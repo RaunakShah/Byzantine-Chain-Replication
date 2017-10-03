@@ -1,10 +1,18 @@
+## Changes from psuedocode:
+## getConfig() does not take two arguments. Takes only one argument - Olympus
+## operation.id and operation.type are now independant variables - id and type
+## id and type are parameters to send()
+## operation_request does not have any attributes except for the operation itself
+## after retransmit, client waits for any type of message (result or error). we need a way to specify whether the message is a result or error message, in the same format.
+
+
+
 class Client(process):
 	def setup(workload, client_timeout, failures):
 		workload_id = 0
 
 	def sendRequest(operation):
 		chain  = getConfig(Olympus)
-		chain.head = 
 		for next_workload_request in workload:
 			type = new_request
 			id = workload_id
