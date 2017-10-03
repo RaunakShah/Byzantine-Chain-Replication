@@ -1,0 +1,48 @@
+class Client(process):
+	def setup(workload, client_timeout, failures):
+		workload_id = 0
+
+	def sendRequest(operation):
+		chain  = getConfig(Olympus)
+		chain.head = 
+		for next_workload_request in workload:
+			type = new_request
+			id = workload_id
+			operation_request = next_workload_request.operation
+			send((id, operation_request, type, self), to= chain.head)
+			await(received(id, (result, result_proof), type, from_= chain.tail) timeout client_timeout
+			if(!verify(result, result_proof)):
+				retransmit(id, operation_request, chain.replicas)
+			workload_id += 1
+		
+	def verify(result, result_proof):
+		#hash() used temporarily for hashing of result
+		for result_statement_hash in result_proof:
+			if(! hash(result) == result_statement_hash):
+				reconfiguration_reqeust.proof_of_misbehavior = (result, result_proof)
+				
+				#need to call a receive handler to use new configuration for retransmit
+				send(reconfiguration_request, to= Olympus)
+				return false
+		return true
+
+	def retransmit(op_id, operation, replicas_in_config):
+		type = retransmission
+		id = op_id
+		operation_request = operation
+		send((id, operation_request, type, self), to= replicas_in_config)
+		
+		#can receive (result,result_proof) or error statement from a replica.
+		#let the  
+		await(received((id, message, type, id), from_ = _))
+		if(message == (result_message)):
+			for result_proof in result_message:
+				verify(result_message.result, result_message.result_proof)
+		elif (message == error_message):
+			chain = getConfig(Olympus)
+			retransmit(id, operation_request, chain.replicas)
+
+	def getConfig(Olympus)
+		send('configQuery', to= Olympus)
+		await((chain, from_=Olympus)
+		return chain
