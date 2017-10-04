@@ -43,8 +43,7 @@ class Client(process):
 		#let the  
 		await(received((request_id, response, response_type), from_ = _))
 		if(response_type == "result"):
-			for result_proof in response:
-				verify(response)
+			verify(response)
 		# Not needed for phase 2
 		elif (response_type == "error"):
 			chain = getConfig(Olympus)
