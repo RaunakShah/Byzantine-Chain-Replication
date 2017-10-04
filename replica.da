@@ -1,0 +1,40 @@
+class Replica(process):
+	def setup(self.head, self.next, self.tail ):
+		pass
+	
+	#1. replica p receivee operation request from replica client
+	def receive(msg = (request_id, next_request, request_type, client)):
+		if(request_type == "new"):
+			if(self.head == True):
+				handleNewRequest(request_id, next_request, self, client)
+		elif request_type == "retransmission":
+			if(request_id, response) in self.cache:
+				response_type = "result"
+				send((request_id, response, response_type), to= client)
+			elif self.mode == "IMMUTABLE":
+				response_type = "error"
+				send((request_id, NULL, response_type), to= client)	
+			else:
+				if(self.head == True):
+					if self.cache contains request_id: #head has ordered operation but not received result shuttle yet
+						await(received((request_id, result_shuttle), from= self.next)) #timeout replica_timeout send reconfig req
+						send((request_id, result_shuttle, response_type = "result"), to=client)
+					else: #head doesnt recognize operation
+						handleNewRequest(request_id, next_request, self, client)	
+						await(received((request_id, result_shuttle), from= self.next)) #timeout replica_timeout send reconfig req
+						send((request_id, result_shuttle, response_type = "result"), to=client)
+				else:
+				# replica is not head in chain
+					send((request_id, next_request, request_type, client), to= self.prev)
+					await(received((request_id, result_shuttle), from= self.next)) #timeout replica_timeout send reconfig req
+					send((request_id, result_shuttle, response_type = "result"), to=client)
+
+#	def handleNewRequest(request_id, request, replica, client):
+#	
+#	def applyOperation():
+#
+#	def orderCommandTransition():
+#		
+	
+	def run():
+		self.cache = []
