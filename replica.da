@@ -1,5 +1,5 @@
 class Replica(process):
-	def setup(self.head, self.next, self.tail ):
+	def setup(head, next, tail, history, mode ):
 		pass
 	
 	#1. replica p receivee operation request from replica client
@@ -29,12 +29,68 @@ class Replica(process):
 					await(received((request_id, result_shuttle), from= self.next)) #timeout replica_timeout send reconfig req
 					send((request_id, result_shuttle, response_type = "result"), to=client)
 
-#	def handleNewRequest(request_id, request, replica, client):
-#	
-#	def applyOperation():
-#
-#	def orderCommandTransition():
-#		
+	def handleNewRequest(request_id, request, replica, client):
+		max_slot = 0
+		for (s,o,p,c,order_statement_list) in p.history:
+			if(s>=max_slot):
+				max_slot = s
+		max_slot += 1
+		
+		#create shuttle
+		shuttle_order_statement_list = []
+		shuttle.order_proof = (max_slot, request, replica, client, shuttle_order_statement_list)
+		shuttle_result_statement_list = []
+		shuttle.result_proof = (request_id, request, replica, client, shuttle_result_statement_list)
+		shuttle.id = request_id
+
+		(result, shuttle) = applyOperation(max_slot, request, repica, shuttle)
+		
+		send(shuttle, to= replica.next)
+
+	def applyOperation(slot, operation, replica, shuttle):
+		#check for conflicting tuples -- not needed in phase 2
+		for (s,o) in replica.state:
+			if s == slot and o != operation:	
+				send(reconfiguation_request, to= Olympus)
+				return NULL
+
+		#check for hole -- not needed for phase 2
+
+		#create new pair and add to state
+		slot_operation_pair = (slot, operation)
+		p.state.append(slot_operation_pair)
+		p.checkpoint_index += 1
+		
+
+		#checkpointing -- not needed for phase 2
+		
+		result = operation
+
+		order_statement = orderCommandTransition(replica, slot, operation, shuttle)
+		replica.cache.append(shuttle.id, result, NULL)
+		shuttle.order_proof.shuttle_order_statement_list.append(order_statement)
+		
+		#sign result statement
+
+		shuttle.result_proof.shuttle_rseult_statement_list.append(result_statement)
+
+		return (result, shuttle)
+
+	def orderCommandTransition(replica, slot, operation, shuttle):
+		if(replica.mode != "ACTIVE"):
+			return NULL
+		#todo: check if all replicas preceding this one have signed order statement in shuttle
+
+		for (s,o,p,c,order_statement_list) in p.history: 
+			if s == slot and o != operation
+			return NULL
+
+		current_order_statement = ("order", slot, operation) # need to sign	
+		shuttle.order_proof.shuttle_order_statement_list.append(current_order_statement)
+		p.history.append(shuttle.order_proof)
+		return order_statement
 	
 	def run():
-		self.cache = []
+		cache = []
+		checkpoint_index = 0
+		state = []
