@@ -1,5 +1,15 @@
+##	Things not done:
+##	1. applying operation 
+## 	2. signing of statements
+## 	3. hashing of statements
+## 	4. check validity of order proof and result proof	
+## 	5. validate result shuttle
+##	6. cache data structure
+
+
+
 class Replica(process):
-	def setup(head, next, tail, history, mode ):
+	def setup(head, prev, next, tail, history, mode ):
 		pass
 	
 	#1. replica p receivee operation request from replica client
@@ -64,7 +74,8 @@ class Replica(process):
 
 		#checkpointing -- not needed for phase 2
 		
-		result = operation
+		#apply operation:
+		result = 
 
 		order_statement = orderCommandTransition(replica, slot, operation, shuttle)
 		replica.cache.append(shuttle.id, result, NULL)
@@ -72,7 +83,7 @@ class Replica(process):
 		
 		#sign result statement
 
-		shuttle.result_proof.shuttle_rseult_statement_list.append(result_statement)
+		shuttle.result_proof.shuttle_result_statement_list.append(result_statement)
 
 		return (result, shuttle)
 
@@ -89,8 +100,50 @@ class Replica(process):
 		shuttle.order_proof.shuttle_order_statement_list.append(current_order_statement)
 		p.history.append(shuttle.order_proof)
 		return order_statement
-	
+
+	#2. replica receives shuttle
+	def receive(shuttle, from_= self.prev):
+		#check validity of shuttle.order_proof
+		#check validity of shuttle.result_proof
+		(result, shuttle) = applyOperation(shuttle.order_proof.max_slot, shuttle.order_proof.request, self, shuttle)
+
+		if self.tail == TRUE:
+			send((shuttle.id, (result, shuttle.result_proof), "result"), to= client)
+			result_shuttle.result_proof = shuttle.result_proof
+			result_shuttle.id = shuttle.id
+			send(result_shuttle, to= self.prev)
+		else:
+			send(shuttle, to= self.next)
+
+	#3. replica p receives result shuttle
+	def receive(result_shuttle, from_=self.next):
+		#validate result shuttle
+		
+		#cache result proof along with corresponding request id and result
+		for tuple in self.cache:
+			if result_shuttle.id == tuple[0]:
+				tuple[2] = result_shuttle
+		if self.head == False:
+			send(result_shuttle, to= self.prev)
+
+	#4. replica receives wedge request -- not needed for phase 2
+	#def receive(wedge_statement, from_= Olympus
+
+	#5. replica receives checkpoint proof -- not needed for phase 2
+	#def receive(checkpoint_shuttle, from_ = replica)
+
+	#6. replica receives catch up message -- not needed for phase 2
+	#def receive("catch_up", from_= Olympus)
+
+	#7. replica receives a get running state message -- not needed for phase 2
+	#def receive("get_running_state", from_= Olympus)
+
+
+ 
+
+ 			
 	def run():
 		cache = []
 		checkpoint_index = 0
-		state = []
+		state = dict()
+		
