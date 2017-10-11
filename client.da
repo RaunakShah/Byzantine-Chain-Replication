@@ -5,23 +5,30 @@
 ## operation_request does not have any attributes except for the operation itself
 ## after retransmit, client waits for any type of message (result or error). we need a way to specify whether the message is a result or error message, in the same format, maybe a string "result" or "error"
 
-
-
 class Client(process):
-	def setup(workload, client_timeout, failures):
+	def setup(client_id, chain, workload, client_timeout, failures):
 		pass
+		
 	def run():
-        #sendRequest(operation) in psuedocode
-                workload_id = 0
-                chain  = getConfig(Olympus)
-                for next_request in workload:
-                        request_type = "new"
-                        request_id = workload_id
-                        send((request_id, next_request, request_type, self), to= chain.head)
-                        await(some(received((id, response, response_type), from_= chain.tail))) #timeout client_timeout
-                        if(verify(response) == False): #self.timeout == TRUE:
-                                retransmit(request_id, next_request, chain.replicas)
-                        workload_id += 1
+		#sendRequest(operation) in psuedocode
+		workload_id = 0
+		#chain  = getConfig(Olympus)
+		for request in workload:
+			request_type = 'new'
+			request_id = (client_id, workload_id)
+			print(request)
+			print(request_id)
+			send(('operation_request', request_id, request_type, request, self), to= chain[0])
+			if (await(some(received(('operation_result', request_id, response, result_proof,), from_= chain[len(chain) - 1])))):
+				print(response)
+				workload_id += 1
+			elif timeout(client_timeout):
+				print('Done')
+			
+			#if(verify(response) == False): #self.timeout == TRUE:
+			#	retransmit(request_id, next_request, chain.replicas)
+			#workload_id += 1
+				
 	def verify(response):
 		#hash() used temporarily for hashing of result
 		for result_statement_hash in response.result_proof:	

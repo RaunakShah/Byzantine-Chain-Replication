@@ -9,141 +9,153 @@
 
 
 class Replica(process):
-	def setup(head, prev, next, tail, history, mode ):
-		pass
+	def setup(replica_id, replica_list, history, mode):
+		self.isHead = False
+		self.isTail = False
+		self.prev_replica = None
+		self.next_replica = None	
+		if replica_id == len(replica_list) - 1:
+			self.isTail = True
+		if replica_id == 0:
+			self.isHead = True
+		if replica_id < len(replica_list) - 1:
+			self.next_replica = replica_list[replica_id + 1]
+		if replica_id > 0:
+			self.prev_replica = replica_list[replica_id - 1]
+		self.operation_dict = dict()
 	
 	#1. replica p receivee operation request from replica client
-	def receive(msg = (request_id, next_request, request_type, client)):
-		if(request_type == "new"):
-			if(self.head == True):
+	def receive(msg = ('operation_request', request_id, request_type, request, client)):
+		if (request_type == 'new'):
+			if(self.isHead == True):
 				handleNewRequest(request_id, next_request, self, client)
-		elif request_type == "retransmission":
-			if(request_id, response) in self.cache:
-				response_type = "result"
-				send((request_id, response, response_type), to= client)
-			elif self.mode == "IMMUTABLE":
-				response_type = "error"
-				send((request_id, NULL, response_type), to= client)	
-			else:
-				if(self.head == True):
-					if self.cache contains request_id: #head has ordered operation but not received result shuttle yet
-						await(received((request_id, result_shuttle), from= self.next)) #timeout replica_timeout send reconfig req
-						send((request_id, result_shuttle, response_type = "result"), to=client)
-					else: #head doesnt recognize operation
-						handleNewRequest(request_id, next_request, self, client)	
-						await(received((request_id, result_shuttle), from= self.next)) #timeout replica_timeout send reconfig req
-						send((request_id, result_shuttle, response_type = "result"), to=client)
-				else:
-				# replica is not head in chain
-					send((request_id, next_request, request_type, client), to= self.prev)
-					await(received((request_id, result_shuttle), from= self.next)) #timeout replica_timeout send reconfig req
-					send((request_id, result_shuttle, response_type = "result"), to=client)
-
+	#	elif (request_type == 'retransmission') :
+	#		if(request_id, response) in self.cache:
+	#			response_type = "result"
+	#			send((request_id, response, response_type), to= client)
+	#		elif self.mode == "IMMUTABLE":
+	#			response_type = "error"
+	#			send((request_id, NULL, response_type), to= client)	
+	#		else:
+	#			if(self.head == True):
+	#				if self.cache contains request_id: #head has ordered operation but not received result shuttle yet
+	#					await(received((request_id, result_shuttle), from= self.next)) #timeout replica_timeout send reconfig req
+	#					send((request_id, result_shuttle, response_type = "result"), to=client)
+	#				else: #head doesnt recognize operation
+	#					handleNewRequest(request_id, next_request, self, client)	
+	#					await(received((request_id, result_shuttle), from= self.next)) #timeout replica_timeout send reconfig req
+	#					send((request_id, result_shuttle, response_type = "result"), to=client)
+	#			else:
+	#			# replica is not head in chain
+	#				send((request_id, next_request, request_type, client), to= self.prev)
+	#				await(received((request_id, result_shuttle), from= self.next)) #timeout replica_timeout send reconfig req
+	#				send((request_id, result_shuttle, response_type = "result"), to=client)
+    #
+	
 	def handleNewRequest(request_id, request, replica, client):
 		max_slot = 0
-		for (s,o,p,c,order_statement_list) in p.history:
-			if(s>=max_slot):
+		for (s, _, _, _, order_statement_list) in history:
+			if(s >= max_slot):
 				max_slot = s
-		max_slot += 1
+		slot += 1
 		
 		#create shuttle
-		shuttle_order_statement_list = []
-		shuttle.order_proof = (max_slot, request, replica, client, shuttle_order_statement_list)
-		shuttle_result_statement_list = []
-		shuttle.result_proof = (request_id, request, replica, client, shuttle_result_statement_list)
-		shuttle.id = request_id
-
-		(result, shuttle) = applyOperation(max_slot, request, repica, shuttle)
-		
-		send(shuttle, to= replica.next)
-
-	def applyOperation(slot, operation, replica, shuttle):
-		#check for conflicting tuples -- not needed in phase 2
-		for (s,o) in replica.state:
-			if s == slot and o != operation:	
-				send(reconfiguation_request, to= Olympus)
-				return NULL
-
-		#check for hole -- not needed for phase 2
-
-		#create new pair and add to state
-		slot_operation_pair = (slot, operation)
-		p.state.append(slot_operation_pair)
-		p.checkpoint_index += 1
-		
-
-		#checkpointing -- not needed for phase 2
-		
-		#apply operation:
-		result = 
-
-		order_statement = orderCommandTransition(replica, slot, operation, shuttle)
-		replica.cache.append(shuttle.id, result, NULL)
-		shuttle.order_proof.shuttle_order_statement_list.append(order_statement)
-		
-		#sign result statement
-
-		shuttle.result_proof.shuttle_result_statement_list.append(result_statement)
-
-		return (result, shuttle)
-
-	def orderCommandTransition(replica, slot, operation, shuttle):
-		if(replica.mode != "ACTIVE"):
-			return NULL
-		#todo: check if all replicas preceding this one have signed order statement in shuttle
-
-		for (s,o,p,c,order_statement_list) in p.history: 
-			if s == slot and o != operation
-			return NULL
-
-		current_order_statement = ("order", slot, operation) # need to sign	
-		shuttle.order_proof.shuttle_order_statement_list.append(current_order_statement)
-		p.history.append(shuttle.order_proof)
-		return order_statement
-
+		order_proof = (slot, request, [self.replica_id])
+		result_proof = (request, [self.replica_id])
+    
+		#(result, shuttle) = applyOperation(max_slot, request, repica, shuttle)
+	
+		send(('shuttle', order_proof, result_proof, request_id, self), to= self.next_replica)
+    
+	#def applyOperation(slot, operation, replica, shuttle):
+	#	#check for conflicting tuples -- not needed in phase 2
+	#	for (s,o) in replica.state:
+	#		if s == slot and o != operation:	
+	#			send(reconfiguation_request, to= Olympus)
+	#			return NULL
+    #
+	#	#check for hole -- not needed for phase 2
+    #
+	#	#create new pair and add to state
+	#	slot_operation_pair = (slot, operation)
+	#	p.state.append(slot_operation_pair)
+	#	p.checkpoint_index += 1
+	#	
+    #
+	#	#checkpointing -- not needed for phase 2
+	#	
+	#	#apply operation:
+	#	result = 
+    #
+	#	order_statement = orderCommandTransition(replica, slot, operation, shuttle)
+	#	replica.cache.append(shuttle.id, result, NULL)
+	#	shuttle.order_proof.shuttle_order_statement_list.append(order_statement)
+	#	
+	#	#sign result statement
+    #
+	#	shuttle.result_proof.shuttle_result_statement_list.append(result_statement)
+    #
+	#	return (result, shuttle)
+    #
+	#def orderCommandTransition(replica, slot, operation, shuttle):
+	#	if(replica.mode != "ACTIVE"):
+	#		return NULL
+	#	#todo: check if all replicas preceding this one have signed order statement in shuttle
+    #
+	#	for (s,o,p,c,order_statement_list) in p.history: 
+	#		if s == slot and o != operation
+	#		return NULL
+    #
+	#	current_order_statement = ("order", slot, operation) # need to sign	
+	#	shuttle.order_proof.shuttle_order_statement_list.append(current_order_statement)
+	#	p.history.append(shuttle.order_proof)
+	#	return order_statement
+    
 	#2. replica receives shuttle
-	def receive(shuttle, from_= self.prev):
+	def receive(('shuttle', order_proof, result_proof, request_id, self), from_= self.prev_replica):
 		#check validity of shuttle.order_proof
 		#check validity of shuttle.result_proof
-		(result, shuttle) = applyOperation(shuttle.order_proof.max_slot, shuttle.order_proof.request, self, shuttle)
-
-		if self.tail == TRUE:
-			send((shuttle.id, (result, shuttle.result_proof), "result"), to= client)
-			result_shuttle.result_proof = shuttle.result_proof
-			result_shuttle.id = shuttle.id
-			send(result_shuttle, to= self.prev)
+	#	(result, shuttle) = applyOperation(shuttle.order_proof.max_slot, shuttle.order_proof.request, self, shuttle)
+    
+		if self.tail == True:
+			send(('operation_result', request_id, 'OK', result_proof, self), to=client)
+			#result_shuttle.result_proof = shuttle.result_proof
+			#result_shuttle.id = shuttle.id
+			#send(result_shuttle, to= self.prev)
 		else:
 			send(shuttle, to= self.next)
-
-	#3. replica p receives result shuttle
-	def receive(result_shuttle, from_=self.next):
-		#validate result shuttle
-		
-		#cache result proof along with corresponding request id and result
-		for tuple in self.cache:
-			if result_shuttle.id == tuple[0]:
-				tuple[2] = result_shuttle
-		if self.head == False:
-			send(result_shuttle, to= self.prev)
-
-	#4. replica receives wedge request -- not needed for phase 2
-	#def receive(wedge_statement, from_= Olympus
-
-	#5. replica receives checkpoint proof -- not needed for phase 2
-	#def receive(checkpoint_shuttle, from_ = replica)
-
-	#6. replica receives catch up message -- not needed for phase 2
-	#def receive("catch_up", from_= Olympus)
-
-	#7. replica receives a get running state message -- not needed for phase 2
-	#def receive("get_running_state", from_= Olympus)
-
-
- 
-
- 			
+    #
+	##3. replica p receives result shuttle
+	#def receive(result_shuttle, from_=self.next):
+	#	#validate result shuttle
+	#	
+	#	#cache result proof along with corresponding request id and result
+	#	for tuple in self.cache:
+	#		if result_shuttle.id == tuple[0]:
+	#			tuple[2] = result_shuttle
+	#	if self.head == False:
+	#		send(result_shuttle, to= self.prev)
+    #
+	##4. replica receives wedge request -- not needed for phase 2
+	##def receive(wedge_statement, from_= Olympus
+    #
+	##5. replica receives checkpoint proof -- not needed for phase 2
+	##def receive(checkpoint_shuttle, from_ = replica)
+    #
+	##6. replica receives catch up message -- not needed for phase 2
+	##def receive("catch_up", from_= Olympus)
+    #
+	##7. replica receives a get running state message -- not needed for phase 2
+	##def receive("get_running_state", from_= Olympus)
+    #
+    #
+    #
+    #
+ 	#		
 	def run():
-		cache = []
-		checkpoint_index = 0
-		state = dict()
+		while True:
+			await(some(received(('operation_request', _, _, _), from_= _)))
+	#	cache = []
+	#	checkpoint_index = 0
+	#	state = dict()
 		
