@@ -19,8 +19,11 @@ class Client(process):
 			print(request)
 			print(request_id)
 			send(('operation_request', request_id, request_type, request, self), to= chain[0])
-			if (await(some(received(('operation_result', request_id, response, result_proof,), from_= chain[len(chain) - 1])))):
-				print(response)
+			if (await(some(
+					received(('operation_result', returned_request_id, response, result_proof, _),
+						from_= chain[len(chain) - 1]),
+					has = (returned_request_id == request_id)))):
+				print(result_proof)
 				workload_id += 1
 			elif timeout(client_timeout):
 				print('Done')

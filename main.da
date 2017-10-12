@@ -15,15 +15,15 @@ def main():
 	
 	replica_num = config['t']
 	replica_num = replica_num * 2 + 1
-	replicas = new(replica_da.Replica, num=1)
+	replicas = new(replica_da.Replica, num = replica_num)
 	replica_list = []
 	# change set to list
 	for replica in replicas:
 		replica_list.append(replica)
 		
 	for index in range(len(replica_list)):
+		replica = replica_list[index]
 		setup(replica, (index, replica_list, [], 'ACTIVE'))
-		print(replica)
 	
 	client_num = config['num_client']
 	#clients = new(client_da.Client, num=client_num)
@@ -31,13 +31,10 @@ def main():
 	client_id = 1
 	for client in clients:
 		workload_string = config['workload[' + str(client_id) + ']']
-		workload = workload_string.split(';').strip()
+		workload = workload_string.split(';')
 		timeout = config['client_timeout']
 		setup(client, (client_id, replica_list, workload, timeout, []))
 		client_id += 1
-		print(client)
 	
 	start(replicas)
 	start(clients)
-
-	
