@@ -6,7 +6,7 @@
 ## after retransmit, client waits for any type of message (result or error). we need a way to specify whether the message is a result or error message, in the same format, maybe a string "result" or "error"
 
 class Client(process):
-	def setup(client_id, chain, workload, client_timeout, failures):
+	def setup(client_id, chain, workload, client_timeout, failures, public_key_list):
 		pass
 		
 	def run():
@@ -16,6 +16,7 @@ class Client(process):
 		for request in workload:
 			request_type = 'new'
 			request_id = (client_id, workload_id)
+			print("NEW ERQUEST")
 			print(request)
 			print(request_id)
 			send(('operation_request', request_id, request_type, request, self), to= chain[0])

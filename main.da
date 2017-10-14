@@ -1,3 +1,6 @@
+import nacl.encoding
+import nacl.signing
+
 def main():
 	client_da = import_da('client')
 	replica_da = import_da('replica')
@@ -17,23 +20,30 @@ def main():
 	replica_num = replica_num * 2 + 1
 	replicas = new(replica_da.Replica, num = replica_num)
 	replica_list = []
+	private_keys_list = []
+	public_keys_list = []	
 	# change set to list
 	for replica in replicas:
 		replica_list.append(replica)
-		
+	for replica in replicas:			
+		replica_private_key = nacl.signing.SigningKey.generate()
+		replica_public_key = replica_private_key.verify_key
+		replica_public_key_hex = replica_public_key.encode(encoder = nacl.encoding.HexEncoder)
+		public_keys_list.append(replica_public_key_hex)
+		private_keys_list.append(replica_private_key)
 	for index in range(len(replica_list)):
 		replica = replica_list[index]
-		setup(replica, (index, replica_list, [], 'ACTIVE'))
+		setup(replica, (index, replica_list, [], 'ACTIVE', private_keys_list[index], public_keys_list))
 	
 	client_num = config['num_client']
-	#clients = new(client_da.Client, num=client_num)
-	clients = new(client_da.Client, num=1)
-	client_id = 1
+	clients = new(client_da.Client, num=client_num-1)
+	#clients = new(client_da.Client, num=1)
+	client_id = 0 
 	for client in clients:
 		workload_string = config['workload[' + str(client_id) + ']']
 		workload = workload_string.split(';')
 		timeout = config['client_timeout']
-		setup(client, (client_id, replica_list, workload, timeout, []))
+		setup(client, (client_id, replica_list, workload, timeout, [], public_keys_list))
 		client_id += 1
 	
 	start(replicas)

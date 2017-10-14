@@ -7,9 +7,11 @@
 ##	6. cache data structure
 
 import re
+import nacl.encoding
+import nacl.signing
 
 class Replica(process):
-	def setup(replica_id, replica_list, history, mode):
+	def setup(replica_id, replica_list, history, mode, private_key, public_key_list):
 		self.isHead = False
 		self.isTail = False
 		self.prev_replica = None
@@ -23,14 +25,15 @@ class Replica(process):
 		if replica_id > 0:
 			self.prev_replica = replica_list[replica_id - 1]
 		self.operation_dict = dict()
+		self.private_key = private_key
+		self.public_key_list = public_key_list
+		self.cache = dict()
 	
-	#1. replica p receivee operation request from replica client
+	#1. replica p receives operation request from replica client
 	def receive(msg = ('operation_request', request_id, request_type, request, _), from_ = client):
 		if (request_type == 'new'):
 			if(self.isHead == True):
 				print("NEW REQ")
-				if(request[0] == 'p'):
-					print(request)
 				handleNewRequest(request_id, request, client)
 				
 	#	elif (request_type == 'retransmission') :
@@ -74,12 +77,19 @@ class Replica(process):
 		
 		order_proof.append(order_statement)
 		result_proof.append((result, order_statement, self.replica_id))
-	
+		print("APPLIED")	
 		if self.isTail != True:
-			send(('shuttle', order_proof, result_proof, request_id, slot, request, client, self), to= self.next_replica)
+			print("NOT TAIL")
+			msg = self.private_key.sign(('shuttle',order_proof, result_proof, request_id, slot, request, client, self))
+			send(msg, to= self.next_replica)
+			send((self.private_key.sign(('shuttle', order_proof, result_proof, request_id, slot, request, client, self))), to= self.next_replica)
+			#send(('shuttle', order_proof, result_proof, request_id, slot, request, client, self), to = self.next_replica)
 		else:
-			send(('operation_result', request_id, 'OK', result_proof, self), to=client)
-    
+			send((self.private_key.sign(('operation_result', request_id, 'OK', result_proof, self))), to=client)
+			#send(('operation_result', request_id, 'OK', result_proof, self), to=client)
+		print("NO REPLY") 
+	
+
 	def applyOperation(slot, request_id, request):
 		#check for conflicting tuples -- not needed in phase 2
 	#	for (s,o) in replica.state:
@@ -100,12 +110,12 @@ class Replica(process):
 		#apply operation:
 	#	result = 
 		result = findAndPerformOperation(self.operation_dict, request) 
-	#	result ='OK'
+
 		#print("dict after operation:")
 		#print(self.operation_dict)	
 		order_statement = orderCommandTransition(slot, request_id, request)
 	
-	#	replica.cache.append(shuttle.id, result, NULL)
+		self.cache[request_id] =  result
 	#	shuttle.order_proof.shuttle_order_statement_list.append(order_statement)
 	#	
 	#	#sign result statement
@@ -132,36 +142,42 @@ class Replica(process):
     
 	#2. replica receives shuttle
 	def receive(msg =('shuttle', order_proof, result_proof, request_id, slot, request, client, _), from_= self.prev_replica):
+		if(nacl.signing.VerifyKey(public_keys_list[self.prev_replica], encoder=nacl.encoding.HexEncoder).verify(msg)):
+		
 		#check validity of shuttle.order_proof
 		#check validity of shuttle.result_proof
+		
+
 		#(result, shuttle) = applyOperation(shuttle.order_proof.max_slot, shuttle.order_proof.request, self, shuttle)
     
-		(result, order_statement) = applyOperation(slot, request_id, request)
-		order_proof.append(order_statement)
-		result_proof.append((result, order_statement, self.replica_id))
-		if self.isTail == True:
-			send(('operation_result', request_id, 'OK', result_proof, self), to=client)
-			#result_shuttle.result_proof = shuttle.result_proof
-			#result_shuttle.id = shuttle.id
-			#send(result_shuttle, to= self.prev)
-		else:
-			send(('shuttle', order_proof, result_proof, request_id, slot, request, client, self), to= self.next_replica)
+			(result, order_statement) = applyOperation(slot, request_id, request)
+			order_proof.append(order_statement)
+			result_proof.append((result, order_statement, self.replica_id))
+			if self.isTail == True:
+				#send(('operation_result', request_id, 'OK', result_proof, self), to=client)			#result_shuttle.result_proof = shuttle.result_proof
+				send((self.private_key.sign('operation_result', request_id, 'OK', result_proof, self)), to=client)			#result_shuttle.result_proof = shuttle.result_proof
+				#result_shuttle.id = shuttle.id
+				#send(result_shuttle, to= self.prev)
+			else:
+				#send(('shuttle', order_proof, result_proof, request_id, slot, request, client, self), to= self.next_replica)
+				send((self.private_key.sign('shuttle', order_proof, result_proof, request_id, slot, request, client, self)), to= self.next_replica)
     #
 
 	def findAndPerformOperation(operation_dict, request):
 		if request[0] == 'p':
-			operands = re.findall('put\(\'(.*?)\'\,\'(.*?)\'\)', request, re.DOTALL)
+			operands = re.findall("put\(\'(.*?)\'\,\'(.*?)\'\)", request, re.DOTALL)
+			print(operands)
 			for key, val in operands:
 				operation_dict[key] = val
 				return 'OK'
-		if request[0] == 'g':
+		elif request[0] == 'g':
 			operand = re.findall('get\(\'(.*?)\'\)', request)	
 			for o in operand:
 				if o in operation_dict:
 					return operation_dict.get(o)
 				else:
 					return " "
-		if request[0] == 'a':
+		elif request[0] == 'a':
 			operands = re.findall('append\(\'(.*?)\'\,\'(.*?)\'\)', request, re.DOTALL)
 			for key, val in operands:
 				if key in operation_dict:
@@ -169,7 +185,7 @@ class Replica(process):
 					return 'OK'
 				else:
 					return 'fail'
-		if request[0] == 's':
+		elif request[0] == 's':
 			operands = re.findall('slice\(\'(.*?)\',\'([0-9]+):([0-9]+)\'\)', request)
 			for key, low_index, up_index in operands:
 				if key in operation_dict and int(low_index) in range(len(operation_dict[key])) and int(up_index) in range(len(operation_dict[key])):
