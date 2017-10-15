@@ -7,8 +7,11 @@
 ##	6. cache data structure
 
 import re
+from nacl.bindings.utils import sodium_memcmp
 import nacl.encoding
 import nacl.signing
+import nacl.hash
+import time
 
 class Replica(process):
 	def setup(replica_id, replica_list, history, mode, private_key, public_key_list):
@@ -28,9 +31,14 @@ class Replica(process):
 		self.private_key = private_key
 		self.public_key_list = public_key_list
 		self.cache = dict()
-	
+		self.count = 0
+		self.HASHER = nacl.hash.sha256
+		
 	#1. replica p receives operation request from replica client
 	def receive(msg = ('operation_request', request_id, request_type, request, _), from_ = client):
+		if(count==0):
+			time.sleep(5)
+			count +=1
 		if (request_type == 'new'):
 			if(self.isHead == True):
 				print("NEW REQ")
@@ -47,7 +55,7 @@ class Replica(process):
 					if request_id in self.cache.keys(): #head has ordered operation but not received result shuttle yet
 						if(await(some(
 								received(('result_shuttle', result_shuttle_id, result, result_proof, client), from_= self.next_replica), has = (result_shuttle_id == request_id)))): #timeout replica_timeout send reconfig req
-							print("RE")
+			#				print("RE")
 							send(('operation_result', request_id, result, result_proof, self), to=client)
 					else: #head doesnt recognize operation
 						handleNewRequest(request_id, request, client)	
@@ -77,20 +85,20 @@ class Replica(process):
 		result_proof = []
     
 		(result, order_statement) = applyOperation(slot, request_id, request)
-		
+		result_in_bytes = bytes(result, 'utf-8')
+		hash_result = self.HASHER(result_in_bytes, encoder = nacl.encoding.HexEncoder)
 		order_proof.append(order_statement)
-		result_proof.append((result, order_statement, self.replica_id))
-		print("APPLIED")	
+		result_proof.append((hash_result, order_statement, self.replica_id))
+		#print("APPLIED")	
 		if self.isTail != True:
-			print("NOT TAIL")
 			#msg = self.private_key.sign(('shuttle',order_proof, result_proof, request_id, slot, request, client, self))
 			#send(msg, to= self.next_replica)
 			#send((self.private_key.sign(('shuttle', order_proof, result_proof, request_id, slot, request, client, self))), to= self.next_replica)
 			send(('shuttle', order_proof, result_proof, request_id, slot, request, client, self), to = self.next_replica)
 		else:
 			#send((self.private_key.sign(('operation_result', request_id, 'OK', result_proof, self))), to=client)
-			send(('operation_result', request_id, 'OK', result_proof, self), to=client)
-		print("NO REPLY") 
+			send(('operation_result', request_id, result, result_proof, self), to=client)
+		#print("NO REPLY") 
 	
 
 	def applyOperation(slot, request_id, request):
@@ -113,8 +121,8 @@ class Replica(process):
 		#apply operation:
 		result = findAndPerformOperation(self.operation_dict, request) 
 
-		print("dict after operation:")
-		print(self.operation_dict)	
+		#print("dict after operation:")
+		#print(self.operation_dict)	
 		order_statement = orderCommandTransition(slot, request_id, request)
 	
 		self.cache[request_id] =  result
@@ -153,10 +161,12 @@ class Replica(process):
 		#(result, shuttle) = applyOperation(shuttle.order_proof.max_slot, shuttle.order_proof.request, self, shuttle)
     
 		(result, order_statement) = applyOperation(slot, request_id, request)
+		result_in_bytes = bytes(result, 'utf-8')
+		hash_result = self.HASHER(result_in_bytes, encoder = nacl.encoding.HexEncoder)
 		order_proof.append(order_statement)
-		result_proof.append((result, order_statement, self.replica_id))
+		result_proof.append((hash_result, order_statement, self.replica_id))
 		if self.isTail == True:
-			send(('operation_result', request_id, 'OK', result_proof, self), to=client) 
+			send(('operation_result', request_id, result, result_proof, self), to=client) 
 				#send((self.private_key.sign('operation_result', request_id, 'OK', result_proof, self)), to=client)			#result_shuttle.result_proof = shuttle.result_proof
 			result_shuttle_id = request_id  
 			send(('result_shuttle',result_shuttle_id, result, result_proof,client), to= self.prev_replica)
@@ -168,7 +178,7 @@ class Replica(process):
 	def findAndPerformOperation(operation_dict, request):
 		if request[0] == 'p':
 			operands = re.findall("put\(\'(.*?)\'\,\'(.*?)\'\)", request, re.DOTALL)
-			print(operands)
+		#	print(operands)
 			for key, val in operands:
 				operation_dict[key] = val
 				return 'OK'
@@ -203,8 +213,8 @@ class Replica(process):
 	#	
 	#	#cache result proof along with corresponding request id and result
 		self.cache[result_shuttle_id] = (result, result_proof)		
-		print("CACHED RESULT")
-		print(cache[result_shuttle_id])
+		#print("CACHED RESULT")
+		#print(cache[result_shuttle_id][1])
 		if self.isHead == False:
 			send(('result_shuttle', result_shuttle_id, result, result_proof, client, self), to= self.prev_replica) 	
 #	for tuple in self.cache:

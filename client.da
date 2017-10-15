@@ -5,60 +5,71 @@
 ## operation_request does not have any attributes except for the operation itself
 ## after retransmit, client waits for any type of message (result or error). we need a way to specify whether the message is a result or error message, in the same format, maybe a string "result" or "error"
 
+from nacl.bindings.utils import sodium_memcmp
+import nacl.encoding
+import nacl.signing
+import nacl.hash
+
 class Client(process):
-	def setup(client_id, chain, workload, client_timeout, failures, public_key_list):
-		pass
+	def setup(client_id, chain, workload, client_timeout, failures, public_key_list):	
+		self.workload_id = 0
+		self.HASHER = nacl.hash.sha256
 		
 	def run():
 		#sendRequest(operation) in psuedocode
-		workload_id = 0
 		#chain  = getConfig(Olympus)
 		for request in workload:
 			request_type = 'new'
 			request_id = (client_id, workload_id)
-			print("NEW ERQUEST")
-			print(request)
-			print(request_id)
+			#print("NEW ERQUEST")
+			#print(request)
+			#print(request_id)
 			send(('operation_request', request_id, request_type, request, self), to= chain[0])
 			if (await(some(
 					received(('operation_result', returned_request_id, response, result_proof, _),
 						from_= _),
 					has = (returned_request_id == request_id)))):
-				print(result_proof)
+		#		print(response)
+		#		print(result_proof)
+				if(verify(response, result_proof) == False):
+					#need to retransmit?
+					print("oops")
 				workload_id += 1
-			elif timeout(client_timeout):
+			elif timeout(3):
 				print('Done')
-			
-			#if(verify(response) == False): #self.timeout == TRUE:
-			#	retransmit(request_id, next_request, chain.replicas)
-			#workload_id += 1
+				retransmit(request_id, request)
+			workload_id += 1
 				
-	def verify(response):
+	def verify(response, result_proof):
 		#hash() used temporarily for hashing of result
-		for result_statement_hash in response.result_proof:	
-			if(hash(result) != result_statement_hash):
+		response_in_bytes = bytes(response, 'utf-8')
+		response_hash = self.HASHER(response_in_bytes, encoder = nacl.encoding.HexEncoder)
+		for result_statement_hash in result_proof:	
+			if not sodium_memcmp(response_hash,result_statement_hash[0]):
+				print(result_statement_hash[0])
 				#NOTE: not needed for phase 2; i think we only need to retransmit the request
-				reconfiguration_reqeust.proof_of_misbehavior = (result, result_proof)
+				#reconfiguration_reqeust.proof_of_misbehavior = (result, result_proof)
 				#need to call a receive handler to use new configuration for retransmit
-				send(reconfiguration_request, to= Olympus)
-				return false
-		return true
+				#send(reconfiguration_request, to= Olympus)
+				return False
+		return True
 
-	def retransmit(op_id, operation, replicas_in_config):
+	def retransmit(request_id, request):
 		request_type = "retransmission"
-		request_id = op_id
-		retransmit_request = operation
-		send((request_id, retransmit_request, request_type, self), to= replicas_in_config)
+		for replica in chain:
+			send(('retransmission',request_id, request, request_type, self), to= replica )
 		
 		#can receive (result,result_proof) or error statement from a replica.
 		#let the  
-		await(received((request_id, response, response_type), from_ = _))
-		if(response_type == "result"):
-			verify(response)
+		if (await(some(received(('operation_result', returned_request_id, response, result_proof, _), from_= _), has = (returned_request_id == request_id)))):
+			#verify(response)
+			print("RES in retransmit!!")
+		#	print(result_proof)
+			#self.workload_id += 1
 		# Not needed for phase 2
-		elif (response_type == "error"):
-			chain = getConfig(Olympus)
-			retransmit(id, retransmit_request, chain.replicas)
+		#elif (response_type == "error"):
+		#	chain = getConfig(Olympus)
+		#	retransmit(id, retransmit_request, chain.replicas)
 
 	def getConfig(Olympus):
 		send('configQuery', to= Olympus)
