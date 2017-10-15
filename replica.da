@@ -36,28 +36,31 @@ class Replica(process):
 				print("NEW REQ")
 				handleNewRequest(request_id, request, client)
 				
-	#	elif (request_type == 'retransmission') :
-	#		if(request_id, response) in self.cache:
-	#			response_type = "result"
-	#			send((request_id, response, response_type), to= client)
+		elif (request_type == 'retransmission') :
+			if (request_id in self.cache.keys()) and (len(self.cache[request_id]) == 2):
+				send(('operation_result', request_id, cache[request_id][0], cache[request_id][1]), to= client)
 	#		elif self.mode == "IMMUTABLE":
 	#			response_type = "error"
 	#			send((request_id, NULL, response_type), to= client)	
-	#		else:
-	#			if(self.head == True):
-	#				if self.cache contains request_id: #head has ordered operation but not received result shuttle yet
-	#					await(received((request_id, result_shuttle), from= self.next)) #timeout replica_timeout send reconfig req
-	#					send((request_id, result_shuttle, response_type = "result"), to=client)
-	#				else: #head doesnt recognize operation
-	#					handleNewRequest(request_id, next_request, self, client)	
-	#					await(received((request_id, result_shuttle), from= self.next)) #timeout replica_timeout send reconfig req
-	#					send((request_id, result_shuttle, response_type = "result"), to=client)
-	#			else:
-	#			# replica is not head in chain
-	#				send((request_id, next_request, request_type, client), to= self.prev)
-	#				await(received((request_id, result_shuttle), from= self.next)) #timeout replica_timeout send reconfig req
-	#				send((request_id, result_shuttle, response_type = "result"), to=client)
-    #
+			else:
+				if(self.isHead == True):
+					if request_id in self.cache.keys(): #head has ordered operation but not received result shuttle yet
+						if(await(some(
+								received(('result_shuttle', result_shuttle_id, result, result_proof, client), from_= self.next_replica), has = (result_shuttle_id == request_id)))): #timeout replica_timeout send reconfig req
+							print("RE")
+							send(('operation_result', request_id, result, result_proof, self), to=client)
+					else: #head doesnt recognize operation
+						handleNewRequest(request_id, request, client)	
+						if(await(some(received(('result_shuttle', result_shuttle_id, result, result_proof, client), from_= self.next_replica), has = (result_shuttle_id == request_id)))): #timeout replica_timeout send reconfig req
+							send(('operation_result', request_id, result, result_proof, self), to=client)
+						#elif timeout:
+	
+				else: #replica that receives retransmission is not head
+					send(('operation_request', request_id, request_type, client), to= replica_list[0])
+					if(await(some(received(('result_shuttle', result_shuttle_id, result, result_proof, client), from_= self.next_replica), has = (result_shuttle_id == request_id)))): #timeout replica_timeout send reconfig req
+						send(('operation_result', request_id, result, result_proof, self), to=client)
+					#elif timeout:
+    
 	
 	def handleNewRequest(request_id, request, client):
 		max_slot = 0
@@ -80,13 +83,13 @@ class Replica(process):
 		print("APPLIED")	
 		if self.isTail != True:
 			print("NOT TAIL")
-			msg = self.private_key.sign(('shuttle',order_proof, result_proof, request_id, slot, request, client, self))
-			send(msg, to= self.next_replica)
-			send((self.private_key.sign(('shuttle', order_proof, result_proof, request_id, slot, request, client, self))), to= self.next_replica)
-			#send(('shuttle', order_proof, result_proof, request_id, slot, request, client, self), to = self.next_replica)
+			#msg = self.private_key.sign(('shuttle',order_proof, result_proof, request_id, slot, request, client, self))
+			#send(msg, to= self.next_replica)
+			#send((self.private_key.sign(('shuttle', order_proof, result_proof, request_id, slot, request, client, self))), to= self.next_replica)
+			send(('shuttle', order_proof, result_proof, request_id, slot, request, client, self), to = self.next_replica)
 		else:
-			send((self.private_key.sign(('operation_result', request_id, 'OK', result_proof, self))), to=client)
-			#send(('operation_result', request_id, 'OK', result_proof, self), to=client)
+			#send((self.private_key.sign(('operation_result', request_id, 'OK', result_proof, self))), to=client)
+			send(('operation_result', request_id, 'OK', result_proof, self), to=client)
 		print("NO REPLY") 
 	
 
@@ -96,9 +99,9 @@ class Replica(process):
 	#		if s == slot and o != operation:	
 	#			send(reconfiguation_request, to= Olympus)
 	#			return NULL
-    #
-	#	#check for hole -- not needed for phase 2
-    #
+	
+	#check for hole -- not needed for phase 2
+
 		#create new pair and add to state
 		#slot_operation_pair = (slot, operation)
 		#p.state.append(slot_operation_pair)
@@ -108,11 +111,10 @@ class Replica(process):
 		#checkpointing -- not needed for phase 2
 		
 		#apply operation:
-	#	result = 
 		result = findAndPerformOperation(self.operation_dict, request) 
 
-		#print("dict after operation:")
-		#print(self.operation_dict)	
+		print("dict after operation:")
+		print(self.operation_dict)	
 		order_statement = orderCommandTransition(slot, request_id, request)
 	
 		self.cache[request_id] =  result
@@ -142,7 +144,7 @@ class Replica(process):
     
 	#2. replica receives shuttle
 	def receive(msg =('shuttle', order_proof, result_proof, request_id, slot, request, client, _), from_= self.prev_replica):
-		if(nacl.signing.VerifyKey(public_keys_list[self.prev_replica], encoder=nacl.encoding.HexEncoder).verify(msg)):
+		#if(nacl.signing.VerifyKey(public_keys_list[self.prev_replica], encoder=nacl.encoding.HexEncoder).verify(msg)):
 		
 		#check validity of shuttle.order_proof
 		#check validity of shuttle.result_proof
@@ -150,17 +152,17 @@ class Replica(process):
 
 		#(result, shuttle) = applyOperation(shuttle.order_proof.max_slot, shuttle.order_proof.request, self, shuttle)
     
-			(result, order_statement) = applyOperation(slot, request_id, request)
-			order_proof.append(order_statement)
-			result_proof.append((result, order_statement, self.replica_id))
-			if self.isTail == True:
-				#send(('operation_result', request_id, 'OK', result_proof, self), to=client)			#result_shuttle.result_proof = shuttle.result_proof
-				send((self.private_key.sign('operation_result', request_id, 'OK', result_proof, self)), to=client)			#result_shuttle.result_proof = shuttle.result_proof
-				#result_shuttle.id = shuttle.id
-				#send(result_shuttle, to= self.prev)
-			else:
-				#send(('shuttle', order_proof, result_proof, request_id, slot, request, client, self), to= self.next_replica)
-				send((self.private_key.sign('shuttle', order_proof, result_proof, request_id, slot, request, client, self)), to= self.next_replica)
+		(result, order_statement) = applyOperation(slot, request_id, request)
+		order_proof.append(order_statement)
+		result_proof.append((result, order_statement, self.replica_id))
+		if self.isTail == True:
+			send(('operation_result', request_id, 'OK', result_proof, self), to=client) 
+				#send((self.private_key.sign('operation_result', request_id, 'OK', result_proof, self)), to=client)			#result_shuttle.result_proof = shuttle.result_proof
+			result_shuttle_id = request_id  
+			send(('result_shuttle',result_shuttle_id, result, result_proof,client), to= self.prev_replica)
+		else:
+			send(('shuttle', order_proof, result_proof, request_id, slot, request, client, self), to= self.next_replica)
+				#send((self.private_key.sign('shuttle', order_proof, result_proof, request_id, slot, request, client, self)), to= self.next_replica)
     #
 
 	def findAndPerformOperation(operation_dict, request):
@@ -196,11 +198,16 @@ class Replica(process):
 
 
 	##3. replica p receives result shuttle
-	#def receive(result_shuttle, from_=self.next):
+	def receive(msg =('result_shuttle', result_shuttle_id, result, result_proof, client), from_=self.next_replica):
 	#	#validate result shuttle
 	#	
 	#	#cache result proof along with corresponding request id and result
-	#	for tuple in self.cache:
+		self.cache[result_shuttle_id] = (result, result_proof)		
+		print("CACHED RESULT")
+		print(cache[result_shuttle_id])
+		if self.isHead == False:
+			send(('result_shuttle', result_shuttle_id, result, result_proof, client, self), to= self.prev_replica) 	
+#	for tuple in self.cache:
 	#		if result_shuttle.id == tuple[0]:
 	#			tuple[2] = result_shuttle
 	#	if self.head == False:

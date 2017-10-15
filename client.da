@@ -22,7 +22,7 @@ class Client(process):
 			send(('operation_request', request_id, request_type, request, self), to= chain[0])
 			if (await(some(
 					received(('operation_result', returned_request_id, response, result_proof, _),
-						from_= chain[len(chain) - 1]),
+						from_= _),
 					has = (returned_request_id == request_id)))):
 				print(result_proof)
 				workload_id += 1
