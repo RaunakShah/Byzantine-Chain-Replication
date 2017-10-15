@@ -18,7 +18,8 @@ class Replica(process):
 		self.isHead = False
 		self.isTail = False
 		self.prev_replica = None
-		self.next_replica = None	
+		self.next_replica = None
+		
 		if replica_id == len(replica_list) - 1:
 			self.isTail = True
 		if replica_id == 0:
@@ -27,6 +28,7 @@ class Replica(process):
 			self.next_replica = replica_list[replica_id + 1]
 		if replica_id > 0:
 			self.prev_replica = replica_list[replica_id - 1]
+		
 		self.operation_dict = dict()
 		self.private_key = private_key
 		self.public_key_list = public_key_list
@@ -36,9 +38,9 @@ class Replica(process):
 		
 	#1. replica p receives operation request from replica client
 	def receive(msg = ('operation_request', request_id, request_type, request, _), from_ = client):
-		if(count==0):
-			time.sleep(5)
-			count +=1
+		#if(count==0):
+		#	time.sleep(5)
+		#	count +=1
 		if (request_type == 'new'):
 			if(self.isHead == True):
 				print("NEW REQ")
@@ -71,6 +73,7 @@ class Replica(process):
     
 	
 	def handleNewRequest(request_id, request, client):
+		# find the max slot that has been assigned to get the slot to assign
 		max_slot = 0
 		for (s, _, _, _, order_statement_list) in self.history:
 			if(s >= max_slot):
@@ -80,11 +83,13 @@ class Replica(process):
 		else:
 			slot = max_slot + 1
 		
-		#create shuttle
+		# create empty lists for order proof and result proof
 		order_proof = []
 		result_proof = []
     
 		(result, order_statement) = applyOperation(slot, request_id, request)
+		
+		#
 		result_in_bytes = bytes(result, 'utf-8')
 		hash_result = self.HASHER(result_in_bytes, encoder = nacl.encoding.HexEncoder)
 		order_proof.append(order_statement)
@@ -103,23 +108,21 @@ class Replica(process):
 
 	def applyOperation(slot, request_id, request):
 		#check for conflicting tuples -- not needed in phase 2
-	#	for (s,o) in replica.state:
-	#		if s == slot and o != operation:	
-	#			send(reconfiguation_request, to= Olympus)
-	#			return NULL
+		#for (s,o) in replica.state:
+		#if s == slot and o != operation:	
+		#	send(reconfiguation_request, to= Olympus)
+		#	return NULL
 	
-	#check for hole -- not needed for phase 2
-
+		#check for hole -- not needed for phase 2
 		#create new pair and add to state
 		#slot_operation_pair = (slot, operation)
 		#p.state.append(slot_operation_pair)
 		#p.checkpoint_index += 1
-		
-    
+	
 		#checkpointing -- not needed for phase 2
 		
-		#apply operation:
-		result = findAndPerformOperation(self.operation_dict, request) 
+		# apply operation in the request to the dictionary object
+		result = findAndPerformOperation(request) 
 
 		#print("dict after operation:")
 		#print(self.operation_dict)	
@@ -173,56 +176,70 @@ class Replica(process):
 		else:
 			send(('shuttle', order_proof, result_proof, request_id, slot, request, client, self), to= self.next_replica)
 				#send((self.private_key.sign('shuttle', order_proof, result_proof, request_id, slot, request, client, self)), to= self.next_replica)
-    #
 
-	def findAndPerformOperation(operation_dict, request):
-		if request[0] == 'p':
+	def findAndPerformOperation(request):
+		request = request.strip()
+		if request.startswith('put'):
 			operands = re.findall("put\(\'(.*?)\'\,\'(.*?)\'\)", request, re.DOTALL)
-		#	print(operands)
-			for key, val in operands:
-				operation_dict[key] = val
-				return 'OK'
-		elif request[0] == 'g':
-			operand = re.findall('get\(\'(.*?)\'\)', request)	
-			for o in operand:
-				if o in operation_dict:
-					return operation_dict.get(o)
-				else:
-					return " "
-		elif request[0] == 'a':
+			# there should only be one tuple of operands found
+			if len(operands) != 1:
+				return None
+				
+			(key, val) = operands[0]
+			self.operation_dict[key] = val
+			return 'OK'
+		elif request.startswith('get'):
+			operand = re.findall('get\(\'(.*?)\'\)', request)
+			# there should only be one operand found
+			if len(operand) != 1:
+				return None
+
+			o = operand[0]
+			if o in self.operation_dict:
+				return self.operation_dict.get(o)
+			else:
+				return ""
+		elif request.startswith('append'):
 			operands = re.findall('append\(\'(.*?)\'\,\'(.*?)\'\)', request, re.DOTALL)
-			for key, val in operands:
-				if key in operation_dict:
-					operation_dict[key] += val
-					return 'OK'
-				else:
-					return 'fail'
-		elif request[0] == 's':
-			operands = re.findall('slice\(\'(.*?)\',\'([0-9]+):([0-9]+)\'\)', request)
-			for key, low_index, up_index in operands:
-				if key in operation_dict and int(low_index) in range(len(operation_dict[key])) and int(up_index) in range(len(operation_dict[key])):
-					operation_dict[key] = operation_dict[key][(int)(low_index):(int)(up_index)]
-					return 'OK'
-				else:
-					return 'fail'
+			# there should only be one tuple of operands found
+			if len(operands) != 1:
+				return None
+			
+			(key, val) = operands[0]
+			if key in self.operation_dict:
+				self.operation_dict[key] += val
+				return 'OK'
+			else:
+				return 'fail'
+		elif request.startswith('slice'):
+			operands = re.findall('slice\(\'(.*?)\',\'(\d+):(\d+)\'\)', request)
+			# there should only be one tuple of operands found
+			if len(operands) != 1:
+				return None
+				
+			(key, low_index, up_index) = operands[0]
+			if (key in self.operation_dict 
+					and int(low_index) in range(len(self.operation_dict[key])) 
+					and int(up_index) in range(len(self.operation_dict[key]))):
+				self.operation_dict[key] = self.operation_dict[key][(int)(low_index):(int)(up_index)]
+				return 'OK'
+			else:
+				return 'fail'
 
 
-	##3. replica p receives result shuttle
-	def receive(msg =('result_shuttle', result_shuttle_id, result, result_proof, client), from_=self.next_replica):
-	#	#validate result shuttle
-	#	
-	#	#cache result proof along with corresponding request id and result
+	#3. replica p receives result shuttle
+	def receive(msg =('result_shuttle', result_shuttle_id, result, result_proof, client, _), from_=self.next_replica):
+		#validate result shuttle
+	
+		#cache result proof along with corresponding request id and result
 		self.cache[result_shuttle_id] = (result, result_proof)		
 		#print("CACHED RESULT")
 		#print(cache[result_shuttle_id][1])
+		
+		# send result shuttle to previous replica
 		if self.isHead == False:
 			send(('result_shuttle', result_shuttle_id, result, result_proof, client, self), to= self.prev_replica) 	
-#	for tuple in self.cache:
-	#		if result_shuttle.id == tuple[0]:
-	#			tuple[2] = result_shuttle
-	#	if self.head == False:
-	#		send(result_shuttle, to= self.prev)
-    #
+
 	##4. replica receives wedge request -- not needed for phase 2
 	##def receive(wedge_statement, from_= Olympus
     #
@@ -234,15 +251,8 @@ class Replica(process):
     #
 	##7. replica receives a get running state message -- not needed for phase 2
 	##def receive("get_running_state", from_= Olympus)
-    #
-    #
-    #
-    #
- 	#		
+	
 	def run():
 		while True:
+			# wait for operation request from client
 			await(some(received(('operation_request', _, _, _), from_= _)))
-	#	cache = []
-	#	checkpoint_index = 0
-	#	state = dict()
-		

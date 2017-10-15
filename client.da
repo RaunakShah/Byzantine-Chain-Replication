@@ -11,8 +11,10 @@ import nacl.signing
 import nacl.hash
 
 class Client(process):
-	def setup(client_id, chain, workload, client_timeout, failures, public_key_list):	
+	def setup(client_id, chain, workload, client_timeout, failures, public_key_list):
+		# id for each request in the workload, initialized to be 0
 		self.workload_id = 0
+		# hasher used for hash decoding
 		self.HASHER = nacl.hash.sha256
 		
 	def run():
@@ -20,32 +22,39 @@ class Client(process):
 		#chain  = getConfig(Olympus)
 		for request in workload:
 			request_type = 'new'
+			# request_id is a pair of current client id and current request id in client's workload
 			request_id = (client_id, workload_id)
-			#print("NEW ERQUEST")
-			#print(request)
-			#print(request_id)
+			
+			# send operation request to head of replica chain
 			send(('operation_request', request_id, request_type, request, self), to= chain[0])
-			if (await(some(
-					received(('operation_result', returned_request_id, response, result_proof, _),
+			
+			# wait for response from replica for the current request
+			if (await(
+					some(received(('operation_result', result_request_id, response, result_proof, _),
 						from_= _),
-					has = (returned_request_id == request_id)))):
-		#		print(response)
+					has = (result_request_id == request_id)))):
+				print(response)
 		#		print(result_proof)
+		
+				# verify operation request
 				if(verify(response, result_proof) == False):
 					#need to retransmit?
 					print("oops")
-				workload_id += 1
 			elif timeout(3):
-				print('Done')
+				# if timeout, perform retransmit
 				retransmit(request_id, request)
+			
+			# move to next request in client's workload
 			workload_id += 1
 				
 	def verify(response, result_proof):
-		#hash() used temporarily for hashing of result
+		# hash() used temporarily for hashing of result
 		response_in_bytes = bytes(response, 'utf-8')
 		response_hash = self.HASHER(response_in_bytes, encoder = nacl.encoding.HexEncoder)
+		# check response hash with all hashes in result proof
 		for result_statement_hash in result_proof:	
 			if not sodium_memcmp(response_hash,result_statement_hash[0]):
+				# hash does not match
 				print(result_statement_hash[0])
 				#NOTE: not needed for phase 2; i think we only need to retransmit the request
 				#reconfiguration_reqeust.proof_of_misbehavior = (result, result_proof)
@@ -56,15 +65,18 @@ class Client(process):
 
 	def retransmit(request_id, request):
 		request_type = "retransmission"
+		# send retransmission message to all replicas in the chain
 		for replica in chain:
 			send(('retransmission',request_id, request, request_type, self), to= replica )
 		
-		#can receive (result,result_proof) or error statement from a replica.
-		#let the  
-		if (await(some(received(('operation_result', returned_request_id, response, result_proof, _), from_= _), has = (returned_request_id == request_id)))):
+		# wait for response from replica for the retransmission request
+		# can receive (result,result_proof) or error statement from a replica  
+		if (await(
+				some(received(('operation_result', result_request_id, response, result_proof, _), from_= _),
+				has = (result_request_id == request_id)))):
 			#verify(response)
 			print("RES in retransmit!!")
-		#	print(result_proof)
+			#print(result_proof)
 			#self.workload_id += 1
 		# Not needed for phase 2
 		#elif (response_type == "error"):
