@@ -2,16 +2,16 @@ import nacl.encoding
 import nacl.signing
 
 class Olympus(process):
-	def setup(replica_num, head_timeout, nonhead_timeout):
+	def setup(replica_num, head_timeout, nonhead_timeout, client_num):
 		# create replicas
 		replica_da = import_da('replica')
-		replicas = new(replica_da.Replica, num = self.replica_num)
+		self.replicas = new(replica_da.Replica, num = self.replica_num)
 		
 		self.replica_list = []
 		self.signing_key_list = []
 		self.verify_key_list = []	
 		# put replicas to a list, and create signing key and verify key for each replica
-		for replica in replicas:
+		for replica in self.replicas:
 			self.replica_list.append(replica)	
 			replica_signing_key = nacl.signing.SigningKey.generate()
 			replica_verify_key = replica_signing_key.verify_key
@@ -39,10 +39,8 @@ class Olympus(process):
 		
 			setup(replica, (index, isHead, isTail, prev_replica, next_replica, replica_list[0], 
 				[], 'ACTIVE', self.signing_key_list[index], self.verify_key_list, timeout))
-		
-		# start replicas
-		start(replicas)
 
+		
 	def receive(msg =('check_configuration', message_id, _), from_= client):
 		# send response to liveness check from client
 		send(('check_configuration_response', 'OK', message_id, self), to = client)
@@ -51,7 +49,11 @@ class Olympus(process):
 		# send current configuration (replica chain and their verify keys) to client
 		send(('get_configuration_response', self.replica_list, self.verify_key_list, self), to = client)
 
-	def run():
-		while True:
-			await(some(received(('get_configuration', _), from_ = client)))
-	
+	def run():				
+		# start replicas
+		start(self.replicas)
+		# send terminate messages to each replica when receive terminate messages from all clients
+		if await(
+				len(setof(c, received(('terminate', c, _)))) == self.client_num):
+			for replica in self.replicas:
+				send(('terminate', self), to = replica)

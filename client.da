@@ -64,6 +64,9 @@ class Client(process):
 			
 			# move to next request in client's workload
 			workload_id += 1
+		
+		# after all requests are processed, send terminate message to Olympus
+		send(("terminate", self.client_id, self), to = self.olympus)
 				
 	def verify(request_id, response, result_proof):
 		# hash() used temporarily for hashing of result

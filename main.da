@@ -23,9 +23,11 @@ def main():
 	head_timeout = config['head_timeout']
 	nonhead_timeout = config['nonhead_timeout']
 	olympus = new(olympus_da.Olympus, num=1)
-	setup(olympus, (replica_num, head_timeout, nonhead_timeout))
 	
 	client_num = config['num_client']
+	
+	setup(olympus, (replica_num, head_timeout, nonhead_timeout, client_num))
+	
 	timeout = config['client_timeout']
 	clients = new(client_da.Client, num=client_num)
 	client_id = 0
@@ -37,6 +39,7 @@ def main():
 			workload = workload_string.split(';')
 		setup(client, (client_id, olympus, workload, timeout, []))
 		client_id += 1
+	
 	
 	start(olympus)
 	start(clients)

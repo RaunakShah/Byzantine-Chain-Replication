@@ -303,6 +303,6 @@ class Replica(process):
 	##def receive("get_running_state", from_= Olympus)
 	
 	def run():
-		while True:
-			# wait for operation request from client
-			await(some(received(('operation_request', _, _, _), from_= _)))
+		# terminate when receive terminate message from Olympus
+		await(some(received(('terminate', _), from_ = Olympus)))
+		
