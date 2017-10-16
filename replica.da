@@ -14,24 +14,11 @@ import nacl.hash
 import time
 
 class Replica(process):
-	def setup(replica_id, replica_list, history, mode, signing_key, verify_key_list):
-		self.isHead = False
-		self.isTail = False
-		self.prev_replica = None
-		self.next_replica = None
-		
-		if replica_id == len(replica_list) - 1:
-			self.isTail = True
-		if replica_id == 0:
-			self.isHead = True
-		if replica_id < len(replica_list) - 1:
-			self.next_replica = replica_list[replica_id + 1]
-		if replica_id > 0:
-			self.prev_replica = replica_list[replica_id - 1]
-		
+	def setup(replica_id, isHead, isTail, prev_replica, next_replica, head, history,
+			mode, signing_key, verify_key_list, timeout):
 		self.operation_dict = dict()
 		self.cache = dict()
-		self.count = 0
+		#self.count = 0
 		self.HASHER = nacl.hash.sha256
 		
 	#1. replica p receives operation request from replica client
@@ -43,30 +30,49 @@ class Replica(process):
 			if(self.isHead == True):
 				handleNewRequest(request_id, request, client)
 				
-		elif (request_type == 'retransmission') :
-			if (request_id in self.cache.keys()) and (len(self.cache[request_id]) == 2):
-				send(('operation_result', request_id, cache[request_id][0], cache[request_id][1]), to= client)
-	#		elif self.mode == "IMMUTABLE":
-	#			response_type = "error"
-	#			send((request_id, NULL, response_type), to= client)	
+		elif (request_type == 'retransmission'):
+			if (request_id in self.cache.keys() 
+					and len(self.cache[request_id]) == 2):
+				# replica has cached the result and result proof for the given request id
+				print("exist in cache")
+				send(('operation_result', request_id, cache[request_id][0], cache[request_id][1], self), to = client)
+			#elif self.mode == "IMMUTABLE":
+			#	response_type = "error"
+			#	send((request_id, NULL, response_type), to= client)	
 			else:
-				if(self.isHead == True):
-					if request_id in self.cache.keys(): #head has ordered operation but not received result shuttle yet
-						if(await(some(
-								received(('result_shuttle', result_shuttle_id, result, result_proof, client), from_= self.next_replica), has = (result_shuttle_id == request_id)))): #timeout replica_timeout send reconfig req
-			#				print("RE")
-							send(('operation_result', request_id, result, result_proof, self), to=client)
-					else: #head doesnt recognize operation
-						handleNewRequest(request_id, request, client)	
-						if(await(some(received(('result_shuttle', result_shuttle_id, result, result_proof, client), from_= self.next_replica), has = (result_shuttle_id == request_id)))): #timeout replica_timeout send reconfig req
-							send(('operation_result', request_id, result, result_proof, self), to=client)
+				if (self.isHead == True):
+					if request_id in self.cache.keys(): 
+						# head has ordered operation but not received result shuttle yet
+						print("exist in head cache")
+						if (await(
+								some(received(('result_shuttle', result_shuttle_id, result, result_proof, client), 
+									from_= self.next_replica), 
+								has = (result_shuttle_id == request_id)))):
+							send(('operation_result', request_id, result, result_proof, self), to = client)
+						#elif timeout(t):
+						# handle timeout, send reconfiguration request to Olympus
+					else: 
+						# head doesnt recognize operation, it's a new operation
+						print("new request")
+						handleNewRequest(request_id, request, client)
+						if (await(
+								some(received(('result_shuttle', result_shuttle_id, result, result_proof, client), 
+									from_= self.next_replica), 
+								has = (result_shuttle_id == request_id)))): 
+							send(('operation_result', request_id, result, result_proof, self), to = client)
 						#elif timeout:
-	
-				else: #replica that receives retransmission is not head
-					send(('operation_request', request_id, request_type, client), to= replica_list[0])
-					if(await(some(received(('result_shuttle', result_shuttle_id, result, result_proof, client), from_= self.next_replica), has = (result_shuttle_id == request_id)))): #timeout replica_timeout send reconfig req
-						send(('operation_result', request_id, result, result_proof, self), to=client)
-					#elif timeout:
+						# handle timeout, send reconfiguration request to Olympus
+				else: # replica that receives retransmission is not head
+					print("need send to head")
+					send(('operation_request', request_id, request_type, client), to = self.head)
+					if (await(
+							some(received(('result_shuttle', result_shuttle_id, result, result_proof, _), 
+								from_ = self.next_replica), 
+							has = (result_shuttle_id == request_id)))):
+						# receive result shuttle, send to client
+						send(('operation_result', request_id, result, result_proof, self), to = client)
+					#elif timeout(t):
+					# handle timeout, send reconfiguration request to Olympus
 
 	def handleNewRequest(request_id, request, client):
 		# find the max slot that has been assigned to get the slot to assign
@@ -112,10 +118,9 @@ class Replica(process):
 			return None
 
 		# check if there is any conflict in current request and history of this replica
-		# the slot number shouldn't have assigned to any other request
-		for (s, _, _, _) in self.history: 
-			if s == slot:
-				return None
+		# the slot number shouldn't have been assigned to any other request
+		if slot in [t[0] for t in self.history]:
+			return None
 	
 		#check for hole -- not needed for phase 2
 		#create new pair and add to state

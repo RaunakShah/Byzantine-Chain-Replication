@@ -11,17 +11,35 @@ import nacl.signing
 import nacl.hash
 
 class Client(process):
-	def setup(client_id, chain, workload, client_timeout, failures, verify_key_list):
+	def setup(client_id, olympus, workload, client_timeout, failures):
 		# id for each request in the workload, initialized to be 0
 		self.workload_id = 0
 		# hasher used for hash decoding
 		self.HASHER = nacl.hash.sha256
+		# replica chain
+		self.chain = []
+		# replica verify keys
+		self.verify_key_list = []
 		
 	def run():
-		#sendRequest(operation) in psuedocode
-		#chain  = getConfig(Olympus)
+		# get configuration from Olympus
+		(self.chain, self.verify_key_list) = getConfig(self.olympus)
+		
+		count = 0
+		check_configuration_msg = 0
 		for request in workload:
 			request_type = 'new'
+			count += 1
+			
+			# check configurations with Olympus for every 5 requests from current client
+			if count == 5:
+				send(('check_configuration', check_configuration_msg, self), to = self.olympus)
+				await(
+					some(received(('check_configuration_response', response, message_id, _), from_= Olympus),
+					has = (message_id == check_configuration_msg and response == 'OK')))
+				count = 0
+				check_configuration_msg += 1
+			
 			# request_id is a pair of current client id and current request id in client's workload
 			request_id = (client_id, workload_id)
 			
@@ -36,7 +54,7 @@ class Client(process):
 				#print(result_proof)
 		
 				# verify operation request
-				if(verify(response, result_proof) == False):
+				if verify(request_id, response, result_proof) == False:
 					#need to retransmit?
 					print("Response not validated")
 				print(response)
@@ -47,17 +65,21 @@ class Client(process):
 			# move to next request in client's workload
 			workload_id += 1
 				
-	def verify(response, result_proof):
+	def verify(request_id, response, result_proof):
 		# hash() used temporarily for hashing of result
 		response_in_bytes = bytes(response, 'utf-8')
 		response_hash = self.HASHER(response_in_bytes, encoder = nacl.encoding.HexEncoder)
 		
-		print("result proof")
-		print(result_proof)
+		#print("result proof")
+		#print(result_proof)
 		
 		# check response hash with all hashes in result proof
 		for index in range(len(result_proof)):
-			(request_id, signed_result_stmt) = result_proof[index]
+			(result_request_id, signed_result_stmt) = result_proof[index]
+			
+			# request id must match
+			if request_id != result_request_id:
+				return False
 			
 			# verify the signature by the replica
 			try:
@@ -66,6 +88,7 @@ class Client(process):
 			except nacl.exceptions.BadSignatureError:
 				return False
 			
+			# check if hashes match
 			if not sodium_memcmp(response_hash, signed_result_stmt.message):
 				# hash does not match
 				print(result_statement_hash[0])
@@ -80,7 +103,7 @@ class Client(process):
 		request_type = "retransmission"
 		# send retransmission message to all replicas in the chain
 		for replica in chain:
-			send(('retransmission',request_id, request, request_type, self), to= replica )
+			send(('retransmission', request_id, request, request_type, self), to = replica )
 		
 		# wait for response from replica for the retransmission request
 		# can receive (result,result_proof) or error statement from a replica  
@@ -89,7 +112,8 @@ class Client(process):
 				has = (result_request_id == request_id)))):
 			#verify(response)
 			print("RES in retransmit!!")
-			#print(result_proof)
+			print(response)
+			print(result_proof)
 			#self.workload_id += 1
 		# Not needed for phase 2
 		#elif (response_type == "error"):
@@ -97,7 +121,8 @@ class Client(process):
 		#	retransmit(id, retransmit_request, chain.replicas)
 
 	def getConfig(Olympus):
-		send('configQuery', to= Olympus)
-		await(received((chain), from_= Olympus))
-		return chain
+		# send get current configuration (replica chain and their verify keys) request to Olympus
+		send(('get_configuration', self), to = Olympus)
+		if await(some(received(('get_configuration_response', chain, verify_key_list, _), from_= Olympus))):
+			return (chain, verify_key_list)
 

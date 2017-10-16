@@ -1,0 +1,57 @@
+import nacl.encoding
+import nacl.signing
+
+class Olympus(process):
+	def setup(replica_num, head_timeout, nonhead_timeout):
+		# create replicas
+		replica_da = import_da('replica')
+		replicas = new(replica_da.Replica, num = self.replica_num)
+		
+		self.replica_list = []
+		self.signing_key_list = []
+		self.verify_key_list = []	
+		# put replicas to a list, and create signing key and verify key for each replica
+		for replica in replicas:
+			self.replica_list.append(replica)	
+			replica_signing_key = nacl.signing.SigningKey.generate()
+			replica_verify_key = replica_signing_key.verify_key
+			replica_verify_key_hex = replica_verify_key.encode(encoder = nacl.encoding.HexEncoder)
+			self.verify_key_list.append(replica_verify_key_hex)
+			self.signing_key_list.append(replica_signing_key)
+		
+		# setup each replica
+		for index in range(len(replica_list)):
+			replica = replica_list[index]
+			isHead = False
+			isTail = False
+			prev_replica = None
+			next_replica = None
+			timeout = self.nonhead_timeout
+			if index == len(replica_list) - 1:
+				isTail = True
+			if index == 0:
+				isHead = True
+				timeout = self.head_timeout
+			if index < len(replica_list) - 1:
+				next_replica = replica_list[index + 1]
+			if index > 0:
+				prev_replica = replica_list[index - 1]
+		
+			setup(replica, (index, isHead, isTail, prev_replica, next_replica, replica_list[0], 
+				[], 'ACTIVE', self.signing_key_list[index], self.verify_key_list, timeout))
+		
+		# start replicas
+		start(replicas)
+
+	def receive(msg =('check_configuration', message_id, _), from_= client):
+		# send response to liveness check from client
+		send(('check_configuration_response', 'OK', message_id, self), to = client)
+		
+	def receive(msg =('get_configuration', _), from_= client):
+		# send current configuration (replica chain and their verify keys) to client
+		send(('get_configuration_response', self.replica_list, self.verify_key_list, self), to = client)
+
+	def run():
+		while True:
+			await(some(received(('get_configuration', _), from_ = client)))
+	
