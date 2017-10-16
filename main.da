@@ -22,24 +22,24 @@ def main():
 	replica_num = replica_num * 2 + 1
 	replicas = new(replica_da.Replica, num = replica_num)
 	replica_list = []
-	private_keys_list = []
-	public_keys_list = []	
+	signing_key_list = []
+	verify_key_list = []	
 	# change set to list
 	for replica in replicas:
 		replica_list.append(replica)	
-		replica_private_key = nacl.signing.SigningKey.generate()
-		replica_public_key = replica_private_key.verify_key
-		replica_public_key_hex = replica_public_key.encode(encoder = nacl.encoding.HexEncoder)
-		public_keys_list.append(replica_public_key_hex)
-		private_keys_list.append(replica_private_key)
+		replica_signing_key = nacl.signing.SigningKey.generate()
+		replica_verify_key = replica_signing_key.verify_key
+		replica_verify_key_hex = replica_verify_key.encode(encoder = nacl.encoding.HexEncoder)
+		verify_key_list.append(replica_verify_key_hex)
+		signing_key_list.append(replica_signing_key)
 		
 	for index in range(len(replica_list)):
 		replica = replica_list[index]
-		setup(replica, (index, replica_list, [], 'ACTIVE', private_keys_list[index], public_keys_list))
+		setup(replica, (index, replica_list, [], 'ACTIVE', signing_key_list[index], verify_key_list))
 	
 	client_num = config['num_client']
 	clients = new(client_da.Client, num=client_num)
-	client_id = 0 
+	client_id = 0
 	for client in clients:
 		workload_string = config['workload[' + str(client_id) + ']']
 		if workload_string.startswith("pseudorandom"):
@@ -47,7 +47,7 @@ def main():
 		else:
 			workload = workload_string.split(';')
 		timeout = config['client_timeout']
-		setup(client, (client_id, replica_list, workload, timeout, [], public_keys_list))
+		setup(client, (client_id, replica_list, workload, timeout, [], verify_key_list))
 		client_id += 1
 	
 	start(replicas)

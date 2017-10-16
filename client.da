@@ -11,7 +11,7 @@ import nacl.signing
 import nacl.hash
 
 class Client(process):
-	def setup(client_id, chain, workload, client_timeout, failures, public_key_list):
+	def setup(client_id, chain, workload, client_timeout, failures, verify_key_list):
 		# id for each request in the workload, initialized to be 0
 		self.workload_id = 0
 		# hasher used for hash decoding
@@ -33,13 +33,13 @@ class Client(process):
 					some(received(('operation_result', result_request_id, response, result_proof, _),
 						from_= _),
 					has = (result_request_id == request_id)))):
-				print(response)
-		#		print(result_proof)
+				#print(result_proof)
 		
 				# verify operation request
 				if(verify(response, result_proof) == False):
 					#need to retransmit?
-					print("oops")
+					print("Response not validated")
+				print(response)
 			elif timeout(3):
 				# if timeout, perform retransmit
 				retransmit(request_id, request)
@@ -51,9 +51,22 @@ class Client(process):
 		# hash() used temporarily for hashing of result
 		response_in_bytes = bytes(response, 'utf-8')
 		response_hash = self.HASHER(response_in_bytes, encoder = nacl.encoding.HexEncoder)
+		
+		print("result proof")
+		print(result_proof)
+		
 		# check response hash with all hashes in result proof
-		for result_statement_hash in result_proof:	
-			if not sodium_memcmp(response_hash,result_statement_hash[0]):
+		for index in range(len(result_proof)):
+			(request_id, signed_result_stmt) = result_proof[index]
+			
+			# verify the signature by the replica
+			try:
+				verify_key = nacl.signing.VerifyKey(self.verify_key_list[index], encoder=nacl.encoding.HexEncoder)
+				verify_key.verify(signed_result_stmt)
+			except nacl.exceptions.BadSignatureError:
+				return False
+			
+			if not sodium_memcmp(response_hash, signed_result_stmt.message):
 				# hash does not match
 				print(result_statement_hash[0])
 				#NOTE: not needed for phase 2; i think we only need to retransmit the request
