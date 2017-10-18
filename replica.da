@@ -15,7 +15,7 @@ import time
 
 class Replica(process):
 	def setup(replica_id, isHead, isTail, prev_replica, next_replica, head, history,
-			mode, signing_key, verify_key_list, timeout):
+			mode, signing_key, verify_key_list, timeout, failures):
 		self.operation_dict = dict()
 		self.cache = dict()
 		#self.count = 0

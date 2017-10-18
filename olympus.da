@@ -1,12 +1,13 @@
 import nacl.encoding
 import nacl.signing
+import re
 
 class Olympus(process):
-	def setup(replica_num, head_timeout, nonhead_timeout, client_num):
+	def setup(replica_num, head_timeout, nonhead_timeout, client_num, config):
 		# create replicas
 		replica_da = import_da('replica')
 		self.replicas = new(replica_da.Replica, num = self.replica_num)
-		
+		self.configuration_id = 0
 		self.replica_list = []
 		self.signing_key_list = []
 		self.verify_key_list = []	
@@ -27,6 +28,18 @@ class Olympus(process):
 			prev_replica = None
 			next_replica = None
 			timeout = self.nonhead_timeout
+			if 'failures[' + str(self.configuration_id) + ',' + str(index) + ']' in config.keys():
+				failures = dict()
+				fail_trig_unparsed = config['failures[' + str(self.configuration_id) + ',' + str(index) + ']']
+				fail_trig_pairs = fail_trig_unparsed.split(';')
+				for number_of_failures in range(len(fail_trig_pairs)):
+					failure_trigger = re.findall('(.*?\(.*?\)),(.*?\(\))',fail_trig_pairs[number_of_failures])
+					failure,trigger = failure_trigger[0]
+					failures[trigger] = failure
+				print("FAILURES")
+				print(failures)
+			else:
+				failures = None
 			if index == len(replica_list) - 1:
 				isTail = True
 			if index == 0:
@@ -38,7 +51,7 @@ class Olympus(process):
 				prev_replica = replica_list[index - 1]
 		
 			setup(replica, (index, isHead, isTail, prev_replica, next_replica, replica_list[0], 
-				[], 'ACTIVE', self.signing_key_list[index], self.verify_key_list, timeout))
+				[], 'ACTIVE', self.signing_key_list[index], self.verify_key_list, timeout, failures))
 
 		
 	def receive(msg =('check_configuration', message_id, _), from_= client):

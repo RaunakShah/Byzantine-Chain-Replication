@@ -18,15 +18,21 @@ def main():
 					config[key.strip()] = int(val) if str.isdecimal(val) else val
 	print(config)
 	
-	replica_num = config['t']
+	replica_num = int(config['t'])
 	replica_num = replica_num * 2 + 1
-	head_timeout = config['head_timeout']
-	nonhead_timeout = config['nonhead_timeout']
+	head_timeout = int(config['head_timeout'])
+	nonhead_timeout = int(config['nonhead_timeout'])
 	olympus = new(olympus_da.Olympus, num=1)
 	
 	client_num = config['num_client']
-	
-	setup(olympus, (replica_num, head_timeout, nonhead_timeout, client_num))
+	a = dict()
+	a['1'] = '2'	
+	a['2'] = 3
+	print(a)
+	a = {'failures[0,0]': 'client_request(2,1), crash()', 'failures[1,2]': 'result_shuttle(0,1),drop(); shuttle(1,3),omit_send()'}	
+	a = {'failures[0,0]': 'client_request(2,1),crash()'}
+
+	setup(olympus, (replica_num, head_timeout, nonhead_timeout, client_num, a))
 	
 	timeout = config['client_timeout']
 	clients = new(client_da.Client, num=client_num)
