@@ -20,9 +20,11 @@ class Replica(process):
 		self.cache = dict()
 		#self.count = 0
 		self.HASHER = nacl.hash.sha256
-		
+		output("\nReplica:", replica_id, "with history: ", history, "initialized", sep = " ")
+				
 	#1. replica p receives operation request from replica client
 	def receive(msg = ('operation_request', request_id, request_type, request, _), from_ = client):
+		output("Replica ", self.replica_id, "received operation_request", request_id[1], "from client", request_id[0], sep = " ") 
 		#if(count==0):
 		#	time.sleep(5)
 		#	count +=1
@@ -36,6 +38,8 @@ class Replica(process):
 				# replica has cached the result and result proof for the given request id
 				print("exist in cache")
 				send(('operation_result', request_id, cache[request_id][0], cache[request_id][1], self), to = client)
+				output("Replica ", self.replica_id, "sent operation_result", request_id[1], "to client", request_id[0], "from cache", sep = " ")
+				
 			#elif self.mode == "IMMUTABLE":
 			#	response_type = "error"
 			#	send((request_id, NULL, response_type), to= client)	
@@ -48,6 +52,7 @@ class Replica(process):
 								some(received(('result_shuttle', result_shuttle_id, result, result_proof, client), 
 									from_= self.next_replica), 
 								has = (result_shuttle_id == request_id)))):
+							output("Replica ", self.replica_id, "received result_shuttle", result_shuttle_id, "from", self.next_replica, sep = " ")
 							send(('operation_result', request_id, result, result_proof, self), to = client)
 						#elif timeout(t):
 						# handle timeout, send reconfiguration request to Olympus
@@ -59,16 +64,19 @@ class Replica(process):
 								some(received(('result_shuttle', result_shuttle_id, result, result_proof, client), 
 									from_= self.next_replica), 
 								has = (result_shuttle_id == request_id)))): 
+							output("Replica ", self.replica_id, "received result_shuttle", result_shuttle_id, "from", self.next_replica, sep = " ")
 							send(('operation_result', request_id, result, result_proof, self), to = client)
 						#elif timeout:
 						# handle timeout, send reconfiguration request to Olympus
 				else: # replica that receives retransmission is not head
 					print("need send to head")
 					send(('operation_request', request_id, request_type, client), to = self.head)
+					output("Replica ", self.replica_id, "sent operation_result", request_id[1], "to head", sep = " ")
 					if (await(
 							some(received(('result_shuttle', result_shuttle_id, result, result_proof, _), 
 								from_ = self.next_replica), 
 							has = (result_shuttle_id == request_id)))):
+						output("Replica ", self.replica_id, "sent operation_result", request_id[1], "to client", request_id[0], sep = " ")
 						# receive result shuttle, send to client
 						send(('operation_result', request_id, result, result_proof, self), to = client)
 					#elif timeout(t):
@@ -104,9 +112,11 @@ class Replica(process):
 		if self.isTail != True:
 			# send shuttle to next replica
 			send(('shuttle', order_proof, result_proof, request_id, slot, request, client, self), to = self.next_replica)
+			output("Replica ", self.replica_id, "sent shuttle", request_id, "to ", self.next_replica, sep = " ")
 		else:
 			# if there is only 1 replica in the chain, send result to client directly
 			send(('operation_result', request_id, result, result_proof, self), to = client)
+			output("Replica ", self.replica_id, "sent operation_result", request_id[1], "to client", request_id[0], sep = " ")
 	
 	def applyOperation(slot, request_id, request, order_proof):
 		"""
@@ -250,6 +260,7 @@ class Replica(process):
     
 	#2. replica receives shuttle
 	def receive(msg =('shuttle', order_proof, result_proof, request_id, slot, request, client, _), from_= self.prev_replica):
+		output("Replica ", self.replica_id, "sent shuttle", request_id, "to", self.prev_replica, sep = " ")
 		(result, signed_order_stmt) = applyOperation(slot, request_id, request, order_proof)
 		
 		# hash and sign the result
@@ -263,12 +274,16 @@ class Replica(process):
 		
 		if self.isTail == True:
 			send(('operation_result', request_id, result, result_proof, self), to = client)
+			output("Replica ", self.replica_id, "sent operation_result", request_id[1], "to client", request_id[0], sep = " ")
 			send(('result_shuttle', request_id, result, result_proof, self), to = self.prev_replica)
+			output("Replica ", self.replica_id, "sent result_shuttle", request_id, "to client", sep = " ")
 		else:
 			send(('shuttle', order_proof, result_proof, request_id, slot, request, client, self), to = self.next_replica)
+			output("Replica ", self.replica_id, "sent shuttle", request_id, "to", self.next_replica, sep = " ")
 
 	#3. replica p receives result shuttle
 	def receive(msg =('result_shuttle', result_shuttle_id, result, result_proof, _), from_ = self.next_replica):
+		output("Replica ", self.replica_id, "received result_shuttle", request_id, "from", self.next_replica, sep = " ")
 		# validate result shuttle
 		# check if current replica has signed a result statement in the result shuttle
 		(request_id, signed_result) = result_proof[self.replica_id]
@@ -289,6 +304,7 @@ class Replica(process):
 		# send result shuttle to previous replica
 		if self.isHead == False:
 			send(('result_shuttle', result_shuttle_id, result, result_proof, self), to= self.prev_replica) 	
+			output("Replica ", self.replica_id, "sent result_shuttle", request_id, "to", self.prev_replica, sep = " ")
 
 	##4. replica receives wedge request -- not needed for phase 2
 	##def receive(wedge_statement, from_= Olympus
