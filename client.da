@@ -11,17 +11,21 @@ import nacl.signing
 import nacl.hash
 
 class Client(process):
-	def setup(client_id, olympus, workload, client_timeout, failures):
+	def setup(client_id, olympus, workload, client_timeout, signing_key, olympus_verify_key):
 		# id for each request in the workload, initialized to be 0
 		self.workload_id = 0
 		# hasher used for hash decoding
 		self.HASHER = nacl.hash.sha256
+		# current configuration id, initialized to be 0
+		self.configuration_id = 0
 		# replica chain
 		self.chain = []
 		# replica verify keys
 		self.verify_key_list = []
-		#output("Client ID:", client_id, "\nWorkload:", workload, "\nTimeout:", client_timeout, sep = " ")		
+		output("Client ID:", client_id, "\nWorkload:", workload, "\nTimeout:", client_timeout, sep = " ")		
+		
 	def run():
+		output('\nStarting client', self.client_id, sep = " ")
 		# get configuration from Olympus
 		(self.chain, self.verify_key_list) = getConfig(self.olympus)
 		
@@ -32,36 +36,40 @@ class Client(process):
 			count += 1
 			
 			# check configurations with Olympus for every 5 requests from current client
-			if count == 5:
+			if count % 5 == 0:
 				send(('check_configuration', check_configuration_msg, self), to = self.olympus)
-				#output("\nSent message: Check configuration to Olympus")
+				output("\nSent message: Check configuration from Olympus")
 				await(
 					some(received(('check_configuration_response', response, message_id, _), from_= Olympus),
 					has = (message_id == check_configuration_msg and response == 'OK')))
-				#output("\nReceived configuration:", response, sep = " ")
-				count = 0
+				output("\nReceived check response:", response, sep = " ")
 				check_configuration_msg += 1
 			
 			# request_id is a pair of current client id and current request id in client's workload
 			request_id = (client_id, workload_id)
 			
+			# create and sign request message
+			request_msg = "request<" + str(request_id) + "," + request + ">"
+			signed_msg = self.signing_key.sign(request_msg.encode())
+			
 			# send operation request to head of replica chain
-			send(('operation_request', request_id, request_type, request, self), to= chain[0])
-			#output("\nClient", self.client_id, "sent operation_request", request_id, "to", chain[0], sep = " ")
+			send(('operation_request', request_id, request_type, request, signed_msg, self), to = self.chain[0])
+			output("\nClient", self.client_id, "sent operation_request", request_id, "to", self.chain[0], sep = " ")
+
 			# wait for response from replica for the current request
 			if (await(
-					some(received(('operation_result', result_request_id, response, result_proof, _),
+					some(received(('operation_result', result_request_id, result_request, response, result_proof, _),
 						from_= _),
 					has = (result_request_id == request_id)))):
 				#print("result_proof")
 				#output("\nClient", self.client_id, "received operation_response", request_id, sep = " ")
 		
 				# verify operation request
-				if verify(request_id, response, result_proof) == False:
+				if verify(request_id, result_request, response, result_proof) == False:
 					#need to retransmit?
 					print("Response not validated")
-					print("")
-			elif timeout(3):
+				print(response)
+			elif timeout(self.client_timeout):
 				# if timeout, perform retransmit
 				retransmit(request_id, request)
 				
@@ -72,33 +80,40 @@ class Client(process):
 		#output("\nClient", self.client_id, "terminating.", sep = " ")
 		send(("terminate", self.client_id, self), to = self.olympus)
 				
-	def verify(request_id, response, result_proof):
+	def verify(request_id, request, response, result_proof):
 		# hash() used temporarily for hashing of result
 		response_in_bytes = bytes(response, 'utf-8')
 		response_hash = self.HASHER(response_in_bytes, encoder = nacl.encoding.HexEncoder)
 		
-		#print("result proof")
-		#print(result_proof)
-		
 		# check response hash with all hashes in result proof
 		for index in range(len(result_proof)):
-			(result_request_id, signed_result_stmt) = result_proof[index]
-			
-			# request id must match
-			if request_id != result_request_id:
-				return False
+			# validate result statement
+			signed_result_stmt = result_proof[index]
 			
 			# verify the signature by the replica
 			try:
 				verify_key = nacl.signing.VerifyKey(self.verify_key_list[index], encoder=nacl.encoding.HexEncoder)
 				verify_key.verify(signed_result_stmt)
 			except nacl.exceptions.BadSignatureError:
+				output("\Client", self.client_id, ": result statement for", request_id, 
+					"is not validated, signature doesn't match.", sep = " ")
+				return False
+				
+			# validate sign message
+			result_message = signed_result_stmt.message
+			
+			result_hash = result_message[:64]
+			message = result_message[64:]
+			if ('result<' + str(request_id) + ',' + request + '>') != message.decode():
+				output("\nClient", self.client_id, ": result statement for", request_id, 
+					"is not validated, signed message doesn't match request.", sep = " ")
 				return False
 			
 			# check if hashes match
-			if not sodium_memcmp(response_hash, signed_result_stmt.message):
+			if not sodium_memcmp(response_hash, result_hash):
 				# hash does not match
-				#print(result_statement_hash[0])
+				output("\Client", self.client_id, ": hash of result for request", request_id, "for operation", request,			
+					"does not match hash in result statement.", sep = " ")
 				#NOTE: not needed for phase 2; i think we only need to retransmit the request
 				#reconfiguration_reqeust.proof_of_misbehavior = (result, result_proof)
 				#need to call a receive handler to use new configuration for retransmit
@@ -108,19 +123,23 @@ class Client(process):
 
 	def retransmit(request_id, request):
 		request_type = "retransmission"
+		# create and sign request message
+		request_msg = "request<" + str(request_id) + "," + request + ">"
+		signed_msg = self.signing_key.sign(request_msg.encode())
+			
 		# send retransmission message to all replicas in the chain
 		for replica in chain:
-			send(('retransmission', request_id, request, request_type, self), to = replica )
-			#output("\nClient", self.client_id, "sent retransmission_request", request_id, "to", self.chain, sep = " ")
-		
+			# send operation request to head of replica chain
+			send(('operation_request', request_id, request_type, request, signed_msg, self), to = self.chain[0])
+			output("\nClient", self.client_id, "sent retransmission_request", request_id, "to", self.chain[0], sep = " ")
+
 		# wait for response from replica for the retransmission request
 		# can receive (result,result_proof) or error statement from a replica  
 		if (await(
 				some(received(('operation_result', result_request_id, response, result_proof, _), from_= _),
 				has = (result_request_id == request_id)))):
-			#v`erify(response)
-			#output("\nClient", self.client_id, "received operation_request", request_id, sep = " ")
-			print("RES in retransmit!!")
+			#verify(response)
+			output("\nClient", self.client_id, "received operation_request", request_id, sep = " ")
 			#print(response)
 			#print(result_proof)
 			#self.workload_id += 1
@@ -132,8 +151,22 @@ class Client(process):
 	def getConfig(Olympus):
 		# send get current configuration (replica chain and their verify keys) request to Olympus
 		send(('get_configuration', self), to = Olympus)
-		#output("\nClient", self.client_id, "sent get_configuration to Olympus.", sep = " ")
-		if await(some(received(('get_configuration_response', chain, verify_key_list, _), from_= Olympus))):
-			#`output("\nClient", self.client_id, "received configuration from Olympus.", sep = " ")
+		
+		output("\nClient", self.client_id, "sent get_configuration to Olympus.", sep = " ")
+		if await(
+				some(received(('get_configuration_response', olympus_configuration_id, chain, verify_key_list, signed_msg, _), 
+				from_= Olympus))):
+			# verify signature and validate message
+			try:
+				olympus_key = nacl.signing.VerifyKey(self.olympus_verify_key, encoder=nacl.encoding.HexEncoder)
+				olympus_key.verify(signed_msg)
+			except nacl.exceptions.BadSignatureError:
+				output("\nMessage from Olympus is not validated, signature doesn't match.")
+				return None
+			message = signed_msg.message
+			if ('configuration_id:' + str(self.configuration_id)) != message.decode():
+				output("\nMessage from Olympus is not validated, mesage doesn't match.")
+				return None
+			
+			output("\nClient", self.client_id, "received configuration", olympus_configuration_id, "from Olympus.", sep = " ")
 			return (chain, verify_key_list)
-

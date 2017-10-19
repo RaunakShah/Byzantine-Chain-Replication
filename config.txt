@@ -16,22 +16,10 @@ client_timeout = 3000
 head_timeout = 3000
 nonhead_timeout = 3000
 
-# MAPPING OF PROCESSES TO HOSTS
-# to simplify changing the hosts, we first specify a semicolon-separated
-# list of hosts, and then use 0-based indices into that list to specify the
-# host on which each process runs.
-# list of hosts used in this scenario
-hosts = localhost; 192.168.0.3; 192.168.0.4
-# host on which each client runs.  in this example, client 0 runs 
-# on host 1, clients 1 and 2 run on host 0.
-client_hosts = 1; 0; 0
-# host on which each replica runs.  same in all configurations.
-replica_hosts = 0; 1; 2
-
 # CLIENT WORKLOAD
-workload[0] = pseudorandom(233,5)
-workload[1] = put('movie','star'); append('movie',' wars'); get('movie')
-workload[2] = put('jedi','luke skywalker'); slice('jedi','0:4'); get('jedi')
+#workload[0] = pseudorandom(233,5)
+workload[0] = put('movie','star'); append('movie',' wars'); get('movie')
+#workload[2] = put('jedi','luke skywalker'); slice('jedi','0:4'); get('jedi')
 
 # FAILURE SCENARIO
 # failures(c,r) is the failure scenario for replica r in configuration c.

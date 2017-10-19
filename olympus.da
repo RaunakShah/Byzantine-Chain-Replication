@@ -3,11 +3,17 @@ import nacl.signing
 import re
 
 class Olympus(process):
-	def setup(replica_num, head_timeout, nonhead_timeout, client_num, config):
+	def setup(config, client_verify_key_list, olympus_signing_key):
+		self.replica_num = int(config['t'])
+		self.replica_num = replica_num * 2 + 1
+		self.head_timeout = int(config['head_timeout'])
+		self.nonhead_timeout = int(config['nonhead_timeout'])
+		self.client_num = int(config['num_client'])
+		self.configuration_id = 0
+		
 		# create replicas
 		replica_da = import_da('replica')
 		self.replicas = new(replica_da.Replica, num = self.replica_num)
-		self.configuration_id = 0
 		self.replica_list = []
 		self.signing_key_list = []
 		self.verify_key_list = []	
@@ -28,25 +34,24 @@ class Olympus(process):
 			prev_replica = None
 			next_replica = None
 			timeout = self.nonhead_timeout
-			print(config.keys())
-			failures = dict()
-			if 'failures[' + str(self.configuration_id) + ',' + str(index) + ']' in config.keys():
+
+			if 'failures[' + str(self.configuration_id) + ',' + str(index) + ']' in config:
+				failures = dict()
 				fail_trig_unparsed = config['failures[' + str(self.configuration_id) + ',' + str(index) + ']']
 				print(fail_trig_unparsed)
 				fail_trig_pairs = fail_trig_unparsed.split(';')
 				print(fail_trig_pairs)
 				for number_of_failures in range(len(fail_trig_pairs)):
 					failure_trigger = re.findall('(.*?\(.*?\)),(.*?\(\))',fail_trig_pairs[number_of_failures])
-					failure,trigger = failure_trigger[0]
+					(trigger, failure) = failure_trigger[0]
 					failure = failure.strip()
 					trigger = trigger.strip()
-					failures[failure] = trigger
-				print("FAILURES")
-			#else:
-			#	failures = None
-			print(index)
-			print(failures)
-			
+					failures[trigger] = failure
+
+				output("\nFailure for replica", index, ":\n", failures, sep = " ")
+			else:
+				failures = None
+
 			if index == len(replica_list) - 1:
 				isTail = True
 			if index == 0:
@@ -58,7 +63,8 @@ class Olympus(process):
 				prev_replica = replica_list[index - 1]
 		
 			setup(replica, (index, isHead, isTail, prev_replica, next_replica, replica_list[0], 
-				[], 'ACTIVE', self.signing_key_list[index], self.verify_key_list, timeout, failures))
+				[], 'ACTIVE', self.signing_key_list[index], self.verify_key_list, self.client_verify_key_list, 
+				timeout, failures))
 
 		
 	def receive(msg =('check_configuration', message_id, _), from_= client):
@@ -67,14 +73,17 @@ class Olympus(process):
 		
 	def receive(msg =('get_configuration', _), from_= client):
 		# send current configuration (replica chain and their verify keys) to client
-		send(('get_configuration_response', self.replica_list, self.verify_key_list, self), to = client)
+		configuration_response_msg = 'configuration_id:' + str(self.configuration_id)
+		signed_msg = self.olympus_signing_key.sign(configuration_response_msg.encode())
+		send(('get_configuration_response', self.configuration_id, self.replica_list, 
+			self.verify_key_list, signed_msg, self), to = client)
 
-	def run():				
+	def run():
+		output("\nStarting Olympus.")
 		# start replicas
 		start(self.replicas)
 		# send terminate messages to each replica when receive terminate messages from all clients
-		if await(
-				len(setof(c, received(('terminate', c, _)))) == self.client_num):
+		if await(len(setof(c, received(('terminate', c, _)))) == self.client_num):
 			for replica in self.replicas:
 				send(('terminate', self), to = replica)
 	#		if await(some(received(('final_dictionary', operation_dictionary), from_ = _))):
