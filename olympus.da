@@ -28,18 +28,25 @@ class Olympus(process):
 			prev_replica = None
 			next_replica = None
 			timeout = self.nonhead_timeout
+			print(config.keys())
+			failures = dict()
 			if 'failures[' + str(self.configuration_id) + ',' + str(index) + ']' in config.keys():
-				failures = dict()
 				fail_trig_unparsed = config['failures[' + str(self.configuration_id) + ',' + str(index) + ']']
+				print(fail_trig_unparsed)
 				fail_trig_pairs = fail_trig_unparsed.split(';')
+				print(fail_trig_pairs)
 				for number_of_failures in range(len(fail_trig_pairs)):
 					failure_trigger = re.findall('(.*?\(.*?\)),(.*?\(\))',fail_trig_pairs[number_of_failures])
 					failure,trigger = failure_trigger[0]
-					failures[trigger] = failure
+					failure = failure.strip()
+					trigger = trigger.strip()
+					failures[failure] = trigger
 				print("FAILURES")
-				print(failures)
-			else:
-				failures = None
+			#else:
+			#	failures = None
+			print(index)
+			print(failures)
+			
 			if index == len(replica_list) - 1:
 				isTail = True
 			if index == 0:
@@ -70,3 +77,5 @@ class Olympus(process):
 				len(setof(c, received(('terminate', c, _)))) == self.client_num):
 			for replica in self.replicas:
 				send(('terminate', self), to = replica)
+	#		if await(some(received(('final_dictionary', operation_dictionary), from_ = _))):
+	##			send(('final_dictionary', operation_dictionary), to =c) 

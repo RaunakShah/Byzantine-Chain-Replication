@@ -24,7 +24,7 @@ def main():
 	nonhead_timeout = int(config['nonhead_timeout'])
 	olympus = new(olympus_da.Olympus, num=1)
 	
-	client_num = config['num_client']
+	client_num = 1 #config['num_client']
 	a = dict()
 	a['1'] = '2'	
 	a['2'] = 3
@@ -32,7 +32,7 @@ def main():
 	a = {'failures[0,0]': 'client_request(2,1), crash()', 'failures[1,2]': 'result_shuttle(0,1),drop(); shuttle(1,3),omit_send()'}	
 	a = {'failures[0,0]': 'client_request(2,1),crash()'}
 
-	setup(olympus, (replica_num, head_timeout, nonhead_timeout, client_num, a))
+	setup(olympus, (replica_num, head_timeout, nonhead_timeout, client_num, config))
 	
 	timeout = config['client_timeout']
 	clients = new(client_da.Client, num=client_num)

@@ -20,7 +20,7 @@ class Client(process):
 		self.chain = []
 		# replica verify keys
 		self.verify_key_list = []
-		output("Client ID:", client_id, "\nWorkload:", workload, "\nTimeout:", client_timeout, sep = " ")		
+		#output("Client ID:", client_id, "\nWorkload:", workload, "\nTimeout:", client_timeout, sep = " ")		
 	def run():
 		# get configuration from Olympus
 		(self.chain, self.verify_key_list) = getConfig(self.olympus)
@@ -34,11 +34,11 @@ class Client(process):
 			# check configurations with Olympus for every 5 requests from current client
 			if count == 5:
 				send(('check_configuration', check_configuration_msg, self), to = self.olympus)
-				output("\nSent message: Check configuration to Olympus")
+				#output("\nSent message: Check configuration to Olympus")
 				await(
 					some(received(('check_configuration_response', response, message_id, _), from_= Olympus),
 					has = (message_id == check_configuration_msg and response == 'OK')))
-				output("\nReceived configuration:", response, sep = " ")
+				#output("\nReceived configuration:", response, sep = " ")
 				count = 0
 				check_configuration_msg += 1
 			
@@ -47,29 +47,29 @@ class Client(process):
 			
 			# send operation request to head of replica chain
 			send(('operation_request', request_id, request_type, request, self), to= chain[0])
-			output("\nClient", self.client_id, "sent operation_request", request_id, "to", chain[0], sep = " ")
+			#output("\nClient", self.client_id, "sent operation_request", request_id, "to", chain[0], sep = " ")
 			# wait for response from replica for the current request
 			if (await(
 					some(received(('operation_result', result_request_id, response, result_proof, _),
 						from_= _),
 					has = (result_request_id == request_id)))):
-				#print(result_proof)
-				output("\nClient", self.client_id, "received operation_response", request_id, sep = " ")
+				#print("result_proof")
+				#output("\nClient", self.client_id, "received operation_response", request_id, sep = " ")
 		
 				# verify operation request
 				if verify(request_id, response, result_proof) == False:
 					#need to retransmit?
 					print("Response not validated")
-				print(response)
+					print("")
 			elif timeout(3):
 				# if timeout, perform retransmit
 				retransmit(request_id, request)
-			
+				
 			# move to next request in client's workload
 			workload_id += 1
 		
 		# after all requests are processed, send terminate message to Olympus
-		output("\nClient", self.client_id, "terminating.", sep = " ")
+		#output("\nClient", self.client_id, "terminating.", sep = " ")
 		send(("terminate", self.client_id, self), to = self.olympus)
 				
 	def verify(request_id, response, result_proof):
@@ -98,7 +98,7 @@ class Client(process):
 			# check if hashes match
 			if not sodium_memcmp(response_hash, signed_result_stmt.message):
 				# hash does not match
-				print(result_statement_hash[0])
+				#print(result_statement_hash[0])
 				#NOTE: not needed for phase 2; i think we only need to retransmit the request
 				#reconfiguration_reqeust.proof_of_misbehavior = (result, result_proof)
 				#need to call a receive handler to use new configuration for retransmit
@@ -111,7 +111,7 @@ class Client(process):
 		# send retransmission message to all replicas in the chain
 		for replica in chain:
 			send(('retransmission', request_id, request, request_type, self), to = replica )
-			output("\nClient", self.client_id, "sent retransmission_request", request_id, "to", self.chain, sep = " ")
+			#output("\nClient", self.client_id, "sent retransmission_request", request_id, "to", self.chain, sep = " ")
 		
 		# wait for response from replica for the retransmission request
 		# can receive (result,result_proof) or error statement from a replica  
@@ -119,10 +119,10 @@ class Client(process):
 				some(received(('operation_result', result_request_id, response, result_proof, _), from_= _),
 				has = (result_request_id == request_id)))):
 			#v`erify(response)
-			output("\nClient", self.client_id, "received operation_request", request_id, sep = " ")
+			#output("\nClient", self.client_id, "received operation_request", request_id, sep = " ")
 			print("RES in retransmit!!")
-			print(response)
-			print(result_proof)
+			#print(response)
+			#print(result_proof)
 			#self.workload_id += 1
 		# Not needed for phase 2
 		#elif (response_type == "error"):
@@ -132,8 +132,8 @@ class Client(process):
 	def getConfig(Olympus):
 		# send get current configuration (replica chain and their verify keys) request to Olympus
 		send(('get_configuration', self), to = Olympus)
-		output("\nClient", self.client_id, "sent get_configuration to Olympus.", sep = " ")
+		#output("\nClient", self.client_id, "sent get_configuration to Olympus.", sep = " ")
 		if await(some(received(('get_configuration_response', chain, verify_key_list, _), from_= Olympus))):
-			output("\nClient", self.client_id, "received configuration from Olympus.", sep = " ")
+			#`output("\nClient", self.client_id, "received configuration from Olympus.", sep = " ")
 			return (chain, verify_key_list)
 
