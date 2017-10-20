@@ -34,12 +34,12 @@ class Replica(process):
 			client_key = nacl.signing.VerifyKey(self.client_verify_key_list[request_id[0]], encoder=nacl.encoding.HexEncoder)
 			client_key.verify(signed_msg)
 		except nacl.exceptions.BadSignatureError:
-			output("\nMessage from client is not validated.")
+			output("\nReplica", self.replica_id, ": message from client is not validated, signature doesn't match.", sep = " ")
 			return
 			
 		message = signed_msg.message
 		if ("request<" + str(request_id) + "," + request + ">") != message.decode():
-			output("\nMessage from client is not validated.")
+			output("\nReplica", self.replica_id, ": message from client is not validated, message doesn't match.", sep = " ")
 			return
 	
 		output("\nReplica", self.replica_id, "received", request_type, "operation request", 
@@ -47,11 +47,11 @@ class Replica(process):
 
 		if (request_type == 'new'):
 			if(self.isHead == True):
-				if 'client_request(' + str(request_id[0]) + ',' + str(request_id[1]) + ')' in self.failures.keys():
-					output("Handle client request failure")
-					(self.change_operation_failure, self.change_result_failure, self.drop_result_stmt_failure) = failureInjection(failures['client_request(' + str(request_id[0]) + ',' + str(request_id[1]) + ')'])	
-					print("DONE")	
-				handleNewRequest(request_id, request, client)
+				if 'client_request(' + str(request_id[0]) + ',' + str(request_id[1]) + ')' in self.failures:
+					trigger = 'client_request(' + str(request_id[0]) + ',' + str(request_id[1]) + ')'
+					output("\nReplica", self.replica_id, ": failure", failures[trigger], "triggered by", trigger, sep = " ")
+					(self.change_operation_failure, self.change_result_failure, self.drop_result_stmt_failure) = failureInjection(failures[trigger])
+				handleNewRequest(request_id, request_type, request, client)
 				
 		elif (request_type == 'retransmission'):
 			if (request_id in self.cache.keys() 
@@ -65,9 +65,9 @@ class Replica(process):
 						self.change_operation_failure, self.change_result_failure, self.drop_result_stmt_failure = failureInjection(failures['forwarded_request(' + str(request_id[0]) + ',' + str(self.forward_request_received[request_id[0]]) + ')'])
 
 
-				send(('operation_result', request_id, cache[request_id][0], cache[request_id][1], self), to = client)
+				send(('operation_result', request_id, request_type, cache[request_id][0], cache[request_id][1], self), to = client)
 
-				output("Replica ", self.replica_id, "sent operation_result", request_id[1], "to client", request_id[0], "from cache", sep = " ")
+				output("\nReplica", self.replica_id, "sent operation_result", request_id[1], "to client", request_id[0], "from cache", sep = " ")
 				
 			#elif self.mode == "IMMUTABLE":
 			#	response_type = "error"
@@ -89,8 +89,8 @@ class Replica(process):
 								some(received(('result_shuttle', result_shuttle_id, result, result_proof, client), 
 									from_= self.next_replica), 
 								has = (result_shuttle_id == request_id)))):
-							output("Replica ", self.replica_id, "received result_shuttle", result_shuttle_id, "from", self.next_replica, sep = " ")
-							send(('operation_result', request_id, result, result_proof, self), to = client)
+							output("\nReplica", self.replica_id, "received result_shuttle", result_shuttle_id, "from", self.next_replica, sep = " ")
+							send(('operation_result', request_id, request_type, result, result_proof, self), to = client)
 						#elif timeout(t):
 						# handle timeout, send reconfiguration request to Olympus
 					else: 
@@ -101,25 +101,25 @@ class Replica(process):
 								some(received(('result_shuttle', result_shuttle_id, result, result_proof, client), 
 									from_= self.next_replica), 
 								has = (result_shuttle_id == request_id)))): 
-							output("Replica ", self.replica_id, "received result_shuttle", result_shuttle_id, "from", self.next_replica, sep = " ")
-							send(('operation_result', request_id, result, result_proof, self), to = client)
+							output("\nReplica", self.replica_id, "received result_shuttle", result_shuttle_id, "from", self.next_replica, sep = " ")
+							send(('operation_result', request_id, request_type, result, result_proof, self), to = client)
 						#elif timeout:
 						# handle timeout, send reconfiguration request to Olympus
 				else: # replica that receives retransmission is not head
 					send(('operation_request', request_id, request_type, request, signed_msg, client), to = self.head)
 
-					output("Replica ", self.replica_id, "sent operation_result", request_id[1], "to head", sep = " ")
+					output("\nReplica", self.replica_id, ": sent operation_result", request_id[1], "to head", sep = " ")
 					if (await(
 							some(received(('result_shuttle', result_shuttle_id, result, result_proof, _), 
 								from_ = self.next_replica), 
 							has = (result_shuttle_id == request_id)))):
-						output("Replica ", self.replica_id, "sent operation_result", request_id[1], "to client", request_id[0], sep = " ")
+						output("\nReplica", self.replica_id, ": sent operation_result", request_id[1], "to client", request_id[0], sep = " ")
 						# receive result shuttle, send to client
-						send(('operation_result', request_id, result, result_proof, self), to = client)
+						send(('operation_result', request_id, request_type, result, result_proof, self), to = client)
 					#elif timeout(t):
 					# handle timeout, send reconfiguration request to Olympus
 
-	def handleNewRequest(request_id, request, client):
+	def handleNewRequest(request_id, request_type, request, client):
 		# find the max slot that has been assigned to get the slot to assign
 		max_slot = 0
 		for (s, _, _, _) in self.history:
@@ -135,26 +135,36 @@ class Replica(process):
 		result_proof = []
 		
 		# get result and signed order statement of the request
-		(result, signed_order_stmt) = applyOperation(slot, request_id, request, order_proof)
-		
+		tuple = applyOperation(slot, request_id, request, order_proof)
+		if tuple:
+			(result, signed_order_stmt) = tuple
+		else:
+			return
+					
+		# check if inject failure change_result()
+		if self.change_result_failure == 1:
+			output("\nReplica ", self.replica_id, ": injecting change_result failure for request", request_id, sep = " ")
+			result = 'OK'
+			self.change_result_failure = 0
+			
 		# hash and sign the result along with request id and request
 		result_in_bytes = bytes(result, 'utf-8')
 		hash_result = self.HASHER(result_in_bytes, encoder = nacl.encoding.HexEncoder)
 		result_stmt_msg = 'result<' + str(request_id) + ',' + request + '>'
 		signed_result = self.signing_key.sign(hash_result + result_stmt_msg.encode())
-		
+
 		# add signed order statement and result statement to order proof and result proof
 		order_proof.append(signed_order_stmt)
 		result_proof.append(signed_result)
 		
 		if self.isTail != True:
 			# send shuttle to next replica
-			send(('shuttle', order_proof, result_proof, request_id, slot, request, client, self), to = self.next_replica)
-			output("Replica A", self.replica_id, "sent shuttle", request_id, "to ", self.next_replica, sep = " ")
+			send(('shuttle', order_proof, result_proof, request_id, request_type, slot, request, client, self), to = self.next_replica)
+			output("\nReplica", self.replica_id, ": sent shuttle", request_id, "to ", self.next_replica, sep = " ")
 		else:
 			# if there is only 1 replica in the chain, send result to client directly
-			send(('operation_result', request_id, request, result, result_proof, self), to = client)
-			output("Replica ", self.replica_id, "sent operation_result", request_id[1], "to client", request_id[0], sep = " ")
+			send(('operation_result', request_id, request, request_type, result, result_proof, self), to = client)
+			output("\nReplica", self.replica_id, ": sent operation_result", request_id[1], "to client", request_id[0], sep = " ")
 	
 	def applyOperation(slot, request_id, request, order_proof):
 		"""
@@ -173,10 +183,9 @@ class Replica(process):
 		#check for hole
 		for checking_slot in range(slot):
 			if checking_slot not in [t[0] for t in self.history]:
-				output('Error with replica', self.replica_id, ': hole exists at index', slot, sep= ' ')
+				output('\nError with replica', self.replica_id, ': hole exists at index', slot, sep= ' ')
 				return None
 			
-	
 		#checkpointing -- not needed for phase 2
 		
 		# validate order proof from shuttle
@@ -197,12 +206,10 @@ class Replica(process):
 				return None
 			# check if there is any conflict in slot number and request id 
 			(slot_str, client_id_str, workload_id_str, request_str) = matches[0]
-			print(slot_str + client_id_str + workload_id_str + request)
 			if (slot != int(slot_str) 
 					or request_id[0] != int(client_id_str) 
 					or request_id[1] != int(workload_id_str)
 					or request != request_str):
-				print("AA")	
 				return None
 
 		# apply operation in the request to the dictionary object
@@ -236,7 +243,6 @@ class Replica(process):
 			operands = re.findall("put\(\'(.*?)\'\,\'(.*?)\'\)", request, re.DOTALL)
 			# there should only be one tuple of operands found
 			if len(operands) != 1:
-				print("1IFF")
 				return None
 				
 			(key, val) = operands[0]
@@ -247,7 +253,6 @@ class Replica(process):
 			operand = re.findall('get\(\'(.*?)\'\)', request)
 			# there should only be one operand found
 			if len(operand) != 1:
-				print("I FOUND U")
 				return None
 
 			o = operand[0]
@@ -261,7 +266,6 @@ class Replica(process):
 			operands = re.findall('append\(\'(.*?)\'\,\'(.*?)\'\)', request, re.DOTALL)
 			# there should only be one tuple of operands found
 			if len(operands) != 1:
-				print("ffffef2")
 				return None
 			
 			(key, val) = operands[0]
@@ -275,7 +279,6 @@ class Replica(process):
 			operands = re.findall('slice\(\'(.*?)\',\'(\d+):(\d+)\'\)', request)
 			# there should only be one tuple of operands found
 			if len(operands) != 1:
-				print("dsfsfdsf3")
 				return None
 				
 			(key, low_index, up_index) = operands[0]
@@ -287,7 +290,6 @@ class Replica(process):
 			else:
 				return 'fail'
 		else:
-			print("4ggggg")
 			return None
 
 	def orderCommand(slot, request_id, request, order_proof):
@@ -303,24 +305,34 @@ class Replica(process):
 		# add order statement from previous replicas to order proof
 		current_order_proof = order_proof[:self.replica_id]
 		current_order_proof.append(signed_order_stmt)
-		#print('this the order proof')
-		#print(current_order_proof)
 		
 		# add the signed order statement to 
 		self.history.append((slot, request_id, request, current_order_proof))
 		return signed_order_stmt
     
 	#2. replica receives shuttle
-	def receive(msg =('shuttle', order_proof, result_proof, request_id, slot, request, client, _), from_= self.prev_replica):
-		output("Replica ", self.replica_id, "received shuttle", request_id, "from", self.prev_replica, sep = " ")
+	def receive(msg =('shuttle', order_proof, result_proof, request_id, request_type, slot, request, client, _), from_= self.prev_replica):
+		output("\nReplica", self.replica_id, ": received shuttle", request_id, "from", self.prev_replica, sep = " ")
 		
-		if 'shuttle(' + str(request_id[0]) + ',' + str(request_id[1]) + ')' in self.failures.keys():
-			self.change_operation_failure, self.change_result_failure, self.drop_result_stmt_failure = failureInjection(failures['shuttle(' + str(request_id[0]) + ',' + str(request_id[1]) + ')'])
-			print("Handle shuttle failure")
+		# check for failure trigger
+		if 'shuttle(' + str(request_id[0]) + ',' + str(request_id[1]) + ')' in self.failures:
+			trigger = 'shuttle(' + str(request_id[0]) + ',' + str(request_id[1]) + ')'
+			output("\nReplica", self.replica_id, ": failure", failures[trigger], "triggered by", trigger, sep = " ")
+			self.change_operation_failure, self.change_result_failure, self.drop_result_stmt_failure = failureInjection(failures[trigger])
 		
-		output("SENDING" , request, sep = " " )
-		(result, signed_order_stmt) = applyOperation(slot, request_id, request, order_proof)
+		# apply operation and get result and signed order statement
+		tuple = applyOperation(slot, request_id, request, order_proof)
+		if tuple:
+			(result, signed_order_stmt) = tuple
+		else:
+			return
 		
+		# check if inject failure change_result()
+		if self.change_result_failure == 1:
+			output("\nReplica ", self.replica_id, ": injecting change_result failure for request", request_id, sep = " ")
+			result = 'OK'
+			self.change_result_failure = 0
+
 		# hash and sign the result along with request id and request
 		result_in_bytes = bytes(result, 'utf-8')
 		hash_result = self.HASHER(result_in_bytes, encoder = nacl.encoding.HexEncoder)
@@ -330,29 +342,26 @@ class Replica(process):
 		# add signed order statement and result statement to order proof and result proof
 		order_proof.append(signed_order_stmt)
 		result_proof.append(signed_result)
+		
+		# check if inject failure drop_result_stmt()
+		if self.drop_result_stmt_failure == 1:
+			output("\nReplica ", self.replica_id, ": injecting drop_result_stmt failure for request", request_id, sep = " ")
+			result_proof = result_proof[1:]
+			self.drop_result_stmt_failure = 0
 				
 		if self.isTail == True:
-			if self.change_result_failure == 1:
-				change_result_in_bytes = bytes("OK", 'utf-8')
-				change_result_hash = self.HASHER(change_result_in_bytes, encoder = nacl.encoding.HexEncoder)
-				signed_changed_result = self.signing_key.sign(change_result_hash)
-				result_proof[self.replica_id] = ((request_id, signed_changed_result))
-				self.change_result_failure = 0
-			if self.drop_result_stmt_failure == 1:
-				result_proof = result_proof[1:]
-				
-			output("Replica ", self.replica_id, "sent operation_result", request_id, "to client", client, sep = " ")
-			send(('operation_result', request_id, request, result, result_proof, self), to = client)
-			output("Replica ", self.replica_id, "sent result_shuttle", request_id, "to replica", self.prev_replica, sep = " ")
+			output("\nReplica", self.replica_id, ": sent operation_result", request_id, "to client", client, sep = " ")
+			send(('operation_result', request_id, request_type, request, result, result_proof, self), to = client)
+			output("\nReplica", self.replica_id, ": sent result_shuttle", request_id, "to replica", self.prev_replica, sep = " ")
 			send(('result_shuttle', request_id, request, result, result_proof, self), to = self.prev_replica)
 		else:			
-			output("Replica ", self.replica_id, "sent shuttle", request_id, "to", self.next_replica, sep = " ")
-			send(('shuttle', order_proof, result_proof, request_id, slot, request, client, self), to = self.next_replica)
+			output("\nReplica", self.replica_id, ": sent shuttle", request_id, "to", self.next_replica, sep = " ")
+			send(('shuttle', order_proof, result_proof, request_id, request_type, slot, request, client, self), to = self.next_replica)
 
 
 	#3. replica p receives result shuttle
 	def receive(msg =('result_shuttle', result_shuttle_id, request, result, result_proof, _), from_ = self.next_replica):
-		output("Replica ", self.replica_id, "received result_shuttle", result_shuttle_id, "from", self.next_replica, sep = " ")
+		output("\nReplica", self.replica_id, "received result_shuttle", result_shuttle_id, "from", self.next_replica, sep = " ")
 
 		if 'result_shuttle(' + str(result_shuttle_id[0]) + ',' + str(result_shuttle_id[1]) + ')' in self.failures.keys():
 			print("Handle result shuttle failure")
@@ -414,12 +423,10 @@ class Replica(process):
 				self.change_result_failure = 0
 			if self.drop_result_stmt_failure == 1:
 				result_proof = result_proof[1:]
-			output("\nReplica ", self.replica_id, "sent result_shuttle", result_shuttle_id, "to", self.prev_replica, sep = " ")
+			output("\nReplica", self.replica_id, ": sent result_shuttle", result_shuttle_id, "to", self.prev_replica, sep = " ")
 			send(('result_shuttle', result_shuttle_id, request, result, result_proof, self), to= self.prev_replica)
 
 	def failureInjection(failure):
-		print("IN")
-		print(failure)
 		if failure == 'change_operation()':
 			return (1,0,0)
 		elif failure == 'change_result()':
@@ -429,6 +436,8 @@ class Replica(process):
 		else:
 			return (0,0,0)
 
+	def change_result():
+		pass
 
 	##4. replica receives wedge request -- not needed for phase 2
 	##def receive(wedge_statement, from_= Olympus
@@ -445,6 +454,6 @@ class Replica(process):
 	def run():
 		output('\nStarting replica', self.replica_id, sep = " ")
 		# terminate when receive terminate message from Olympus
-		await(some(received(('terminate', _), from_ = Olympus)))
-	#	if self.isTail == True:
-	#		send(('final_dictionary', self.operation_dict), to = Olympus) 	
+		if await(some(received(('terminate', _), from_ = Olympus))):
+			time.sleep(5)
+			print(self.operation_dict)
