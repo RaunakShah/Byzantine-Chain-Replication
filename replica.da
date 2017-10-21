@@ -44,13 +44,19 @@ class Replica(process):
 	
 		output("\nReplica", self.replica_id, "received", request_type, "operation request", 
 			request_id, "for operation:", request, sep = " ") 
+		
+		if request_id[0] in self.client_request_received:
+			self.client_request_received[request_id[0]] += 1
+		else:
+			self.client_request_received[request_id[0]] = 0
+
+		if 'client_request(' + str(request_id[0]) + ',' + str(self.client_request_received[request_id[0]]) + ')' in self.failures:
+			trigger = 'client_request(' + str(request_id[0]) + ',' + str(self.client_request_received[request_id[0]]) + ')'
+			output("\nReplica", self.replica_id, ": failure", failures[trigger], "triggered by", trigger, sep = " ")
+			failureInjection(failures[trigger])
 
 		if (request_type == 'new'):
 			if(self.isHead == True):
-				if 'client_request(' + str(request_id[0]) + ',' + str(request_id[1]) + ')' in self.failures:
-					trigger = 'client_request(' + str(request_id[0]) + ',' + str(request_id[1]) + ')'
-					output("\nReplica", self.replica_id, ": failure", failures[trigger], "triggered by", trigger, sep = " ")
-					failureInjection(failures[trigger])
 				handleNewRequest(request_id, request_type, request, client)
 				
 		elif (request_type == 'retransmission'):
