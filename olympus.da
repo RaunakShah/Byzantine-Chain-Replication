@@ -38,9 +38,9 @@ class Olympus(process):
 			failures = dict()
 			if 'failures[' + str(self.configuration_id) + ',' + str(index) + ']' in config:
 				fail_trig_unparsed = config['failures[' + str(self.configuration_id) + ',' + str(index) + ']']
-				print(fail_trig_unparsed)
+				#print(fail_trig_unparsed)
 				fail_trig_pairs = fail_trig_unparsed.split(';')
-				print(fail_trig_pairs)
+				#print(fail_trig_pairs)
 				for number_of_failures in range(len(fail_trig_pairs)):
 					failure_trigger = re.findall('(.*?\(.*?\)),(.*?\(\))',fail_trig_pairs[number_of_failures])
 					(trigger, failure) = failure_trigger[0]

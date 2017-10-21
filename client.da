@@ -89,7 +89,7 @@ class Client(process):
 				pass
 			elif timeout(self.client_timeout):
 				# if timeout, perform retransmit
-				output("\nClient", self.client_id, ": timeout waiting for response for request", request_id, sep = " ")
+				output("\nClient", self.client_id, ": timeout waiting for response for request", request_id, "start retransmission phase", sep = " ")
 				retransmit(request_id, request)
 				
 			# move to next request in client's workload
@@ -173,13 +173,9 @@ class Client(process):
 		# wait for response from replica for the retransmission request
 		# can receive result and result proof or error statement from a replica
 		if (await(self.response_verified)):
-			# if replica has already been checked, ignore
-			output("\nRetransmission finished")
-			#print(response)
-			#print(result_proof)
-			#self.workload_id += 1
-		elif timeout(3000):
-			output('its over')
+			output("\nClient", self.client_id, ": retransmission for request", request_id, "finished.", sep = " ")
+		elif timeout(self.client_timeout):
+			output("\nClient", self.client_id, ": retransmission for request", request_id, "timeout. (For Phase 2 only since we don't consider reconfig)", sep = " ")
 		#elif (response_type == "error"):
 		#	chain = getConfig(Olympus)
 		#	retransmit(id, retransmit_request, chain.replicas)
@@ -197,8 +193,6 @@ class Client(process):
 				"for operation", result_request, "is validated, the result is:", response, sep = " ")
 			# result is verified, set verifying state back to false
 			self.response_verified = True
-		else:
-			print('not verified')
 			
 	def receive(msg =('operation_result', result_request_id, 'retransmission', result_request, response, result_proof, _), from_ = replica):
 		output("\nClient", self.client_id, ": received response for retransmission request", result_request_id, 
@@ -212,8 +206,6 @@ class Client(process):
 			output("\nClient", self.client_id, ": response of", request_type, "request", request_id, 
 				"for operation", request, "is validated, the result is:", response, sep = " ")
 			self.response_verified = True
-		else:
-			print('not verified')
 		
 	def getConfig(Olympus):
 		# send get current configuration (replica chain and their verify keys) request to Olympus
