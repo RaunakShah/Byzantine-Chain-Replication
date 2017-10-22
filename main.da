@@ -2,6 +2,7 @@ import nacl.encoding
 import nacl.signing
 import random
 import re
+import sys
 
 def main():
 	client_da = import_da('client')
@@ -9,7 +10,14 @@ def main():
 	
 	# read input config file
 	config = dict()
-	with open('config.txt','r') as f:
+	
+	# get config file name
+	try:
+		file_name = sys.argv[1]
+	except Error:
+		print('Not enough arguments.')
+	
+	with open(file_name,'r') as f:
 		for line in f:
 			if line[0] != '#':
 				(key,sep,val) = line.partition('=')
@@ -17,7 +25,7 @@ def main():
 				if len(sep) != 0:
 					val = val.strip()
 					config[key.strip()] = int(val) if str.isdecimal(val) else val
-
+    
 	# create an Olympus object
 	olympus = new(olympus_da.Olympus, num=1)
 	
@@ -36,7 +44,7 @@ def main():
 	olympus_signing_key = nacl.signing.SigningKey.generate()
 	olympus_verify_key = olympus_signing_key.verify_key
 	olympus_verify_key_hex = olympus_verify_key.encode(encoder = nacl.encoding.HexEncoder)
-
+    
 	# set up Olympus 
 	setup(olympus, (config, client_verify_key_list, olympus_signing_key))
 	

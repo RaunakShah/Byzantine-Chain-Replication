@@ -77,6 +77,8 @@ class Olympus(process):
 			self.verify_key_list, signed_msg, self), to = client)
 
 	def run():
+		test_name = config['test_case_name']
+		output("\nStarting test case:", test_name, sep = " ")
 		output("\nStarting Olympus.")
 		# start replicas
 		start(self.replicas)

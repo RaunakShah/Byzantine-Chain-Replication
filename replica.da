@@ -103,8 +103,8 @@ class Replica(process):
 							output("\nReplica", self.replica_id, ": retransimission request", request_id, "received result shuttle.", sep = " ") 
 							send(('operation_result', request_id, result_request, 'retransimission', result, result_proof, self), to = client)
 						elif timeout(self.timeout):
-						# handle timeout, send reconfiguration request to Olympus
-							pass
+							# handle timeout, send reconfiguration request to Olympus
+							output("\nReplica", self.replica_id, ": timeout handling retransimission request", request_id, "send reconfiguration request to Olympus.", sep = " ") 
 					else: 
 						# head doesnt recognize operation, it's a new operation
 						
@@ -117,7 +117,7 @@ class Replica(process):
 							send(('operation_result', request_id, result_request, 'retransimission', result, result_proof, self), to = client)
 						elif timeout(self.timeout):
 							# handle timeout, send reconfiguration request to Olympus
-							pass
+							output("\nReplica", self.replica_id, ": timeout handling retransimission request", request_id, "send reconfiguration request to Olympus.", sep = " ")
 				else: # replica that receives retransmission is not head
 					output("\nReplica", self.replica_id, ": nonhead replica receives retransimission request", request_id, "forward request to head.", sep = " ") 
 					send(('operation_request', request_id, request_type, request, signed_msg, client), to = self.head)
@@ -131,7 +131,7 @@ class Replica(process):
 						send(('operation_result', request_id, result_request, 'retransimission', result, result_proof, self), to = client)
 					elif timeout(self.timeout):
 						# handle timeout, send reconfiguration request to Olympus
-						pass
+						output("\nReplica", self.replica_id, ": timeout handling retransimission request", request_id, "send reconfiguration request to Olympus.", sep = " ")
 
 	def handleNewRequest(request_id, request_type, request, client):
 		# find the max slot that has been assigned to get the slot to assign
