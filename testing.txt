@@ -1,0 +1,38 @@
+1) Failure free scenario with our own defined requests only
+
+3 clients with t = 1, own defined requests are:
+Client 0: put('movie','star'); append('movie',' wars'); get('movie')
+Client 1: put('jedi','luke skywalker'); slice('jedi','0:4'); get('jedi')
+Client 2: put('school','Stony Brook'); put('school','Columbia'); get('school')
+
+2) Input file name: config/test1.txt
+
+3) N/A
+
+4) Log file name: test1.log
+
+5) 
+
+6) Test passed, since there is no byzantine failure and the output is expected
+
+======================================================================================================
+
+1) Failure free scenario with randomly generated requests only
+
+2 clients with t = 2, randomly generated requests are:
+Client 0: get('key_1'); append('key_1','value_1'); put('key_0','value_0'); append('key_1','value_1'); get('key_1')
+Client 1: append('key_1','value_3'); append('key_1','value_3'); slice('key_0','2:4'); append('key_1','value_3')
+
+2) Input file name: config/test2.txt
+
+3) N/A
+
+4) Log file name: test2.log
+
+5) Since Client 1 has slice operation for 'key_0' but no put operation for 'key_0', therefore it's own dictionary state is different from the actual
+dictionary state of the replicas. However, with put 'key_0' request from Client 0, the slice operation will operate successfully on the replicas, 
+and the final replica state is: {'key_0': 'lu'}
+
+6) Test passed, since there is no byzantine failure and the output is expected
+
+=====================================================================================================

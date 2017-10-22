@@ -14,8 +14,9 @@ def main():
 	# get config file name
 	try:
 		file_name = sys.argv[1]
-	except Error:
+	except IndexError:
 		print('Not enough arguments.')
+		return
 	
 	with open(file_name,'r') as f:
 		for line in f:
@@ -26,6 +27,8 @@ def main():
 					val = val.strip()
 					config[key.strip()] = int(val) if str.isdecimal(val) else val
     
+	config(channel = 'reliable')
+	
 	# create an Olympus object
 	olympus = new(olympus_da.Olympus, num=1)
 	
@@ -50,6 +53,7 @@ def main():
 	
 	# create client objects
 	timeout = config['client_timeout']
+	timeout = int(timeout / 1000)
 	clients = new(client_da.Client, num=client_num)
 	
 	# set up each client
@@ -102,7 +106,7 @@ def generatePseudorandomRequests(workload_string):
 		elif operation_num == 2:
 			# slice operation
 			request = 'slice'
-			slice_start = random_num % 5
+			slice_start = random_num % 3
 			slice_end = random_num % 5
 			if slice_end < slice_start:
 				slice_end = slice_start + slice_start - slice_end

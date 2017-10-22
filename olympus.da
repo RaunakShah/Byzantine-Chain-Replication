@@ -60,6 +60,8 @@ class Olympus(process):
 			if index > 0:
 				prev_replica = replica_list[index - 1]
 		
+			timeout = int(timeout / 1000)
+
 			setup(replica, (index, isHead, isTail, prev_replica, next_replica, replica_list[0], 
 				[], 'ACTIVE', self.signing_key_list[index], self.verify_key_list, self.client_verify_key_list, 
 				timeout, failures))

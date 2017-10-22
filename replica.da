@@ -42,7 +42,7 @@ class Replica(process):
 			output("\nReplica", self.replica_id, ": message from client is not validated, message doesn't match.", sep = " ")
 			return
 	
-		output("\nReplica", self.replica_id, "received", request_type, "operation request", 
+		output("\nReplica", self.replica_id, ": received", request_type, "operation request", 
 			request_id, "for operation:", request, sep = " ") 
 		
 		if request_id[0] in self.client_request_received:
@@ -106,9 +106,8 @@ class Replica(process):
 							# handle timeout, send reconfiguration request to Olympus
 							output("\nReplica", self.replica_id, ": timeout handling retransimission request", request_id, "send reconfiguration request to Olympus.", sep = " ") 
 					else: 
-						# head doesnt recognize operation, it's a new operation
-						
-						handleNewRequest(request_id, request, client)
+						# head doesnt recognize operation, start new operation process
+						handleNewRequest(request_id, request_type, request,	client)
 						if (await(
 								some(received(('result_shuttle', result_shuttle_id, result_request, result, result_proof, _), 
 									from_= self.next_replica), 
@@ -261,7 +260,7 @@ class Replica(process):
 		request = request.strip()
 		if request.startswith('put'):
 			# put operation
-			operands = re.findall("put\(\'(.*?)\'\,\'(.*?)\'\)", request, re.DOTALL)
+			operands = re.findall("put\(\'(.*?)\'\,\s*\'(.*?)\'\)", request, re.DOTALL)
 			# there should only be one tuple of operands found
 			if len(operands) != 1:
 				return None
@@ -284,7 +283,7 @@ class Replica(process):
 	
 		elif request.startswith('append'):
 			# append operation
-			operands = re.findall('append\(\'(.*?)\'\,\'(.*?)\'\)', request, re.DOTALL)
+			operands = re.findall('append\(\'(.*?)\'\,\s*\'(.*?)\'\)', request, re.DOTALL)
 			# there should only be one tuple of operands found
 			if len(operands) != 1:
 				return None
@@ -297,7 +296,7 @@ class Replica(process):
 				return 'fail'
 		elif request.startswith('slice'):
 			# slice operation
-			operands = re.findall('slice\(\'(.*?)\',\'(\d+):(\d+)\'\)', request)
+			operands = re.findall('slice\(\'(.*?)\',\s*\'(\d+):(\d+)\'\)', request)
 			# there should only be one tuple of operands found
 			if len(operands) != 1:
 				return None
