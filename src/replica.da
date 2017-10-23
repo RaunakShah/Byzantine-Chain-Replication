@@ -1,0 +1,608 @@
+##	Things not done:
+##	1. applying operation 
+## 	2. signing of statements
+## 	3. hashing of statements
+## 	4. check validity of order proof and result proof	
+## 	5. validate result shuttle
+##	6. cache data structure
+
+import re
+from nacl.bindings.utils import sodium_memcmp
+import nacl.encoding
+import nacl.signing
+import nacl.hash
+import time
+
+class Replica(process):
+	def setup(replica_id, isHead, isTail, prev_replica, next_replica, head, history,
+			mode, signing_key, verify_key_list, client_verify_key_list, timeout, failures):
+		self.operation_dict = dict()
+		self.cache = dict()
+		#self.count = 0
+		self.HASHER = nacl.hash.sha256
+		self.forward_request_received = dict()
+		self.client_request_received = dict()
+		self.change_operation_failure = 0
+		self.change_result_failure = 0
+		self.drop_result_stmt_failure = 0
+		output("\nReplica:", replica_id, "with history: ", history, "initialized", sep = " ")
+				
+	#1. replica p receives operation request from replica client
+	def receive(msg = ('operation_request', request_id, request_type, request, signed_msg, client), from_ = _):
+		# verify client signature and validate request message
+		try:
+			client_key = nacl.signing.VerifyKey(self.client_verify_key_list[request_id[0]], encoder=nacl.encoding.HexEncoder)
+			client_key.verify(signed_msg)
+		except nacl.exceptions.BadSignatureError:
+			output("\nReplica", self.replica_id, ": message from client is not validated, signature doesn't match.", sep = " ")
+			return
+			
+		message = signed_msg.message
+		if ("request<" + str(request_id) + "," + request + ">") != message.decode():
+			output("\nReplica", self.replica_id, ": message from client is not validated, message doesn't match.", sep = " ")
+			return
+	
+		output("\nReplica", self.replica_id, ": received", request_type, "operation request", 
+			request_id, "for operation:", request, sep = " ") 
+		
+		if request_id[0] in self.client_request_received:
+			self.client_request_received[request_id[0]] += 1
+		else:
+			self.client_request_received[request_id[0]] = 0
+
+		if (request_type == 'new'):
+			if(self.isHead == True):
+				if 'client_request(' + str(request_id[0]) + ',' + str(self.client_request_received[request_id[0]]) + ')' in self.failures:
+					trigger = 'client_request(' + str(request_id[0]) + ',' + str(self.client_request_received[request_id[0]]) + ')'
+					output("\nReplica", self.replica_id, ": failure", failures[trigger], "triggered by", trigger, sep = " ")
+					failureInjection(failures[trigger], 1)
+				handleNewRequest(request_id, request_type, request, client)
+				
+		elif (request_type == 'retransmission' or request_type == 'forward'):
+			if 'client_request(' + str(request_id[0]) + ',' + str(self.client_request_received[request_id[0]]) + ')' in self.failures:
+				trigger = 'client_request(' + str(request_id[0]) + ',' + str(self.client_request_received[request_id[0]]) + ')'
+				output("\nReplica", self.replica_id, ": failure", failures[trigger], "triggered by", trigger, sep = " ")
+				failureInjection(failures[trigger], 2)
+				
+			if (request_id in self.cache.keys() 
+					and len(self.cache[request_id]) == 3):
+				output("\nReplica", self.replica_id, ": retransmission request", request_id, "exist in cache.", sep = " ") 
+				# replica has cached the result and result proof for the given request id
+				if self.isHead == True:
+					if request_type == 'forward':
+						if request_id[0] in self.forward_request_received:
+							self.forward_request_received[request_id[0]] += 1
+						else: 	
+							self.forward_request_received[request_id[0]] = 0
+						
+						if 'forwarded_request(' + str(request_id[0]) + ',' + str(self.forward_request_received[request_id[0]]) + ')' in self.failures:
+							trigger = 'forwarded_request(' + str(request_id[0]) + ',' + str(self.forward_request_received[request_id[0]]) + ')'
+							output("\nReplica", self.replica_id, ": failure", failures[trigger], "triggered by", trigger, sep = " ")
+							failureInjection(failures[trigger], 2)
+
+				result_proof = self.cache[request_id][2]
+						
+				# check for failure change_result()
+				if self.change_result_failure > 0:
+					output("\nReplica", self.replica_id, ": injecting change_result failure for request", request_id, "at result", sep = " ")
+					change_result_in_bytes = bytes('OK', 'utf-8')
+					change_result_hash = self.HASHER(change_result_in_bytes, encoder = nacl.encoding.HexEncoder)
+					result_stmt_msg = 'result<' + str(result_shuttle_id) + ',' + request + '>'
+					signed_result = self.signing_key.sign(change_result_hash + result_stmt_msg.encode())
+					result_proof[self.replica_id] = (signed_result)
+					self.change_result_failure -= 1
+				
+				# check for failure drop_result_stmt()
+				if self.drop_result_stmt_failure > 0:
+					output("\nReplica", self.replica_id, ": injecting drop_result_stmt failure for request", result_shuttle_id, "at result", sep = " ")
+					if (len(result_proof)) > 0:
+						result_proof = result_proof[1:]
+					self.drop_result_stmt_failure -= 1
+			
+				# send operation result directly back to client
+				send(('operation_result', request_id, 'retransimission', cache[request_id][1], cache[request_id][0], result_proof, self), to = client)
+				
+				output("\nReplica", self.replica_id, ": sent result for retransmission request", request_id, "to client", client, sep = " ")
+				
+			#elif self.mode == "IMMUTABLE":
+			#	response_type = "error"
+			#	send((request_id, NULL, response_type), to= client)	
+			else:
+				if (self.isHead == True):
+					if (request_type == 'forward'):
+						if request_id[0] in self.forward_request_received:
+							self.forward_request_received[request_id[0]] += 1
+						else: 	
+							self.forward_request_received[request_id[0]] = 0
+							
+						if 'forwarded_request(' + str(request_id[0]) + ',' + str(self.forward_request_received[request_id[0]]) + ')' in self.failures:
+							trigger = 'forwarded_request(' + str(request_id[0]) + ',' + str(self.forward_request_received[request_id[0]]) + ')'
+							output("\nReplica", self.replica_id, ": failure", failures[trigger], "triggered by", trigger, sep = " ")
+							failureInjection(failures[trigger], 2)
+					
+					if request_id in self.cache and self.cache[request_id][1] == request: 
+						# head has ordered operation but not received result shuttle yet
+						output("\nReplica", self.replica_id, ": retransmission request", request_id, "is performed but has not received result shuttle.", sep = " ") 
+						if (await(
+								some(received(('result_shuttle', result_shuttle_id, result_request, result, result_proof, _), 
+									from_= self.next_replica), 
+								has = (result_shuttle_id == request_id and result_request == request)))):
+							# check for failure change_result()
+							if self.change_result_failure > 0:
+								output("\nReplica", self.replica_id, ": injecting change_result failure for request", request_id, "at result", sep = " ")
+								change_result_in_bytes = bytes('OK', 'utf-8')
+								change_result_hash = self.HASHER(change_result_in_bytes, encoder = nacl.encoding.HexEncoder)
+								result_stmt_msg = 'result<' + str(result_shuttle_id) + ',' + request + '>'
+								signed_result = self.signing_key.sign(change_result_hash + result_stmt_msg.encode())
+								result_proof[self.replica_id] = (signed_result)
+								self.change_result_failure -= 1
+							
+							# check for failure drop_result_stmt()
+							if self.drop_result_stmt_failure > 0:
+								output("\nReplica", self.replica_id, ": injecting drop_result_stmt failure for request", result_shuttle_id, "at result", sep = " ")
+								if (len(result_proof)) > 0:
+									result_proof = result_proof[1:]
+								self.drop_result_stmt_failure -= 1
+					
+							output("\nReplica", self.replica_id, ": retransimssion request", request_id, "received result shuttle, send to client", client, sep = " ") 
+							send(('operation_result', request_id, result_request, 'retransimission', result, result_proof, self), to = client)
+						elif timeout(self.timeout):
+							# handle timeout, send reconfiguration request to Olympus
+							output("\nReplica", self.replica_id, ": timeout handling retransmission request", request_id, "send reconfiguration request to Olympus.", sep = " ") 
+					else: 
+						output("\nReplica", self.replica_id, ": retransmission request", request_id, "for operation", request, "is not recognized, start new operation.", sep = " ") 
+						# head doesnt recognize operation, start new operation process
+						handleNewRequest(request_id, request_type, request,	client)
+						if (await(
+								some(received(('result_shuttle', result_shuttle_id, result_request, result, result_proof, _), 
+									from_= self.next_replica), 
+								has = (result_shuttle_id == request_id and result_request == request)))):
+							# check for failure change_result()
+							if self.change_result_failure > 0:
+								output("\nReplica", self.replica_id, ": injecting change_result failure for request", request_id, "at result", sep = " ")
+								change_result_in_bytes = bytes('OK', 'utf-8')
+								change_result_hash = self.HASHER(change_result_in_bytes, encoder = nacl.encoding.HexEncoder)
+								result_stmt_msg = 'result<' + str(result_shuttle_id) + ',' + request + '>'
+								signed_result = self.signing_key.sign(change_result_hash + result_stmt_msg.encode())
+								result_proof[self.replica_id] = (signed_result)
+								self.change_result_failure -= 1
+							
+							# check for failure drop_result_stmt()
+							if self.drop_result_stmt_failure > 0:
+								output("\nReplica", self.replica_id, ": injecting drop_result_stmt failure for request", result_shuttle_id, "at result", sep = " ")
+								if (len(result_proof)) > 0:
+									result_proof = result_proof[1:]
+								self.drop_result_stmt_failure -= 1
+								
+							output("\nReplica", self.replica_id, ": retransmission request", request_id, "received result shuttle, send to client", client, sep = " ") 
+							send(('operation_result', request_id, result_request, 'retransimission', result, result_proof, self), to = client)
+						elif timeout(self.timeout):
+							# handle timeout, send reconfiguration request to Olympus
+							output("\nReplica", self.replica_id, ": timeout handling retransmission request", request_id, "send reconfiguration request to Olympus.", sep = " ")
+				else: # replica that receives retransmission is not head
+					output("\nReplica", self.replica_id, ": nonhead replica receives retransmission request", request_id, "forward request to head.", sep = " ") 
+					send(('operation_request', request_id, 'forward', request, signed_msg, client), to = self.head)
+
+					if (await(
+							some(received(('result_shuttle', result_shuttle_id, result_request, result, result_proof, _), 
+								from_ = self.next_replica), 
+							has = (result_shuttle_id == request_id and result_request == request)))):
+						# check for failure change_result()
+						if self.change_result_failure > 0:
+							output("\nReplica", self.replica_id, ": injecting change_result failure for request", request_id, "at result", sep = " ")
+							change_result_in_bytes = bytes('OK', 'utf-8')
+							change_result_hash = self.HASHER(change_result_in_bytes, encoder = nacl.encoding.HexEncoder)
+							result_stmt_msg = 'result<' + str(result_shuttle_id) + ',' + request + '>'
+							signed_result = self.signing_key.sign(change_result_hash + result_stmt_msg.encode())
+							result_proof[self.replica_id] = (signed_result)
+							self.change_result_failure -= 1
+						
+						# check for failure drop_result_stmt()
+						if self.drop_result_stmt_failure > 0:
+							output("\nReplica", self.replica_id, ": injecting drop_result_stmt failure for request", result_shuttle_id, "at result", sep = " ")
+							if (len(result_proof)) > 0:
+								result_proof = result_proof[1:]
+							self.drop_result_stmt_failure -= 1	
+						
+						output("\nReplica", self.replica_id, ": retransimssion request", request_id, "received result shuttle, send to client", client, sep = " ") 
+						# receive result shuttle, send to client
+						send(('operation_result', request_id, result_request, 'retransimission', result, result_proof, self), to = client)
+					elif timeout(self.timeout):
+						# handle timeout, send reconfiguration request to Olympus
+						output("\nReplica", self.replica_id, ": timeout handling retransmission request", request_id, "send reconfiguration request to Olympus.", sep = " ")
+
+	def handleNewRequest(request_id, request_type, request, client):
+		# find the max slot that has been assigned to get the slot to assign
+		max_slot = 0
+		for (s, _, _, _) in self.history:
+			if(s >= max_slot):
+				max_slot = s
+		if len(self.history) == 0:
+			slot = 0
+		else:
+			slot = max_slot + 1
+		
+		# create empty lists for order proof and result proof
+		order_proof = []
+		result_proof = []
+		
+		# get result and signed order statement of the request
+		tuple = applyOperation(slot, request_id, request, order_proof)
+		if tuple:
+			(result, signed_order_stmt) = tuple
+		else:
+			return
+					
+		# check if inject failure change_result()
+		if self.change_result_failure > 0:
+			output("\nReplica", self.replica_id, ": injecting change_result failure for request", request_id, sep = " ")
+			result = 'OK'
+			self.change_result_failure -= 1
+		
+		# check for failure change_operation()
+		if self.change_operation_failure > 0:
+			output("\nReplica", self.replica_id, ": injecting change_operation failure for request", request_id, "at shuttle.", sep = " ")
+			op_request = "get('x')"
+			self.change_operation_failure -= 1
+			
+			# make order statement a string so it can be turned into bytes and signed 
+			order_statement = "order<" + str(slot) + "," + str(request_id) + "," + op_request + ">"
+			# sign order statement using the signing key of this replica
+			signed_order_stmt = self.signing_key.sign(order_statement.encode())
+		else:
+			op_request = request
+			
+		# hash and sign the result along with request id and request
+		result_in_bytes = bytes(result, 'utf-8')
+		hash_result = self.HASHER(result_in_bytes, encoder = nacl.encoding.HexEncoder)
+		result_stmt_msg = 'result<' + str(request_id) + ',' + op_request + '>'
+		signed_result = self.signing_key.sign(hash_result + result_stmt_msg.encode())
+
+		# add signed order statement and result statement to order proof and result proof
+		order_proof.append(signed_order_stmt)
+		result_proof.append(signed_result)
+		
+		if self.isTail != True:
+			# send shuttle to next replica
+			send(('shuttle', order_proof, result_proof, request_id, request_type, slot, request, client, self), to = self.next_replica)
+			output("\nReplica", self.replica_id, ": sent shuttle", request_id, "to ", self.next_replica, sep = " ")
+		else:
+			# if there is only 1 replica in the chain, send result to client directly
+			send(('operation_result', request_id, request, request_type, result, result_proof, self), to = client)
+			output("\nReplica", self.replica_id, ": sent operation_result", request_id[1], "to client", request_id[0], sep = " ")
+	
+	def applyOperation(slot, request_id, request, order_proof):
+		"""
+		Perform condition checks then run the request
+		"""
+		# this replica must be in ACTIVE mode
+		if(self.mode != 'ACTIVE'):
+			output("\nReplica", self.replica_id, ": mode is not 'ACTIVE'.", sep = " ")
+			return None
+
+		# check if there is any conflict in current request and history of this replica
+		# the slot number shouldn't have been assigned to any other request
+		if slot in [t[0] for t in self.history]:
+			output("\nReplica", self.replica_id, ": conflict in current request and history for slot number", slot, sep = " ")
+			return None
+	
+		#check for hole
+		for checking_slot in range(slot):
+			if checking_slot not in [t[0] for t in self.history]:
+				output("\nReplica", self.replica_id, ": there is a hole in the history for slot number", checking_slot, sep = " ")
+				return None
+			
+		#checkpointing -- not needed for phase 2
+		
+		# validate order proof from shuttle
+		# check if all replicas preceding this replica have signed order statement and have correct slot and request id
+		for index in range(self.replica_id):
+			signed_order_stmt = order_proof[index]
+			# verify the signature
+			try:
+				verify_key = nacl.signing.VerifyKey(self.verify_key_list[index], encoder=nacl.encoding.HexEncoder)
+				verify_key.verify(signed_order_stmt)
+			except nacl.exceptions.BadSignatureError:
+				output("\nReplica", self.replica_id, ": order statement from shuttle is not validated, signature of replica", 
+					index, "doesn't match.", sep = " ")
+				return None
+				
+			# get order statement by decoding message from signed message
+			order_stmt = signed_order_stmt.message.decode()
+			matches = re.findall("order<(\d+),\((\d+),\s+(\d+)\),(.*?)>", order_stmt)
+			# there should only be one match
+			if len(matches) != 1:
+				output("\nReplica", self.replica_id, ": message in order statement from shuttle doesn't match.", sep = " ")
+				return None
+			# check if there is any conflict in slot number and request id 
+			(slot_str, client_id_str, workload_id_str, request_str) = matches[0]
+			if (slot != int(slot_str) 
+					or request_id[0] != int(client_id_str) 
+					or request_id[1] != int(workload_id_str)
+					or request != request_str):
+				output("\nReplica", self.replica_id, ": message in order statement from shuttle doesn't match.", sep = " ")
+				return None
+
+		# apply operation in the request to the dictionary object
+		result = findAndPerformOperation(request)
+		
+		if result == None:
+			output("\nReplica", self.replica_id, ": perform operation fail, no result returned.", sep = " ")
+			return None
+
+		# get order statement of current replica
+		current_signed_order_stmt = orderCommand(slot, request_id, request, order_proof)
+	
+		self.cache[request_id] =  (result, request)
+		
+		return (result, current_signed_order_stmt)
+		
+	def findAndPerformOperation(request):
+		"""
+		Perform the operation in the request
+		"""
+		
+		request = request.strip()
+		if request.startswith('put'):
+			# put operation
+			operands = re.findall("put\(\'(.*?)\'\,\s*\'(.*?)\'\)", request, re.DOTALL)
+			# there should only be one tuple of operands found
+			if len(operands) != 1:
+				return None
+				
+			(key, val) = operands[0]
+			self.operation_dict[key] = val
+			return 'OK'
+		elif request.startswith('get'):
+			# get operation
+			operand = re.findall('get\(\'(.*?)\'\)', request)
+			# there should only be one operand found
+			if len(operand) != 1:
+				return None
+
+			o = operand[0]
+			if o in self.operation_dict:
+				return self.operation_dict.get(o)
+			else:
+				return ""
+	
+		elif request.startswith('append'):
+			# append operation
+			operands = re.findall('append\(\'(.*?)\'\,\s*\'(.*?)\'\)', request, re.DOTALL)
+			# there should only be one tuple of operands found
+			if len(operands) != 1:
+				return None
+			
+			(key, val) = operands[0]
+			if key in self.operation_dict:
+				self.operation_dict[key] += val
+				return 'OK'
+			else:
+				return 'fail'
+		elif request.startswith('slice'):
+			# slice operation
+			operands = re.findall('slice\(\'(.*?)\',\s*\'(\d+):(\d+)\'\)', request)
+			# there should only be one tuple of operands found
+			if len(operands) != 1:
+				return None
+				
+			(key, low_index, up_index) = operands[0]
+			if (key in self.operation_dict 
+					and int(low_index) in range(len(self.operation_dict[key])) 
+					and int(up_index) in range(len(self.operation_dict[key]))):
+				self.operation_dict[key] = self.operation_dict[key][(int)(low_index):(int)(up_index)]
+				return 'OK'
+			else:
+				return 'fail'
+		else:
+			return None
+
+	def orderCommand(slot, request_id, request, order_proof):
+		"""
+		Create a signed order statement and create an order proof to append to history of this replica
+		"""
+		# create an order statement for this replica
+		# make order statement a string so it can be turned into bytes and signed 
+		order_statement = "order<" + str(slot) + "," + str(request_id) + "," + request + ">"
+		# sign order statement using the signing key of this replica
+		signed_order_stmt = self.signing_key.sign(order_statement.encode())
+		
+		# add order statement from previous replicas to order proof
+		current_order_proof = order_proof[:self.replica_id]
+		current_order_proof.append(signed_order_stmt)
+		
+		# add the signed order statement to 
+		self.history.append((slot, request_id, request, current_order_proof))
+		return signed_order_stmt
+    
+	#2. replica receives shuttle
+	def receive(msg =('shuttle', order_proof, result_proof, request_id, request_type, slot, request, client, _), from_= self.prev_replica):
+		output("\nReplica", self.replica_id, ": received shuttle", request_id, "from", self.prev_replica, sep = " ")
+		
+		# check for failure trigger shuttle()
+		if 'shuttle(' + str(request_id[0]) + ',' + str(request_id[1]) + ')' in self.failures:
+			trigger = 'shuttle(' + str(request_id[0]) + ',' + str(request_id[1]) + ')'
+			output("\nReplica", self.replica_id, ": failure", failures[trigger], "triggered by", trigger, sep = " ")
+			failureInjection(failures[trigger], 1)
+		
+		# apply operation and get result and signed order statement
+		tuple = applyOperation(slot, request_id, request, order_proof)
+		if tuple:
+			(result, signed_order_stmt) = tuple
+		else:
+			return
+		
+		hash_result = result
+		
+		# check if inject failure change_result()
+		if self.change_result_failure > 0:
+			output("\nReplica", self.replica_id, ": injecting change_result failure for request", request_id, "at shuttle.", sep = " ")
+			hash_result = 'OK'
+			self.change_result_failure -= 1
+			
+		# check for failure change_operation()
+		if self.change_operation_failure > 0:
+			output("\nReplica", self.replica_id, ": injecting change_operation failure for request", request_id, "at shuttle.", sep = " ")
+			op_request = "get('x')"
+			self.change_operation_failure -= 1
+			
+			# make order statement a string so it can be turned into bytes and signed 
+			order_statement = "order<" + str(slot) + "," + str(request_id) + "," + op_request + ">"
+			# sign order statement using the signing key of this replica
+			signed_order_stmt = self.signing_key.sign(order_statement.encode())
+		else:
+			op_request = request
+
+		# hash and sign the result along with request id and request
+		result_in_bytes = bytes(hash_result, 'utf-8')
+		result_hash = self.HASHER(result_in_bytes, encoder = nacl.encoding.HexEncoder)
+		result_stmt_msg = 'result<' + str(request_id) + ',' + op_request + '>'
+		signed_result = self.signing_key.sign(result_hash + result_stmt_msg.encode())
+		
+		# add signed order statement and result statement to order proof and result proof
+		order_proof.append(signed_order_stmt)
+		result_proof.append(signed_result)
+		
+		# check if inject failure drop_result_stmt()
+		if self.drop_result_stmt_failure > 0:
+			output("\nReplica", self.replica_id, ": injecting drop_result_stmt failure for request", request_id, "at shuttle.", sep = " ")
+			if len(result_proof) > 0:
+				result_proof = result_proof[1:]
+			self.drop_result_stmt_failure -= 1
+				
+		if self.isTail == True:
+			# cache result proof
+			self.cache[request_id] = (result, request, result_proof)
+			
+			output("\nReplica", self.replica_id, ": sent operation_result", request_id, "to client", client, sep = " ")
+			send(('operation_result', request_id, request_type, request, result, result_proof, self), to = client)
+			output("\nReplica", self.replica_id, ": sent result_shuttle", request_id, "to replica", self.prev_replica, sep = " ")
+			send(('result_shuttle', request_id, request, result, result_proof, self), to = self.prev_replica)
+		else:
+			output("\nReplica", self.replica_id, ": sent shuttle", request_id, "to", self.next_replica, sep = " ")
+			send(('shuttle', order_proof, result_proof, request_id, request_type, slot, request, client, self), to = self.next_replica)
+
+
+	#3. replica p receives result shuttle
+	def receive(msg =('result_shuttle', result_shuttle_id, request, result, result_proof, _), from_ = self.next_replica):
+		output("\nReplica", self.replica_id, ": received result_shuttle", result_shuttle_id, "from", self.next_replica, sep = " ")
+
+		# check for failure trigger result_shuttle()
+		if 'result_shuttle(' + str(result_shuttle_id[0]) + ',' + str(result_shuttle_id[1]) + ')' in self.failures:
+			trigger = 'result_shuttle(' + str(result_shuttle_id[0]) + ',' + str(result_shuttle_id[1]) + ')'
+			output("\nReplica", self.replica_id, ": failure", failures[trigger], "triggered by", trigger, sep = " ")
+			failureInjection(failures[trigger], 1)
+
+		# validate result shuttle
+		# check if result shuttle contains result statement from all replicas
+		if (len(result_proof) != len(self.verify_key_list)):
+			output("\nReplica", self.replica_id, ": result shuttle for", result_shuttle_id, "does not contain enough entries, expected", 
+				len(self.verify_key_list), "but only receive", len(result_proof), "ignore this result shuttle", sep = " ")
+			return
+			
+		# check if all replicas preceding this replica have signed result statement
+		for index in range(self.replica_id):
+			signed_result_stmt = result_proof[index]
+			
+			# verify the signature
+			try:
+				verify_key = nacl.signing.VerifyKey(self.verify_key_list[index], encoder=nacl.encoding.HexEncoder)
+				verify_key.verify(signed_result_stmt)
+			except nacl.exceptions.BadSignatureError:
+				output("\nReplica", self.replica_id, 
+					": message received from result shuttle is not validated, signature doesn't match.", sep = " ")
+				return
+				
+			# validate sign message
+			result_message = signed_result_stmt.message
+			result_stmt_hash = result_message[:64]
+			message = result_message[64:]
+			if ('result<' + str(result_shuttle_id) + ',' + request + '>') != message.decode():
+				output("\nReplica", self.replica_id, 
+					": message received from result shuttle is not validated, message doesn't match.", sep = " ")
+				return
+			
+			# check if hash match with the replica's result
+			result_in_bytes = bytes(self.cache[result_shuttle_id][0], 'utf-8')
+			result_hash = self.HASHER(result_in_bytes, encoder = nacl.encoding.HexEncoder)
+			if not sodium_memcmp(result_hash, result_stmt_hash):
+				# hash does not match
+				output("\nReplica", self.replica_id, ": hash of result for request", result_shuttle_id, "for operation", request,			
+					"does not match hash of replica", index, "in result statement, ignore result shuttle.", sep = " ")
+				return
+
+		# check if current replica has processed the request id from result shuttle
+		if result_shuttle_id not in self.cache:
+			output("\nReplica", self.replica_id, ": request", result_shuttle_id, "does not exist in cache.", sep = " ")
+			return
+
+		# check if the request matches for the request id
+		if self.cache[result_shuttle_id][1] != request:
+			output("\nReplica", self.replica_id, ": request", result_shuttle_id, "for operation", request,			
+				"does not match existing operation", self.cache[result_shuttle_id], "in cache.", sep = " ")
+			return
+
+		# cache result proof along with corresponding request id and result
+		self.cache[result_shuttle_id] = (result, request, result_proof)
+		
+		# check for failure change_result()
+		if self.change_result_failure > 0:
+			output("\nReplica", self.replica_id, ": injecting change_result failure for request", result_shuttle_id, "at result shuttle", sep = " ")
+			change_result_in_bytes = bytes('OK', 'utf-8')
+			change_result_hash = self.HASHER(change_result_in_bytes, encoder = nacl.encoding.HexEncoder)
+			result_stmt_msg = 'result<' + str(result_shuttle_id) + ',' + request + '>'
+			signed_result = self.signing_key.sign(change_result_hash + result_stmt_msg.encode())
+			result_proof[self.replica_id] = (signed_result)
+			self.change_result_failure -= 1
+		
+		# check for failure drop_result_stmt()
+		if self.drop_result_stmt_failure > 0:
+			output("\nReplica", self.replica_id, ": injecting drop_result_stmt failure for request", result_shuttle_id, "at result shuttle", sep = " ")
+			if (len(result_proof)) > 0:
+				result_proof = result_proof[1:]
+			self.drop_result_stmt_failure -= 1
+				
+		# send result shuttle to previous replica
+		if self.isHead == False:
+			output("\nReplica", self.replica_id, ": sent result_shuttle", result_shuttle_id, "to", self.prev_replica, sep = " ")
+			send(('result_shuttle', result_shuttle_id, request, result, result_proof, self), to= self.prev_replica)
+
+	def failureInjection(failure, num):
+		if ';' in failure:
+			failures = failure.split(';')
+		else:
+			failures = [failure]
+		for f in failures:
+			f.strip()
+			if f == 'change_operation()':
+				self.change_operation_failure = num
+				#return (1,0,0)
+			elif f == 'change_result()':
+				self.change_result_failure = num
+				#return (0,1,0)
+			elif f == 'drop_result_stmt()':
+				self.drop_result_stmt_failure = num
+				#return (0,0,1)
+			elif f == 'sleep()':
+				time.sleep(5)
+		#else:
+		#	return (0,0,0)
+
+	##4. replica receives wedge request -- not needed for phase 2
+	##def receive(wedge_statement, from_= Olympus
+    #
+	##5. replica receives checkpoint proof -- not needed for phase 2
+	##def receive(checkpoint_shuttle, from_ = replica)
+    #
+	##6. replica receives catch up message -- not needed for phase 2
+	##def receive("catch_up", from_= Olympus)
+    #
+	##7. replica receives a get running state message -- not needed for phase 2
+	##def receive("get_running_state", from_= Olympus)
+	
+	def run():
+		output('\nStarting replica', self.replica_id, sep = " ")
+		# terminate when receive terminate message from Olympus
+		if await(some(received(('terminate', _), from_ = Olympus))):
+			time.sleep(3)
+			output('\nReplica', self.replica_id, 'state:', self.operation_dict, sep = " ")
