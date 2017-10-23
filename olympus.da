@@ -40,13 +40,15 @@ class Olympus(process):
 				fail_trig_unparsed = config['failures[' + str(self.configuration_id) + ',' + str(index) + ']']
 				#print(fail_trig_unparsed)
 				fail_trig_pairs = fail_trig_unparsed.split(';')
-				#print(fail_trig_pairs)
 				for number_of_failures in range(len(fail_trig_pairs)):
-					failure_trigger = re.findall('(.*?\(.*?\)),(.*?\(\))',fail_trig_pairs[number_of_failures])
+					failure_trigger = re.findall('(.*?\(.*?\)),(.*?\(\))',fail_trig_pairs[number_of_failures].strip())
 					(trigger, failure) = failure_trigger[0]
 					failure = failure.strip()
 					trigger = trigger.strip()
-					failures[trigger] = failure
+					if trigger in failures:
+						failures[trigger] += ";" + failure
+					else:
+						failures[trigger] = failure
 
 				output("\nFailure for replica", index, ":\n", failures, sep = " ")
 

@@ -1,3 +1,5 @@
+test1 - Failure free 
+
 1) Failure free scenario with our own defined requests only
 
 3 clients with t = 1, own defined requests are:
@@ -9,13 +11,14 @@ Client 2: put('school','Stony Brook'); put('school','Columbia'); get('school')
 
 3) N/A
 
-4) Log file name: test1.log
+4) Log file name: logs/test1.log
 
-5) 
+5) The actual results and testing results for all requests for all clients match
 
-6) Test passed, since there is no byzantine failure and the output is expected
+6) Test passes, since there is no byzantine failure and the output is expected
 
 ======================================================================================================
+test2 - Failure free with pseudorandom requests
 
 1) Failure free scenario with randomly generated requests only
 
@@ -27,12 +30,161 @@ Client 1: append('key_1','value_3'); append('key_1','value_3'); slice('key_0','2
 
 3) N/A
 
-4) Log file name: test2.log
+4) Log file name: logs/test2.log
 
 5) Since Client 1 has slice operation for 'key_0' but no put operation for 'key_0', therefore it's own dictionary state is different from the actual
 dictionary state of the replicas. However, with put 'key_0' request from Client 0, the slice operation will operate successfully on the replicas, 
 and the final replica state is: {'key_0': 'lu'}
 
-6) Test passed, since there is no byzantine failure and the output is expected
+6) Test passes, since there is no byzantine failure and the output is expected
 
 =====================================================================================================
+test3 - Client Request trigger Change Operation
+
+1) Failure for Replica 0: client_request(0,1), change_operation()
+
+Head replica triggers change operation when it receives request (0,1) (2nd message) from Client 0. Change operation changes the request in order
+statement and result statement of the outgoing shuttle to Replica 1.
+
+Replica 1 receives shuttle and validate the order statement, but since request doesn't match it will ignore the shuttle. Thus Client 0 timeouts 
+waiting for response, and send retransmit request for (0,1) to all replica. 
+
+Since Replica 0 caches (0,1) for the retransmit request, it starts a timer waiting for result shuttle. The shuttle for this request never reaches
+tail replica, therefore no result shuttle is sent and eventually all replicas timeout. In phase 2 there is no reconfig request, therefore Client 0 
+timeouts for retransmit request, and ignore this request and moves to next request (0,2)
+
+Next request is processed successfully until the shuttle reaches Replica 1. Since Replica 1 never runs the previous request (0,1) but Replica 0 does,
+Replica 0 gives slot 1 to request (0,1) and slot 2 to request (0,2), but Replica 1 has a hole in slot 1, therefore it ignores the request as well.
+
+Client 0 once again timeouts and sends retransmit request for (0,2), and eventually all replicas timeout and supposedly send reconfig request to
+Olympus. In phase 2 there is no reconfig request, therefore Client 0 timeouts for retransmit request, and ignore this request and terminates
+
+1 client with t = 1:
+Client 0: put('movie','star'); append('movie',' wars'); get('movie')
+
+2) Input file name: config/test3.txt
+
+3) N/A
+
+4) Log file name: logs/test3.log
+
+5) Client 0 only receives response for request (0,1), which is 'OK'. Replica 0 processes request (0,1) but other replicas don't, therefore Replica 0
+has state {'movie': 'star wars'}, but others have states {'movie': 'star'}
+
+6) In Phase 2 there is no reconfig, therefore both requests (0,1) and (0,2) timeout in retransmission. This is expected and test passes.
+
+=====================================================================================================
+test4 - Shuttle trigger Change Result
+
+1) Failure for Replica 2: shuttle(2,2), change_result()
+
+Replica 2 triggers change result failure when receives shuttle for request (2,2). It changes the result hash in result and result shuttle. When 
+Client 2 receives result, it still accepts since hashes of 4 other replicas match, that means majority of the replica accepts the result. 
+
+When Replica 3 receives the result shuttle for the same request, it ignores the result shuttle since hash of Replica 2 doesn't actually match the
+actual result. Therefore result shuttle is not validated, and Replica 3 doesn't cache the result proof.
+
+3 client with t = 2:
+Client 0: put('movie','star'); append('movie',' wars'); get('movie')
+Client 1: put('jedi','luke skywalker'); slice('jedi','0:4'); get('jedi')
+Client 2: put('school','Stony Brook'); put('school','Columbia'); get('school')
+
+2) Input file name: config/test4.txt
+
+3) N/A
+
+4) Log file name: logs/test4.log
+
+5) The actual results and testing results for all requests for all clients match
+
+6) Test passes, since client still accepts result if majority of replica has matching hashes
+
+=====================================================================================================
+test5 - Result Shuttle trigger Drop Result Statement
+
+1) Failure for Replica 1: result_shuttle(0,1), drop_result_stmt()
+
+Replica 1 triggers drop result statement failure when receives result shuttle for request (0,1). It drops the head result statement in result proof.
+
+When Replica 0 receives the result shuttle for the same request from Replica 1, it ignores the result shuttle since it expects 3 result statement but 
+there are only 2.
+
+2 client with t = 1:
+Client 0: put('movie','star'); append('movie',' wars'); get('movie')
+Client 1: put('jedi','luke skywalker'); slice('jedi','0:4'); get('jedi')
+
+2) Input file name: config/test5.txt
+
+3) N/A
+
+4) Log file name: logs/test5.log
+
+5) The actual results and testing results for all requests for all clients match
+
+6) Test passes, since client result is not affected and replica behavior is expected
+
+=====================================================================================================
+test6 - Shuttle trigger Drop Result Statement
+
+1) Failure for Replica 4: shuttle(1,2), drop_result_stmt()
+
+Replica 4 (tail replica) triggers drop result statement failure when receives shuttle for request (0,1). It drops the head result statement in result 
+proof in result shuttle as well as result sent to client.
+
+When Client 1 receives result for request (1,2), it only finds 4 matching hashes, but it still accepts it since majority of replicas have matching 
+hashes.
+
+When Replica 3 receives the result shuttle for the same request from Replica 4, it ignores the result shuttle since it expects 5 result statement but 
+there are only 4.
+
+2 client with t = 2:
+Client 0: put('movie','star'); append('movie',' wars'); get('movie')
+Client 1: put('jedi','luke skywalker'); slice('jedi','0:4'); get('jedi')
+
+2) Input file name: config/test6.txt
+
+3) N/A
+
+4) Log file name: logs/test6.log
+
+5) The actual results and testing results for all requests for all clients match
+
+6) Test passes, since client client still accepts result if majority of replica has matching hashes and replica behavior is expected
+
+====================================================================================================
+test7 - Retransmission Forwarded Request trigger Change Result
+
+1) Cause retransmission for request (0,2) with Replica sleep and Client 0 timeout
+Failure for Replica 0: forwarded_request(0,0), change_result()
+
+Client 0 sends retransmit request (0,2) to all replicas. Replica 1 receives retransmission request, since it hasn't received result shuttle (tail 
+replica is still sleeping), it forwards request to Replica 0. Replica 0 receives forwarded request and triggers change result failure.
+
+1 client with t = 1:
+Client 0: put('movie','star'); append('movie',' wars'); get('movie')
+
+2) Input file name: config/test7.txt
+
+3) N/A
+
+4) Log file name: logs/test7.log
+
+5) Since Replica 2 sends result to Client first, at the time Replica 0 sends its result, Client 0 has already accepted the result and terminates.
+By inspecting the log, it can be checked that Replica 0 indeed injects the failures at result shuttle as well as result sent to client.
+
+6) Test passes, since replica behavior is expected
+
+====================================================================================================
+test8 - Stress Test
+
+1) 10 clients with 100 random generated requests each
+
+2) Input file name: config/test8.txt
+
+3) N/A
+
+4) Log file name: logs/test8.log
+
+5) N/A
+
+6) Test passes, since there is no run time error

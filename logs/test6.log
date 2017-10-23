@@ -1,0 +1,334 @@
+[2017-10-22 21:23:35,534] replica.Replica<Replica:47005>:OUTPUT: 
+Replica: 0 with history:  [] initialized
+[2017-10-22 21:23:35,550] replica.Replica<Replica:47003>:OUTPUT: 
+Replica: 1 with history:  [] initialized
+[2017-10-22 21:23:35,550] replica.Replica<Replica:47002>:OUTPUT: 
+Replica: 2 with history:  [] initialized
+[2017-10-22 21:23:35,550] replica.Replica<Replica:47004>:OUTPUT: 
+Replica: 3 with history:  [] initialized
+[2017-10-22 21:23:35,565] olympus.Olympus<Olympus:8a002>:OUTPUT: 
+Failure for replica 4 :
+ {'shuttle(1,2)': 'drop_result_stmt()'}
+[2017-10-22 21:23:35,565] replica.Replica<Replica:47001>:OUTPUT: 
+Replica: 4 with history:  [] initialized
+[2017-10-22 21:23:35,972] client.Client<Client:8a003>:OUTPUT: Client ID: 0 
+Workload: ["put('movie','star')", " append('movie',' wars')", " get('movie')"] 
+Timeout: 3
+[2017-10-22 21:23:35,972] client.Client<Client:8a004>:OUTPUT: Client ID: 1 
+Workload: ["put('jedi','luke skywalker')", " slice('jedi','0:4')", " get('jedi')"] 
+Timeout: 3
+[2017-10-22 21:23:35,972] olympus.Olympus<Olympus:8a002>:OUTPUT: 
+Starting test case: test6 - Shuttle trigger Drop Result Statement
+[2017-10-22 21:23:35,972] olympus.Olympus<Olympus:8a002>:OUTPUT: 
+Starting Olympus.
+[2017-10-22 21:23:35,972] client.Client<Client:8a003>:OUTPUT: 
+Starting client 0
+[2017-10-22 21:23:35,972] client.Client<Client:8a004>:OUTPUT: 
+Starting client 1
+[2017-10-22 21:23:35,972] replica.Replica<Replica:47005>:OUTPUT: 
+Starting replica 0
+[2017-10-22 21:23:35,972] replica.Replica<Replica:47003>:OUTPUT: 
+Starting replica 1
+[2017-10-22 21:23:35,972] replica.Replica<Replica:47002>:OUTPUT: 
+Starting replica 2
+[2017-10-22 21:23:35,972] replica.Replica<Replica:47004>:OUTPUT: 
+Starting replica 3
+[2017-10-22 21:23:35,987] client.Client<Client:8a003>:OUTPUT: 
+Client 0 : sent get_con[2017-10-22 21:23:35,987] client.Client<Client:8a004>:OUTPUT: 
+Client 1 : sent get_configuration to Olympus.
+[2017-10-22 21:23:35,987] client.Client<Client:8a003>:OUTPUT: 
+Client 0 : received configuration 0 from Olympus.
+[2017-10-22 21:23:35,987] client.Client<Client:8a003>:OUTPUT: 
+Client 0 : sent check config message to Olympus.
+[2017-10-22 21:23:36,003] client.Client<Client:8a003>:OUTPUT: 
+Client 0 : received check config response:  OK
+[2017-10-22 21:23:36,003] client.Client<Client:8a004>:OUTPUT: 
+Client 1 : received configuration 0 from Olympus.
+[2017-10-22 21:23:36,003] client.Client<Client:8a004>:OUTPUT: 
+Client 1 : sent check config message to Olympus.
+[2017-10-22 21:23:36,003] client.Client<Client:8a004>:OUTPUT: 
+Client 1 : received check config response:  OK
+[2017-10-22 21:23:36,019] client.Client<Client:8a004>:OUTPUT: 
+Client 1 : sent operation_request (1, 0) to <Replica:47005>
+[2017-10-22 21:23:36,019] client.Client<Client:8a003>:OUTPUT: 
+Client 0 : sent operation_request (0, 0) to <Replica:47005>
+[2017-10-22 21:23:36,019] replica.Replica<Replica:47005>:OUTPUT: 
+Replica 0 : received new operation request (0, 0) for operation: put('movie','star')
+[2017-10-22 21:23:36,034] replica.Replica<Replica:47005>:OUTPUT: 
+Replica 0 : sent shuttle (0, 0) to  <Replica:47003>
+[2017-10-22 21:23:36,034] replica.Replica<Replica:47005>:OUTPUT: 
+Replica 0 : received new operation request (1, 0) for operation: put('jedi','luke skywalker')
+[2017-10-22 21:23:36,034] replica.Replica<Replica:47003>:OUTPUT: 
+Replica 1 : received shuttle (0, 0) from <Replica:47005>
+[2017-10-22 21:23:36,034] replica.Replica<Replica:47005>:OUTPUT: 
+Replica 0 : sent shuttle (1, 0) to  <Replica:47003>
+[2017-10-22 21:23:36,034] replica.Replica<Replica:47003>:OUTPUT: 
+Replica 1 : sent shuttle (0, 0) to <Replica:47002>
+[2017-10-22 21:23:36,050] replica.Replica<Replica:47003>:OUTPUT: 
+Replica 1 : received shuttle (1, 0) from <Replica:47005>
+[2017-10-22 21:23:36,050] replica.Replica<Replica:47002>:OUTPUT: 
+Replica 2 : received shuttle (0, 0) from <Replica:47003>
+[2017-10-22 21:23:36,050] replica.Replica<Replica:47003>:OUTPUT: 
+Replica 1 : sent shuttle (1, 0) to <Replica:47002>
+[2017-10-22 21:23:36,050] replica.Replica<Replica:47002>:OUTPUT: 
+Replica 2 : sent shuttle (0, 0) to <Replica:47004>
+[2017-10-22 21:23:36,081] replica.Replica<Replica:47002>:OUTPUT: 
+Replica 2 : received shuttle (1, 0) from <Replica:47003>
+[2017-10-22 21:23:36,081] replica.Replica<Replica:47004>:OUTPUT: 
+Replica 3 : received shuttle (0, 0) from <Replica:47002>
+[2017-10-22 21:23:36,081] replica.Replica<Replica:47002>:OUTPUT: 
+Replica 2 : sent shuttle (1, 0) to <Replica:47004>
+[2017-10-22 21:23:36,081] replica.Replica<Replica:47004>:OUTPUT: 
+Replica 3 : sent shuttle (0, 0) to <Replica:47001>
+[2017-10-22 21:23:36,100] replica.Replica<Replica:47004>:OUTPUT: 
+Replica 3 : received shuttle (1, 0) from <Replica:47002>
+[2017-10-22 21:23:36,104] replica.Replica<Replica:47001>:OUTPUT: 
+Replica 4 : received shuttle (0, 0) from <Replica:47004>
+[2017-10-22 21:23:36,105] replica.Replica<Replica:47004>:OUTPUT: 
+Replica 3 : sent shuttle (1, 0) to <Replica:47001>
+[2017-10-22 21:23:36,109] replica.Replica<Replica:47001>:OUTPUT: 
+Replica 4 : sent operation_result (0, 0) to client <Client:8a003>
+[2017-10-22 21:23:36,121] replica.Replica<Replica:47001>:OUTPUT: 
+Replica 4 : sent result_shuttle (0, 0) to replica <Replica:47004>
+[2017-10-22 21:23:36,122] client.Client<Client:8a003>:OUTPUT: 
+Client 0 : received response for new request (0, 0) from replica <Replica:47001>
+[2017-10-22 21:23:36,127] client.Client<Client:8a003>:OUTPUT: 
+Client 0 : response of request (0, 0) for operation put('movie','star') is verified with 5 replicas acceptance.
+[2017-10-22 21:23:36,127] client.Client<Client:8a003>:OUTPUT: 
+Client 0 : response of new request (0, 0) for operation put('movie','star') is validated, the result is: OK
+[2017-10-22 21:23:36,129] client.Client<Client:8a003>:OUTPUT: 
+Client 0 : sent operation_request (0, 1) to <Replica:47005>
+[2017-10-22 21:23:36,129] replica.Replica<Replica:47005>:OUTPUT: 
+Replica 0 : received new operation request (0, 1) for operation:  append('movie',' wars')
+[2017-10-22 21:23:36,129] replica.Replica<Replica:47005>:OUTPUT: 
+Replica 0 : sent shuttle (0, 1) to  <Replica:47003>
+[2017-10-22 21:23:36,129] replica.Replica<Replica:47003>:OUTPUT: 
+Replica 1 : received shuttle (0, 1) from <Replica:47005>
+[2017-10-22 21:23:36,129] replica.Replica<Replica:47003>:OUTPUT: 
+Replica 1 : sent shuttle (0, 1) to <Replica:47002>
+[2017-10-22 21:23:36,129] replica.Replica<Replica:47002>:OUTPUT: 
+Replica 2 : received shuttle (0, 1) from <Replica:47003>
+[2017-10-22 21:23:36,129] replica.Replica<Replica:47002>:OUTPUT: 
+Replica 2 : sent shuttle (0, 1) to <Replica:47004>
+[2017-10-22 21:23:36,145] replica.Replica<Replica:47004>:OUTPUT: 
+Replica 3 : received shuttle (0, 1) from <Replica:47002>
+[2017-10-22 21:23:36,145] replica.Replica<Replica:47001>:OUTPUT: 
+Replica 4 : received shuttle (1, 0) from <Replica:47004>
+[2017-10-22 21:23:36,145] replica.Replica<Replica:47004>:OUTPUT: 
+Replica 3 : sent shuttle (0, 1) to <Replica:47001>
+[2017-10-22 21:23:36,145] replica.Replica<Replica:47001>:OUTPUT: 
+Replica 4 : sent operation_result (1, 0) to client <Client:8a004>
+[2017-10-22 21:23:36,145] replica.Replica<Replica:47004>:OUTPUT: 
+Replica 3 : received result_shuttle (0, 0) from <Replica:47001>
+[2017-10-22 21:23:36,145] replica.Replica<Replica:47004>:OUTPUT: 
+Replica 3 : sent result_shuttle (0, 0) to <Replica:47002>
+[2017-10-22 21:23:36,160] client.Client<Client:8a004>:OUTPUT: 
+Client 1 : received response for new request (1, 0) from replica <Replica:47001>
+[2017-10-22 21:23:36,160] replica.Replica<Replica:47001>:OUTPUT: 
+Replica 4 : sent result_shuttle (1, 0) to replica <Replica:47004>
+[2017-10-22 21:23:36,160] replica.Replica<Replica:47002>:OUTPUT: 
+Replica 2 : received result_shuttle (0, 0) from <Replica:47004>
+[2017-10-22 21:23:36,160] replica.Replica<Replica:47002>:OUTPUT: 
+Replica 2 : sent result_shuttle (0, 0) to <Replica:47003>
+[2017-10-22 21:23:36,160] replica.Replica<Replica:47001>:OUTPUT: 
+Replica 4 : received shuttle (0, 1) from <Replica:47004>
+[2017-10-22 21:23:36,160] replica.Replica<Replica:47004>:OUTPUT: 
+Replica 3 : received result_shuttle (1, 0) from <Replica:47001>
+[2017-10-22 21:23:36,160] client.Client<Client:8a004>:OUTPUT: 
+Client 1 : response of request (1, 0) for operation put('jedi','luke skywalker') is verified with 5 replicas acceptance.
+[2017-10-22 21:23:36,160] client.Client<Client:8a004>:OUTPUT: 
+Client 1 : response of new request (1, 0) for operation put('jedi','luke skywalker') is validated, the result is: OK
+[2017-10-22 21:23:36,160] replica.Replica<Replica:47004>:OUTPUT: 
+Replica 3 : sent result_shuttle (1, 0) to <Replica:47002>
+[2017-10-22 21:23:36,160] client.Client<Client:8a004>:OUTPUT: 
+Client 1 : sent operation_request (1, 1) to <Replica:47005>
+[2017-10-22 21:23:36,160] replica.Replica<Replica:47001>:OUTPUT: 
+Replica 4 : sent operation_result (0, 1) to client <Client:8a003>
+[2017-10-22 21:23:36,160] replica.Replica<Replica:47003>:OUTPUT: 
+Replica 1 : received result_shuttle (0, 0) from <Replica:47002>
+[2017-10-22 21:23:36,160] replica.Replica<Replica:47005>:OUTPUT: 
+Replica 0 : received new operation request (1, 1) for operation:  slice('jedi','0:4')
+[2017-10-22 21:23:36,160] replica.Replica<Replica:47001>:OUTPUT: 
+Replica 4 : sent result_shuttle (0, 1) to replica <Replica:47004>
+[2017-10-22 21:23:36,160] replica.Replica<Replica:47003>:OUTPUT: 
+Replica 1 : sent result_shuttle (0, 0) to <Replica:47005>
+[2017-10-22 21:23:36,160] replica.Replica<Replica:47002>:OUTPUT: 
+Replica 2 : received result_shuttle (1, 0) from <Replica:47004>
+[2017-10-22 21:23:36,160] client.Client<Client:8a003>:OUTPUT: 
+Client 0 : received response for new request (0, 1) from replica <Replica:47001>
+[2017-10-22 21:23:36,160] replica.Replica<Replica:47005>:OUTPUT: 
+Replica 0 : sent shuttle (1, 1) to  <Replica:47003>
+[2017-10-22 21:23:36,160] replica.Replica<Replica:47004>:OUTPUT: 
+Replica 3 : received result_shuttle (0, 1) from <Replica:47001>
+[2017-10-22 21:23:36,160] replica.Replica<Replica:47002>:OUTPUT: 
+Replica 2 : sent result_shuttle (1, 0) to <Replica:47003>
+[2017-10-22 21:23:36,176] replica.Replica<Replica:47003>:OUTPUT: 
+Replica 1 : received shuttle (1, 1) from <Replica:47005>
+[2017-10-22 21:23:36,176] client.Client<Client:8a003>:OUTPUT: 
+Client 0 : response of request (0, 1) for operation  append('movie',' wars') is verified with 5 replicas acceptance.
+[2017-10-22 21:23:36,176] replica.Replica<Replica:47004>:OUTPUT: 
+Replica 3 : sent result_shuttle (0, 1) to <Replica:47002>
+[2017-10-22 21:23:36,176] replica.Replica<Replica:47005>:OUTPUT: 
+Replica 0 : received result_shuttle (0, 0) from <Replica:47003>
+[2017-10-22 21:23:36,176] client.Client<Client:8a003>:OUTPUT: 
+Client 0 : response of new request (0, 1) for operation  append('movie',' wars') is validated, the result is: OK
+[2017-10-22 21:23:36,176] replica.Replica<Replica:47003>:OUTPUT: 
+Replica 1 : sent shuttle (1, 1) to <Replica:47002>
+[2017-10-22 21:23:36,176] client.Client<Client:8a003>:OUTPUT: 
+Client 0 : sent operation_request (0, 2) to <Replica:47005>
+[2017-10-22 21:23:36,176] replica.Replica<Replica:47002>:OUTPUT: 
+Replica 2 : received result_shuttle (0, 1) from <Replica:47004>
+[2017-10-22 21:23:36,176] replica.Replica<Replica:47005>:OUTPUT: 
+Replica 0 : received new operation request (0, 2) for operation:  get('movie')
+[2017-10-22 21:23:36,176] replica.Replica<Replica:47003>:OUTPUT: 
+Replica 1 : received result_shuttle (1, 0) from <Replica:47002>
+[2017-10-22 21:23:36,176] replica.Replica<Replica:47002>:OUTPUT: 
+Replica 2 : sent result_shuttle (0, 1) to <Replica:47003>
+[2017-10-22 21:23:36,176] replica.Replica<Replica:47003>:OUTPUT: 
+Replica 1 : sent result_shuttle (1, 0) to <Replica:47005>
+[2017-10-22 21:23:36,176] replica.Replica<Replica:47005>:OUTPUT: 
+Replica 0 : sent shuttle (0, 2) to  <Replica:47003>
+[2017-10-22 21:23:36,176] replica.Replica<Replica:47002>:OUTPUT: 
+Replica 2 : received shuttle (1, 1) from <Replica:47003>
+[2017-10-22 21:23:36,192] replica.Replica<Replica:47003>:OUTPUT: 
+Replica 1 : received result_shuttle (0, 1) from <Replica:47002>
+[2017-10-22 21:23:36,192] replica.Replica<Replica:47005>:OUTPUT: 
+Replica 0 : received result_shuttle (1, 0) from <Replica:47003>
+[2017-10-22 21:23:36,192] replica.Replica<Replica:47002>:OUTPUT: 
+Replica 2 : sent shuttle (1, 1) to <Replica:47004>
+[2017-10-22 21:23:36,192] replica.Replica<Replica:47003>:OUTPUT: 
+Replica 1 : sent result_shuttle (0, 1) to <Replica:47005>
+[2017-10-22 21:23:36,192] replica.Replica<Replica:47003>:OUTPUT: 
+Replica 1 : received shuttle (0, 2) from <Replica:47005>
+[2017-10-22 21:23:36,192] replica.Replica<Replica:47004>:OUTPUT: 
+Replica 3 : received shuttle (1, 1) from <Replica:47002>
+[2017-10-22 21:23:36,192] replica.Replica<Replica:47005>:OUTPUT: 
+Replica 0 : received result_shuttle (0, 1) from <Replica:47003>
+[2017-10-22 21:23:36,192] replica.Replica<Replica:47003>:OUTPUT: 
+Replica 1 : sent shuttle (0, 2) to <Replica:47002>
+[2017-10-22 21:23:36,192] replica.Replica<Replica:47004>:OUTPUT: 
+Replica 3 : sent shuttle (1, 1) to <Replica:47001>
+[2017-10-22 21:23:36,192] replica.Replica<Replica:47002>:OUTPUT: 
+Replica 2 : received shuttle (0, 2) from <Replica:47003>
+[2017-10-22 21:23:36,192] replica.Replica<Replica:47001>:OUTPUT: 
+Replica 4 : received shuttle (1, 1) from <Replica:47004>
+[2017-10-22 21:23:36,192] replica.Replica<Replica:47002>:OUTPUT: 
+Replica 2 : sent shuttle (0, 2) to <Replica:47004>
+[2017-10-22 21:23:36,192] replica.Replica<Replica:47004>:OUTPUT: 
+Replica 3 : received shuttle (0, 2) from <Replica:47002>
+[2017-10-22 21:23:36,192] replica.Replica<Replica:47001>:OUTPUT: 
+Replica 4 : sent operation_result (1, 1) to client <Client:8a004>
+[2017-10-22 21:23:36,192] replica.Replica<Replica:47001>:OUTPUT: 
+Replica 4 : sent result_shuttle (1, 1) to replica <Replica:47004>
+[2017-10-22 21:23:36,192] client.Client<Client:8a004>:OUTPUT: 
+Client 1 : received response for new request (1, 1) from replica <Replica:47001>
+[2017-10-22 21:23:36,192] replica.Replica<Replica:47004>:OUTPUT: 
+Replica 3 : sent shuttle (0, 2) to <Replica:47001>
+[2017-10-22 21:23:36,192] replica.Replica<Replica:47004>:OUTPUT: 
+Replica 3 : received result_shuttle (1, 1) from <Replica:47001>
+[2017-10-22 21:23:36,192] replica.Replica<Replica:47001>:OUTPUT: 
+Replica 4 : received shuttle (0, 2) from <Replica:47004>
+[2017-10-22 21:23:36,192] client.Client<Client:8a004>:OUTPUT: 
+Client 1 : response of request (1, 1) for operation  slice('jedi','0:4') is verified with 5 replicas acceptance.
+[2017-10-22 21:23:36,192] client.Client<Client:8a004>:OUTPUT: 
+Client 1 : response of new request (1, 1) for operation  slice('jedi','0:4') is validated, the result is: OK
+[2017-10-22 21:23:36,192] replica.Replica<Replica:47004>:OUTPUT: 
+Replica 3 : sent result_shuttle (1, 1) to <Replica:47002>
+[2017-10-22 21:23:36,192] client.Client<Client:8a004>:OUTPUT: 
+Client 1 : sent operation_request (1, 2) to <Replica:47005>
+[2017-10-22 21:23:36,192] replica.Replica<Replica:47001>:OUTPUT: 
+Replica 4 : sent operation_result (0, 2) to client <Client:8a003>
+[2017-10-22 21:23:36,192] replica.Replica<Replica:47002>:OUTPUT: 
+Replica 2 : received result_shuttle (1, 1) from <Replica:47004>
+[2017-10-22 21:23:36,207] client.Client<Client:8a003>:OUTPUT: 
+Client 0 : received response for new request (0, 2) from replica <Replica:47001>
+[2017-10-22 21:23:36,207] replica.Replica<Replica:47001>:OUTPUT: 
+Replica 4 : sent result_shuttle (0, 2) to replica <Replica:47004>
+[2017-10-22 21:23:36,192] replica.Replica<Replica:47005>:OUTPUT: 
+Replica 0 : received new operation request (1, 2) for operation:  get('jedi')
+[2017-10-22 21:23:36,207] replica.Replica<Replica:47002>:OUTPUT: 
+Replica 2 : sent result_shuttle (1, 1) to <Replica:47003>
+[2017-10-22 21:23:36,207] replica.Replica<Replica:47005>:OUTPUT: 
+Replica 0 : sent shuttle (1, 2) to  <Replica:47003>
+[2017-10-22 21:23:36,207] replica.Replica<Replica:47004>:OUTPUT: 
+Replica 3 : received result_shuttle (0, 2) from <Replica:47001>
+[2017-10-22 21:23:36,207] client.Client<Client:8a003>:OUTPUT: 
+Client 0 : response of request (0, 2) for operation  get('movie') is verified with 5 replicas acceptance.
+[2017-10-22 21:23:36,207] replica.Replica<Replica:47003>:OUTPUT: 
+Replica 1 : received shuttle (1, 2) from <Replica:47005>
+[2017-10-22 21:23:36,207] client.Client<Client:8a003>:OUTPUT: 
+Client 0 : response of new request (0, 2) for operation  get('movie') is validated, the result is: star wars
+[2017-10-22 21:23:36,207] replica.Replica<Replica:47004>:OUTPUT: 
+Replica 3 : sent result_shuttle (0, 2) to <Replica:47002>
+[2017-10-22 21:23:36,207] replica.Replica<Replica:47003>:OUTPUT: 
+Replica 1 : sent shuttle (1, 2) to <Replica:47002>
+[2017-10-22 21:23:36,207] replica.Replica<Replica:47003>:OUTPUT: 
+Replica 1 : received result_shuttle (1, 1) from <Replica:47002>
+[2017-10-22 21:23:36,207] replica.Replica<Replica:47002>:OUTPUT: 
+Replica 2 : received result_shuttle (0, 2) from <Replica:47004>
+[2017-10-22 21:23:36,207] replica.Replica<Replica:47003>:OUTPUT: 
+Replica 1 : sent result_shuttle (1, 1) to <Replica:47005>
+[2017-10-22 21:23:36,207] replica.Replica<Replica:47002>:OUTPUT: 
+Replica 2 : sent result_shuttle (0, 2) to <Replica:47003>
+[2017-10-22 21:23:36,207] replica.Replica<Replica:47005>:OUTPUT: 
+Replica 0 : received result_shuttle (1, 1) from <Replica:47003>
+[2017-10-22 21:23:36,207] replica.Replica<Replica:47002>:OUTPUT: 
+Replica 2 : received shuttle (1, 2) from <Replica:47003>
+[2017-10-22 21:23:36,207] replica.Replica<Replica:47003>:OUTPUT: 
+Replica 1 : received result_shuttle (0, 2) from <Replica:47002>
+[2017-10-22 21:23:36,207] replica.Replica<Replica:47003>:OUTPUT: 
+Replica 1 : sent result_shuttle (0, 2) to <Replica:47005>
+[2017-10-22 21:23:36,207] replica.Replica<Replica:47002>:OUTPUT: 
+Replica 2 : sent shuttle (1, 2) to <Replica:47004>
+[2017-10-22 21:23:36,223] replica.Replica<Replica:47005>:OUTPUT: 
+Replica 0 : received result_shuttle (0, 2) from <Replica:47003>
+[2017-10-22 21:23:36,223] replica.Replica<Replica:47004>:OUTPUT: 
+Replica 3 : received shuttle (1, 2) from <Replica:47002>
+[2017-10-22 21:23:36,223] replica.Replica<Replica:47004>:OUTPUT: 
+Replica 3 : sent shuttle (1, 2) to <Replica:47001>
+[2017-10-22 21:23:36,223] replica.Replica<Replica:47001>:OUTPUT: 
+Replica 4 : received shuttle (1, 2) from <Replica:47004>
+[2017-10-22 21:23:36,223] replica.Replica<Replica:47001>:OUTPUT: 
+Replica 4 : failure drop_result_stmt() triggered by shuttle(1,2)
+[2017-10-22 21:23:36,223] replica.Replica<Replica:47001>:OUTPUT: 
+Replica 4 : injecting drop_result_stmt failure for request (1, 2) at shuttle.
+[2017-10-22 21:23:36,223] replica.Replica<Replica:47001>:OUTPUT: 
+Replica 4 : sent operation_result (1, 2) to client <Client:8a004>
+[2017-10-22 21:23:36,223] replica.Replica<Replica:47001>:OUTPUT: 
+Replica 4 : sent result_shuttle (1, 2) to replica <Replica:47004>
+[2017-10-22 21:23:36,223] client.Client<Client:8a004>:OUTPUT: 
+Client 1 : received response for new request (1, 2) from replica <Replica:47001>
+[2017-10-22 21:23:36,223] replica.Replica<Replica:47004>:OUTPUT: 
+Replica 3 : received result_shuttle (1, 2) from <Replica:47001>
+[2017-10-22 21:23:36,223] replica.Replica<Replica:47004>:OUTPUT: 
+Replica 3 : result shuttle for (1, 2) does not contain enough entries, expected 5 but only receive 4 ignore this result shuttle
+[2017-10-22 21:23:36,238] client.Client<Client:8a004>:OUTPUT: 
+Client 1 : response of request (1, 2) for operation  get('jedi') is verified with 4 replicas acceptance.
+[2017-10-22 21:23:36,238] client.Client<Client:8a004>:OUTPUT: 
+Client 1 : response of new request (1, 2) for operation  get('jedi') is validated, the result is: luke
+[2017-10-22 21:23:41,208] client.Client<Client:8a003>:OUTPUT: 
+Client 0 : actual request result: ['OK', 'OK', 'star wars']
+[2017-10-22 21:23:41,208] client.Client<Client:8a003>:OUTPUT: 
+Client 0 : final test result: ['OK', 'OK', 'star wars']
+[2017-10-22 21:23:41,208] client.Client<Client:8a003>:OUTPUT: 
+Client 0 : final test state: {'movie': 'star wars'}
+[2017-10-22 21:23:41,208] client.Client<Client:8a003>:OUTPUT: 
+Client 0 terminating.
+[2017-10-22 21:23:41,239] client.Client<Client:8a004>:OUTPUT: 
+Client 1 : actual request result: ['OK', 'OK', 'luke']
+[2017-10-22 21:23:41,239] client.Client<Client:8a004>:OUTPUT: 
+Client 1 : final test result: ['OK', 'OK', 'luke']
+[2017-10-22 21:23:41,239] client.Client<Client:8a004>:OUTPUT: 
+Client 1 : final test state: {'jedi': 'luke'}
+[2017-10-22 21:23:41,239] client.Client<Client:8a004>:OUTPUT: 
+Client 1 terminating.
+[2017-10-22 21:23:44,254] replica.Replica<Replica:47004>:OUTPUT: 
+Replica 3 state: {'movie': 'star wars', 'jedi': 'luke'}
+[2017-10-22 21:23:44,254] replica.Replica<Replica:47003>:OUTPUT: 
+Replica 1 state: {'movie': 'star wars', 'jedi': 'luke'}
+[2017-10-22 21:23:44,254] replica.Replica<Replica:47002>:OUTPUT: 
+Replica 2 state: {'movie': 'star wars', 'jedi': 'luke'}
+[2017-10-22 21:23:44,254] replica.Replica<Replica:47005>:OUTPUT: 
+Replica 0 state: {'movie': 'star wars', 'jedi': 'luke'}
+[2017-10-22 21:23:44,254] replica.Replica<Replica:47001>:OUTPUT: 
+Replica 4 state: {'jedi': 'luke', 'movie': 'star wars'}

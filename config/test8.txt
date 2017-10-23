@@ -1,0 +1,26 @@
+test_case_name = test9 - Failure Free with Pseudorandom
+
+# number of failures to tolerate.  number of replicas is 2t+1.
+t = 2
+# number of clients
+num_client = 10
+# client timeout, in milliseconds.
+client_timeout = 3000
+# timeout, in milliseconds, for head and non-head servers, respectively
+head_timeout = 3000
+nonhead_timeout = 3000
+
+# CLIENT WORKLOAD
+workload[0] = pseudorandom(50,100)
+workload[1] = pseudorandom(150,100)
+workload[2] = pseudorandom(250,100)
+workload[3] = pseudorandom(350,100)
+workload[4] = pseudorandom(450,100)
+workload[5] = pseudorandom(550,100)
+workload[6] = pseudorandom(650,100)
+workload[7] = pseudorandom(750,100)
+workload[8] = pseudorandom(850,100)
+workload[9] = pseudorandom(900,100)
+
+# FAILURE SCENARIO
+# no failures

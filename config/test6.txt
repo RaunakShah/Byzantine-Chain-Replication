@@ -1,0 +1,19 @@
+test_case_name = test6 - Shuttle trigger Drop Result Statement
+
+# number of failures to tolerate.  number of replicas is 2t+1.
+t = 2
+# number of clients
+num_client = 2
+# client timeout, in milliseconds.
+client_timeout = 3000
+# timeout, in milliseconds, for head and non-head servers, respectively
+head_timeout = 5000
+nonhead_timeout = 5000
+
+# CLIENT WORKLOAD
+workload[0] = put('movie','star'); append('movie',' wars'); get('movie')
+workload[1] = put('jedi','luke skywalker'); slice('jedi','0:4'); get('jedi')
+
+# FAILURE SCENARIO
+failures[0,4] = shuttle(1,2), drop_result_stmt()
+

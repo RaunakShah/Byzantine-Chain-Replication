@@ -1,0 +1,471 @@
+[2017-10-22 21:17:09,243] replica.Replica<Replica:70005>:OUTPUT: 
+Replica: 0 with history:  [] initialized
+[2017-10-22 21:17:09,259] replica.Replica<Replica:70001>:OUTPUT: 
+Replica: 1 with history:  [] initialized
+[2017-10-22 21:17:09,274] replica.Replica<Replica:70003>:OUTPUT: 
+Replica: 2 with history:  [] initialized
+[2017-10-22 21:17:09,290] replica.Replica<Replica:70004>:OUTPUT: 
+Replica: 3 with history:  [] initialized
+[2017-10-22 21:17:09,306] replica.Replica<Replica:70002>:OUTPUT: 
+Replica: 4 with history:  [] initialized
+[2017-10-22 21:17:09,712] client.Client<Client:77003>:OUTPUT: Client ID: 0 
+Workload: ["get('key_1')", "append('key_1','value_1')", "put('key_0','value_0')", "append('key_1','value_1')", "get('key_1')"] 
+Timeout: 3
+[2017-10-22 21:17:09,728] client.Client<Client:77004>:OUTPUT: Client ID: 1 
+Workload: ["append('key_1','value_3')", "append('key_1','value_3')", "slice('key_0','2:4')", "append('key_1','value_3')"] 
+Timeout: 3
+[2017-10-22 21:17:09,728] olympus.Olympus<Olympus:77002>:OUTPUT: 
+Starting test case: test2 - Failure Free with Pseudorandom
+[2017-10-22 21:17:09,728] olympus.Olympus<Olympus:77002>:OUTPUT: 
+Starting Olympus.
+[2017-10-22 21:17:09,728] client.Client<Client:77003>:OUTPUT: 
+Starting client 0
+[2017-10-22 21:17:09,728] client.Client<Client:77004>:OUTPUT: 
+Starting client 1
+[2017-10-22 21:17:09,728] replica.Replica<Replica:70005>:OUTPUT: 
+Starting replica 0
+[2017-10-22 21:17:09,728] replica.Replica<Replica:70001>:OUTPUT: 
+Starting replica 1
+[2017-10-22 21:17:09,728] replica.Replica<Replica:70003>:OUTPUT: 
+Starting replica 2
+[2017-10-22 21:17:09,728] replica.Replica<Replica:70004>:OUTPUT: 
+Starting replica 3
+[2017-10-22 21:17:09,728] replica.Replica<Replica:70002>:OUTPUT: 
+Starting replica 4
+[2017-10-22 21:17:09,728] client.Client<Client:77003>:OUTPUT: 
+Client 0 : sent get_configuration to Olympus.
+[2017-10-22 21:17:09,728] client.Client<Client:77004>:OUTPUT: 
+Client 1 : sent get_configuration to Olympus.
+[2017-10-22 21:17:09,743] client.Client<Client:77003>:OUTPUT: 
+Client 0 : received configuration 0 from Olympus.
+[2017-10-22 21:17:09,743] client.Client<Client:77004>:OUTPUT: 
+Client 1 : received configuration 0 from Olympus.
+[2017-10-22 21:17:09,743] client.Client<Client:77003>:OUTPUT: 
+Client 0 : sent check config message to Olympus.
+[2017-10-22 21:17:09,743] client.Client<Client:77004>:OUTPUT: 
+Client 1 : sent check config message to Olympus.
+[2017-10-22 21:17:09,743] client.Client<Client:77003>:OUTPUT: 
+Client 0 : received check config response:  OK
+[2017-10-22 21:17:09,743] client.Client<Client:77004>:OUTPUT: 
+Client 1 : received check config response:  OK
+[2017-10-22 21:17:09,759] client.Client<Client:77003>:OUTPUT: 
+Client 0 : sent operation_request (0, 0) to <Replica:70005>
+[2017-10-22 21:17:09,759] replica.Replica<Replica:70005>:OUTPUT: 
+Replica 0 : received new operation request (0, 0) for operation: get('key_1')
+[2017-10-22 21:17:09,775] replica.Replica<Replica:70005>:OUTPUT: 
+Replica 0 : sent shuttle (0, 0) to  <Replica:70001>
+[2017-10-22 21:17:09,775] client.Client<Client:77004>:OUTPUT: 
+Client 1 : sent operation_request (1, 0) to <Replica:70005>
+[2017-10-22 21:17:09,775] replica.Replica<Replica:70001>:OUTPUT: 
+Replica 1 : received shuttle (0, 0) from <Replica:70005>
+[2017-10-22 21:17:09,775] replica.Replica<Replica:70005>:OUTPUT: 
+Replica 0 : received new operation request (1, 0) for operation: append('key_1','value_3')
+[2017-10-22 21:17:09,775] replica.Replica<Replica:70001>:OUTPUT: 
+Replica 1 : sent shuttle (0, 0) to <Replica:70003>
+[2017-10-22 21:17:09,775] replica.Replica<Replica:70005>:OUTPUT: 
+Replica 0 : sent shuttle (1, 0) to  <Replica:70001>
+[2017-10-22 21:17:09,790] replica.Replica<Replica:70001>:OUTPUT: 
+Replica 1 : received shuttle (1, 0) from <Replica:70005>
+[2017-10-22 21:17:09,790] replica.Replica<Replica:70003>:OUTPUT: 
+Replica 2 : received shuttle (0, 0) from <Replica:70001>
+[2017-10-22 21:17:09,790] replica.Replica<Replica:70001>:OUTPUT: 
+Replica 1 : sent shuttle (1, 0) to <Replica:70003>
+[2017-10-22 21:17:09,790] replica.Replica<Replica:70003>:OUTPUT: 
+Replica 2 : sent shuttle (0, 0) to <Replica:70004>
+[2017-10-22 21:17:09,806] replica.Replica<Replica:70003>:OUTPUT: 
+Replica 2 : received shuttle (1, 0) from <Replica:70001>
+[2017-10-22 21:17:09,806] replica.Replica<Replica:70004>:OUTPUT: 
+Replica 3 : received shuttle (0, 0) from <Replica:70003>
+[2017-10-22 21:17:09,806] replica.Replica<Replica:70003>:OUTPUT: 
+Replica 2 : sent shuttle (1, 0) to <Replica:70004>
+[2017-10-22 21:17:09,806] replica.Replica<Replica:70004>:OUTPUT: 
+Replica 3 : sent shuttle (0, 0) to <Replica:70002>
+[2017-10-22 21:17:09,821] replica.Replica<Replica:70004>:OUTPUT: 
+Replica 3 : received shuttle (1, 0) from <Replica:70003>
+[2017-10-22 21:17:09,821] replica.Replica<Replica:70002>:OUTPUT: 
+Replica 4 : received shuttle (0, 0) from <Replica:70004>
+[2017-10-22 21:17:09,821] replica.Replica<Replica:70004>:OUTPUT: 
+Replica 3 : sent shuttle (1, 0) to <Replica:70002>
+[2017-10-22 21:17:09,821] replica.Replica<Replica:70002>:OUTPUT: 
+Replica 4 : sent operation_result (0, 0) to client <Client:77003>
+[2017-10-22 21:17:09,837] replica.Replica<Replica:70002>:OUTPUT: 
+Replica 4 : sent result_shuttle (0, 0) to replica <Replica:70004>
+[2017-10-22 21:17:09,837] client.Client<Client:77003>:OUTPUT: 
+Client 0 : received response for new request (0, 0) from replica <Replica:70002>
+[2017-10-22 21:17:09,837] client.Client<Client:77003>:OUTPUT: 
+Client 0 : response of request (0, 0) for operation get('key_1') is verified with 5 replicas acceptance.
+[2017-10-22 21:17:09,837] client.Client<Client:77003>:OUTPUT: 
+Client 0 : response of new request (0, 0) for operation get('key_1') is validated, the result is: 
+[2017-10-22 21:17:09,837] client.Client<Client:77003>:OUTPUT: 
+Client 0 : sent operation_request (0, 1) to <Replica:70005>
+[2017-10-22 21:17:09,837] replica.Replica<Replica:70005>:OUTPUT: 
+Replica 0 : received new operation request (0, 1) for operation: append('key_1','value_1')
+[2017-10-22 21:17:09,837] replica.Replica<Replica:70005>:OUTPUT: 
+Replica 0 : sent shuttle (0, 1) to  <Replica:70001>
+[2017-10-22 21:17:09,837] replica.Replica<Replica:70001>:OUTPUT: 
+Replica 1 : received shuttle (0, 1) from <Replica:70005>
+[2017-10-22 21:17:09,837] replica.Replica<Replica:70001>:OUTPUT: 
+Replica 1 : sent shuttle (0, 1) to <Replica:70003>
+[2017-10-22 21:17:09,837] replica.Replica<Replica:70003>:OUTPUT: 
+Replica 2 : received shuttle (0, 1) from <Replica:70001>
+[2017-10-22 21:17:09,853] replica.Replica<Replica:70002>:OUTPUT: 
+Replica 4 : received shuttle (1, 0) from <Replica:70004>
+[2017-10-22 21:17:09,853] replica.Replica<Replica:70003>:OUTPUT: 
+Replica 2 : sent shuttle (0, 1) to <Replica:70004>
+[2017-10-22 21:17:09,853] replica.Replica<Replica:70004>:OUTPUT: 
+Replica 3 : received result_shuttle (0, 0) from <Replica:70002>
+[2017-10-22 21:17:09,853] replica.Replica<Replica:70004>:OUTPUT: 
+Replica 3 : sent result_shuttle (0, 0) to <Replica:70003>
+[2017-10-22 21:17:09,853] replica.Replica<Replica:70002>:OUTPUT: 
+Replica 4 : sent operation_result (1, 0) to client <Client:77004>
+[2017-10-22 21:17:09,868] replica.Replica<Replica:70004>:OUTPUT: 
+Replica 3 : received shuttle (0, 1) from <Replica:70003>
+[2017-10-22 21:17:09,868] replica.Replica<Replica:70003>:OUTPUT: 
+Replica 2 : received result_shuttle (0, 0) from <Replica:70004>
+[2017-10-22 21:17:09,868] replica.Replica<Replica:70003>:OUTPUT: 
+Replica 2 : sent result_shuttle (0, 0) to <Replica:70001>
+[2017-10-22 21:17:09,868] replica.Replica<Replica:70004>:OUTPUT: 
+Replica 3 : sent shuttle (0, 1) to <Replica:70002>
+[2017-10-22 21:17:09,884] replica.Replica<Replica:70002>:OUTPUT: 
+Replica 4 : sent result_shuttle (1, 0) to replica <Replica:70004>
+[2017-10-22 21:17:09,884] client.Client<Client:77004>:OUTPUT: 
+Client 1 : received response for new request (1, 0) from replica <Replica:70002>
+[2017-10-22 21:17:09,884] replica.Replica<Replica:70001>:OUTPUT: 
+Replica 1 : received result_shuttle (0, 0) from <Replica:70003>
+[2017-10-22 21:17:09,884] replica.Replica<Replica:70001>:OUTPUT: 
+Replica 1 : sent result_shuttle (0, 0) to <Replica:70005>
+[2017-10-22 21:17:09,884] replica.Replica<Replica:70002>:OUTPUT: 
+Replica 4 : received shuttle (0, 1) from <Replica:70004>
+[2017-10-22 21:17:09,884] replica.Replica<Replica:70004>:OUTPUT: 
+Replica 3 : received result_shuttle (1, 0) from <Replica:70002>
+[2017-10-22 21:17:09,884] client.Client<Client:77004>:OUTPUT: 
+Client 1 : response of request (1, 0) for operation append('key_1','value_3') is verified with 5 replicas acceptance.
+[2017-10-22 21:17:09,884] client.Client<Client:77004>:OUTPUT: 
+Client 1 : response of new request (1, 0) for operation append('key_1','value_3') is validated, the result is: fail
+[2017-10-22 21:17:09,884] replica.Replica<Replica:70004>:OUTPUT: 
+Replica 3 : sent result_shuttle (1, 0) to <Replica:70003>
+[2017-10-22 21:17:09,884] replica.Replica<Replica:70002>:OUTPUT: 
+Replica 4 : sent operation_result (0, 1) to client <Client:77003>
+[2017-10-22 21:17:09,884] replica.Replica<Replica:70005>:OUTPUT: 
+Replica 0 : received result_shuttle (0, 0) from <Replica:70001>
+[2017-10-22 21:17:09,884] replica.Replica<Replica:70002>:OUTPUT: 
+Replica 4 : sent result_shuttle (0, 1) to replica <Replica:70004>
+[2017-10-22 21:17:09,884] client.Client<Client:77004>:OUTPUT: 
+Client 1 : sent operation_request (1, 1) to <Replica:70005>
+[2017-10-22 21:17:09,900] client.Client<Client:77003>:OUTPUT: 
+Client 0 : received response for new request (0, 1) from replica <Replica:70002>
+[2017-10-22 21:17:09,900] replica.Replica<Replica:70003>:OUTPUT: 
+Replica 2 : received result_shuttle (1, 0) from <Replica:70004>
+[2017-10-22 21:17:09,900] replica.Replica<Replica:70005>:OUTPUT: 
+Replica 0 : received new operation request (1, 1) for operation: append('key_1','value_3')
+[2017-10-22 21:17:09,900] replica.Replica<Replica:70004>:OUTPUT: 
+Replica 3 : received result_shuttle (0, 1) from <Replica:70002>
+[2017-10-22 21:17:09,900] replica.Replica<Replica:70005>:OUTPUT: 
+Replica 0 : sent shuttle (1, 1) to  <Replica:70001>
+001>
+[2017-10-22 21:17:09,900] replica.Replica<Replica:70004>:OUTPUT: 
+Replica 3 : sent result_shuttle (0, 1) to <Replica:70003>
+[2017-10-22 21:17:09,900] replica.Replica<Replica:70001>:OUTPUT: 
+Replica 1 : received shuttle (1, 1) from <Replica:70005>
+[2017-10-22 21:17:09,900] client.Client<Client:77003>:OUTPUT: 
+Client 0 : response of request (0, 1) for operation append('key_1','value_1') is verified with 5 replicas acceptance.
+[2017-10-22 21:17:09,915] client.Client<Client:77003>:OUTPUT: 
+Client 0 : response of new request (0, 1) for operation append('key_1','value_1') is validated, the result is: fail
+[2017-10-22 21:17:09,915] replica.Replica<Replica:70001>:OUTPUT: 
+Replica 1 : sent shuttle (1, 1) to <Replica:70003>
+[2017-10-22 21:17:09,915] replica.Replica<Replica:70003>:OUTPUT: 
+Replica 2 : received result_shuttle (0, 1) from <Replica:70004>
+[2017-10-22 21:17:09,915] client.Client<Client:77003>:OUTPUT: 
+Client 0 : sent operation_request (0, 2) to <Replica:70005>
+[2017-10-22 21:17:09,915] replica.Replica<Replica:70001>:OUTPUT: 
+Replica 1 : received result_shuttle (1, 0) from <Replica:70003>
+[2017-10-22 21:17:09,915] replica.Replica<Replica:70003>:OUTPUT: 
+Replica 2 : sent result_shuttle (0, 1) to <Replica:70001>
+[2017-10-22 21:17:09,915] replica.Replica<Replica:70005>:OUTPUT: 
+Replica 0 : received new operation request (0, 2) for operation: put('key_0','value_0')
+[2017-10-22 21:17:09,915] replica.Replica<Replica:70001>:OUTPUT: 
+Replica 1 : sent result_shuttle (1, 0) to <Replica:70005>
+[2017-10-22 21:17:09,915] replica.Replica<Replica:70003>:OUTPUT: 
+Replica 2 : received shuttle (1, 1) from <Replica:70001>
+[2017-10-22 21:17:09,915] replica.Replica<Replica:70005>:OUTPUT: 
+Replica 0 : sent shuttle (0, 2) to  <Replica:70001>
+[2017-10-22 21:17:09,915] replica.Replica<Replica:70001>:OUTPUT: 
+Replica 1 : received result_shuttle (0, 1) from <Replica:70003>
+[2017-10-22 21:17:09,915] replica.Replica<Replica:70003>:OUTPUT: 
+Replica 2 : sent shuttle (1, 1) to <Replica:70004>
+[2017-10-22 21:17:09,915] replica.Replica<Replica:70005>:OUTPUT: 
+Replica 0 : received result_shuttle (1, 0) from <Replica:70001>
+[2017-10-22 21:17:09,915] replica.Replica<Replica:70001>:OUTPUT: 
+Replica 1 : sent result_shuttle (0, 1) to <Replica:70005>
+[2017-10-22 21:17:09,915] replica.Replica<Replica:70004>:OUTPUT: 
+Replica 3 : received shuttle (1, 1) from <Replica:70003>
+[2017-10-22 21:17:09,915] replica.Replica<Replica:70001>:OUTPUT: 
+Replica 1 : received shuttle (0, 2) from <Replica:70005>
+[2017-10-22 21:17:09,915] replica.Replica<Replica:70005>:OUTPUT: 
+Replica 0 : received result_shuttle (0, 1) from <Replica:70001>
+[2017-10-22 21:17:09,915] replica.Replica<Replica:70001>:OUTPUT: 
+Replica 1 : sent shuttle (0, 2) to <Replica:70003>
+[2017-10-22 21:17:09,915] replica.Replica<Replica:70004>:OUTPUT: 
+Replica 3 : sent shuttle (1, 1) to <Replica:70002>
+[2017-10-22 21:17:09,915] replica.Replica<Replica:70003>:OUTPUT: 
+Replica 2 : received shuttle (0, 2) from <Replica:70001>
+[2017-10-22 21:17:09,915] replica.Replica<Replica:70002>:OUTPUT: 
+Replica 4 : received shuttle (1, 1) from <Replica:70004>
+[2017-10-22 21:17:09,915] replica.Replica<Replica:70003>:OUTPUT: 
+Replica 2 : sent shuttle (0, 2) to <Replica:70004>
+[2017-10-22 21:17:09,915] replica.Replica<Replica:70002>:OUTPUT: 
+Replica 4 : sent operation_result (1, 1) to client <Client:77004>
+[2017-10-22 21:17:09,915] replica.Replica<Replica:70004>:OUTPUT: 
+Replica 3 : received shuttle (0, 2) from <Replica:70003>
+[2017-10-22 21:17:09,915] replica.Replica<Replica:70002>:OUTPUT: 
+Replica 4 : sent result_shuttle (1, 1) to replica <Replica:70004>
+[2017-10-22 21:17:09,915] client.Client<Client:77004>:OUTPUT: 
+Client 1 : received response for new request (1, 1) from replica <Replica:70002>
+[2017-10-22 21:17:09,931] replica.Replica<Replica:70004>:OUTPUT: 
+Replica 3 : sent shuttle (0, 2) to <Replica:70002>
+[2017-10-22 21:17:09,931] client.Client<Client:77004>:OUTPUT: 
+Client 1 : response of request (1, 1) for operation append('key_1','value_3') is verified with 5 replicas acceptance.
+[2017-10-22 21:17:09,931] client.Client<Client:77004>:OUTPUT: 
+Client 1 : response of new request (1, 1) for operation append('key_1','value_3') is validated, the result is: fail
+[2017-10-22 21:17:09,931] client.Client<Client:77004>:OUTPUT: 
+Client 1 : sent operation_request (1, 2) to <Replica:70005>
+[2017-10-22 21:17:09,931] replica.Replica<Replica:70004>:OUTPUT: 
+Replica 3 : received result_shuttle (1, 1) from <Replica:70002>
+[2017-10-22 21:17:09,931] replica.Replica<Replica:70002>:OUTPUT: 
+Replica 4 : received shuttle (0, 2) from <Replica:70004>
+[2017-10-22 21:17:09,931] replica.Replica<Replica:70005>:OUTPUT: 
+Replica 0 : received new operation request (1, 2) for operation: slice('key_0','2:4')
+[2017-10-22 21:17:09,931] replica.Replica<Replica:70004>:OUTPUT: 
+Replica 3 : sent result_shuttle (1, 1) to <Replica:70003>
+[2017-10-22 21:17:09,931] replica.Replica<Replica:70005>:OUTPUT: 
+Replica 0 : sent shuttle (1, 2) to  <Replica:70001>
+[2017-10-22 21:17:09,931] replica.Replica<Replica:70002>:OUTPUT: 
+Replica 4 : sent operation_result (0, 2) to client <Client:77003>
+[2017-10-22 21:17:09,931] replica.Replica<Replica:70001>:OUTPUT: 
+Replica 1 : received shuttle (1, 2) from <Replica:70005>
+[2017-10-22 21:17:09,931] replica.Replica<Replica:70003>:OUTPUT: 
+Replica 2 : received result_shuttle (1, 1) from <Replica:70004>
+[2017-10-22 21:17:09,931] replica.Replica<Replica:70002>:OUTPUT: 
+Replica 4 : sent result_shuttle (0, 2) to replica <Replica:70004>
+[2017-10-22 21:17:09,931] client.Client<Client:77003>:OUTPUT: 
+Client 0 : received response for new request (0, 2) from replica <Replica:70002>
+[2017-10-22 21:17:09,931] replica.Replica<Replica:70001>:OUTPUT: 
+Replica 1 : sent shuttle (1, 2) to <Replica:70003>
+[2017-10-22 21:17:09,931] replica.Replica<Replica:70003>:OUTPUT: 
+Replica 2 : sent result_shuttle (1, 1) to <Replica:70001>
+[2017-10-22 21:17:09,931] replica.Replica<Replica:70004>:OUTPUT: 
+Replica 3 : received result_shuttle (0, 2) from <Replica:70002>
+[2017-10-22 21:17:09,931] replica.Replica<Replica:70003>:OUTPUT: 
+Replica 2 : received shuttle (1, 2) from <Replica:70001>
+[2017-10-22 21:17:09,931] replica.Replica<Replica:70001>:OUTPUT: 
+Replica 1 : received result_shuttle (1, 1) from <Replica:70003>
+[2017-10-22 21:17:09,931] client.Client<Client:77003>:OUTPUT: 
+Client 0 : response of request (0, 2) for operation put('key_0','value_0') is verified with 5 replicas acceptance.
+[2017-10-22 21:17:09,931] client.Client<Client:77003>:OUTPUT: 
+Client 0 : response of new request (0, 2) for operation put('key_0','value_0') is validated, the result is: OK
+[2017-10-22 21:17:09,931] replica.Replica<Replica:70004>:OUTPUT: 
+Replica 3 : sent result_shuttle (0, 2) to <Replica:70003>
+[2017-10-22 21:17:09,931] replica.Replica<Replica:70001>:OUTPUT: 
+Replica 1 : sent result_shuttle (1, 1) to <Replica:70005>
+[2017-10-22 21:17:09,946] replica.Replica<Replica:70003>:OUTPUT: 
+Replica 2 : sent shuttle (1, 2) to <Replica:70004>
+[2017-10-22 21:17:09,946] client.Client<Client:77003>:OUTPUT: 
+Client 0 : sent operation_request (0, 3) to <Replica:70005>
+[2017-10-22 21:17:09,946] replica.Replica<Replica:70005>:OUTPUT: 
+Replica 0 : received result_shuttle (1, 1) from <Replica:70001>
+[2017-10-22 21:17:09,946] replica.Replica<Replica:70005>:OUTPUT: 
+Replica 0 : received new operation request (0, 3) for operation: append('key_1','value_1')
+[2017-10-22 21:17:09,946] replica.Replica<Replica:70003>:OUTPUT: 
+Replica 2 : received result_shuttle (0, 2) from <Replica:70004>
+[2017-10-22 21:17:09,946] replica.Replica<Replica:70004>:OUTPUT: 
+Replica 3 : received shuttle (1, 2) from <Replica:70003>
+[2017-10-22 21:17:09,946] replica.Replica<Replica:70005>:OUTPUT: 
+Replica 0 : sent shuttle (0, 3) to  <Replica:70001>
+[2017-10-22 21:17:09,946] replica.Replica<Replica:70003>:OUTPUT: 
+Replica 2 : sent result_shuttle (0, 2) to <Replica:70001>
+[2017-10-22 21:17:09,946] replica.Replica<Replica:70001>:OUTPUT: 
+Replica 1 : received shuttle (0, 3) from <Replica:70005>
+[2017-10-22 21:17:09,946] replica.Replica<Replica:70004>:OUTPUT: 
+Replica 3 : sent shuttle (1, 2) to <Replica:70002>
+[2017-10-22 21:17:09,946] replica.Replica<Replica:70001>:OUTPUT: 
+Replica 1 : sent shuttle (0, 3) to <Replica:70003>
+[2017-10-22 21:17:09,946] replica.Replica<Replica:70001>:OUTPUT: 
+Replica 1 : received result_shuttle (0, 2) from <Replica:70003>
+[2017-10-22 21:17:09,946] replica.Replica<Replica:70003>:OUTPUT: 
+Replica 2 : received shuttle (0, 3) from <Replica:70001>
+[2017-10-22 21:17:09,946] replica.Replica<Replica:70002>:OUTPUT: 
+Replica 4 : received shuttle (1, 2) from <Replica:70004>
+[2017-10-22 21:17:09,946] replica.Replica<Replica:70001>:OUTPUT: 
+Replica 1 : sent result_shuttle (0, 2) to <Replica:70005>
+[2017-10-22 21:17:09,946] replica.Replica<Replica:70003>:OUTPUT: 
+Replica 2 : sent shuttle (0, 3) to <Replica:70004>
+[2017-10-22 21:17:09,946] replica.Replica<Replica:70005>:OUTPUT: 
+Replica 0 : received result_shuttle (0, 2) from <Replica:70001>
+[2017-10-22 21:17:09,946] replica.Replica<Replica:70002>:OUTPUT: 
+Replica 4 : sent operation_result (1, 2) to client <Client:77004>
+[2017-10-22 21:17:09,946] replica.Replica<Replica:70004>:OUTPUT: 
+Replica 3 : received shuttle (0, 3) from <Replica:70003>
+[2017-10-22 21:17:09,946] replica.Replica<Replica:70002>:OUTPUT: 
+Replica 4 : sent result_shuttle (1, 2) to replica <Replica:70004>
+[2017-10-22 21:17:09,962] replica.Replica<Replica:70004>:OUTPUT: 
+Replica 3 : sent shuttle (0, 3) to <Replica:70002>
+[2017-10-22 21:17:09,962] client.Client<Client:77004>:OUTPUT: 
+Client 1 : received response for new request (1, 2) from replica <Replica:70002>
+[2017-10-22 21:17:09,962] replica.Replica<Replica:70004>:OUTPUT: 
+Replica 3 : received result_shuttle (1, 2) from <Replica:70002>
+[2017-10-22 21:17:09,962] replica.Replica<Replica:70002>:OUTPUT: 
+Replica 4 : received shuttle (0, 3) from <Replica:70004>
+[2017-10-22 21:17:09,962] client.Client<Client:77004>:OUTPUT: 
+Client 1 : response of request (1, 2) for operation slice('key_0','2:4') is verified with 5 replicas acceptance.
+[2017-10-22 21:17:09,962] client.Client<Client:77004>:OUTPUT: 
+Client 1 : response of new request (1, 2) for operation slice('key_0','2:4') is validated, the result is: OK
+[2017-10-22 21:17:09,962] replica.Replica<Replica:70004>:OUTPUT: 
+Replica 3 : sent result_shuttle (1, 2) to <Replica:70003>
+[2017-10-22 21:17:09,962] client.Client<Client:77004>:OUTPUT: 
+Client 1 : sent operation_request (1, 3) to <Replica:70005>
+[2017-10-22 21:17:09,962] replica.Replica<Replica:70002>:OUTPUT: 
+Replica 4 : sent operation_result (0, 3) to client <Client:77003>
+[2017-10-22 21:17:09,962] replica.Replica<Replica:70003>:OUTPUT: 
+Replica 2 : received result_shuttle (1, 2) from <Replica:70004>
+[2017-10-22 21:17:09,962] replica.Replica<Replica:70002>:OUTPUT: 
+Replica 4 : sent result_shuttle (0, 3) to replica <Replica:70004>
+[2017-10-22 21:17:09,962] replica.Replica<Replica:70005>:OUTPUT: 
+Replica 0 : received new operation request (1, 3) for operation: append('key_1','value_3')
+[2017-10-22 21:17:09,962] client.Client<Client:77003>:OUTPUT: 
+Client 0 : received response for new request (0, 3) from replica <Replica:70002>
+[2017-10-22 21:17:09,962] replica.Replica<Replica:70003>:OUTPUT: 
+Replica 2 : sent result_shuttle (1, 2) to <Replica:70001>
+[2017-10-22 21:17:09,962] replica.Replica<Replica:70005>:OUTPUT: 
+Replica 0 : sent shuttle (1, 3) to  <Replica:70001>
+[2017-10-22 21:17:09,962] replica.Replica<Replica:70004>:OUTPUT: 
+Replica 3 : received result_shuttle (0, 3) from <Replica:70002>
+[2017-10-22 21:17:09,962] replica.Replica<Replica:70001>:OUTPUT: 
+Replica 1 : received shuttle (1, 3) from <Replica:70005>
+[2017-10-22 21:17:09,962] replica.Replica<Replica:70001>:OUTPUT: 
+Replica 1 : sent shuttle (1, 3) to <Replica:70003>
+[2017-10-22 21:17:09,962] client.Client<Client:77003>:OUTPUT: 
+Client 0 : response of request (0, 3) for operation append('key_1','value_1') is verified with 5 replicas acceptance.
+[2017-10-22 21:17:09,962] replica.Replica<Replica:70004>:OUTPUT: 
+Replica 3 : sent result_shuttle (0, 3) to <Replica:70003>
+[2017-10-22 21:17:09,962] client.Client<Client:77003>:OUTPUT: 
+Client 0 : response of new request (0, 3) for operation append('key_1','value_1') is validated, the result is: fail
+[2017-10-22 21:17:09,978] replica.Replica<Replica:70001>:OUTPUT: 
+Replica 1 : received result_shuttle (1, 2) from <Replica:70003>
+[2017-10-22 21:17:09,978] replica.Replica<Replica:70003>:OUTPUT: 
+Replica 2 : received shuttle (1, 3) from <Replica:70001>
+[2017-10-22 21:17:09,978] client.Client<Client:77003>:OUTPUT: 
+Client 0 : sent operation_request (0, 4) to <Replica:70005>
+[2017-10-22 21:17:09,978] replica.Replica<Replica:70001>:OUTPUT: 
+Replica 1 : sent result_shuttle (1, 2) to <Replica:70005>
+[2017-10-22 21:17:09,978] replica.Replica<Replica:70003>:OUTPUT: 
+Replica 2 : sent shuttle (1, 3) to <Replica:70004>
+[2017-10-22 21:17:09,978] replica.Replica<Replica:70005>:OUTPUT: 
+Replica 0 : received new operation request (0, 4) for operation: get('key_1')
+[2017-10-22 21:17:09,978] replica.Replica<Replica:70003>:OUTPUT: 
+Replica 2 : received result_shuttle (0, 3) from <Replica:70004>
+[2017-10-22 21:17:09,978] replica.Replica<Replica:70005>:OUTPUT: 
+Replica 0 : sent shuttle (0, 4) to  <Replica:70001>
+[2017-10-22 21:17:09,978] replica.Replica<Replica:70004>:OUTPUT: 
+Replica 3 : received shuttle (1, 3) from <Replica:70003>
+[2017-10-22 21:17:09,978] replica.Replica<Replica:70001>:OUTPUT: 
+Replica 1 : received shuttle (0, 4) from <Replica:70005>
+[2017-10-22 21:17:09,978] replica.Replica<Replica:70005>:OUTPUT: 
+Replica 0 : received result_shuttle (1, 2) from <Replica:70001>
+[2017-10-22 21:17:09,978] replica.Replica<Replica:70003>:OUTPUT: 
+Replica 2 : sent result_shuttle (0, 3) to <Replica:70001>
+[2017-10-22 21:17:09,978] replica.Replica<Replica:70001>:OUTPUT: 
+Replica 1 : sent shuttle (0, 4) to <Replica:70003>
+[2017-10-22 21:17:09,978] replica.Replica<Replica:70004>:OUTPUT: 
+Replica 3 : sent shuttle (1, 3) to <Replica:70002>
+[2017-10-22 21:17:09,978] replica.Replica<Replica:70001>:OUTPUT: 
+Replica 1 : received result_shuttle (0, 3) from <Replica:70003>
+[2017-10-22 21:17:09,978] replica.Replica<Replica:70003>:OUTPUT: 
+Replica 2 : received shuttle (0, 4) from <Replica:70001>
+[2017-10-22 21:17:09,978] replica.Replica<Replica:70001>:OUTPUT: 
+Replica 1 : sent result_shuttle (0, 3) to <Replica:70005>
+[2017-10-22 21:17:09,978] replica.Replica<Replica:70002>:OUTPUT: 
+Replica 4 : received shuttle (1, 3) from <Replica:70004>
+[2017-10-22 21:17:09,993] replica.Replica<Replica:70005>:OUTPUT: 
+Replica 0 : received result_shuttle (0, 3) from <Replica:70001>
+[2017-10-22 21:17:09,978] replica.Replica<Replica:70003>:OUTPUT: 
+Replica 2 : sent shuttle (0, 4) to <Replica:70004>
+[2017-10-22 21:17:09,993] replica.Replica<Replica:70002>:OUTPUT: 
+Replica 4 : sent operation_result (1, 3) to client <Client:77004>
+[2017-10-22 21:17:09,993] replica.Replica<Replica:70002>:OUTPUT: 
+Replica 4 : sent result_shuttle (1, 3) to replica <Replica:70004>
+[2017-10-22 21:17:09,993] client.Client<Client:77004>:OUTPUT: 
+Client 1 : received response for new request (1, 3) from replica <Replica:70002>
+[2017-10-22 21:17:09,993] replica.Replica<Replica:70004>:OUTPUT: 
+Replica 3 : received shuttle (0, 4) from <Replica:70003>
+[2017-10-22 21:17:09,993] replica.Replica<Replica:70004>:OUTPUT: 
+Replica 3 : sent shuttle (0, 4) to <Replica:70002>
+[2017-10-22 21:17:09,993] client.Client<Client:77004>:OUTPUT: 
+Client 1 : response of request (1, 3) for operation append('key_1','value_3') is verified with 5 replicas acceptance.
+[2017-10-22 21:17:09,993] client.Client<Client:77004>:OUTPUT: 
+Client 1 : response of new request (1, 3) for operation append('key_1','value_3') is validated, the result is: fail
+[2017-10-22 21:17:09,993] replica.Replica<Replica:70004>:OUTPUT: 
+Replica 3 : received result_shuttle (1, 3) from <Replica:70002>
+[2017-10-22 21:17:09,993] replica.Replica<Replica:70002>:OUTPUT: 
+Replica 4 : received shuttle (0, 4) from <Replica:70004>
+[2017-10-22 21:17:09,993] replica.Replica<Replica:70004>:OUTPUT: 
+Replica 3 : sent result_shuttle (1, 3) to <Replica:70003>
+[2017-10-22 21:17:09,993] replica.Replica<Replica:70002>:OUTPUT: 
+Replica 4 : sent operation_result (0, 4) to client <Client:77003>
+[2017-10-22 21:17:09,993] replica.Replica<Replica:70003>:OUTPUT: 
+Replica 2 : received result_shuttle (1, 3) from <Replica:70004>
+[2017-10-22 21:17:09,993] replica.Replica<Replica:70002>:OUTPUT: 
+Replica 4 : sent result_shuttle (0, 4) to replica <Replica:70004>
+[2017-10-22 21:17:09,993] client.Client<Client:77003>:OUTPUT: 
+Client 0 : received response for new request (0, 4) from replica <Replica:70002>
+[2017-10-22 21:17:09,993] replica.Replica<Replica:70003>:OUTPUT: 
+Replica 2 : sent result_shuttle (1, 3) to <Replica:70001>
+[2017-10-22 21:17:10,009] replica.Replica<Replica:70004>:OUTPUT: 
+Replica 3 : received result_shuttle (0, 4) from <Replica:70002>
+[2017-10-22 21:17:10,009] client.Client<Client:77003>:OUTPUT: 
+Client 0 : response of request (0, 4) for operation get('key_1') is verified with 5 replicas acceptance.
+[2017-10-22 21:17:10,009] replica.Replica<Replica:70001>:OUTPUT: 
+Replica 1 : received result_shuttle (1, 3) from <Replica:70003>
+[2017-10-22 21:17:10,009] client.Client<Client:77003>:OUTPUT: 
+Client 0 : response of new request (0, 4) for operation get('key_1') is validated, the result is: 
+[2017-10-22 21:17:10,009] replica.Replica<Replica:70001>:OUTPUT: 
+Replica 1 : sent result_shuttle (1, 3) to <Replica:70005>
+[2017-10-22 21:17:10,009] replica.Replica<Replica:70004>:OUTPUT: 
+Replica 3 : sent result_shuttle (0, 4) to <Replica:70003>
+[2017-10-22 21:17:10,009] replica.Replica<Replica:70005>:OUTPUT: 
+Replica 0 : received result_shuttle (1, 3) from <Replica:70001>
+[2017-10-22 21:17:10,009] replica.Replica<Replica:70003>:OUTPUT: 
+Replica 2 : received result_shuttle (0, 4) from <Replica:70004>
+[2017-10-22 21:17:10,009] replica.Replica<Replica:70003>:OUTPUT: 
+Replica 2 : sent result_shuttle (0, 4) to <Replica:70001>
+[2017-10-22 21:17:10,009] replica.Replica<Replica:70001>:OUTPUT: 
+Replica 1 : received result_shuttle (0, 4) from <Replica:70003>
+[2017-10-22 21:17:10,009] replica.Replica<Replica:70001>:OUTPUT: 
+Replica 1 : sent result_shuttle (0, 4) to <Replica:70005>
+[2017-10-22 21:17:10,009] replica.Replica<Replica:70005>:OUTPUT: 
+Replica 0 : received result_shuttle (0, 4) from <Replica:70001>
+[2017-10-22 21:17:15,006] client.Client<Client:77004>:OUTPUT: 
+Client 1 : actual request result: ['fail', 'fail', 'OK', 'fail']
+[2017-10-22 21:17:15,006] client.Client<Client:77004>:OUTPUT: 
+Client 1 : final test result: ['fail', 'fail', 'fail', 'fail']
+[2017-10-22 21:17:15,006] client.Client<Client:77004>:OUTPUT: 
+Client 1 : final test state: {}
+[2017-10-22 21:17:15,006] client.Client<Client:77004>:OUTPUT: 
+Client 1 terminating.
+[2017-10-22 21:17:15,022] client.Client<Client:77003>:OUTPUT: 
+Client 0 : actual request result: ['', 'fail', 'OK', 'fail', '']
+[2017-10-22 21:17:15,022] client.Client<Client:77003>:OUTPUT: 
+Client 0 : final test result: ['', 'fail', 'OK', 'fail', '']
+[2017-10-22 21:17:15,022] client.Client<Client:77003>:OUTPUT: 
+Client 0 : final test state: {'key_0': 'value_0'}
+[2017-10-22 21:17:15,022] client.Client<Client:77003>:OUTPUT: 
+Client 0 terminating.
+[2017-10-22 21:17:18,027] replica.Replica<Replica:70002>:OUTPUT: 
+Replica 4 state: {'key_0': 'lu'}
+[2017-10-22 21:17:18,027] replica.Replica<Replica:70003>:OUTPUT: 
+Replica 2 state: {'key_0': 'lu'}
+[2017-10-22 21:17:18,027] replica.Replica<Replica:70005>:OUTPUT: 
+Replica 0 state: {'key_0': 'lu'}
+[2017-10-22 21:17:18,027] replica.Replica<Replica:70004>:OUTPUT: 
+Replica 3 state: {'key_0': 'lu'}
+[2017-10-22 21:17:18,027] replica.Replica<Replica:70001>:OUTPUT: 
+Replica 1 state: {'key_0': 'lu'}

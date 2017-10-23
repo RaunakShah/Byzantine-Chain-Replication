@@ -10,6 +10,7 @@ import nacl.encoding
 import nacl.signing
 import nacl.hash
 import re
+import time
 
 class Client(process):
 	def setup(client_id, olympus, workload, client_timeout, signing_key, olympus_verify_key):
@@ -101,6 +102,7 @@ class Client(process):
 			# move to next request in client's workload
 			workload_count += 1
 		
+		time.sleep(5)
 		# log testing result
 		output("\nClient", self.client_id, ": actual request result:", self.result, sep=" ")
 		output("\nClient", self.client_id, ": final test result:", self.test_result, sep=" ")
@@ -117,17 +119,19 @@ class Client(process):
 		acceptance_num = 0
 		
 		# check response hash with all hashes in result proof
-		for index in range(len(result_proof)):
+		for index in range(1, len(result_proof) + 1):
+			actual_index = len(result_proof) - index
+		
 			# validate result statement
-			signed_result_stmt = result_proof[index]
+			signed_result_stmt = result_proof[-index]
 			
 			# verify the signature by the replica
 			try:
-				verify_key = nacl.signing.VerifyKey(self.verify_key_list[index], encoder=nacl.encoding.HexEncoder)
+				verify_key = nacl.signing.VerifyKey(self.verify_key_list[-index], encoder=nacl.encoding.HexEncoder)
 				verify_key.verify(signed_result_stmt)
 			except nacl.exceptions.BadSignatureError:
 				output("\nClient", self.client_id, ": result statement for", request_id, 
-					"is not validated, signature from replica", index, "doesn't match.", sep = " ")
+					"is not validated, signature from replica", actual_index, "doesn't match.", sep = " ")
 				continue
 				
 			# validate sign message
@@ -137,14 +141,14 @@ class Client(process):
 			message = result_message[64:]
 			if ('result<' + str(request_id) + ',' + request + '>') != message.decode():
 				output("\nClient", self.client_id, ": result statement for", request_id, 
-					"is not validated, signed message from replica", index, "doesn't match request.", sep = " ")
+					"is not validated, signed message from replica", actual_index, "doesn't match request.", sep = " ")
 				continue
 			
 			# check if hashes match
 			if not sodium_memcmp(response_hash, result_hash):
 				# hash does not match
 				output("\nClient", self.client_id, ": hash of result for request", request_id, 
-					"for operation", request, "does not match hash of replica", index, 
+					"for operation", request, "does not match hash of replica", actual_index, 
 					"in result statement.", sep = " ")
 				#NOTE: not needed for phase 2; i think we only need to retransmit the request
 				#reconfiguration_reqeust.proof_of_misbehavior = (result, result_proof)

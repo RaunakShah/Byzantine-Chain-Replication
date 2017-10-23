@@ -1,0 +1,172 @@
+[2017-10-22 21:18:32,768] olympus.Olympus<Olympus:2a002>:OUTPUT: 
+Failure for replica 0 :
+ {'client_request(0,1)': 'change_operation()'}
+[2017-10-22 21:18:32,784] replica.Replica<Replica:3c002>:OUTPUT: 
+Replica: 0 with history:  [] initialized
+[2017-10-22 21:18:32,800] replica.Replica<Replica:3c001>:OUTPUT: 
+Replica: 1 with history:  [] initialized
+[2017-10-22 21:18:32,800] replica.Replica<Replica:3c003>:OUTPUT: 
+Replica: 2 with history:  [] initialized
+[2017-10-22 21:18:33,018] client.Client<Client:2a003>:OUTPUT: Client ID: 0 
+Workload: ["put('movie','star')", " append('movie',' wars')", " get('movie')"] 
+Timeout: 3
+[2017-10-22 21:18:33,018] olympus.Olympus<Olympus:2a002>:OUTPUT: 
+Starting test case: test3 - Client Request trigger Change Operation
+[2017-10-22 21:18:33,018] olympus.Olympus<Olympus:2a002>:OUTPUT: 
+Starting Olympus.
+[2017-10-22 21:18:33,034] replica.Replica<Replica:3c001>:OUTPUT: 
+Starting replica[2017-10-22 21:18:33,034] replica.Replica<Replica:3c003>:OUTPUT: 
+Starting replica 2
+[2017-10-22 21:18:33,034] client.Client<Client:2a003>:OUTPUT: 
+Client 0 : sent get_configuration to Olympus.
+[2017-10-22 21:18:33,034] client.Client<Client:2a003>:OUTPUT: 
+Client 0 : received configuration 0 from Olympus.
+[2017-10-22 21:18:33,034] client.Client<Client:2a003>:OUTPUT: 
+Client 0 : sent check config message to Olympus.
+[2017-10-22 21:18:33,034] client.Client<Client:2a003>:OUTPUT: 
+Client 0 : received check config response:  OK
+[2017-10-22 21:18:33,050] client.Client<Client:2a003>:OUTPUT: 
+Client 0 : sent operation_request (0, 0) to <Replica:3c002>
+ation: put('movie','star')
+[2017-10-22 21:18:33,050] replica.Replica<Replica:3c002>:OUTPUT: 
+Replica 0 : sent shuttle (0, 0) to  <Replica:3c001>
+[2017-10-22 21:18:33,050] replica.Replica<Replica:3c001>:OUTPUT: 
+Replica 1 : received shuttle (0, 0) from <Replica:3c002>
+[2017-10-22 21:18:33,050] replica.Replica<Replica:3c001>:OUTPUT: 
+Replica 1 : sent shuttle (0, 0) to <Replica:3c003>
+[2017-10-22 21:18:33,065] replica.Replica<Replica:3c003>:OUTPUT: 
+Replica 2 : received shuttle (0, 0) from <Replica:3c001>
+[2017-10-22 21:18:33,065] replica.Replica<Replica:3c003>:OUTPUT: 
+Replica 2 : sent operation_result (0, 0) to client <Client:2a003>
+[2017-10-22 21:18:33,065] replica.Replica<Replica:3c003>:OUTPUT: 
+Replica 2 : sent result_shuttle (0, 0) to replica <Replica:3c001>
+[2017-10-22 21:18:33,065] client.Client<Client:2a003>:OUTPUT: 
+Client 0 : received response for new request (0, 0) from replica <Replica:3c003>
+[2017-10-22 21:18:33,065] client.Client<Client:2a003>:OUTPUT: 
+Client 0 : response of request (0, 0) for operation put('movie','star') is verified with 3 replicas acceptance.
+[2017-10-22 21:18:33,065] client.Client<Client:2a003>:OUTPUT: 
+Client 0 : response of new request (0, 0) for operation put('movie','star') is validated, the result is: OK
+[2017-10-22 21:18:33,081] replica.Replica<Replica:3c001>:OUTPUT: 
+Replica 1 : received result_shuttle (0, 0) from <Replica:3c003>
+[2017-10-22 21:18:33,081] replica.Replica<Replica:3c002>:OUTPUT: 
+Replica 0 : received new operation request (0, 1) for operation:  append('movie',' wars')
+[2017-10-22 21:18:33,081] client.Client<Client:2a003>:OUTPUT: 
+Client 0 : sent operation_request (0, 1) to <Replica:3c002>
+[2017-10-22 21:18:33,081] replica.Replica<Replica:3c002>:OUTPUT: 
+Replica 0 : failure change_operation() triggered by client_request(0,1)
+[2017-10-22 21:18:33,081] replica.Replica<Replica:3c001>:OUTPUT: 
+Replica 1 : sent result_shuttle (0, 0) to <Replica:3c002>
+[2017-10-22 21:18:33,081] replica.Replica<Replica:3c002>:OUTPUT: 
+Replica 0 : injecting change_operation failure for request (0, 1) at shuttle.
+[2017-10-22 21:18:33,081] replica.Replica<Replica:3c002>:OUTPUT: 
+Replica 0 : sent shuttle (0, 1) to  <Replica:3c001>
+[2017-10-22 21:18:33,081] replica.Replica<Replica:3c001>:OUTPUT: 
+Replica 1 : received shuttle (0, 1) from <Replica:3c002>
+[2017-10-22 21:18:33,081] replica.Replica<Replica:3c002>:OUTPUT: 
+Replica 0 : received result_shuttle (0, 0) from <Replica:3c001>
+[2017-10-22 21:18:33,081] replica.Replica<Replica:3c001>:OUTPUT: 
+Replica 1 : message in order statement from shuttle doesn't match.
+[2017-10-22 21:18:36,094] client.Client<Client:2a003>:OUTPUT: 
+Client 0 : timeout waiting for response for request (0, 1) start retransmission phase
+[2017-10-22 21:18:36,097] client.Client<Client:2a003>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:3c002>
+[2017-10-22 21:18:36,097] replica.Replica<Replica:3c002>:OUTPUT: 
+Replica 0 : received retransmission operation request (0, 1) for operation:  append('movie',' wars')
+[2017-10-22 21:18:36,097] replica.Replica<Replica:3c002>:OUTPUT: 
+Replica 0 : retransmission request (0, 1) is performed but has not received result shuttle.
+[2017-10-22 21:18:36,114] client.Client<Client:2a003>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:3c002>
+[2017-10-22 21:18:36,114] replica.Replica<Replica:3c001>:OUTPUT: 
+Replica 1 : received retransmission operation request (0, 1) for operation:  append('movie',' wars')
+[2017-10-22 21:18:36,114] replica.Replica<Replica:3c001>:OUTPUT: 
+Replica 1 : nonhead replica receives retransmission request (0, 1) forward request to head.
+[2017-10-22 21:18:36,114] client.Client<Client:2a003>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:3c002>
+[2017-10-22 21:18:36,114] replica.Replica<Replica:3c002>:OUTPUT: 
+Replica 0 : received forward operation request (0, 1) for operation:  append('movie',' wars')
+[2017-10-22 21:18:36,114] replica.Replica<Replica:3c002>:OUTPUT: 
+Replica 0 : retransmission request (0, 1) is performed but has not received result shuttle.
+[2017-10-22 21:18:36,114] replica.Replica<Replica:3c003>:OUTPUT: 
+Replica 2 : received retransmission operation request (0, 1) for operation:  append('movie',' wars')
+[2017-10-22 21:18:36,114] replica.Replica<Replica:3c003>:OUTPUT: 
+Replica 2 : nonhead replica receives retransmission request (0, 1) forward request to head.
+[2017-10-22 21:18:36,131] replica.Replica<Replica:3c002>:OUTPUT: 
+Replica 0 : received forward operation request (0, 1) for operation:  append('movie',' wars')
+[2017-10-22 21:18:36,131] replica.Replica<Replica:3c002>:OUTPUT: 
+Replica 0 : retransmission request (0, 1) is performed but has not received result shuttle.
+[2017-10-22 21:18:41,128] replica.Replica<Replica:3c001>:OUTPUT: 
+Replica 1 : timeout handling retransmission request (0, 1) send reconfiguration request to Olympus.
+[2017-10-22 21:18:41,144] replica.Replica<Replica:3c002>:OUTPUT: 
+Replica 0 : timeout handling retransmission request (0, 1) send reconfiguration request to Olympus.
+[2017-10-22 21:18:41,144] replica.Replica<Replica:3c003>:OUTPUT: 
+Replica 2 : timeout handling retransmission request (0, 1) send reconfiguration request to Olympus.
+[2017-10-22 21:18:41,144] replica.Replica<Replica:3c002>:OUTPUT: 
+Replica 0 : timeout handling retransmission request (0, 1) send reconfiguration request to Olympus.
+[2017-10-22 21:18:41,144] replica.Replica<Replica:3c002>:OUTPUT: 
+Replica 0 : timeout handling retransmission request (0, 1) send reconfiguration request to Olympus.
+[2017-10-22 21:18:51,119] client.Client<Client:2a003>:OUTPUT: 
+Client 0 : retransmission for request (0, 1) timeout. (For Phase 2 only since we don't consider reconfig)
+[2017-10-22 21:18:51,119] client.Client<Client:2a003>:OUTPUT: 
+Client 0 : sent operation_request (0, 2) to <Replica:3c002>
+[2017-10-22 21:18:51,119] replica.Replica<Replica:3c002>:OUTPUT: 
+Replica 0 : received new operation request (0, 2) for operation:  get('movie')
+[2017-10-22 21:18:51,119] replica.Replica<Replica:3c002>:OUTPUT: 
+Replica 0 : sent shuttle (0, 2) to  <Replica:3c001>
+[2017-10-22 21:18:51,119] replica.Replica<Replica:3c001>:OUTPUT: 
+Replica 1 : received shuttle (0, 2) from <Replica:3c002>
+[2017-10-22 21:18:51,119] replica.Replica<Replica:3c001>:OUTPUT: 
+Replica 1 : there is a hole in the history for slot number 1
+[2017-10-22 21:18:54,126] client.Client<Client:2a003>:OUTPUT: 
+Client 0 : timeout waiting for response for request (0, 2) start retransmission phase
+[2017-10-22 21:18:54,126] client.Client<Client:2a003>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 2) to <Replica:3c002>
+[2017-10-22 21:18:54,126] client.Client<Client:2a003>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 2) to <Replica:3c002>
+[2017-10-22 21:18:54,126] replica.Replica<Replica:3c002>:OUTPUT: 
+Replica 0 : received retransmission operation request (0, 2) for operation:  get('movie')
+[2017-10-22 21:18:54,126] replica.Replica<Replica:3c002>:OUTPUT: 
+Replica 0 : retransmission request (0, 2) is performed but has not received result shuttle.
+[2017-10-22 21:18:54,126] client.Client<Client:2a003>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 2) to <Replica:3c002>
+[2017-10-22 21:18:54,126] replica.Replica<Replica:3c001>:OUTPUT: 
+Replica 1 : received retransmission operation request (0, 2) for operation:  get('movie')
+[2017-10-22 21:18:54,126] replica.Replica<Replica:3c001>:OUTPUT: 
+Replica 1 : nonhead replica receives retransmission request (0, 2) forward request to head.
+[2017-10-22 21:18:54,126] replica.Replica<Replica:3c003>:OUTPUT: 
+Replica 2 : received retransmission operation request (0, 2) for operation:  get('movie')
+[2017-10-22 21:18:54,126] replica.Replica<Replica:3c003>:OUTPUT: 
+Replica 2 : nonhead replica receives retransmission request (0, 2) forward request to head.
+[2017-10-22 21:18:54,126] replica.Replica<Replica:3c002>:OUTPUT: 
+Replica 0 : received forward operation request (0, 2) for operation:  get('movie')
+[2017-10-22 21:18:54,126] replica.Replica<Replica:3c002>:OUTPUT: 
+Replica 0 : retransmission request (0, 2) is performed but has not received result shuttle.
+[2017-10-22 21:18:54,142] replica.Replica<Replica:3c002>:OUTPUT: 
+Replica 0 : received forward operation request (0, 2) for operation:  get('movie')
+[2017-10-22 21:18:54,142] replica.Replica<Replica:3c002>:OUTPUT: 
+Replica 0 : retransmission request (0, 2) is performed but has not received result shuttle.
+[2017-10-22 21:18:59,127] replica.Replica<Replica:3c003>:OUTPUT: 
+Replica 2 : timeout handling retransmission request (0, 2) send reconfiguration request to Olympus.
+[2017-10-22 21:18:59,127] replica.Replica<Replica:3c001>:OUTPUT: 
+Replica 1 : timeout handling retransmission request (0, 2) send reconfiguration request to Olympus.
+[2017-10-22 21:18:59,142] replica.Replica<Replica:3c002>:OUTPUT: 
+Replica 0 : timeout handling retransmission request (0, 2) send reconfiguration request to Olympus.
+[2017-10-22 21:19:04,144] replica.Replica<Replica:3c002>:OUTPUT: 
+Replica 0 : timeout handling retransmission request (0, 2) send reconfiguration request to Olympus.
+[2017-10-22 21:19:04,147] replica.Replica<Replica:3c002>:OUTPUT: 
+Replica 0 : timeout handling retransmission request (0, 2) send reconfiguration request to Olympus.
+[2017-10-22 21:19:09,126] client.Client<Client:2a003>:OUTPUT: 
+Client 0 : retransmission for request (0, 2) timeout. (For Phase 2 only since we don't consider reconfig)
+[2017-10-22 21:19:14,130] client.Client<Client:2a003>:OUTPUT: 
+Client 0 : actual request result: ['OK']
+[2017-10-22 21:19:14,130] client.Client<Client:2a003>:OUTPUT: 
+Client 0 : final test result: ['OK', 'OK', 'star wars']
+[2017-10-22 21:19:14,130] client.Client<Client:2a003>:OUTPUT: 
+Client 0 : final test state: {'movie': 'star wars'}
+[2017-10-22 21:19:14,130] client.Client<Client:2a003>:OUTPUT: 
+Client 0 terminating.
+[2017-10-22 21:19:17,131] replica.Replica<Replica:3c001>:OUTPUT: 
+Replica 1 state: {'movie': 'star'}
+[2017-10-22 21:19:17,131] replica.Replica<Replica:3c002>:OUTPUT: 
+Replica 0 state: {'movie': 'star wars'}
+[2017-10-22 21:19:17,131] replica.Replica<Replica:3c003>:OUTPUT: 
+Replica 2 state: {'movie': 'star'}
