@@ -2,8 +2,9 @@
 Asynchronous systems project Fall 2017
 
 Members:
-Jiajie Li - 109255512
-Raunak Shah - ID
+	
+	Jiajie Li - 109255512
+	Raunak Shah - ID
 
 PLATFORM:
 DistAlgo - version 1.0.9 
