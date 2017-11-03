@@ -609,6 +609,25 @@ class Replica(process):
     #
 	#5. replica receives checkpoint proof -- not needed for phase 2
 	def receive(msg = ('checkpoint_proof', checkpoint_proof_statement_list, checkpoint_prefix), from_ = self.prev_replica):
+		#check if checkpoint proof contains entry for every replica
+		number_of_checkpoints = 0
+		for index in range(self.replica_id):
+			signed_checkpoint_stmt = checkpoint_proof_statement_list[index]
+			# verify the signature
+			try:
+				verify_key = nacl.signing.VerifyKey(self.verify_key_list[index], encoder=nacl.encoding.HexEncoder)
+				verify_key.verify(signed_checkpoint_stmt)
+			except nacl.exceptions.BadSignatureError:
+				output("\nReplica", self.replica_id, ": checkpoint statement from proof is not validated, signature of replica", index, "doesn't match.", sep = " ")
+				return None
+			
+			# get checkpoint statement by decoding message
+			checkpoint_stmt = signed_checkpoint_stmt.message.decode()
+			number_of_checkpoints += 1
+		if number_of_checkpoints != len(range(self.replica_id)):
+			output('At replica', self.replica_id, 'number of checkpoint proofs missing:', (len(range(self.replica_id))-number_of_checkpoints), sep = " " )
+			return None
+
 		#generate checkpoint proof by hashing state and signing the message
 		state = ""
 		for key, value in self.operation_dict.items():
@@ -626,24 +645,13 @@ class Replica(process):
 			send(('checkpoint_proof', checkpoint_proof_statement_list, checkpoint_prefix), to = self.next_replica) 
 			output(self.replica_id, "sent checkpoint proof to", self.next_replica, sep = " ")
 		else:
-			#check if checkpoint proof contains entry for every replica
-			number_of_checkpoints = 0
-			for index in range(self.replica_id):
-				signed_checkpoint_stmt = checkpoint_proof_statement_list[index]
-				# verify the signature
-				try:
-					verify_key = nacl.signing.VerifyKey(self.verify_key_list[index], encoder=nacl.encoding.HexEncoder)
-					verify_key.verify(signed_checkpoint_stmt)
-				except nacl.exceptions.BadSignatureError:
-					output("\nReplica", self.replica_id, ": checkpoint statement from proof is not validated, signature of replica", index, "doesn't match.", sep = " ")
-					return None
-				
-				# get checkpoint statement by decoding message
-				checkpoint_stmt = signed_checkpoint_stmt.message.decode()
-				number_of_checkpoints += 1
-			if number_of_checkpoints == len(range(self.replica_id)):
-				send(('checkpoint_result', checkpoint_proof_statement_list, checkpoint_prefix), to = self.prev_replica)
-				output(self.replica_id, "sent checkpoint result to", self.prev_replica, sep = " ")
+			#delete history uptil checkpoint prefix
+			self.last_checkpoint_slot += checkpoint_prefix
+			self.history = self.history[checkpoint_prefix:]
+			self.checkpoint_index = 0
+			self.latest_checkpoint_proof = checkpoint_proof_statement_list
+			send(('checkpoint_result', checkpoint_proof_statement_list, checkpoint_prefix), to = self.prev_replica)
+			output(self.replica_id, "sent checkpoint result to", self.prev_replica, sep = " ")
 	
 
 
