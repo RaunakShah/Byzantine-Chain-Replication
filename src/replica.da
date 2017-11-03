@@ -1,11 +1,3 @@
-##	Things not done:
-##	1. applying operation 
-## 	2. signing of statements
-## 	3. hashing of statements
-## 	4. check validity of order proof and result proof	
-## 	5. validate result shuttle
-##	6. cache data structure
-
 import re
 from nacl.bindings.utils import sodium_memcmp
 import nacl.encoding
@@ -25,6 +17,11 @@ class Replica(process):
 		self.change_operation_failure = 0
 		self.change_result_failure = 0
 		self.drop_result_stmt_failure = 0
+		self.checkpoint_index = 0
+		self.checkpoint_interval = 3
+		self.checkpoint_prefix = 2
+		self.latest_checkpoint_proof = []
+		self.last_checkpoint_slot = 0
 		output("\nReplica:", replica_id, "with history: ", history, "initialized", sep = " ")
 				
 	#1. replica p receives operation request from replica client
@@ -287,13 +284,32 @@ class Replica(process):
 			return None
 	
 		#check for hole
-		for checking_slot in range(slot):
+		for checking_slot in range(self.last_checkpoint_slot, slot):
 			if checking_slot not in [t[0] for t in self.history]:
 				output("\nReplica", self.replica_id, ": there is a hole in the history for slot number", checking_slot, sep = " ")
 				return None
-			
-		#checkpointing -- not needed for phase 2
 		
+	
+		#checkpointing 
+		#Increase checkpoint index and test equality with checkpoint interval
+		self.checkpoint_index += 1
+		if self.checkpoint_index == self.checkpoint_interval and self.isHead == True:
+			checkpoint_proof_statement_list = []
+			#generate checkpoint proof by hashing state and signing the message
+			state = ""
+			for key, value in self.operation_dict.items():
+				state += key
+				state += value
+			state_in_bytes = bytes(state, 'utf-8')
+			state_hash = self.HASHER(state_in_bytes, encoder = nacl.encoding.HexEncoder)
+			checkpoint_stmt_msg = 'checkpoint' 
+			signed_checkpoint_statement = self.signing_key.sign(checkpoint_stmt_msg.encode() + state_hash)
+			checkpoint_proof_statement_list.append(signed_checkpoint_statement)
+			#send checkpoint proof to next replica in chain
+			send(('checkpoint_proof', checkpoint_proof_statement_list, self.checkpoint_prefix), to = self.next_replica) 
+			output(self.replica_id, "sent checkpoint proof to", self.next_replica, sep = " ")
+			
+			
 		# validate order proof from shuttle
 		# check if all replicas preceding this replica have signed order statement and have correct slot and request id
 		for index in range(self.replica_id):
@@ -589,11 +605,61 @@ class Replica(process):
 		#	return (0,0,0)
 
 	##4. replica receives wedge request -- not needed for phase 2
-	##def receive(wedge_statement, from_= Olympus
+	##def receive(wedge_statement, from_= Olympus)
     #
-	##5. replica receives checkpoint proof -- not needed for phase 2
-	##def receive(checkpoint_shuttle, from_ = replica)
-    #
+	#5. replica receives checkpoint proof -- not needed for phase 2
+	def receive(msg = ('checkpoint_proof', checkpoint_proof_statement_list, checkpoint_prefix), from_ = self.prev_replica):
+		#generate checkpoint proof by hashing state and signing the message
+		state = ""
+		for key, value in self.operation_dict.items():
+			state += key
+			state += value
+		state_in_bytes = bytes(state, 'utf-8')
+		state_hash = self.HASHER(state_in_bytes, encoder = nacl.encoding.HexEncoder)
+		checkpoint_stmt_msg = 'checkpoint'
+		signed_checkpoint_statement = self.signing_key.sign(checkpoint_stmt_msg.encode() + state_hash)
+		checkpoint_proof_statement_list.append(signed_checkpoint_statement)
+		
+
+		if self.isTail == False:
+			#send checkpoint proof to next replica in chain
+			send(('checkpoint_proof', checkpoint_proof_statement_list, checkpoint_prefix), to = self.next_replica) 
+			output(self.replica_id, "sent checkpoint proof to", self.next_replica, sep = " ")
+		else:
+			#check if checkpoint proof contains entry for every replica
+			number_of_checkpoints = 0
+			for index in range(self.replica_id):
+				signed_checkpoint_stmt = checkpoint_proof_statement_list[index]
+				# verify the signature
+				try:
+					verify_key = nacl.signing.VerifyKey(self.verify_key_list[index], encoder=nacl.encoding.HexEncoder)
+					verify_key.verify(signed_checkpoint_stmt)
+				except nacl.exceptions.BadSignatureError:
+					output("\nReplica", self.replica_id, ": checkpoint statement from proof is not validated, signature of replica", index, "doesn't match.", sep = " ")
+					return None
+				
+				# get checkpoint statement by decoding message
+				checkpoint_stmt = signed_checkpoint_stmt.message.decode()
+				number_of_checkpoints += 1
+			if number_of_checkpoints == len(range(self.replica_id)):
+				send(('checkpoint_result', checkpoint_proof_statement_list, checkpoint_prefix), to = self.prev_replica)
+				output(self.replica_id, "sent checkpoint result to", self.prev_replica, sep = " ")
+	
+
+
+	def receive(msg = ('checkpoint_result', checkpoint_proof_statement_list, checkpoint_prefix), from_ = self.next_replica):
+		#delete history uptil checkpoint prefix
+		self.last_checkpoint_slot += checkpoint_prefix
+		self.history = self.history[checkpoint_prefix:]
+		self.checkpoint_index = 0
+		self.latest_checkpoint_proof = checkpoint_proof_statement_list
+		if self.isHead == False:
+			send(('checkpoint_result', checkpoint_proof_statement_list, checkpoint_prefix), to = self.prev_replica)
+			output(self.replica_id, "sent checkpoint result to", self.prev_replica, sep = " ")
+			
+
+
+ 
 	##6. replica receives catch up message -- not needed for phase 2
 	##def receive("catch_up", from_= Olympus)
     #
@@ -605,4 +671,6 @@ class Replica(process):
 		# terminate when receive terminate message from Olympus
 		if await(some(received(('terminate', _), from_ = Olympus))):
 			time.sleep(3)
-			output('\nReplica', self.replica_id, 'state:', self.operation_dict, sep = " ")
+			output('\nReplica', self.replica_id, 'state:', self.operation_dict,sep = " ")
+			for a,b,c,d in self.history:
+				output('ID:', self.replica_id, 'history:',a , sep = " ")
