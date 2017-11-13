@@ -97,7 +97,7 @@ class Replica(process):
 					self.drop_result_stmt_failure -= 1
 			
 				# send operation result directly back to client
-				send(('operation_result', request_id, 'retransimission', cache[request_id][1], cache[request_id][0], result_proof, self), to = client)
+				send(('operation_result', request_id, 'retransmission', cache[request_id][1], cache[request_id][0], result_proof, self), to = client)
 				
 				output("\nReplica", self.replica_id, ": sent result for retransmission request", request_id, "to client", client, sep = " ")
 				
@@ -120,94 +120,53 @@ class Replica(process):
 					if request_id in self.cache and self.cache[request_id][1] == request: 
 						# head has ordered operation but not received result shuttle yet
 						output("\nReplica", self.replica_id, ": retransmission request", request_id, "is performed but has not received result shuttle.", sep = " ") 
-						if (await(
-								some(received(('result_shuttle', result_shuttle_id, result_request, result, result_proof, _), 
-									from_= self.next_replica), 
-								has = (result_shuttle_id == request_id and result_request == request)))):
-							# check for failure change_result()
-							if self.change_result_failure > 0:
-								output("\nReplica", self.replica_id, ": injecting change_result failure for request", request_id, "at result", sep = " ")
-								change_result_in_bytes = bytes('OK', 'utf-8')
-								change_result_hash = self.HASHER(change_result_in_bytes, encoder = nacl.encoding.HexEncoder)
-								result_stmt_msg = 'result<' + str(result_shuttle_id) + ',' + request + '>'
-								signed_result = self.signing_key.sign(change_result_hash + result_stmt_msg.encode())
-								result_proof[self.replica_id] = (signed_result)
-								self.change_result_failure -= 1
-							
-							# check for failure drop_result_stmt()
-							if self.drop_result_stmt_failure > 0:
-								output("\nReplica", self.replica_id, ": injecting drop_result_stmt failure for request", result_shuttle_id, "at result", sep = " ")
-								if (len(result_proof)) > 0:
-									result_proof = result_proof[1:]
-								self.drop_result_stmt_failure -= 1
-					
-							output("\nReplica", self.replica_id, ": retransimssion request", request_id, "received result shuttle, send to client", client, sep = " ") 
-							send(('operation_result', request_id, result_request, 'retransimission', result, result_proof, self), to = client)
-						elif timeout(self.timeout):
-							# handle timeout, send reconfiguration request to Olympus
-							output("\nReplica", self.replica_id, ": timeout handling retransmission request", request_id, "send reconfiguration request to Olympus.", sep = " ") 
+						# handle retransmission
+						handleRetransmit(request_id, request, client)
+						return
 					else: 
 						output("\nReplica", self.replica_id, ": retransmission request", request_id, "for operation", request, "is not recognized, start new operation.", sep = " ") 
 						# head doesnt recognize operation, start new operation process
 						handleNewRequest(request_id, request_type, request,	client)
-						if (await(
-								some(received(('result_shuttle', result_shuttle_id, result_request, result, result_proof, _), 
-									from_= self.next_replica), 
-								has = (result_shuttle_id == request_id and result_request == request)))):
-							# check for failure change_result()
-							if self.change_result_failure > 0:
-								output("\nReplica", self.replica_id, ": injecting change_result failure for request", request_id, "at result", sep = " ")
-								change_result_in_bytes = bytes('OK', 'utf-8')
-								change_result_hash = self.HASHER(change_result_in_bytes, encoder = nacl.encoding.HexEncoder)
-								result_stmt_msg = 'result<' + str(result_shuttle_id) + ',' + request + '>'
-								signed_result = self.signing_key.sign(change_result_hash + result_stmt_msg.encode())
-								result_proof[self.replica_id] = (signed_result)
-								self.change_result_failure -= 1
-							
-							# check for failure drop_result_stmt()
-							if self.drop_result_stmt_failure > 0:
-								output("\nReplica", self.replica_id, ": injecting drop_result_stmt failure for request", result_shuttle_id, "at result", sep = " ")
-								if (len(result_proof)) > 0:
-									result_proof = result_proof[1:]
-								self.drop_result_stmt_failure -= 1
-								
-							output("\nReplica", self.replica_id, ": retransmission request", request_id, "received result shuttle, send to client", client, sep = " ") 
-							send(('operation_result', request_id, result_request, 'retransimission', result, result_proof, self), to = client)
-						elif timeout(self.timeout):
-							# handle timeout, send reconfiguration request to Olympus
-							output("\nReplica", self.replica_id, ": timeout handling retransmission request", request_id, "send reconfiguration request to Olympus.", sep = " ")
+						# handle retransmission
+						handleRetransmit(request_id, request, client)
+						return
 				else: # replica that receives retransmission is not head
 					output("\nReplica", self.replica_id, ": nonhead replica receives retransmission request", request_id, "forward request to head.", sep = " ") 
 					send(('operation_request', request_id, 'forward', request, signed_msg, client), to = self.head)
 
-					if (await(
-							some(received(('result_shuttle', result_shuttle_id, result_request, result, result_proof, _), 
-								from_ = self.next_replica), 
-							has = (result_shuttle_id == request_id and result_request == request)))):
-						# check for failure change_result()
-						if self.change_result_failure > 0:
-							output("\nReplica", self.replica_id, ": injecting change_result failure for request", request_id, "at result", sep = " ")
-							change_result_in_bytes = bytes('OK', 'utf-8')
-							change_result_hash = self.HASHER(change_result_in_bytes, encoder = nacl.encoding.HexEncoder)
-							result_stmt_msg = 'result<' + str(result_shuttle_id) + ',' + request + '>'
-							signed_result = self.signing_key.sign(change_result_hash + result_stmt_msg.encode())
-							result_proof[self.replica_id] = (signed_result)
-							self.change_result_failure -= 1
-						
-						# check for failure drop_result_stmt()
-						if self.drop_result_stmt_failure > 0:
-							output("\nReplica", self.replica_id, ": injecting drop_result_stmt failure for request", result_shuttle_id, "at result", sep = " ")
-							if (len(result_proof)) > 0:
-								result_proof = result_proof[1:]
-							self.drop_result_stmt_failure -= 1	
-						
-						output("\nReplica", self.replica_id, ": retransimssion request", request_id, "received result shuttle, send to client", client, sep = " ") 
-						# receive result shuttle, send to client
-						send(('operation_result', request_id, result_request, 'retransimission', result, result_proof, self), to = client)
-					elif timeout(self.timeout):
-						# handle timeout, send reconfiguration request to Olympus
-						output("\nReplica", self.replica_id, ": timeout handling retransmission request", request_id, "send reconfiguration request to Olympus.", sep = " ")
+					# handle retransmission
+					handleRetransmit(request_id, request, client)
+					return
 
+	def handleRetransmit(request_id, request, client):
+		if (await(
+				some(received(('result_shuttle', result_shuttle_id, result_request, result, result_proof, _), 
+					from_ = self.next_replica), 
+				has = (result_shuttle_id == request_id and result_request == request)))):
+			# check for failure change_result()
+			if self.change_result_failure > 0:
+				output("\nReplica", self.replica_id, ": injecting change_result failure for request", request_id, "at result", sep = " ")
+				change_result_in_bytes = bytes('OK', 'utf-8')
+				change_result_hash = self.HASHER(change_result_in_bytes, encoder = nacl.encoding.HexEncoder)
+				result_stmt_msg = 'result<' + str(result_shuttle_id) + ',' + request + '>'
+				signed_result = self.signing_key.sign(change_result_hash + result_stmt_msg.encode())
+				result_proof[self.replica_id] = (signed_result)
+				self.change_result_failure -= 1
+			
+			# check for failure drop_result_stmt()
+			if self.drop_result_stmt_failure > 0:
+				output("\nReplica", self.replica_id, ": injecting drop_result_stmt failure for request", result_shuttle_id, "at result", sep = " ")
+				if (len(result_proof)) > 0:
+					result_proof = result_proof[1:]
+				self.drop_result_stmt_failure -= 1	
+			
+			output("\nReplica", self.replica_id, ": retransmssion request", request_id, "received result shuttle, send to client", client, sep = " ") 
+			# receive result shuttle, send to client
+			send(('operation_result', request_id, result_request, 'retransmission', result, result_proof, self), to = client)
+		elif timeout(self.timeout):
+			# handle timeout, send reconfiguration request to Olympus
+			output("\nReplica", self.replica_id, ": timeout handling retransmission request", request_id, "send reconfiguration request to Olympus.", sep = " ")
+	
 	def handleNewRequest(request_id, request_type, request, client):
 		# find the max slot that has been assigned to get the slot to assign
 		max_slot = 0
@@ -307,7 +266,7 @@ class Replica(process):
 			checkpoint_proof_statement_list.append(signed_checkpoint_statement)
 			#send checkpoint proof to next replica in chain
 			send(('checkpoint_proof', checkpoint_proof_statement_list, self.checkpoint_prefix), to = self.next_replica) 
-			output(self.replica_id, "sent checkpoint proof to", self.next_replica, sep = " ")
+			output("\nReplica", self.replica_id, ": sent checkpoint proof to", self.next_replica, sep = " ")
 			
 			
 		# validate order proof from shuttle
@@ -609,6 +568,8 @@ class Replica(process):
     #
 	#5. replica receives checkpoint proof -- not needed for phase 2
 	def receive(msg = ('checkpoint_proof', checkpoint_proof_statement_list, checkpoint_prefix), from_ = self.prev_replica):
+		output("\nReplica", self.replica_id, ": received checkpoint_proof for checkpoint prefix", checkpoint_prefix, "from", self.prev_replica, sep = " ")
+		
 		#check if checkpoint proof contains entry for every replica
 		number_of_checkpoints = 0
 		for index in range(self.replica_id):
@@ -625,7 +586,7 @@ class Replica(process):
 			checkpoint_stmt = signed_checkpoint_stmt.message.decode()
 			number_of_checkpoints += 1
 		if number_of_checkpoints != len(range(self.replica_id)):
-			output('At replica', self.replica_id, 'number of checkpoint proofs missing:', (len(range(self.replica_id))-number_of_checkpoints), sep = " " )
+			output('\nReplica', self.replica_id, ': number of checkpoint proofs missing:', (len(range(self.replica_id))-number_of_checkpoints), sep = " " )
 			return None
 
 		#generate checkpoint proof by hashing state and signing the message
@@ -643,7 +604,7 @@ class Replica(process):
 		if self.isTail == False:
 			#send checkpoint proof to next replica in chain
 			send(('checkpoint_proof', checkpoint_proof_statement_list, checkpoint_prefix), to = self.next_replica) 
-			output(self.replica_id, "sent checkpoint proof to", self.next_replica, sep = " ")
+			output("\nReplica", self.replica_id, ": sent checkpoint proof to", self.next_replica, sep = " ")
 		else:
 			#delete history uptil checkpoint prefix
 			self.last_checkpoint_slot += checkpoint_prefix
@@ -651,7 +612,7 @@ class Replica(process):
 			self.checkpoint_index = 0
 			self.latest_checkpoint_proof = checkpoint_proof_statement_list
 			send(('checkpoint_result', checkpoint_proof_statement_list, checkpoint_prefix), to = self.prev_replica)
-			output(self.replica_id, "sent checkpoint result to", self.prev_replica, sep = " ")
+			output("\nReplica", self.replica_id, ": sent checkpoint result to", self.prev_replica, sep = " ")
 	
 
 
@@ -665,9 +626,6 @@ class Replica(process):
 			send(('checkpoint_result', checkpoint_proof_statement_list, checkpoint_prefix), to = self.prev_replica)
 			output(self.replica_id, "sent checkpoint result to", self.prev_replica, sep = " ")
 			
-
-
- 
 	##6. replica receives catch up message -- not needed for phase 2
 	##def receive("catch_up", from_= Olympus)
     #
