@@ -4,6 +4,8 @@ import nacl.encoding
 import nacl.signing
 import nacl.hash
 import time
+import logging
+import os
 
 class Replica(process):
 	def setup(replica_id, isHead, isTail, prev_replica, next_replica, head, history,
@@ -14,11 +16,14 @@ class Replica(process):
 		self.HASHER = nacl.hash.sha256
 		self.forward_request_received = dict()
 		self.client_request_received = dict()
+		# failure variables
 		self.change_operation_failure = 0
 		self.change_result_failure = 0
 		self.drop_result_stmt_failure = 0
+		self.invalid_order_sig_failure = 0
+		# checkpoint variables
 		self.checkpoint_index = 0
-		self.checkpoint_interval = 3
+		self.checkpoint_interval = 10
 		self.checkpoint_prefix = 2
 		self.latest_checkpoint_proof = []
 		self.last_checkpoint_slot = 0
@@ -53,7 +58,7 @@ class Replica(process):
 					trigger = 'client_request(' + str(request_id[0]) + ',' + str(self.client_request_received[request_id[0]]) + ')'
 					output("\nReplica", self.replica_id, ": failure", failures[trigger], "triggered by", trigger, sep = " ")
 					failureInjection(failures[trigger], 1)
-				handleNewRequest(request_id, request_type, request, client)
+				handleNewRequest(request_id, request_type, request, client, signed_msg)
 				
 		elif (request_type == 'retransmission' or request_type == 'forward'):
 			if 'client_request(' + str(request_id[0]) + ',' + str(self.client_request_received[request_id[0]]) + ')' in self.failures:
@@ -126,7 +131,7 @@ class Replica(process):
 					else: 
 						output("\nReplica", self.replica_id, ": retransmission request", request_id, "for operation", request, "is not recognized, start new operation.", sep = " ") 
 						# head doesnt recognize operation, start new operation process
-						handleNewRequest(request_id, request_type, request,	client)
+						handleNewRequest(request_id, request_type, request,	client, signed_msg)
 						# handle retransmission
 						handleRetransmit(request_id, request, client)
 						return
@@ -167,7 +172,7 @@ class Replica(process):
 			# handle timeout, send reconfiguration request to Olympus
 			output("\nReplica", self.replica_id, ": timeout handling retransmission request", request_id, "send reconfiguration request to Olympus.", sep = " ")
 	
-	def handleNewRequest(request_id, request_type, request, client):
+	def handleNewRequest(request_id, request_type, request, client, signed_msg):
 		# find the max slot that has been assigned to get the slot to assign
 		max_slot = 0
 		for (s, _, _, _) in self.history:
@@ -220,7 +225,7 @@ class Replica(process):
 		
 		if self.isTail != True:
 			# send shuttle to next replica
-			send(('shuttle', order_proof, result_proof, request_id, request_type, slot, request, client, self), to = self.next_replica)
+			send(('shuttle', order_proof, result_proof, request_id, request_type, slot, request, signed_msg, client, self), to = self.next_replica)
 			output("\nReplica", self.replica_id, ": sent shuttle", request_id, "to ", self.next_replica, sep = " ")
 		else:
 			# if there is only 1 replica in the chain, send result to client directly
@@ -388,10 +393,37 @@ class Replica(process):
 		
 		# add the signed order statement to 
 		self.history.append((slot, request_id, request, current_order_proof))
+		
+		# check for failure invalid_order_sig()
+		if self.invalid_order_sig_failure > 0:
+			output("\nReplica", self.replica_id, ": injecting invalid_order_sig failure for request", request_id, "at shuttle.", sep = " ")
+			
+			# increment the first byte of the signature in a nacl.signing.SignedMessage
+			signedlist = list(signed_order_stmt)
+			signedlist[0] = (signedlist[0] + 1) % 256
+			newsigned = bytes(signedlist)
+			invalid_signed = nacl.signing.SignedMessage._from_parts(signed_order_stmt._signature, signed_order_stmt._message, newsigned)
+			signed_order_stmt = invalid_signed
+			
+			self.invalid_order_sig_failure -= 1
+			
 		return signed_order_stmt
     
 	#2. replica receives shuttle
-	def receive(msg =('shuttle', order_proof, result_proof, request_id, request_type, slot, request, client, _), from_= self.prev_replica):
+	def receive(msg =('shuttle', order_proof, result_proof, request_id, request_type, slot, request, signed_msg, client, _), from_= self.prev_replica):
+		# verify client signature and validate request message from shuttle
+		try:
+			client_key = nacl.signing.VerifyKey(self.client_verify_key_list[request_id[0]], encoder=nacl.encoding.HexEncoder)
+			client_key.verify(signed_msg)
+		except nacl.exceptions.BadSignatureError:
+			output("\nReplica", self.replica_id, ": in shuttle from", self.prev_replica, "message from client is not validated, signature doesn't match.", sep = " ")
+			return
+			
+		message = signed_msg.message
+		if ("request<" + str(request_id) + "," + request + ">") != message.decode():
+			output("\nReplica", self.replica_id, ": in shuttle from", self.prev_replica, "message from client is not validated, message doesn't match.", sep = " ")
+			return
+		
 		output("\nReplica", self.replica_id, ": received shuttle", request_id, "from", self.prev_replica, sep = " ")
 		
 		# check for failure trigger shuttle()
@@ -455,7 +487,7 @@ class Replica(process):
 			send(('result_shuttle', request_id, request, result, result_proof, self), to = self.prev_replica)
 		else:
 			output("\nReplica", self.replica_id, ": sent shuttle", request_id, "to", self.next_replica, sep = " ")
-			send(('shuttle', order_proof, result_proof, request_id, request_type, slot, request, client, self), to = self.next_replica)
+			send(('shuttle', order_proof, result_proof, request_id, request_type, slot, request, signed_msg, client, self), to = self.next_replica)
 
 
 	#3. replica p receives result shuttle
@@ -551,15 +583,33 @@ class Replica(process):
 			f.strip()
 			if f == 'change_operation()':
 				self.change_operation_failure = num
-				#return (1,0,0)
 			elif f == 'change_result()':
 				self.change_result_failure = num
-				#return (0,1,0)
 			elif f == 'drop_result_stmt()':
 				self.drop_result_stmt_failure = num
-				#return (0,0,1)
-			elif f == 'sleep()':
-				time.sleep(5)
+			elif f == 'crash()':
+				logging.shutdown()
+				os._exit(-1)
+			elif f == 'truncate_history()':
+				return
+			elif f.startswith('sleep'):
+				match = re.findall("sleep\((\d+)\)", f)
+				# here assume no failures in parsing the sleep time
+				sleep_time = int(match[0])
+				sleep_time = sleep_time / 1000
+				time.sleep(sleep_time)
+			elif f == 'drop()':
+				return
+			elif f == 'increment_slot()':
+				return
+			elif f == 'extra_op()':
+				return
+			elif f == 'invalid_order_sig()':
+				self.invalid_order_sig_failure = num
+			elif f == 'invalid_result_sig()':
+				return
+			elif f == 'drop_checkpt_stmts()':
+				return
 		#else:
 		#	return (0,0,0)
 
@@ -639,4 +689,4 @@ class Replica(process):
 			time.sleep(3)
 			output('\nReplica', self.replica_id, 'state:', self.operation_dict,sep = " ")
 			for a,b,c,d in self.history:
-				output('ID:', self.replica_id, 'history:',a , sep = " ")
+				output('\nReplica', self.replica_id, 'history:', a , sep = " ")

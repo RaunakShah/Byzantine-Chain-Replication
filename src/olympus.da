@@ -41,7 +41,7 @@ class Olympus(process):
 				#print(fail_trig_unparsed)
 				fail_trig_pairs = fail_trig_unparsed.split(';')
 				for number_of_failures in range(len(fail_trig_pairs)):
-					failure_trigger = re.findall('(.*?\(.*?\)),(.*?\(\))',fail_trig_pairs[number_of_failures].strip())
+					failure_trigger = re.findall('(.*?\(.*?\)),(.*?\(.*?\))',fail_trig_pairs[number_of_failures].strip())
 					(trigger, failure) = failure_trigger[0]
 					failure = failure.strip()
 					trigger = trigger.strip()

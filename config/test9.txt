@@ -1,4 +1,4 @@
-test_case_name = test7 - Retransmission Forwarded Request trigger Change Result
+test_case_name = test3 - Client Request trigger Change Operation
 
 # number of failures to tolerate.  number of replicas is 2t+1.
 t = 1
@@ -14,5 +14,4 @@ nonhead_timeout = 5000
 workload[0] = put('movie','star'); append('movie',' wars'); get('movie')
 
 # FAILURE SCENARIO
-failures[0,2] = shuttle(0,2), sleep(5000)
-failures[0,0] = forwarded_request(0,0), change_result()
+failures[0,0] = client_request(0,1), invalid_order_sig()
