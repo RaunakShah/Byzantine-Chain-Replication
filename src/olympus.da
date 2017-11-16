@@ -120,7 +120,7 @@ class Olympus(process):
 
 		#check for any conflicting slot and operation in replicas that make the quorum
 		for index in range(len(wedge_statement_history_in_quorum)-1):
-			(slot, request_id, request, order_proof) = wedge_statement_history_in_quorum[index]
+			for (slot, request_id, request, order_proof) in wedge_statement_history_in_quorum[index]:
 				if slot in [t[0] for t in wedge_statement_history_in_quorum[index+1]]:
 					if request not in [t[2] for t in wedge_statement_history_in_quorum[index+1]]:
 						return False
@@ -128,30 +128,30 @@ class Olympus(process):
 		#validate order proof in wedged statements:
 		for i in range(len(H)):
 			(wedge,replica_id) = H[i]
-			(slot, request_id, request, order_proof) = wedge_statement_history_in_quorum[i]
-			for index in range(self.replica_id):
-				signed_order_stmt = order_proof[index]
-				# verify the signature
-				try:
-					verify_key = nacl.signing.VerifyKey(self.verify_key_list[index], encoder=nacl.encoding.HexEncoder)
-					verify_key.verify(signed_order_stmt)
-				except nacl.exceptions.BadSignatureError:
-					output("\nReplica", self.replica_id, ": order statement from shuttle is not validated, signature of replica",index, "doesn't match.", sep = " ")
-					return False
-				# get order statement by decoding message from signed message
-				order_stmt = signed_order_stmt.message.decode()
-				matches = re.findall("order<(\d+),\((\d+),\s+(\d+)\),(.*?)>", order_stmt)
-				# there should only be one match
-				if len(matches) != 1:
-					output("\nReplica", self.replica_id, ": message in order statement from shuttle doesn't match.", sep = " ")
-					return False
+			for (slot, request_id, request, order_proof) in wedge_statement_history_in_quorum[i]:
+				for index in range(replica_id):
+					signed_order_stmt = order_proof[index]
+					# verify the signature
+					try:
+						verify_key = nacl.signing.VerifyKey(self.verify_key_list[index], encoder=nacl.encoding.HexEncoder)
+						verify_key.verify(signed_order_stmt)
+					except nacl.exceptions.BadSignatureError:
+						output("\nReplica", self.replica_id, ": order statement from shuttle is not validated, signature of replica",index, "doesn't match.", sep = " ")
+						return False
+					# get order statement by decoding message from signed message
+					order_stmt = signed_order_stmt.message.decode()
+					matches = re.findall("order<(\d+),\((\d+),\s+(\d+)\),(.*?)>", order_stmt)
+					# there should only be one match
+					if len(matches) != 1:
+						output("\nReplica", self.replica_id, ": message in order statement from shuttle doesn't match.", sep = " ")
+						return False
 		return True
 	
 	def switchConfig(H):
 		#precondition checks
 		if self.quorum_size == len(H) and validHist(H):
 			print("much work to be done!") 
-
+			
 		
 	def run():
 		test_name = config['test_case_name']
