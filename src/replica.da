@@ -1,5 +1,5 @@
 import re
-from nacl.bindings.utils import sodium_memcmp
+from nacl.bindings.utils import sodium_memcmp 
 import nacl.encoding
 import nacl.signing
 import nacl.hash
@@ -23,7 +23,7 @@ class Replica(process):
 		self.invalid_order_sig_failure = 0
 		# checkpoint variables
 		self.checkpoint_index = 0
-		self.checkpoint_interval = 10
+		self.checkpoint_interval = 2
 		self.checkpoint_prefix = 2
 		self.latest_checkpoint_proof = []
 		self.last_checkpoint_slot = 0
@@ -613,10 +613,16 @@ class Replica(process):
 		#else:
 		#	return (0,0,0)
 
-	##4. replica receives wedge request -- not needed for phase 2
-	##def receive(wedge_statement, from_= Olympus)
-    #
-	#5. replica receives checkpoint proof -- not needed for phase 2
+	#4. replica receives wedge request -- not needed for phase 2
+	def receive(msg = ('wedge_request'), from_= Olympus):
+	#def receive(msg = ('operation_request', request_id, request_type, request, signed_msg, client), from_ = _):
+		self.mode = 'IMMUTABLE'
+		
+		#sign and send self.replica_id, self.history, self.operation_dict, self.latest_checkpoint_proof in wedge statement
+		wedge_response = self.signing_key.sign((str(self.replica_id) + ';' + str(self.history) + ';' + str(self.operation_dict()) + ';' + str(self.latest_checkpoint_proof)).encode())  
+		send(('wedge_statement', wedge_response, self.replica_id), to = Olympus)
+	
+	#5. replica receives checkpoint proof 
 	def receive(msg = ('checkpoint_proof', checkpoint_proof_statement_list, checkpoint_prefix), from_ = self.prev_replica):
 		output("\nReplica", self.replica_id, ": received checkpoint_proof for checkpoint prefix", checkpoint_prefix, "from", self.prev_replica, sep = " ")
 		
@@ -640,11 +646,7 @@ class Replica(process):
 			return None
 
 		#generate checkpoint proof by hashing state and signing the message
-		state = ""
-		for key, value in self.operation_dict.items():
-			state += key
-			state += value
-		state_in_bytes = bytes(state, 'utf-8')
+		state_in_bytes = (str(self.operation_dict)).encode() 
 		state_hash = self.HASHER(state_in_bytes, encoder = nacl.encoding.HexEncoder)
 		checkpoint_stmt_msg = 'checkpoint'
 		signed_checkpoint_statement = self.signing_key.sign(checkpoint_stmt_msg.encode() + state_hash)

@@ -1,3 +1,4 @@
+import random
 import nacl.encoding
 import nacl.signing
 import re
@@ -10,7 +11,7 @@ class Olympus(process):
 		self.nonhead_timeout = int(config['nonhead_timeout'])
 		self.client_num = int(config['num_client'])
 		self.configuration_id = 0
-		
+		self.quorum_size = int(config['t']) + 1		
 		# create replicas
 		replica_da = import_da('replica')
 		self.replicas = new(replica_da.Replica, num = self.replica_num)
@@ -80,6 +81,78 @@ class Olympus(process):
 		send(('get_configuration_response', self.configuration_id, self.replica_list, 
 			self.verify_key_list, signed_msg, self), to = client)
 
+	def receive(msg = ('reconfiguration_request', replica_id), from_= sending_replica):
+		#assuming for now only replicas send reconfig request
+		for replica in self.replicas:
+			send(('wedge_request'), to = replica)
+		#wait for replies from all replicas
+		if await(len(setof(r, received(('wedge_statement', wedge_response, replica_id)))) == self.replica_num):
+			successful_configuration_change = false
+			while successful_configuration_change == false:
+				#form a random quorum from the replica list
+				quorum = random.sample(range(self.replica_num), self.quorum_size)	
+				H = []
+				for q in quorum:
+					if received('wedge_statement', wedge_response, q):
+						H.append((wedge_response, q))
+				successful_configuration_change = switchConfig(H)
+	
+	def validHist(H):
+		#H is a list of the form [(wedge,id), (wedge,id)...]
+		#wedge is a signed wedge statement by every replica with replica_id = id. wedge = <"replica_id;history;dictionary;checkpointproof">_p 
+		#history is of the form (slot, request_id, request, order_proof)
+
+		wedged_statement_history_in_quorum = []
+		for index in range(len(H)):
+			#verify signature of each signed wedged statement in H
+			try:
+				verify_key = nacl.signing.VerifyKey(self.verify_key_list[index], encoder=nacl.encoding.HexEncoder)
+				verify_key.verify(H[index][0])
+			except nacl.exceptions.BadSignatureError:
+                                #output("\nReplica", self.replica_id, ": checkpoint statement from proof is not validated, signature of replica", index, "doesn't match.", sep = " ")
+				return None
+			
+			#current_wedge_statement contains the history part of each wedge
+			current_wedge_statement = H[index][0].message.decode() 
+			current_wedge_statement = current_wedge_statement.split(';')
+			current_wedge_statement = current_wedge_statement[1]
+			wedge_statement_history_in_quorum.append(current_wedge_statement)
+
+		#check for any conflicting slot and operation in replicas that make the quorum
+		for index in range(len(wedge_statement_history_in_quorum)-1):
+			(slot, request_id, request, order_proof) = wedge_statement_history_in_quorum[index]
+				if slot in [t[0] for t in wedge_statement_history_in_quorum[index+1]]:
+					if request not in [t[2] for t in wedge_statement_history_in_quorum[index+1]]:
+						return False
+		
+		#validate order proof in wedged statements:
+		for i in range(len(H)):
+			(wedge,replica_id) = H[i]
+			(slot, request_id, request, order_proof) = wedge_statement_history_in_quorum[i]
+			for index in range(self.replica_id):
+				signed_order_stmt = order_proof[index]
+				# verify the signature
+				try:
+					verify_key = nacl.signing.VerifyKey(self.verify_key_list[index], encoder=nacl.encoding.HexEncoder)
+					verify_key.verify(signed_order_stmt)
+				except nacl.exceptions.BadSignatureError:
+					output("\nReplica", self.replica_id, ": order statement from shuttle is not validated, signature of replica",index, "doesn't match.", sep = " ")
+					return False
+				# get order statement by decoding message from signed message
+				order_stmt = signed_order_stmt.message.decode()
+				matches = re.findall("order<(\d+),\((\d+),\s+(\d+)\),(.*?)>", order_stmt)
+				# there should only be one match
+				if len(matches) != 1:
+					output("\nReplica", self.replica_id, ": message in order statement from shuttle doesn't match.", sep = " ")
+					return False
+		return True
+	
+	def switchConfig(H):
+		#precondition checks
+		if self.quorum_size == len(H) and validHist(H):
+			print("much work to be done!") 
+
+		
 	def run():
 		test_name = config['test_case_name']
 		output("\nStarting test case:", test_name, sep = " ")
