@@ -69,7 +69,6 @@ class Replica(process):
 			if (request_id in self.cache.keys() 
 					and len(self.cache[request_id]) == 3):
 				output("\nReplica", self.replica_id, ": retransmission request", request_id, "exist in cache.", sep = " ") 
-				# replica has cached the result and result proof for the given request id
 				if self.isHead == True:
 					if request_type == 'forward':
 						if request_id[0] in self.forward_request_received:
@@ -170,6 +169,7 @@ class Replica(process):
 			send(('operation_result', request_id, result_request, 'retransmission', result, result_proof, self), to = client)
 		elif timeout(self.timeout):
 			# handle timeout, send reconfiguration request to Olympus
+			send(('reconfiguration_request', self.replica_id), to = Olympus)
 			output("\nReplica", self.replica_id, ": timeout handling retransmission request", request_id, "send reconfiguration request to Olympus.", sep = " ")
 	
 	def handleNewRequest(request_id, request_type, request, client, signed_msg):
@@ -236,10 +236,6 @@ class Replica(process):
 		"""
 		Perform condition checks then run the request
 		"""
-		# this replica must be in ACTIVE mode
-		if(self.mode != 'ACTIVE'):
-			output("\nReplica", self.replica_id, ": mode is not 'ACTIVE'.", sep = " ")
-			return None
 
 		# check if there is any conflict in current request and history of this replica
 		# the slot number shouldn't have been assigned to any other request
@@ -381,6 +377,11 @@ class Replica(process):
 		"""
 		Create a signed order statement and create an order proof to append to history of this replica
 		"""
+		# this replica must be in ACTIVE mode
+		if(self.mode != 'ACTIVE'):
+			output("\nReplica", self.replica_id, ": mode is not 'ACTIVE'.", sep = " ")
+			return None
+		
 		# create an order statement for this replica
 		# make order statement a string so it can be turned into bytes and signed 
 		order_statement = "order<" + str(slot) + "," + str(request_id) + "," + request + ">"
@@ -615,10 +616,9 @@ class Replica(process):
 
 	#4. replica receives wedge request -- not needed for phase 2
 	def receive(msg = ('wedge_request'), from_= Olympus):
-	#def receive(msg = ('operation_request', request_id, request_type, request, signed_msg, client), from_ = _):
 		self.mode = 'IMMUTABLE'
 		
-		#sign and send self.replica_id, self.history, self.operation_dict, self.latest_checkpoint_proof in wedge statement
+		#sign and send (self.replica_id;self.history;self.operation_dict;self.latest_checkpoint_proof) in wedge statement
 		wedge_response = self.signing_key.sign((str(self.replica_id) + ';' + str(self.history) + ';' + str(self.operation_dict()) + ';' + str(self.latest_checkpoint_proof)).encode())  
 		send(('wedge_statement', wedge_response, self.replica_id), to = Olympus)
 	
@@ -678,9 +678,9 @@ class Replica(process):
 			send(('checkpoint_result', checkpoint_proof_statement_list, checkpoint_prefix), to = self.prev_replica)
 			output(self.replica_id, "sent checkpoint result to", self.prev_replica, sep = " ")
 			
-	##6. replica receives catch up message -- not needed for phase 2
-	##def receive("catch_up", from_= Olympus)
-    #
+	#6. replica receives catch up message 2
+#	def receive(msg =("catch_up", catch_up_sequence), from_= Olympus)
+
 	##7. replica receives a get running state message -- not needed for phase 2
 	##def receive("get_running_state", from_= Olympus)
 	

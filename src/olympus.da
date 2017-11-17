@@ -11,7 +11,8 @@ class Olympus(process):
 		self.nonhead_timeout = int(config['nonhead_timeout'])
 		self.client_num = int(config['num_client'])
 		self.configuration_id = 0
-		self.quorum_size = int(config['t']) + 1		
+		self.quorum_size = int(config['t']) + 1
+		self.HASHER = nacl.hash.sha256		
 		# create replicas
 		replica_da = import_da('replica')
 		self.replicas = new(replica_da.Replica, num = self.replica_num)
@@ -155,6 +156,7 @@ class Olympus(process):
 			#find longest history
 			LH = []
 			max = 0
+			ch = dict()
 			for (wedge, id) in H: 
 				current_wedge_statement = wedge.message.decode() 
 				current_wedge_statement = current_wedge_statement.split(';')
@@ -175,7 +177,24 @@ class Olympus(process):
 				catch_up_sequence = LH[(len(history_in_wedge_statement)):len(LH)]
 				send (('catch_up', catch_up_sequence), to = self.replica[id])
 				if await(some(received(('caught_up', caught_up_state, replica_id), from_ = self.replica[id]))):
-					
+					ch['replica_id'] = caught_up_state
+			expected_value = next(iter(ch.values()))  
+			all_checkpoints_equal = all(value == expected_value for value in ch.values())
+			if all_checkpoints_equal == False:
+				return False
+			
+			running_state = NULL
+			running_states_match = False
+			while running_states_match == False:
+				random_wedge_in_quorum = random.choice(H)
+				random_replica_in_quorum = random_wedge_in_quorum[1]
+				send(('get_running_state', to = random_replica_in_quorum))
+				if await(some(received(('running_state_message',running_state), from_ = random_replica_in_quorum))):
+					running_state_hash = self.HASHER(running_state, encoder = nacl.encoding.HexEncoder)
+					if expected_value == running_state_hash:
+						running_states_match = True
+
+			#TODO send state to new configuration	
 		else:
 			return False
 		
