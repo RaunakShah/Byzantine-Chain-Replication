@@ -121,9 +121,10 @@ class Olympus(process):
 		#check for any conflicting slot and operation in replicas that make the quorum
 		for index in range(len(wedge_statement_history_in_quorum)-1):
 			for (slot, request_id, request, order_proof) in wedge_statement_history_in_quorum[index]:
-				if slot in [t[0] for t in wedge_statement_history_in_quorum[index+1]]:
-					if request not in [t[2] for t in wedge_statement_history_in_quorum[index+1]]:
-						return False
+				for index2 in range(index, len(wedge_statement_history_in_quorum)):
+					if slot in [t[0] for t in wedge_statement_history_in_quorum[index2]]:
+						if request not in [t[2] for t in wedge_statement_history_in_quorum[index2]]:
+							return False
 		
 		#validate order proof in wedged statements:
 		for i in range(len(H)):
@@ -150,8 +151,34 @@ class Olympus(process):
 	def switchConfig(H):
 		#precondition checks
 		if self.quorum_size == len(H) and validHist(H):
-			print("much work to be done!") 
-			
+			print("much work to be done!")
+			#find longest history
+			LH = []
+			max = 0
+			for (wedge, id) in H: 
+				current_wedge_statement = wedge.message.decode() 
+				current_wedge_statement = current_wedge_statement.split(';')
+				history_in_wedge_statement = current_wedge_statement[1]
+
+				if len(history_in_wedge_statement) > max:
+					max = len(history_in_wedge_statement)
+					LH = history_in_wedge_statement
+			for (wedge, id) in H:
+				current_wedge_statement = wedge.message.decode() 
+				current_wedge_statement = current_wedge_statement.split(';')
+				history_in_wedge_statement = current_wedge_statement[1]
+				checkpoint_in_wedge_statement = current_wedge_statement[3]
+				
+				#TODO validate checkpoint proof
+				
+				catch_up_length = len(LH) - len(history_in_wedge_statement)
+				catch_up_sequence = LH[(len(history_in_wedge_statement)):len(LH)]
+				send (('catch_up', catch_up_sequence), to = self.replica[id])
+				if await(some(received(('caught_up', caught_up_state, replica_id), from_ = self.replica[id]))):
+					
+		else:
+			return False
+		
 		
 	def run():
 		test_name = config['test_case_name']
