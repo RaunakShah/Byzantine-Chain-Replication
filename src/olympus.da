@@ -152,7 +152,6 @@ class Olympus(process):
 	def switchConfig(H):
 		#precondition checks
 		if self.quorum_size == len(H) and validHist(H):
-			print("much work to be done!")
 			#find longest history
 			LH = []
 			max = 0
@@ -165,6 +164,7 @@ class Olympus(process):
 				if len(history_in_wedge_statement) > max:
 					max = len(history_in_wedge_statement)
 					LH = history_in_wedge_statement
+			#for all replicas in quorum
 			for (wedge, id) in H:
 				current_wedge_statement = wedge.message.decode() 
 				current_wedge_statement = current_wedge_statement.split(';')
@@ -173,24 +173,27 @@ class Olympus(process):
 				
 				#TODO validate checkpoint proof
 				
+				#find catch up sequence per replica in quorum
 				catch_up_length = len(LH) - len(history_in_wedge_statement)
 				catch_up_sequence = LH[(len(history_in_wedge_statement)):len(LH)]
 				send (('catch_up', catch_up_sequence), to = self.replica[id])
 				if await(some(received(('caught_up', caught_up_state, replica_id), from_ = self.replica[id]))):
 					ch['replica_id'] = caught_up_state
+
+			#check if all running states are the same after catch up
 			expected_value = next(iter(ch.values()))  
 			all_checkpoints_equal = all(value == expected_value for value in ch.values())
 			if all_checkpoints_equal == False:
 				return False
 			
-			running_state = NULL
+			#get running state from random replica in quorum
 			running_states_match = False
 			while running_states_match == False:
 				random_wedge_in_quorum = random.choice(H)
 				random_replica_in_quorum = random_wedge_in_quorum[1]
 				send(('get_running_state', to = random_replica_in_quorum))
 				if await(some(received(('running_state_message',running_state), from_ = random_replica_in_quorum))):
-					running_state_hash = self.HASHER(running_state, encoder = nacl.encoding.HexEncoder)
+					running_state_hash = self.HASHER(running_state.encode(), encoder = nacl.encoding.HexEncoder)
 					if expected_value == running_state_hash:
 						running_states_match = True
 
