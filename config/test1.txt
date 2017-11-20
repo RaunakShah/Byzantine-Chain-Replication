@@ -9,6 +9,8 @@ client_timeout = 3000
 # timeout, in milliseconds, for head and non-head servers, respectively
 head_timeout = 5000
 nonhead_timeout = 5000
+# checkpoint interval.  take a checkpoint every checkpt_interval slots.
+checkpt_interval = 10
 
 # CLIENT WORKLOAD
 workload[0] = put('movie','star'); append('movie',' wars'); get('movie')
