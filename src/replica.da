@@ -8,7 +8,7 @@ import logging
 import os
 
 class Replica(process):
-	def setup(replica_id, isHead, isTail, prev_replica, next_replica, head, history,
+	def setup(replica_id, isHead, isTail, prev_replica, next_replica, olympus, configuration_id, history,
 			mode, signing_key, verify_key_list, client_verify_key_list, timeout, failures, checkpt_interval):
 		# current slot number
 		self.slot_num = 0
@@ -173,8 +173,10 @@ class Replica(process):
 			send(('operation_result', request_id, result_request, 'retransmission', result, result_proof, self), to = client)
 		elif timeout(self.timeout):
 			# handle timeout, send reconfiguration request to Olympus
-			send(('reconfiguration_request', self.replica_id), to = Olympus)
-			output("\nReplica", self.replica_id, ": timeout handling retransmission request", request_id, "send reconfiguration request to Olympus.", sep = " ")
+			output("\nReplica", self.replica_id, ": timeout handling retransmission request", request_id, 
+				"send reconfiguration request to Olympus.", sep = " ")
+			send(('reconfiguration_request', self.replica_id, self.configuration_id, self), to = self.olympus)
+			
 	
 	def handleNewRequest(request_id, request_type, request, client, signed_msg):
 		# we don't use this method because it's hard to inject failure increment_slot()
@@ -246,21 +248,32 @@ class Replica(process):
 		# this replica must be in ACTIVE mode
 		if(self.mode != 'ACTIVE'):
 			output("\nReplica", self.replica_id, ": mode is not 'ACTIVE'.", sep = " ")
+			# this is a proof of misbehavior, send reconfig request immediately
+			output("\nReplica", self.replica_id, ": find proof of misbehavior handling request", request_id, 
+				"send reconfiguration request to Olympus.", sep = " ")
+			send(('reconfiguration_request', self.replica_id, self.configuration_id, self), to = self.olympus)
 			return None
 
 		# check if there is any conflict in current request and history of this replica
 		# the slot number shouldn't have been assigned to any other request
 		if slot in [t[0] for t in self.history]:
 			output("\nReplica", self.replica_id, ": conflict in current request and history for slot number", slot, sep = " ")
+			# this is a proof of misbehavior, send reconfig request immediately
+			output("\nReplica", self.replica_id, ": find proof of misbehavior handling request", request_id, 
+				"send reconfiguration request to Olympus.", sep = " ")
+			send(('reconfiguration_request', self.replica_id, self.configuration_id, self), to = self.olympus)
 			return None
 	
 		#check for hole
 		for checking_slot in range(self.last_checkpoint_slot, slot):
 			if checking_slot not in [t[0] for t in self.history]:
 				output("\nReplica", self.replica_id, ": there is a hole in the history for slot number", checking_slot, sep = " ")
+				# this is a proof of misbehavior, send reconfig request immediately
+				output("\nReplica", self.replica_id, ": find proof of misbehavior handling request", request_id, 
+					"send reconfiguration request to Olympus.", sep = " ")
+				send(('reconfiguration_request', self.replica_id, self.configuration_id, self), to = self.olympus)
 				return None
 		
-	
 		#checkpointing 
 		#Increase checkpoint index and test equality with checkpoint interval
 		if self.isHead:
@@ -600,13 +613,14 @@ class Replica(process):
 			output("\nReplica", self.replica_id, ": sent result_shuttle", result_shuttle_id, "to", self.prev_replica, sep = " ")
 			send(('result_shuttle', result_shuttle_id, request, result, result_proof, self), to= self.prev_replica)
 		
-	#4. replica receives wedge request -- not needed for phase 2
-	def receive(msg = ('wedge_request'), from_= Olympus):
+	#4. replica receives wedge request
+	def receive(msg = ('wedge_request', _), from_= Olympus):
 		self.mode = 'IMMUTABLE'
 		
 		#sign and send (self.replica_id;self.history;self.operation_dict;self.latest_checkpoint_proof) in wedge statement
-		wedge_response = self.signing_key.sign((str(self.replica_id) + ';' + str(self.history) + ';' + str(self.operation_dict()) + ';' + str(self.latest_checkpoint_proof)).encode())  
-		send(('wedge_statement', wedge_response, self.replica_id), to = Olympus)
+		wedge_response = self.signing_key.sign((str(self.replica_id) + ';' + str(self.history) + ';' + str(self.operation_dict()) + ';' + str(self.latest_checkpoint_proof)).encode())
+		output("\nReplica", self.replica_id, ": sent wedge statement to Olympus.", sep = " ")		
+		send(('wedge_statement', wedge_response, self.replica_id, self.configuration_id, self), to = Olympus)
 	
 	#5. replica receives checkpoint proof shuttle (from head to tail)
 	def receive(msg = ('checkpoint_proof', checkpoint_proof_statement_list, checkpoint_prefix, current_slot, _), from_ = self.prev_replica):
@@ -760,19 +774,19 @@ class Replica(process):
 			return None
 		return result
 	
-	#6. replica receives catch up message 2
-	def receive(msg =("catch_up", catch_up_sequence), from_= Olympus)
+	#7. replica receives catch up message
+	def receive(msg =("catch_up", catch_up_sequence), from_= self.olympus)
 		for index in range(len(catch_up_sequence)):
 			(slot, request_id, request, order_proof) = catch_up_sequence[index]
 			res = appyOperationDuringReconfiguration(slot, request)
 		state_in_bytes = (str(self.operation_dict)).encode() 
 		state_hash = self.HASHER(state_in_bytes, encoder = nacl.encoding.HexEncoder)
-		send(('caught_up', state_hash, self.replica_id), to = Olympus)
+		send(('caught_up', state_hash, self.replica_id), to = self.olympus)
 			
-	#7. replica receives a get running state message -- not needed for phase 2
-	def receive(msg=("get_running_state"), from_= Olympus)
+	#8. replica receives a get running state message
+	def receive(msg=("get_running_state"), from_= self.olympus)
 		state = str(self.operation_dict)
-		send(('running_state_message', state), to = Olympus)
+		send(('running_state_message', state), to = self.olympus)
 
 	def run():
 		output('\nStarting replica', self.replica_id, sep = " ")

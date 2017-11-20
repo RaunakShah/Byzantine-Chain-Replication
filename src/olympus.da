@@ -14,7 +14,14 @@ class Olympus(process):
 		self.configuration_id = 0
 		self.quorum_size = int(config['t']) + 1
 		self.checkpt_interval = int(config['checkpt_interval'])
-		self.HASHER = nacl.hash.sha256		
+		self.HASHER = nacl.hash.sha256
+
+		# reconfiguration state
+		self.reconfig_state = False
+		
+		# reconfiguration related variable
+		self.reconfig_msg = []
+		
 		# create replicas
 		replica_da = import_da('replica')
 		self.replicas = new(replica_da.Replica, num = self.replica_num)
@@ -68,42 +75,68 @@ class Olympus(process):
 		
 			timeout = int(timeout / 1000)
 
-			setup(replica, (index, isHead, isTail, prev_replica, next_replica, replica_list[0], 
+			setup(replica, (index, isHead, isTail, prev_replica, next_replica, self, self.configuration_id, 
 				[], 'ACTIVE', self.signing_key_list[index], self.verify_key_list, self.client_verify_key_list, 
 				timeout, failures, self.checkpt_interval))
-
-		
-	def receive(msg =('check_configuration', message_id, _), from_= client):
-		# send response to liveness check from client
-		send(('check_configuration_response', 'OK', message_id, self), to = client)
+	
+	def receive(msg =('check_configuration', message_id, client_configuration_id, _), from_= client):
+		# check if configuration id matches
+		if self.configuration_id == client_configuration_id:
+			# send response to liveness check from client
+			output("\Olympus: send check config response 'OK' to client", client, sep = " ")
+			send(('check_configuration_response', 'OK', message_id, self.configuration_id, self), to = client)
+		else:
+			output("\Olympus: send check config response 'RECONFIG' to client", client, sep = " ")
+			send(('check_configuration_response', 'RECONFIG', message_id, self.configuration_id, self), to = client)
 		
 	def receive(msg =('get_configuration', _), from_= client):
 		# send current configuration (replica chain and their verify keys) to client
 		configuration_response_msg = 'configuration_id:' + str(self.configuration_id)
 		signed_msg = self.olympus_signing_key.sign(configuration_response_msg.encode())
+		output("\Olympus: send replicas and configuration information for config", self.configuration_id, "to client", client, sep = " ")
 		send(('get_configuration_response', self.configuration_id, self.replica_list, 
 			self.verify_key_list, signed_msg, self), to = client)
 
-	def receive(msg = ('reconfiguration_request', replica_id), from_= sending_replica):
-		#assuming for now only replicas send reconfig request
+	def receive(msg = ('reconfiguration_request', replica_id, replica_config_id, _), from_= sending_replica):
+		output("\Olympus: received reconfig request from replica", replica_id, "for configuration", replica_config_id, sep = " ")
+		# check if config id matches
+		if replica_config_id != self.configuration_id:
+			return
+		# enter reconfig state, use this to prevent olympus handling multiple reconfig requests from multiple replicas in same config		
+		if self.reconfig_state:
+			output("\Olympus: reconfiguration is ongoing.", sep = " ")
+			return
+		else:
+			self.reconfig_state = True
+			output("\Olympus: start reconfiguration.", sep = " ")
+		# for now only replicas send reconfig request
+		output("\Olympus: send wedge requests to all", self.replica_num, "replicas.", sep = " ")
 		for replica in self.replicas:
 			send(('wedge_request'), to = replica)
 		#wait for replies from all replicas
-		if await(len(setof(r, received(('wedge_statement', wedge_response, replica_id)))) == self.replica_num):
-			successful_configuration_change = false
-			while successful_configuration_change == false:
-				#form a random quorum from the replica list
-				quorum = random.sample(range(self.replica_num), self.quorum_size)	
-				H = []
-				for q in quorum:
-					if received('wedge_statement', wedge_response, q):
-						H.append((wedge_response, q))
-				successful_configuration_change = switchConfig(H)
+		if await(len(setof(r, received(('wedge_statement', _, _, _, _)))) == self.replica_num and
+				each(received(('wedge_statement', _, _, replica_config_id, _)), has)):
+			output("\Olympus: received wedge statements from all", self.replica_num, "replicas.", sep = " ")
+			#successful_configuration_change = False
+			#while successful_configuration_change == False:
+			#	#form a random quorum from the replica list
+			#	quorum = random.sample(range(self.replica_num), self.quorum_size)	
+			#	H = []
+			#	for q in quorum:
+			#		if received('wedge_statement', wedge_response, q):
+			#			H.append((wedge_response, q))
+			#	successful_configuration_change = switchConfig(H)
+	
+	def receive(msg = ('wedge_statement', wedge_response, replica_id, replica_config_id, _), from _= _):
+		output("\Olympus: received wedge statement from replica", replica_id, sep = " ")
+		# check if config id matches
+		if replica_config_id != self.configuration_id:
+			self.reconfig_msg.append((wedge_response, replica_id))
 	
 	def validHist(H):
-		#H is a list of the form [(wedge,id), (wedge,id)...]
-		#wedge is a signed wedge statement by every replica with replica_id = id. wedge = <"replica_id;history;dictionary;checkpointproof">_p 
-		#history is of the form (slot, request_id, request, order_proof)
+		# H is a list of the form [(wedge,id), (wedge,id)...]
+		# wedge is a signed wedge statement by every replica with replica_id = id. wedge = <"replica_id;history;dictionary;checkpointproof">_p 
+		# history is of the form (slot, request_id, request, order_proof)
     
 		wedged_statement_history_in_quorum = []
 		for index in range(len(H)):
@@ -140,7 +173,7 @@ class Olympus(process):
 						verify_key = nacl.signing.VerifyKey(self.verify_key_list[index], encoder=nacl.encoding.HexEncoder)
 						verify_key.verify(signed_order_stmt)
 					except nacl.exceptions.BadSignatureError:
-						output("\nReplica", self.replica_id, ": order statement from shuttle is not validated, signature of replica",index, "doesn't match.", sep = " ")
+						output("\Olympus", self.replica_id, ": order statement from shuttle is not validated, signature of replica",index, "doesn't match.", sep = " ")
 						return False
 					# get order statement by decoding message from signed message
 					order_stmt = signed_order_stmt.message.decode()
