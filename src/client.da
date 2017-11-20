@@ -11,6 +11,7 @@ import nacl.signing
 import nacl.hash
 import re
 import time
+import random
 
 class Client(process):
 	def setup(client_id, olympus, workload, client_timeout, signing_key, olympus_verify_key):
@@ -35,6 +36,12 @@ class Client(process):
 		# testing related object
 		self.test_dict = dict()
 		self.test_result = []
+		# check for pseudorandom workload
+		if len(workload) == 1 and workload[0].startswith("pseudorandom"):
+			workload_string = workload[0]
+			print(workload_string)
+			workload = generatePseudorandomRequests(workload_string)
+		
 		output("Client ID:", client_id, "\nWorkload:", workload, "\nTimeout:", client_timeout, sep = " ")		
 		
 	def run():
@@ -74,21 +81,6 @@ class Client(process):
 			output("\nClient", self.client_id, ": sent operation_request", request_id, "to", self.chain[0], sep = " ")
 
 			self.response_verified = False
-			
-			#if (await(
-			#		some(received(('operation_result', result_request_id, request_type, result_request, response, result_proof, _),
-			#			from_ = self.chain[len(self.chain) - 1]),
-			#		has = (result_request_id == request_id and request_type == 'new')) and is_verified)):
-			#	output("\nClient", self.client_id, ": received operation_response of request", request_id,
-			#		"for operation", request, sep = " ")
-		    #
-			#	# verify operation result
-			#	if verify(request_id, result_request, response, result_proof):
-			#		output("\nClient", self.client_id, ": response of", request_type, "request", request_id, 
-			#		"for operation", request, "is validated, the result is:", response, sep = " ")
-			#	else:
-			#		output("Result not validated")
-			#		time.sleep(self.client_timeout)
 			
 			# wait and verify for response from replica for the current request
 			if (await(self.response_verified)):
@@ -193,9 +185,9 @@ class Client(process):
 		#elif (response_type == "error"):
 		#	chain = getConfig(Olympus)
 		#	retransmit(id, retransmit_request, chain.replicas)
-
-	def receive(msg =('operation_result', result_request_id, 'new', result_request, response, result_proof, _), from_ = replica):
-		output("\nClient", self.client_id, ": received response for new request", result_request_id, 
+			
+	def receive(msg =('operation_result', result_request_id, request_type, result_request, response, result_proof, _), from_ = replica):
+		output("\nClient", self.client_id, ": received response for", request_type, "request", result_request_id, 
 			"from replica", replica, sep = " ")
 		# check request id, request type, and request
 		if (result_request_id != self.current_request_id or result_request != self.current_request_operation):
@@ -203,24 +195,10 @@ class Client(process):
 
 		# verify operation result
 		if verify(result_request_id, result_request, response, result_proof):
-			output("\nClient", self.client_id, ": response of new request", result_request_id, 
+			output("\nClient", self.client_id, ": response of", request_type, "request", result_request_id, 
 				"for operation", result_request, "is validated, the result is:", response, sep = " ")
 			self.result.append(response)
 			# result is verified, set verifying state back to false
-			self.response_verified = True
-			
-	def receive(msg =('operation_result', result_request_id, 'retransmission', result_request, response, result_proof, _), from_ = replica):
-		output("\nClient", self.client_id, ": received response for retransmission request", result_request_id, 
-			"from replica", replica, sep = " ")
-		# check request id, request type, and request
-		if (result_request_id != self.current_request_id or result_request != self.current_request_operation):
-			return
-
-		# verify operation result
-		if verify(request_id, result_request, response, result_proof):
-			output("\nClient", self.client_id, ": response of", request_type, "request", request_id, 
-				"for operation", request, "is validated, the result is:", response, sep = " ")
-			self.result.append(response)
 			self.response_verified = True
 		
 	def getConfig(Olympus):
@@ -305,3 +283,51 @@ class Client(process):
 				return 'fail'
 		else:
 			return None
+	
+	def generatePseudorandomRequests(workload_string):
+		# get seed and number of requests from workload string
+		matches = re.findall("pseudorandom\((\d+),(\d+)\)", workload_string)
+		if len(matches) != 1:
+			return []
+		matched_tuple = matches[0]
+		random_seed = int(matched_tuple[0])
+		n = int(matched_tuple[1])
+		
+		# set seed for random number generator
+		random.seed(random_seed)
+		# generate at most ((n / 3) + 1) keys
+		key_num = int(n/3) + 1
+		request_list = []
+		for i in range(n):
+			# get a random number from 0 to 100
+			random_num = random.randint(0, 100)
+			# generate a random operation, there are only 4 operations
+			operation_num = random_num % 4
+			# generate a random key
+			key = random_num % key_num
+			if operation_num == 0:
+				# put operation
+				request = 'put'
+				value = random_num % n
+				request += "('key_" + str(key) + "','value_" + str(value) + "')"
+			elif operation_num == 1:
+				# get operation
+				request = 'get'
+				request += "('key_" + str(key) + "')"
+			elif operation_num == 2:
+				# slice operation
+				request = 'slice'
+				slice_start = random_num % 3
+				slice_end = random_num % 5
+				if slice_end < slice_start:
+					slice_end = slice_start + slice_start - slice_end
+				request += "('key_" + str(key) + "','" + str(slice_start) + ":" + str(slice_end) + "')"
+			else:
+				# append operation
+				request = 'append'
+				value = random_num % n
+				request += "('key_" + str(key) + "','value_" + str(value) + "')"
+			request_list.append(request)
+		output("\nClient", self.client_id, ": Pseudorandom workload:", request_list, sep = ' ')
+		return request_list
+	
