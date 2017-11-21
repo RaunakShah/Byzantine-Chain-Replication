@@ -1,10 +1,3 @@
-## Changes from psuedocode:
-## getConfig() does not take two arguments. Takes only one argument - Olympus
-## operation.id and operation.type are now independant variables - id and type
-## id and type are parameters to send()
-## operation_request does not have any attributes except for the operation itself
-## after retransmit, client waits for any type of message (result or error). we need a way to specify whether the message is a result or error message, in the same format, maybe a string "result" or "error"
-
 from nacl.bindings.utils import sodium_memcmp
 import nacl.encoding
 import nacl.signing
@@ -32,10 +25,10 @@ class Client(process):
 		# indicate the state of client when client is waiting and verifying response from operation request
 		self.response_verified = True
 		# results for all request
-		self.result = []
+		self.result = dict()
 		# testing related object
 		self.test_dict = dict()
-		self.test_result = []
+		self.test_result = dict()
 		# check for pseudorandom workload
 		if len(workload) == 1 and workload[0].startswith("pseudorandom"):
 			workload_string = workload[0]
@@ -97,7 +90,7 @@ class Client(process):
 				output("\nClient", self.client_id, ": timeout waiting for response for request", request_id, "start retransmission phase", sep = " ")
 				retransmit(request_id, request)
 			
-			self.test_result.append(findAndPerformOperation(request))
+			self.test_result[request_id] = findAndPerformOperation(request)
 			# move to next request in client's workload
 			workload_count += 1
 		
@@ -187,8 +180,8 @@ class Client(process):
 		# can receive result and result proof or error statement from a replica
 		if (await(self.response_verified)):
 			output("\nClient", self.client_id, ": retransmission for request", request_id, "finished.", sep = " ")
-		elif timeout(15):
-			output("\nClient", self.client_id, ": retransmission for request", request_id, "timeout. (For Phase 2 only since we don't consider reconfig)", sep = " ")
+		#elif timeout(15):
+		#	output("\nClient", self.client_id, ": retransmission for request", request_id, "timeout. (For Phase 2 only since we don't consider reconfig)", sep = " ")
 		#elif (response_type == "error"):
 		#	chain = getConfig(Olympus)
 		#	retransmit(id, retransmit_request, chain.replicas)
@@ -204,7 +197,7 @@ class Client(process):
 		if verify(result_request_id, result_request, response, result_proof):
 			output("\nClient", self.client_id, ": response of", request_type, "request", result_request_id, 
 				"for operation", result_request, "is validated, the result is:", response, sep = " ")
-			self.result.append(response)
+			self.result[result_request_id] = response
 			# result is verified, set verifying state back to false
 			self.response_verified = True
 		
