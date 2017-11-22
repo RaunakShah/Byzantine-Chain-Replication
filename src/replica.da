@@ -51,6 +51,7 @@ class Replica(process):
 		except nacl.exceptions.BadSignatureError:
 			output("\nReplica", self.replica_id, ": message from client is not validated, signature doesn't match.", sep = " ")
 			return
+		output("\nReplica", self.replica_id, ": message from client is validated", sep = " ")
 			
 		message = signed_msg.message
 		if ("request<" + str(request_id) + "," + request + ">") != message.decode():
@@ -72,6 +73,7 @@ class Replica(process):
 					output("\nReplica", self.replica_id, ": failure", failures[trigger], "triggered by", trigger, sep = " ")
 					failureInjection(failures[trigger], 1)
 				if self.drop == 0:
+					output("\nReplica", self.replica_id, ": handling new request from", client, trigger, sep = " ")
 					handleNewRequest(request_id, request_type, request, client, signed_msg)
 				else:
 					output("\nReplica", self.replica_id, ": dropped incoming messge", sep = " ")
@@ -221,6 +223,7 @@ class Replica(process):
 		# get result and signed order statement of the request
 		tuple = applyOperation(slot, request_id, request, order_proof)
 		if tuple:
+			output("\nReplica", self.replica_id, ": obtained result and signed order statement for request", request_id, sep = " ")
 			(result, signed_order_stmt) = tuple
 		else:
 			return
@@ -241,6 +244,7 @@ class Replica(process):
 			order_statement = "order<" + str(slot) + "," + str(request_id) + "," + op_request + ">"
 			# sign order statement using the signing key of this replica
 			signed_order_stmt = self.signing_key.sign(order_statement.encode())
+			output("\nReplica", self.replica_id, ": hashed and signed order statement for request", request_id, "at shuttle.", sep = " ")
 		else:
 			op_request = request
 			
@@ -249,6 +253,7 @@ class Replica(process):
 		hash_result = self.HASHER(result_in_bytes, encoder = nacl.encoding.HexEncoder)
 		result_stmt_msg = 'result<' + str(request_id) + ',' + op_request + '>'
 		signed_result = self.signing_key.sign(hash_result + result_stmt_msg.encode())
+		output("\nReplica", self.replica_id, ": hashed and signed result statement for request", request_id, "at shuttle.", sep = " ")
 
 		# add signed order statement and result statement to order proof and result proof
 		order_proof.append(signed_order_stmt)
@@ -310,10 +315,12 @@ class Replica(process):
 				state_in_bytes = bytes(str(self.operation_dict), 'utf-8')
 				state_hash = self.HASHER(state_in_bytes, encoder = nacl.encoding.HexEncoder)
 				self.checkpoint_hash = state_hash
+				output("\nReplica", self.replica_id, ": hashed current state and saved for future comparison", sep = " ")
 				
 				# sign hash of current state and append it to checkpoint proof
 				signed_checkpoint_statement = self.signing_key.sign(state_hash)
 				checkpoint_proof_statement_list.append((self.replica_id, signed_checkpoint_statement))
+				output("\nReplica", self.replica_id, ": signed current state and appended to checkpoint proof", sep = " ")
 				
 				#send checkpoint proof to next replica in chain
 				output("\nReplica", self.replica_id, ": sent checkpoint proof for index", self.checkpoint_index, "to", self.next_replica, sep = " ")
@@ -321,6 +328,7 @@ class Replica(process):
 				
 				# set checkpoint index back to 0
 				self.checkpoint_index = 0
+				output("\nReplica", self.replica_id, ": set checkpoint index to 0", sep = " ")
 			
 		# validate order proof from shuttle
 		# check if all replicas preceding this replica have signed order statement and have correct slot and request id
@@ -335,6 +343,7 @@ class Replica(process):
 					index, "doesn't match.", sep = " ")
 				return None
 				
+			output("\nReplica", self.replica_id, ": message from replica is validated", sep = " ")
 			# get order statement by decoding message from signed message
 			order_stmt = signed_order_stmt.message.decode()
 			matches = re.findall("order<(\d+),\((\d+),\s+(\d+)\),(.*?)>", order_stmt)
@@ -342,6 +351,7 @@ class Replica(process):
 			if len(matches) != 1:
 				output("\nReplica", self.replica_id, ": message in order statement from shuttle doesn't match.", sep = " ")
 				return None
+			output("\nReplica", self.replica_id, ": received and successfully decoded signed order statement", sep = " ")
 			# check if there is any conflict in slot number and request id 
 			(slot_str, client_id_str, workload_id_str, request_str) = matches[0]
 			if (slot != int(slot_str) 
@@ -350,6 +360,7 @@ class Replica(process):
 					or request != request_str):
 				output("\nReplica", self.replica_id, ": message in order statement from shuttle doesn't match.", sep = " ")
 				return None
+			output("\nReplica", self.replica_id, ": no conflict in slot number and request id during order proof validation", sep = " ")
 
 		# apply operation in the request to the dictionary object
 		result = findAndPerformOperation(request)
@@ -357,6 +368,8 @@ class Replica(process):
 		if result == None:
 			output("\nReplica", self.replica_id, ": perform operation fail, no result returned.", sep = " ")
 			return None
+		
+		output("\nReplica", self.replica_id, ": applied operation and result returned.", sep = " ")
 
 		# get order statement of current replica
 		current_signed_order_stmt = orderCommand(slot, request_id, request, order_proof)
@@ -366,6 +379,7 @@ class Replica(process):
 		hash_result = self.HASHER(result_in_bytes, encoder = nacl.encoding.HexEncoder)
 		result_stmt_msg = 'result<' + str(request_id) + ',' + request + '>'
 		signed_result = self.signing_key.sign(hash_result + result_stmt_msg.encode())
+		output("\nReplica", self.replica_id, ": hashed and signed result",  sep = " ")
 		
 		# cache result, request, and result statement
 		self.cache[request_id] =  (result, request, signed_result)
@@ -449,6 +463,7 @@ class Replica(process):
 		
 		# add the signed order statement to history
 		self.history.append((slot, request_id, request, current_order_proof))
+		output("\nReplica", self.replica_id, ": signed order statement and added order proof to history",  sep = " ")
 		
 		# increment slot number
 		self.slot_num += 1
@@ -477,7 +492,9 @@ class Replica(process):
 		except nacl.exceptions.BadSignatureError:
 			output("\nReplica", self.replica_id, ": in shuttle from", self.prev_replica, "message from client is not validated, signature doesn't match.", sep = " ")
 			return
-			
+		
+		output("\nReplica", self.replica_id, ": shuttle message from replica is validated", sep = " ")
+
 		message = signed_msg.message
 		if ("request<" + str(request_id) + "," + request + ">") != message.decode():
 			output("\nReplica", self.replica_id, ": in shuttle from", self.prev_replica, "message from client is not validated, message doesn't match.", sep = " ")
@@ -520,8 +537,10 @@ class Replica(process):
 					invalid_signing_key = nacl.signing.SigningKey.generate()
 					signed_order_stmt = invalid_signing_key.sign(order_statement.encode())
 					self.invalid_order_sig_failure = 0
+					output("\nReplica", self.replica_id, ": injecting invalid_order_sig failure for request", request_id, "at shuttle.", sep = " ")
 				else:		
 					signed_order_stmt = self.signing_key.sign(order_statement.encode())
+					output("\nReplica", self.replica_id, ": signed order statement for request", request_id, "at shuttle.", sep = " ")
 			else:
 				op_request = request
 
@@ -530,6 +549,7 @@ class Replica(process):
 			result_hash = self.HASHER(result_in_bytes, encoder = nacl.encoding.HexEncoder)
 			result_stmt_msg = 'result<' + str(request_id) + ',' + op_request + '>'
 			signed_result = self.signing_key.sign(result_hash + result_stmt_msg.encode())
+			output("\nReplica", self.replica_id, ": hashed and result for request", request_id, "at shuttle.", sep = " ")
 		
 			# add signed order statement and result statement to order proof and result proof
 			order_proof.append(signed_order_stmt)
@@ -590,6 +610,8 @@ class Replica(process):
 					len(self.verify_key_list), "but only receive", len(result_proof), "ignore this result shuttle", sep = " ")
 				return
 			
+			output("\nReplica", self.replica_id, ": result shuttle for", result_shuttle_id, "contains enough entries, expected", 
+					len(self.verify_key_list), "and received", len(result_proof),sep = " ")
 			# check if all replicas preceding this replica have signed result statement
 			for index in range(self.replica_id):
 				signed_result_stmt = result_proof[index]
@@ -602,6 +624,7 @@ class Replica(process):
 					output("\nReplica", self.replica_id, 
 						": message received from result shuttle is not validated, signature doesn't match.", sep = " ")
 					return
+				output("\nReplica", self.replica_id, ": result shuttle from replica is validated", sep = " ")
 				
 				# validate sign message
 				result_message = signed_result_stmt.message
@@ -635,6 +658,7 @@ class Replica(process):
 			# cache result proof along with corresponding request id, result, and result statement
 			result_stmt_in_cache = self.cache[result_shuttle_id][2]
 			self.cache[result_shuttle_id] = (result, request, result_stmt_in_cache, result_proof)
+			output("\nReplica", self.replica_id, ": cached result proof for request id", result_shuttle_id, sep = " ")
 			
 			# check for failure change_result()
 			if self.change_result_failure > 0:
