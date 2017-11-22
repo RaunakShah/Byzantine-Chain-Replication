@@ -5,6 +5,7 @@ import nacl.hash
 import re
 import sys
 from nacl.bindings.utils import sodium_memcmp 
+import time
 
 class Olympus(process):
 	def setup(config, client_list, client_verify_key_list, olympus_signing_key):
@@ -239,7 +240,7 @@ class Olympus(process):
 					if replica_index1 == replica_index2:
 						# replica ids are the same, continue
 						continue
-						
+					
 					# check if the 2 histories are consistent
 					for (slot1, request_id1, request1, _) in replica_history1:
 						match_num = 0
@@ -558,6 +559,7 @@ class Olympus(process):
 				timeout, failures, self.checkpt_interval))
 		
 	def run():
+		start = time.time()
 		test_name = config['test_case_name']
 		output("\nStarting test case:", test_name, sep = " ")
 		output("\nStarting Olympus.")
@@ -567,5 +569,6 @@ class Olympus(process):
 		if await(len(setof(c, received(('terminate', c, _)))) == self.client_num):
 			for replica in self.replicas:
 				send(('terminate', self), to = replica)
-	#		if await(some(received(('final_dictionary', operation_dictionary), from_ = _))):
-	##			send(('final_dictionary', operation_dictionary), to =c) 
+	
+		end = time.time()
+		output("\nApplication elapsed time:", end - start, sep = " ")

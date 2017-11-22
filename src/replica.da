@@ -34,7 +34,8 @@ class Replica(process):
 		self.wedge_request_count = 0
 		self.new_configuration_count = 0
 		self.truncate_history_failure = 0
-		self.invalid_order_sig_failure = 0		
+		self.invalid_order_sig_failure = 0
+		self.invalid_result_sig_failure = 0	
 		self.drop_checkpt_stmts = 0
 		self.drop = 0
 		
@@ -85,7 +86,7 @@ class Replica(process):
 					self.drop = 0
 					return
 					
-				output("\nReplica", self.replica_id, ": handling new request from", client, trigger, sep = " ")
+				output("\nReplica", self.replica_id, ": handling new request from", client, sep = " ")
 				handleNewRequest(request_id, request_type, request, client, signed_msg)
 					
 		elif (request_type == 'retransmission' or request_type == 'forward'):
@@ -129,7 +130,7 @@ class Replica(process):
 					change_result_hash = self.HASHER(change_result_in_bytes, encoder = nacl.encoding.HexEncoder)
 					result_stmt_msg = 'result<' + str(result_shuttle_id) + ',' + request + '>'
 					signed_result = self.signing_key.sign(change_result_hash + result_stmt_msg.encode())
-					result_proof[self.replica_id] = (signed_result)
+					result_proof[self.replica_id] = ((self.replica_id, signed_result))
 					self.change_result_failure -= 1
 				
 				# check for failure drop_result_stmt()
@@ -579,7 +580,7 @@ class Replica(process):
 		
 		# add signed order statement and result statement to order proof and result proof
 		order_proof.append(signed_order_stmt)
-		result_proof.append(signed_result)
+		result_proof.append((self.replica_id, signed_result))
 		
 		# check if inject failure drop_result_stmt()
 		if self.drop_result_stmt_failure > 0:
@@ -601,7 +602,7 @@ class Replica(process):
 				result_proof = result_proof[:-1]
 				invalid_signing_key = nacl.signing.SigningKey.generate()
 				signed_result = invalid_signing_key.sign(result_hash + result_stmt_msg.encode())
-				result_proof.append(signed_result)
+				result_proof.append((self.replica_id, signed_result))
 				self.invalid_result_sig_failure = 0
 			output("\nReplica", self.replica_id, ": sent operation_result", request_id, "to client", client, sep = " ")
 			send(('operation_result', request_id, request_type, request, result, result_proof, self), to = client)
@@ -900,7 +901,7 @@ class Replica(process):
 			elif f == 'invalid_result_sig()':
 				self.invalid_result_sig_failure = num
 			elif f == 'drop_checkpt_stmts()':
-				self.drop_check_pt_stmts = num
+				self.drop_checkpt_stmts = num
 		
 	def applyOperationDuringReconfiguration(slot, request_id, operation):
 		output("\nReplica", self.replica_id, ": applying operation", operation, "at slot", slot, "during reconfiguration", sep = " ")
