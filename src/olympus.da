@@ -3,9 +3,11 @@ import nacl.encoding
 import nacl.signing
 import nacl.hash
 import re
+import sys
+from nacl.bindings.utils import sodium_memcmp 
 
 class Olympus(process):
-	def setup(config, client_verify_key_list, olympus_signing_key):
+	def setup(config, client_list, client_verify_key_list, olympus_signing_key):
 		self.replica_num = int(config['t'])
 		self.replica_num = replica_num * 2 + 1
 		self.head_timeout = int(config['head_timeout'])
@@ -20,10 +22,11 @@ class Olympus(process):
 		self.reconfig_state = False
 		
 		# reconfiguration related variable
-		self.reconfig_msg = []
+		self.wedged_msg = []
+		self.selected_quorum = []
 		
 		# create replicas
-		replica_da = import_da('replica')
+		self.replica_da = import_da('replica')
 		self.replicas = new(replica_da.Replica, num = self.replica_num)
 		self.replica_list = []
 		self.signing_key_list = []
@@ -75,7 +78,7 @@ class Olympus(process):
 		
 			timeout = int(timeout / 1000)
 
-			setup(replica, (index, isHead, isTail, prev_replica, next_replica, self, self.configuration_id, 
+			setup(replica, (index, None, isHead, isTail, prev_replica, next_replica, self.replica_list[0], self, self.configuration_id, 
 				[], 'ACTIVE', self.signing_key_list[index], self.verify_key_list, self.client_verify_key_list, 
 				timeout, failures, self.checkpt_interval))
 	
@@ -83,159 +86,476 @@ class Olympus(process):
 		# check if configuration id matches
 		if self.configuration_id == client_configuration_id:
 			# send response to liveness check from client
-			output("\Olympus: send check config response 'OK' to client", client, sep = " ")
+			output("\nOlympus: send check config response 'OK' to client", client, sep = " ")
 			send(('check_configuration_response', 'OK', message_id, self.configuration_id, self), to = client)
 		else:
-			output("\Olympus: send check config response 'RECONFIG' to client", client, sep = " ")
+			output("\nOlympus: send check config response 'RECONFIG' to client", client, sep = " ")
 			send(('check_configuration_response', 'RECONFIG', message_id, self.configuration_id, self), to = client)
 		
 	def receive(msg =('get_configuration', _), from_= client):
 		# send current configuration (replica chain and their verify keys) to client
 		configuration_response_msg = 'configuration_id:' + str(self.configuration_id)
 		signed_msg = self.olympus_signing_key.sign(configuration_response_msg.encode())
-		output("\Olympus: send replicas and configuration information for config", self.configuration_id, "to client", client, sep = " ")
+		output("\nOlympus: send replicas and configuration information for config", self.configuration_id, "to client", client, sep = " ")
 		send(('get_configuration_response', self.configuration_id, self.replica_list, 
 			self.verify_key_list, signed_msg, self), to = client)
 
 	def receive(msg = ('reconfiguration_request', replica_id, replica_config_id, _), from_= sending_replica):
-		output("\Olympus: received reconfig request from replica", replica_id, "for configuration", replica_config_id, sep = " ")
+		output("\nOlympus: received reconfig request from replica", replica_id, "for configuration", replica_config_id, sep = " ")
 		# check if config id matches
 		if replica_config_id != self.configuration_id:
 			return
 		# enter reconfig state, use this to prevent olympus handling multiple reconfig requests from multiple replicas in same config		
 		if self.reconfig_state:
-			output("\Olympus: reconfiguration is ongoing.", sep = " ")
+			output("\nOlympus: reconfiguration is ongoing.", sep = " ")
 			return
 		else:
 			self.reconfig_state = True
-			output("\Olympus: start reconfiguration.", sep = " ")
+			output("\nOlympus: start reconfiguration.", sep = " ")
 		# for now only replicas send reconfig request
-		output("\Olympus: send wedge requests to all", self.replica_num, "replicas.", sep = " ")
-		for replica in self.replicas:
-			send(('wedge_request'), to = replica)
+		output("\nOlympus: send wedge requests to all", self.replica_num, "replicas.", sep = " ")
+		for r in self.replica_list:
+			send(('wedge_request', self), to = r)
 		#wait for replies from all replicas
-		if await(len(setof(r, received(('wedge_statement', _, _, _, _)))) == self.replica_num and
-				each(received(('wedge_statement', _, _, replica_config_id, _)), has)):
-			output("\Olympus: received wedge statements from all", self.replica_num, "replicas.", sep = " ")
-			#successful_configuration_change = False
-			#while successful_configuration_change == False:
-			#	#form a random quorum from the replica list
-			#	quorum = random.sample(range(self.replica_num), self.quorum_size)	
-			#	H = []
-			#	for q in quorum:
-			#		if received('wedge_statement', wedge_response, q):
-			#			H.append((wedge_response, q))
-			#	successful_configuration_change = switchConfig(H)
-	
-	def receive(msg = ('wedge_statement', wedge_response, replica_id, replica_config_id, _), from _= _):
-		output("\Olympus: received wedge statement from replica", replica_id, sep = " ")
-		# check if config id matches
-		if replica_config_id != self.configuration_id:
-			self.reconfig_msg.append((wedge_response, replica_id))
-	
-	def validHist(H):
-		# H is a list of the form [(wedge,id), (wedge,id)...]
-		# wedge is a signed wedge statement by every replica with replica_id = id. wedge = <"replica_id;history;dictionary;checkpointproof">_p 
-		# history is of the form (slot, request_id, request, order_proof)
-    
-		wedged_statement_history_in_quorum = []
-		for index in range(len(H)):
-			#verify signature of each signed wedged statement in H
-			try:
-				verify_key = nacl.signing.VerifyKey(self.verify_key_list[index], encoder=nacl.encoding.HexEncoder)
-				verify_key.verify(H[index][0])
-			except nacl.exceptions.BadSignatureError:
-                                #output("\nReplica", self.replica_id, ": checkpoint statement from proof is not validated, signature of replica", index, "doesn't match.", sep = " ")
-				return None
+		if await(len(self.wedged_msg) == self.replica_num):
+			output("\nOlympus: received wedge statements from all", self.replica_num, "replicas.", sep = " ")
+			while True:
+				# start looking for a quorum
+				quorum = findQuorum()
+				# the below if condition should never happen, but included for safety
+				if len(quorum) < self.quorum_size:
+					output("\nOlympus: cannot find a quorum with enough replicas, this should never happen", sep = " ")
+					return			
+				# switch config
+				switch_config_succeed = switchConfig(quorum)
+				# if succeed, continue; else redo finding quorum
+				if switch_config_succeed:
+					break
 			
-			#current_wedge_statement contains the history part of each wedge
-			current_wedge_statement = H[index][0].message.decode() 
-			current_wedge_statement = current_wedge_statement.split(';')
-			current_wedge_statement = current_wedge_statement[1]
-			wedge_statement_history_in_quorum.append(current_wedge_statement)
-    
-		#check for any conflicting slot and operation in replicas that make the quorum
-		for index in range(len(wedge_statement_history_in_quorum)-1):
-			for (slot, request_id, request, order_proof) in wedge_statement_history_in_quorum[index]:
-				for index2 in range(index, len(wedge_statement_history_in_quorum)):
-					if slot in [t[0] for t in wedge_statement_history_in_quorum[index2]]:
-						if request not in [t[2] for t in wedge_statement_history_in_quorum[index2]]:
-							return False
+	
+	def receive(msg = ('wedge_statement', wedged_response, replica_id, replica_history, replica_checkpt_proof, replica_last_checkpt, replica_config_id, _), from_= _):
+		output("\nOlympus: received wedge statement from replica", replica_id, sep = " ")
+		# check if config id matches
+		if replica_config_id == self.configuration_id:
+			self.wedged_msg.append((wedged_response, replica_id, replica_history, replica_checkpt_proof, replica_last_checkpt))
+	
+	def findQuorum():
+		""" form a quorum of replicas for current configuration """
+		# wedged_msg is a list of the form [(wedge_response, replica_id), (wedge_response, replica_id)...]
+		# wedge_response is a signed wedge statement by every replica with replica_id = id. wedge_response = <"replica_id;history;latest_checkpoint_proof;last_checkpoint_slot">_p 
+		# history is of the form (slot, request_id, request, order_proof)
+		output("\nOlympus: start finding a quorum of size", self.quorum_size, sep = " ")
 		
-		#validate order proof in wedged statements:
-		for i in range(len(H)):
-			(wedge,replica_id) = H[i]
-			for (slot, request_id, request, order_proof) in wedge_statement_history_in_quorum[i]:
-				for index in range(replica_id):
-					signed_order_stmt = order_proof[index]
-					# verify the signature
+		# validate all wedged_msg signature and all order proofs in history, remove replica with invalid signatures and order proofs
+		index = 0
+		while index < len(self.wedged_msg):
+			(signed_wedged_stmt, replica_index, replica_history, replica_checkpt_proof, replica_last_checkpt) = self.wedged_msg[index]
+			# verify signature of each signed wedged statement
+			try:
+				replica_verify_key = nacl.signing.VerifyKey(self.verify_key_list[replica_index], encoder=nacl.encoding.HexEncoder)
+				replica_verify_key.verify(signed_wedged_stmt)
+			except nacl.exceptions.BadSignatureError:
+				# signature not verified, remove the statement from list
+				output("\nOlympus: wedged statement is not validated for replica", replica_index, "signature doesn't match.", sep = " ")
+				output("\nOlympus: remove wedged stmt from replica", replica_index, sep = " ")
+				del self.wedged_msg[index]
+				continue
+			
+			# validate the signed message
+			wedged_stmt = signed_wedged_stmt.message.decode()
+			if (str(replica_index) + ';' + str(replica_history) + ';' + str(replica_checkpt_proof) + ';' + str(replica_last_checkpt)) != wedged_stmt:
+				output("\nOlympus: wedged statement is not validated for replica", replica_index, "signed message doesn't match.", sep = " ")
+				output("\nOlympus: remove wedged stmt from replica", replica_index, sep = " ")
+				del self.wedged_msg[index]
+				continue
+			
+			# variable used to check for hole
+			current_slot = replica_history[0][0]
+	
+			# validate history in wedge statement, remove replica with invalid history
+			for (slot, request_id, request, order_proof) in replica_history:
+				#check for hole
+				if current_slot != slot:
+					output("\nOlympus: wedged statement is not validated for replica", replica_index, "there is a hole at slot", current_slot, sep = " ")
+					output("\nOlympus: remove wedged stmt from replica", replica_index, sep = " ")
+					del self.wedged_msg[index]
+					continue
+				current_slot += 1
+				
+				# check order proof
+				for previous_replica_index in range(replica_index):
+					signed_order_stmt = order_proof[previous_replica_index]
+					# verify the signature in order proof
 					try:
-						verify_key = nacl.signing.VerifyKey(self.verify_key_list[index], encoder=nacl.encoding.HexEncoder)
+						verify_key = nacl.signing.VerifyKey(self.verify_key_list[previous_replica_index], encoder=nacl.encoding.HexEncoder)
 						verify_key.verify(signed_order_stmt)
 					except nacl.exceptions.BadSignatureError:
-						output("\Olympus", self.replica_id, ": order statement from shuttle is not validated, signature of replica",index, "doesn't match.", sep = " ")
-						return False
+						output("\nOlympus: order statement from wedged statement is not validated for replica", replica_index, "signature of previous replica", 
+							previous_replica_index, "doesn't match.", sep = " ")
+						output("\nOlympus: remove wedged stmt from replica", replica_index, sep = " ")
+						del self.wedged_msg[index]
+						continue
+					
 					# get order statement by decoding message from signed message
 					order_stmt = signed_order_stmt.message.decode()
 					matches = re.findall("order<(\d+),\((\d+),\s+(\d+)\),(.*?)>", order_stmt)
 					# there should only be one match
 					if len(matches) != 1:
-						output("\nReplica", self.replica_id, ": message in order statement from shuttle doesn't match.", sep = " ")
-						return False
-		return True
-	
-	def switchConfig(H):
-		#precondition checks
-		if self.quorum_size == len(H) and validHist(H):
-			#find longest history
-			LH = []
-			max = 0
-			ch = dict()
-			for (wedge, id) in H: 
-				current_wedge_statement = wedge.message.decode() 
-				current_wedge_statement = current_wedge_statement.split(';')
-				history_in_wedge_statement = current_wedge_statement[1]
-    
-				if len(history_in_wedge_statement) > max:
-					max = len(history_in_wedge_statement)
-					LH = history_in_wedge_statement
-			#for all replicas in quorum
-			for (wedge, id) in H:
-				current_wedge_statement = wedge.message.decode() 
-				current_wedge_statement = current_wedge_statement.split(';')
-				history_in_wedge_statement = current_wedge_statement[1]
-				checkpoint_in_wedge_statement = current_wedge_statement[3]
+						output("\nOlympus: order statement from wedged statement is not validated for replica", replica_index, 
+							"message doesn't match for order stmt of previous replica", previous_replica_index, sep = " ")
+						output("\nOlympus: remove wedged stmt from replica", replica_index, sep = " ")
+						del self.wedged_msg[index]
+						continue
+					# check if there is any conflict in slot number and request id 
+					(slot_str, client_id_str, workload_id_str, request_str) = matches[0]
+					if (slot != int(slot_str) 
+							or request_id[0] != int(client_id_str) 
+							or request_id[1] != int(workload_id_str)
+							or request != request_str):
+						output("\nOlympus: order statement from wedged statement is not validated for replica", replica_index, 
+							"there is conflict in slot number and request id for order stmt of previous replica", previous_replica_index, sep = " ")
+						output("\nOlympus: remove wedged stmt from replica", replica_index, sep = " ")
+						del self.wedged_msg[index]
+						continue
 				
-				#TODO validate checkpoint proof
-				
-				#find catch up sequence per replica in quorum
-				catch_up_length = len(LH) - len(history_in_wedge_statement)
-				catch_up_sequence = LH[(len(history_in_wedge_statement)):len(LH)]
-				send (('catch_up', catch_up_sequence), to = self.replica[id])
-				if await(some(received(('caught_up', caught_up_state, replica_id), from_ = self.replica[id]))):
-					ch['replica_id'] = caught_up_state
-    
-			#check if all running states are the same after catch up
-			expected_value = next(iter(ch.values()))  
-			all_checkpoints_equal = all(value == expected_value for value in ch.values())
-			if all_checkpoints_equal == False:
-				return False
-			
-			#get running state from random replica in quorum
-			running_states_match = False
-			while running_states_match == False:
-				random_wedge_in_quorum = random.choice(H)
-				random_replica_in_quorum = random_wedge_in_quorum[1]
-				send(('get_running_state', to = random_replica_in_quorum))
-				if await(some(received(('running_state_message',running_state), from_ = random_replica_in_quorum))):
-					running_state_hash = self.HASHER(running_state.encode(), encoder = nacl.encoding.HexEncoder)
-					if expected_value == running_state_hash:
-						running_states_match = True
-    
-			#TODO send state to new configuration	
-		else:
-			return False
+			output("\nOlympus: wedged stmt validated for replica", replica_index, sep = " ")
+			index += 1
 		
+		# the remaining wedged msg have validated history, now try to form a quorum 
+		# here the quorum is also a list of [(wedge_response, replica_id), (wedge_response, replica_id)...], but only consists of replicas in quorum
+		quorum = []
+		for i in range(len(self.wedged_msg)):
+			# add a replica to quorum and try to add other replicas that has consistent history
+			output("\nOlympus: start forming quorum with replica", self.wedged_msg[i][1], sep = " ")
+			quorum.append(self.wedged_msg[i])
+			for j in range(len(self.wedged_msg)):
+				if i == j:
+					continue
+				is_consistent = True
+				# get replica id and history
+				(signed_wedged_stmt1, replica_index1, replica_history1, replica_checkpt_proof1, replica_last_checkpt1) = self.wedged_msg[j]
+				# compare this replica to every replica in currrent quorum to see if every pair has consistent history 
+				for (signed_wedged_stmt2, replica_index2, replica_history2, replica_checkpt_proof2, replica_last_checkpt2) in quorum:
+					if replica_index1 == replica_index2:
+						# replica ids are the same, continue
+						continue
+						
+					# check if the 2 histories are consistent
+					for (slot1, request_id1, request1, _) in replica_history1:
+						match_num = 0
+						# if inconsistent found, exit loop
+						if not is_consistent:
+							break
+						
+						# compare to every order_stmt in history of 2nd replica
+						for (slot2, request_id2, request2, _) in replica_history2:
+							# find same slot, check request id and request operation
+							if slot1 == slot2:
+								if request_id1 != request_id2 or request1 != request2:
+									output("\nOlympus: mismatch request for replica", replica_index1, "and replica", replica_index2,
+										"at slot", slot1, sep = " ")
+									is_consistent = False
+									break
+								else:
+									match_num += 1
+					
+						# if there is no match at all, then their histories must be empty and last checkpoints must at least be the same
+						if match_num == 0:
+							if (len(replica_history1) == 0 and len(replica_history2) == 0 
+									and replica_last_checkpt1 == replica_last_checkpt2):
+								pass
+							else:
+								output("\nOlympus: there is no match at any slot for replica", replica_index1, "and replica", replica_index2,
+										"and their histories are not empty", slot1, sep = " ")
+								is_consistent = False
+								break
+					
+					# if inconsistent found, exit loop
+					if not is_consistent:
+						break
+						
+				if is_consistent:
+					# current replica is consistent with every replica in current quorum, add to quorum
+					output("\nOlympus: during forming quorum with replica", self.wedged_msg[i][1], "replica", replica_index1, 
+						"is consistent with every replica in current quorum, add it to current quorum", sep = " ")
+					quorum.append(self.wedged_msg[j])		
+					
+			# check if reaches quorum size
+			if len(quorum) >= self.quorum_size and quorum not in self.selected_quorum:
+				break
+			else:
+				# current replica doesn't form a quorum, try next one
+				output("\nOlympus: cannot form quorum with current replica", self.wedged_msg[i][1], sep = " ")
+				quorum = []
+		
+		# log and remember chosen replica ids
+		chosen_replica_ids = [wedged_stmt[1] for wedged_stmt in quorum]
+		self.selected_quorum.append(chosen_replica_ids)
+		output("\nOlympus: found quorum of size", self.quorum_size, "the chosen replicas are", chosen_replica_ids, sep = " ")
+		
+		return quorum
+	
+	def switchConfig(quorum):
+		#precondition checks
+		if len(quorum) > self.quorum_size:
+			#find longest history
+			output("\nOlympus: start looking for longest history.", sep = " ")
+			longest_history = []
+			max_slot_history = []
+			max_slot = 0
+			min_slot_history = []
+			min_slot = sys.maxsize
+			ch = dict()
+			for (_, replica_id, replica_history, replica_checkpt_proof, replica_last_checkpt) in quorum:
+				# check largest slot in history
+				if replica_history[-1][0] > max_slot:
+					max_slot = replica_history[-1][0]
+					max_slot_history = replica_history	
+					output("\nOlympus: find new max slot", max_slot, "at replica", replica_id, sep = " ")
+					
+				#  validate checkpoint proof to find min slot to initiate checkpoint
+				number_of_checkpoints = 0
+		
+				# if there is no checkpoint proof yet, continue
+				if len(replica_checkpt_proof) == 0:
+					continue
+					
+				# get hash of current replica first
+				current_checkpt_hash = [t[1].message for t in replica_checkpt_proof if t[0] == replica_id]
+					
+				# check for each check point statement in checkpoint proof
+				for index in range(len(replica_checkpt_proof)):
+					# get signed message
+					(replica_checkpt_index, signed_checkpoint_stmt) = replica_checkpt_proof[index]
+					
+					# verify the signature
+					try:
+						verify_key = nacl.signing.VerifyKey(self.verify_key_list[replica_checkpt_index], encoder=nacl.encoding.HexEncoder)
+						verify_key.verify(signed_checkpoint_stmt)
+					except nacl.exceptions.BadSignatureError:
+						continue
+					
+					# get and validate checkpoint hash from message
+					checkpoint_hash = signed_checkpoint_stmt.message
+					
+					# check if hashes match
+					if not sodium_memcmp(checkpoint_hash, current_checkpt_hash):
+						# hash does not match
+						continue
+					
+					number_of_checkpoints += 1
+					
+				if number_of_checkpoints < self.quorum_size:
+					output('\nOlympus: number of checkpoint proofs not enough for replica', replica_id, 'expected at least', self.quorum_size, 
+						'but only has', number_of_checkpoints, sep = " " )
+					continue
+				
+				# found new min slot 
+				if min_slot < replica_last_checkpt:
+					min_slot = replica_last_checkpt
+					min_slot_history = replica_history
+					output("\nOlympus: checkpoint proof validated, find new min slot", min_slot, "at replica", replica_id, sep = " ")
+
+			# handle case when there is no checkpoint proof and longest history start at slot 0
+			if min_slot > max_slot:
+				min_slot = 0
+			
+			# construct longest history from min slot to max slot
+			for slot in range(min_slot, max_slot + 1):
+				if slot in [t[0] for t in min_slot_history]:
+					# slot is found in min slot history
+					(op_slot, request_id, operation) = [(t[0], t[1], t[2]) for t in min_slot_history if t[0] == slot][0]
+					longest_history.append((op_slot, request_id, operation))
+				elif slot in [t[0] for t in max_slot_history]:
+					# slot is found in max slot history
+					(op_slot, request_id, operation) = [(t[0], t[1], t[2]) for t in max_slot_history if t[0] == slot][0]
+					longest_history.append((op_slot, request_id, operation))
+				else:
+					# slot is not found in either, but some replica must have history that assign this slot
+					for (_, _, replica_history, _, _) in quorum:
+						if slot in [t[0] for t in replica_history]:
+							(op_slot, request_id, operation) = [(t[0], t[1], t[2]) for t in replica_history if t[0] == slot][0]
+							longest_history.append((op_slot, request_id, operation))
+			
+			output("\nOlympus: longest history constructed:", longest_history, sep = " ")
+			
+			# result proof for each client's latest request
+			result_proof_dict = dict()
+			
+			# for each replica send catch up message
+			for (_, replica_id, replica_history, _, _) in quorum:
+				# find catch up sequence for current replica
+				catch_up_sequence = []
+				last_slot = replica_history[-1][0]
+				output("\nOlympus: constructing catch up sequence for replica", replica_id, "start from slot", last_slot, sep = " ")
+				for catch_up_slot in range(last_slot + 1, max_slot + 1):
+					# replica hasn't applied the operation at slot, add to catch up sequence
+					(op_slot, request_id, operation) = [(t[0], t[1], t[2]) for t in longest_history if t[0] == catch_up_slot][0]
+					catch_up_sequence.append((op_slot, request_id, operation))
+				
+				output("\nOlympus: catch_up sequence", catch_up_sequence, "constructed for replica", replica_id, sep = " ")
+				output("\nOlympus: send catch_up request to replica", replica_id, sep = " ")
+				send (('catch_up', catch_up_sequence, self), to = self.replica_list[replica_id])
+			
+				# wait for response from replica
+				if await(some(
+						received(('caught_up', state_hash, reply_replica_id, result_stmt_dict, replica_configuration_id, _), 
+							from_ = self.replica_list[replica_id]),
+						has = (reply_replica_id == replica_id and replica_configuration_id == self.configuration_id))):
+					output("\nOlympus: received caught_up message from replica", replica_id, sep = " ")
+					ch[replica_id] = state_hash
+					
+					# construct result proof for every client's latest request
+					for key in result_stmt_dict:
+						request_id, request_result, request_operation, result_stmt = result_stmt_dict[key]
+						if key not in result_proof_dict:
+							# initialization
+							output("\nOlympus: handling latest request", result_stmt_dict[key][0], "from replica", replica_id, sep = " ")
+							current_result_proof = [result_stmt]
+							result_proof_dict[key] = (request_id, request_result, request_operation, current_result_proof)
+						else:
+							if (request_id == result_proof_dict[key][0] and request_result == result_proof_dict[key][1] and 
+									request_operation == result_proof_dict[key][2]):
+								# append to result proof
+								output("\nOlympus: handling latest request", result_stmt_dict[key][0], "from replica", replica_id, sep = " ")
+								current_result_proof = result_proof_dict[key][3]
+								current_result_proof.append(result_stmt)
+								result_proof_dict[key] = (request_id, request_result, request_operation, current_result_proof)
+							
+			output("\nOlympus: caught up message received from all replicas")
+			
+			# log constructed result proof
+			for key in result_proof_dict:
+				output("\nOlympus: construct result proof for client", key, "for latest request", result_proof_dict[key][0], 
+					"for operation", result_proof_dict[key][2], sep =" ")
+    	
+			#check if all state hashes are the same after catch up
+			expected_value = next(iter(ch.values()))  
+			matched_state_num = 0 
+			for value in ch.values():
+				# check if hashes match
+				if sodium_memcmp(value, expected_value):
+					# hash matches
+					matched_state_num += 1
+			if matched_state_num < self.quorum_size:
+				output("\nOlympus: not enough caught_up state hashes match.")
+				return False
+				
+			output("\nOlympus: caught_up state hashes match for replicas in the quorum.")
+			
+			# get running state from random replica in quorum
+			running_state_match = False
+			correct_state = None
+			for (_, replica_id, _, _, _) in quorum:
+				output("\nOlympus: send get_running_state request to replica", replica_id, sep = " ")
+				send(('get_running_state', self), to = self.replica_list[replica_id])
+				
+				if await(some(
+						received(('running_state_message', running_state, reply_replica_id, replica_configuration_id, _), 
+							from_ = self.replica_list[replica_id]),
+						has = (reply_replica_id == replica_id and replica_configuration_id == self.configuration_id))):
+					output("\nOlympus: received running_state_message message from replica", replica_id, sep = " ")
+					running_state_hash = self.HASHER(str(running_state).encode(), encoder = nacl.encoding.HexEncoder)
+					
+					matched_state_num = 0
+					for value in ch.values():
+						# check if hashes match
+						if sodium_memcmp(value, running_state_hash):
+							# hash matches
+							matched_state_num += 1
+					if matched_state_num < self.quorum_size:
+						output("\nOlympus: not enough state hashes match for running state of replica", replica_id, sep = " ")
+					else:
+						running_state_match = True
+						correct_state = running_state
+						output("\nOlympus: all replica in the quorum have state hashes match for running state of replica", replica_id, sep = " ")
+						output("\nOlympus: the correct running state is", correct_state, sep = " ")
+						break
+			
+			if not running_state_match or correct_state is None:
+				output("\nOlympus: not correct running state found.", sep = " ")
+				return False
+				
+			# for each client's latest request, send result proof
+			for client_index in result_proof_dict:
+				request_id, request_result, request_operation, result_proof = result_proof_dict[client_index]
+				output("\nOlympus: sent reconfig operation_result for latest request", request_id, "for operation", 
+					request_operation, "to client", client_index, sep = " ")
+				send(('operation_result', request_id, "reconfig", request_operation, request_result, result_proof, self), to = self.client_list[client_index])
+			
+			# terminate current replicas
+			output("\nOlympus: terminte current replicas")
+			for replica in self.replicas:
+				send(('terminate', self), to = replica)
+			
+			# create new configuration
+			self.configuration_id += 1
+			setupReplica(correct_state)
+			output("\nOlympus: start all new replicas")
+			start(self.replicas)
+			
+			self.reconfig_state = False
+			self.wedged_msg = []
+			self.selected_quorum = []
+			
+			return True
+		
+	def setupReplica(running_state):
+		# create new replicas
+		self.replicas = new(replica_da.Replica, num = self.replica_num)
+		self.replica_list = []
+		self.signing_key_list = []
+		self.verify_key_list = []	
+		# put replicas to a list, and create signing key and verify key for each replica
+		for replica in self.replicas:
+			self.replica_list.append(replica)	
+			replica_signing_key = nacl.signing.SigningKey.generate()
+			replica_verify_key = replica_signing_key.verify_key
+			replica_verify_key_hex = replica_verify_key.encode(encoder = nacl.encoding.HexEncoder)
+			self.verify_key_list.append(replica_verify_key_hex)
+			self.signing_key_list.append(replica_signing_key)
+		
+		# setup each replica
+		for index in range(len(replica_list)):
+			replica = replica_list[index]
+			isHead = False
+			isTail = False
+			prev_replica = None
+			next_replica = None
+			timeout = self.nonhead_timeout
+
+			failures = dict()
+			if 'failures[' + str(self.configuration_id) + ',' + str(index) + ']' in config:
+				fail_trig_unparsed = config['failures[' + str(self.configuration_id) + ',' + str(index) + ']']
+				#print(fail_trig_unparsed)
+				fail_trig_pairs = fail_trig_unparsed.split(';')
+				for number_of_failures in range(len(fail_trig_pairs)):
+					failure_trigger = re.findall('(.*?\(.*?\)),(.*?\(.*?\))',fail_trig_pairs[number_of_failures].strip())
+					(trigger, failure) = failure_trigger[0]
+					failure = failure.strip()
+					trigger = trigger.strip()
+					if trigger in failures:
+						failures[trigger] += ";" + failure
+					else:
+						failures[trigger] = failure
+
+				output("\nFailure for replica", index, ":\n", failures, sep = " ")
+
+			if index == len(replica_list) - 1:
+				isTail = True
+			if index == 0:
+				isHead = True
+				timeout = self.head_timeout
+			if index < len(replica_list) - 1:
+				next_replica = replica_list[index + 1]
+			if index > 0:
+				prev_replica = replica_list[index - 1]
+		
+			timeout = int(timeout / 1000)
+
+			setup(replica, (index, running_state, isHead, isTail, prev_replica, next_replica, self.replica_list[0], self, self.configuration_id, 
+				[], 'ACTIVE', self.signing_key_list[index], self.verify_key_list, self.client_verify_key_list, 
+				timeout, failures, self.checkpt_interval))
 		
 	def run():
 		test_name = config['test_case_name']
