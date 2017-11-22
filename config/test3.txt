@@ -5,10 +5,10 @@ t = 1
 # number of clients
 num_client = 1
 # client timeout, in milliseconds.
-client_timeout = 3000
+client_timeout = 6000
 # timeout, in milliseconds, for head and non-head servers, respectively
-head_timeout = 5000
-nonhead_timeout = 5000
+head_timeout = 3000
+nonhead_timeout = 3000
 # checkpoint interval.  take a checkpoint every checkpt_interval slots.
 checkpt_interval = 10
 

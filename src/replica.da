@@ -8,11 +8,15 @@ import logging
 import os
 
 class Replica(process):
-	def setup(replica_id, isHead, isTail, prev_replica, next_replica, head, olympus, configuration_id, history,
+	def setup(replica_id, running_state, isHead, isTail, prev_replica, next_replica, head, olympus, configuration_id, history,
 			mode, signing_key, verify_key_list, client_verify_key_list, timeout, failures, checkpt_interval):
 		# current slot number
 		self.slot_num = 0
-		self.operation_dict = dict()
+		# set running state
+		if running_state is None:
+			self.operation_dict = dict()
+		else:
+			self.operation_dict = running_state
 		self.cache = dict()
 		#self.count = 0
 		self.HASHER = nacl.hash.sha256
@@ -94,7 +98,7 @@ class Replica(process):
 					change_result_hash = self.HASHER(change_result_in_bytes, encoder = nacl.encoding.HexEncoder)
 					result_stmt_msg = 'result<' + str(result_shuttle_id) + ',' + request + '>'
 					signed_result = self.signing_key.sign(change_result_hash + result_stmt_msg.encode())
-					result_proof[self.replica_id] = (signed_result)
+					result_proof[self.replica_id] = (self.replica_id, signed_result)
 					self.change_result_failure -= 1
 				
 				# check for failure drop_result_stmt()
@@ -158,7 +162,7 @@ class Replica(process):
 				change_result_hash = self.HASHER(change_result_in_bytes, encoder = nacl.encoding.HexEncoder)
 				result_stmt_msg = 'result<' + str(result_shuttle_id) + ',' + request + '>'
 				signed_result = self.signing_key.sign(change_result_hash + result_stmt_msg.encode())
-				result_proof[self.replica_id] = (signed_result)
+				result_proof[self.replica_id] = (self.replica_id, signed_result)
 				self.change_result_failure -= 1
 			
 			# check for failure drop_result_stmt()
@@ -233,7 +237,7 @@ class Replica(process):
 
 		# add signed order statement and result statement to order proof and result proof
 		order_proof.append(signed_order_stmt)
-		result_proof.append(signed_result)
+		result_proof.append((self.replica_id, signed_result))
 		
 		if self.isTail != True:
 			# send shuttle to next replica
@@ -251,10 +255,11 @@ class Replica(process):
 		# this replica must be in ACTIVE mode
 		if(self.mode != 'ACTIVE'):
 			output("\nReplica", self.replica_id, ": mode is not 'ACTIVE'.", sep = " ")
-			# this is a proof of misbehavior, send reconfig request immediately
-			output("\nReplica", self.replica_id, ": find proof of misbehavior handling request", request_id, 
-				"send reconfiguration request to Olympus.", sep = " ")
-			send(('reconfiguration_request', self.replica_id, self.configuration_id, self), to = self.olympus)
+			# this is a proof of misbehavior if replica is not in state 'IMMUTABLE', send reconfig request immediately
+			if (self.mode != 'IMMUTABLE'):
+				output("\nReplica", self.replica_id, ": find proof of misbehavior handling request", request_id, 
+					"send reconfiguration request to Olympus.", sep = " ")
+				send(('reconfiguration_request', self.replica_id, self.configuration_id, self), to = self.olympus)
 			return None
 
 		# check if there is any conflict in current request and history of this replica
@@ -508,7 +513,7 @@ class Replica(process):
 		
 		# add signed order statement and result statement to order proof and result proof
 		order_proof.append(signed_order_stmt)
-		result_proof.append(signed_result)
+		result_proof.append((self.replica_id, signed_result))
 		
 		# check if inject failure drop_result_stmt()
 		if self.drop_result_stmt_failure > 0:
@@ -550,7 +555,7 @@ class Replica(process):
 			
 		# check if all replicas preceding this replica have signed result statement
 		for index in range(self.replica_id):
-			signed_result_stmt = result_proof[index]
+			signed_result_stmt = [t[1] for t in result_proof if t[0] == index][0]
 			
 			# verify the signature
 			try:
@@ -601,7 +606,7 @@ class Replica(process):
 			change_result_hash = self.HASHER(change_result_in_bytes, encoder = nacl.encoding.HexEncoder)
 			result_stmt_msg = 'result<' + str(result_shuttle_id) + ',' + request + '>'
 			signed_result = self.signing_key.sign(change_result_hash + result_stmt_msg.encode())
-			result_proof[self.replica_id] = (signed_result)
+			result_proof[self.replica_id] = (self.replica_id, signed_result)
 			self.change_result_failure -= 1
 		
 		# check for failure drop_result_stmt()
@@ -758,7 +763,7 @@ class Replica(process):
 		#else:
 		#	return (0,0,0)
 		
-	def applyOperationDuringReconfiguration(slot, operation):
+	def applyOperationDuringReconfiguration(slot, request_id, operation):
 		output("\nReplica", self.replica_id, ": applying operation", operation, "at slot", slot, "during reconfiguration", sep = " ")
 	
 		# check if there is any conflict in current request and history of this replica
@@ -779,23 +784,65 @@ class Replica(process):
 		if result == None:
 			output("\nReplica", self.replica_id, ": during reconfiguration, perform operation fail, no result returned.", sep = " ")
 			return None
+			
+		# hash and sign the result along with request id and operation
+		result_in_bytes = bytes(result, 'utf-8')
+		hash_result = self.HASHER(result_in_bytes, encoder = nacl.encoding.HexEncoder)
+		result_stmt_msg = 'result<' + str(request_id) + ',' + operation + '>'
+		signed_result = self.signing_key.sign(hash_result + result_stmt_msg.encode())
+		
+		# cache result, operation, and result statement
+		self.cache[request_id] =  (result, operation, signed_result)
+		
 		return result
 	
 	#7. replica receives catch up message
 	def receive(msg =("catch_up", catch_up_sequence, _), from_= self.olympus):
 		output("\nReplica", self.replica_id, ": received catch_up request for sequence", catch_up_sequence, sep = " ")
-		for (slot, operation) in catch_up_sequence:
-			res = applyOperationDuringReconfiguration(slot, operation)
+		for (slot, request_id, operation) in catch_up_sequence:
+			res = applyOperationDuringReconfiguration(slot, request_id, operation)
 			output("\nReplica", self.replica_id, ": during reconfiguration, perform operation succeeds, result is", res, sep = " ")
+		
+		# get hash of state
 		state_in_bytes = (str(self.operation_dict)).encode() 
 		state_hash = self.HASHER(state_in_bytes, encoder = nacl.encoding.HexEncoder)
+		
+		# get signed result stmt of all clients latest request
+		result_stmt_dict = getLatestResultStmt()
+		
 		output("\nReplica", self.replica_id, ": send caught_up message and result state hash to Olympus", sep = " ")
-		send(('caught_up', state_hash, self.replica_id, [], self.configuration_id, self), to = self.olympus)
+		send(('caught_up', state_hash, self.replica_id, result_stmt_dict, self.configuration_id, self), to = self.olympus)
 			
-	##8. replica receives a get running state message
-	#def receive(msg=("get_running_state"), from_= self.olympus)
-	#	state = str(self.operation_dict)
-	#	send(('running_state_message', state), to = self.olympus)
+	def getLatestResultStmt():
+		output("\nReplica", self.replica_id, ": start looking for latest result statement for each client.", sep = " ")
+		# initialization
+		latest_request_id_dict = dict()
+		latest_result_stmt_dict = dict()
+		# go through every item in cache, and find latest request id and signed result stmt
+		for key in self.cache:
+			# get client id
+			client_id = key[0]
+			if client_id not in latest_request_id_dict:
+				latest_request_id_dict[client_id] = key
+				latest_result_stmt_dict[client_id] = (key, self.cache[key][0], self.cache[key][1], (self.replica_id, self.cache[key][2]))
+			
+			# check if request id is larger
+			latest_request_id = latest_request_id_dict[client_id]
+			if (key[1] > latest_request_id[1]):
+				# if it is larger, update latest request id and result stmt
+				latest_request_id_dict[client_id] = key
+				latest_result_stmt_dict[client_id] = (key, self.cache[key][0], self.cache[key][1], (self.replica_id, self.cache[key][2]))
+			
+		output("\nReplica", self.replica_id, ": find latest result for clients, the requests id of the results are", 
+			latest_request_id_dict, sep = " ")
+		return latest_result_stmt_dict
+			
+	
+	#8. replica receives a get running state message
+	def receive(msg = ("get_running_state", _), from_= self.olympus):
+		output("\nReplica", self.replica_id, ": received get_running_state request.", sep = " ")
+		output("\nReplica", self.replica_id, ": send running_state_message for current state to Olympus.", sep = " ")
+		send(('running_state_message', self.operation_dict, self.replica_id, self.configuration_id, self), to = self.olympus)
 
 	def run():
 		output('\nStarting replica', self.replica_id, sep = " ")
