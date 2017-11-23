@@ -8,10 +8,10 @@ import logging
 import os
 
 class Replica(process):
-	def setup(replica_id, running_state, isHead, isTail, prev_replica, next_replica, head, olympus, configuration_id, history,
-			mode, signing_key, verify_key_list, client_verify_key_list, timeout, failures, checkpt_interval):
+	def setup(replica_id, running_state, isHead, isTail, prev_replica, next_replica, head, olympus, configuration_id, history, init_slot,
+			mode, signing_key, verify_key_list, client_verify_key_list, timeout, failures, new_config_failures, checkpt_interval):
 		# current slot number
-		self.slot_num = 0
+		self.slot_num = init_slot
 		# set running state
 		if running_state is None:
 			self.operation_dict = dict()
@@ -32,9 +32,7 @@ class Replica(process):
 		self.get_running_state_count = 0
 		self.catch_up_count = 0
 		self.wedge_request_count = 0
-		self.new_configuration_count = 0
 		self.truncate_history_failure = 0
-		self.invalid_order_sig_failure = 0
 		self.invalid_result_sig_failure = 0	
 		self.drop_checkpt_stmts = 0
 		self.drop = 0
@@ -43,7 +41,7 @@ class Replica(process):
 		self.checkpoint_index = 0
 		self.checkpoint_interval = checkpt_interval
 		self.latest_checkpoint_proof = []
-		self.last_checkpoint_slot = 0
+		self.last_checkpoint_slot = init_slot
 		self.checkpoint_hash = None
 		# majority number
 		self.majority_num = (len(self.verify_key_list) - 1) / 2 + 1
@@ -365,7 +363,8 @@ class Replica(process):
 					index, "doesn't match.", sep = " ")
 				return None
 				
-			output("\nReplica", self.replica_id, ": message from replica is validated", sep = " ")
+			output("\nReplica", self.replica_id, ": signature of replica", index, "is validated", sep = " ")
+			
 			# get order statement by decoding message from signed message
 			order_stmt = signed_order_stmt.message.decode()
 			matches = re.findall("order<(\d+),\((\d+),\s+(\d+)\),(.*?)>", order_stmt)
@@ -383,6 +382,7 @@ class Replica(process):
 				output("\nReplica", self.replica_id, ": message in order statement from shuttle doesn't match.", sep = " ")
 				return None
 			output("\nReplica", self.replica_id, ": no conflict in slot number and request id during order proof validation", sep = " ")
+		output("\nReplica", self.replica_id, ": validation for applying request succeeds, start applying request.", sep = " ")
 
 		# apply operation in the request to the dictionary object
 		result = findAndPerformOperation(request)
@@ -472,6 +472,7 @@ class Replica(process):
 		"""
 		Create a signed order statement and create an order proof to append to history of this replica
 		"""
+		output("\nReplica", self.replica_id, ": create order statement at slot", slot, sep = " ")
 		
 		# create an order statement for this replica
 		# make order statement a string so it can be turned into bytes and signed 
@@ -506,7 +507,9 @@ class Replica(process):
 		return signed_order_stmt
     
 	#2. replica receives shuttle
-	def receive(msg =('shuttle', order_proof, result_proof, request_id, request_type, slot, request, signed_msg, client, _), from_= self.prev_replica):
+	def receive(msg =('shuttle', order_proof, result_proof, request_id, request_type, slot, request, signed_msg, client, _), from_= self.prev_replica):		
+		output("\nReplica", self.replica_id, ": received shuttle", request_id, "from", self.prev_replica, sep = " ")
+		
 		# verify client signature and validate request message from shuttle
 		try:
 			client_key = nacl.signing.VerifyKey(self.client_verify_key_list[request_id[0]], encoder=nacl.encoding.HexEncoder)
@@ -514,15 +517,13 @@ class Replica(process):
 		except nacl.exceptions.BadSignatureError:
 			output("\nReplica", self.replica_id, ": in shuttle from", self.prev_replica, "message from client is not validated, signature doesn't match.", sep = " ")
 			return
-		
-		output("\nReplica", self.replica_id, ": shuttle message from replica is validated", sep = " ")
 
 		message = signed_msg.message
 		if ("request<" + str(request_id) + "," + request + ">") != message.decode():
 			output("\nReplica", self.replica_id, ": in shuttle from", self.prev_replica, "message from client is not validated, message doesn't match.", sep = " ")
 			return
-		
-		output("\nReplica", self.replica_id, ": received shuttle", request_id, "from", self.prev_replica, sep = " ")
+			
+		output("\nReplica", self.replica_id, ": shuttle message from replica is validated", sep = " ")
 		
 		# check for failure trigger shuttle()
 		if 'shuttle(' + str(request_id[0]) + ',' + str(request_id[1]) + ')' in self.failures:
@@ -559,15 +560,8 @@ class Replica(process):
 			# make order statement a string so it can be turned into bytes and signed 
 			order_statement = "order<" + str(slot) + "," + str(request_id) + "," + op_request + ">"
 			# sign order statement using the signing key of this replica
-			#invalid signature failure
-			if self.invalid_order_sig_failure > 0:
-				invalid_signing_key = nacl.signing.SigningKey.generate()
-				signed_order_stmt = invalid_signing_key.sign(order_statement.encode())
-				self.invalid_order_sig_failure = 0
-				output("\nReplica", self.replica_id, ": injecting invalid_order_sig failure for request", request_id, "at shuttle.", sep = " ")
-			else:		
-				signed_order_stmt = self.signing_key.sign(order_statement.encode())
-				output("\nReplica", self.replica_id, ": signed order statement for request", request_id, "at shuttle.", sep = " ")
+			signed_order_stmt = self.signing_key.sign(order_statement.encode())
+			output("\nReplica", self.replica_id, ": signed order statement for request", request_id, "at shuttle.", sep = " ")
 		else:
 			op_request = request
 
@@ -598,21 +592,34 @@ class Replica(process):
 			output("\nReplica", self.replica_id, ": sent result_shuttle", request_id, "to replica", self.prev_replica, sep = " ")
 			send(('result_shuttle', request_id, request, result, result_proof, self), to = self.prev_replica)
 			if self.invalid_result_sig_failure > 0:
-				output("\nReplica", self.replica_id, ": injecting invalid_result_sig failure for request", request_id, "at shuttle.", sep = " ")
+				output("\nReplica", self.replica_id, ": injecting invalid_result_sig failure for request", request_id, "at result.", sep = " ")
 				result_proof = result_proof[:-1]
-				invalid_signing_key = nacl.signing.SigningKey.generate()
-				signed_result = invalid_signing_key.sign(result_hash + result_stmt_msg.encode())
+				
+				# increment the first byte of the signature in a nacl.signing.SignedMessage
+				signedlist = list(signed_result)
+				signedlist[0] = (signedlist[0] + 1) % 256
+				newsigned = bytes(signedlist)
+				invalid_signed = nacl.signing.SignedMessage._from_parts(signed_result._signature, signed_result._message, newsigned)
+				signed_result = invalid_signed
+				
 				result_proof.append((self.replica_id, signed_result))
+				
 				self.invalid_result_sig_failure = 0
 			output("\nReplica", self.replica_id, ": sent operation_result", request_id, "to client", client, sep = " ")
 			send(('operation_result', request_id, request_type, request, result, result_proof, self), to = client)
 		else:
 			if self.invalid_result_sig_failure > 0:
-				output("\nReplica", self.replica_id, ": injecting invalid_result_sig failure for request", request_id, "at shuttle.", sep = " ")
+				output("\nReplica", self.replica_id, ": injecting invalid_result_sig failure for request", request_id, "at result shuttle.", sep = " ")
 				result_proof = result_proof[:-1]
-				invalid_signing_key = nacl.signing.SigningKey.generate()
-				signed_result = invalid_signing_key.sign(result_hash + result_stmt_msg.encode())
-				result_proof.append(signed_result)
+				
+				# increment the first byte of the signature in a nacl.signing.SignedMessage
+				signedlist = list(signed_result)
+				signedlist[0] = (signedlist[0] + 1) % 256
+				newsigned = bytes(signedlist)
+				invalid_signed = nacl.signing.SignedMessage._from_parts(signed_result._signature, signed_result._message, newsigned)
+				signed_result = invalid_signed
+				
+				result_proof.append((self.replica_id, signed_result))
 				self.invalid_result_sig_failure = 0
 			
 			output("\nReplica", self.replica_id, ": sent shuttle", request_id, "to", self.next_replica, sep = " ")
@@ -684,6 +691,8 @@ class Replica(process):
 			output("\nReplica", self.replica_id, ": request", result_shuttle_id, "for operation", request,			
 				"does not match existing operation", self.cache[result_shuttle_id], "in cache.", sep = " ")
 			return
+			
+		output("\nReplica", self.replica_id, ": result_shuttle is validated.", sep = " ")
 
 		# cache result proof along with corresponding request id, result, and result statement
 		result_stmt_in_cache = self.cache[result_shuttle_id][2]
@@ -730,7 +739,8 @@ class Replica(process):
 			return
 			
 		if self.truncate_history_failure > 0:
-			output("\nReplica", self.replica_id, ": injecting truncate_history failure for request", request_id, "at shuttle.", sep = " ")
+			output("\nReplica", self.replica_id, ": injecting truncate_history failure by removing", 
+				self.truncate_history_failure, "entries for wedge_response.", sep = " ")
 			wedge_history = self.history[0:(len(self.history)-self.truncate_history_failure)]
 			self.truncate_history_failure = 0
 		else:
@@ -746,12 +756,15 @@ class Replica(process):
 	def receive(msg = ('checkpoint_proof', checkpoint_proof_statement_list, checkpoint_prefix, current_slot, _), from_ = self.prev_replica):
 		output("\nReplica", self.replica_id, ": received checkpoint_proof shuttle for checkpoint interval", 
 			checkpoint_prefix, "at slot", current_slot, "from", self.prev_replica, sep = " ")
+		
+		# check for checkpoint trigger
 		self.received_checkpoint_count += 1	
 		if 'checkpoint(' + str(self.received_checkpoint_count) + ')' in self.failures:
 					trigger = 'checkpoint(' + str(self.received_checkpoint_count) + ')'
 					output("\nReplica", self.replica_id, ": failure", failures[trigger], "triggered by", trigger, sep = " ")
 					failureInjection(failures[trigger], 1)
 	
+		# check for failure injection drop()
 		if self.drop > 0:
 			output("\n:Replica", self.replica_id, ": injecting failure drop() in checkpoint_proof", sep = " ")
 			self.drop = 0
@@ -790,12 +803,14 @@ class Replica(process):
 		output("\nReplica", self.replica_id, ": received completed checkpoint_proof shuttle for checkpoint interval",
 			checkpoint_prefix, "at slot", current_slot, "from", self.next_replica, sep = " ")
 		
+		# check for trigger completed_checkpoint
 		self.completed_checkpoint_count += 1	
 		if 'completed_checkpoint(' + str(self.completed_checkpoint_count) + ')' in self.failures:
-					trigger = 'completed_checkpoint(' + str(self.completed_checkpoint_count) + ')'
-					output("\nReplica", self.replica_id, ": failure", failures[trigger], "triggered by", trigger, sep = " ")
-					failureInjection(failures[trigger], 1)
+			trigger = 'completed_checkpoint(' + str(self.completed_checkpoint_count) + ')'
+			output("\nReplica", self.replica_id, ": failure", failures[trigger], "triggered by", trigger, sep = " ")
+			failureInjection(failures[trigger], 1)
 		
+		# check for failure injection drop()
 		if self.drop > 0:
 			output("\n:Replica", self.replica_id, ": injecting failure drop() in checkpoint_result", sep = " ")
 			self.drop = 0
@@ -814,8 +829,9 @@ class Replica(process):
 			#handle failure drop checkpoint statements
 			if self.drop_checkpt_stmts > 0:
 				output("\nReplica", self.replica_id, ": injecting drop_checkpt_stmt failure for request", request_id, "at shuttle.", sep = " ")
-				checkpoint_proof_statement_list = checkpoint_proof_statement_list[failures+1:]
-				self.drop_checkpt_stmts = 0	
+				checkpoint_proof_statement_list = checkpoint_proof_statement_list[self.majority_num:]
+				self.drop_checkpt_stmts = 0
+			
 			send(('checkpoint_result', checkpoint_proof_statement_list, checkpoint_prefix, current_slot, self), to = self.prev_replica)
 			output(self.replica_id, "sent completed checkpoint result to", self.prev_replica, sep = " ")
 
@@ -875,7 +891,7 @@ class Replica(process):
 			elif f == 'drop_result_stmt()':
 				self.drop_result_stmt_failure = num
 			elif f == 'crash()':
-				output("\nReplica", self.replica_id, ": crach this replica.", sep = " ")
+				output("\nReplica", self.replica_id, ": injecting failure crach() for this replica.", sep = " ")
 				logging.shutdown()
 				os._exit(-1)
 			elif f.startswith('truncate_history'):
@@ -887,14 +903,16 @@ class Replica(process):
 				# here assume no failures in parsing the sleep time
 				sleep_time = int(match[0])
 				sleep_time = sleep_time / 1000
-				output("\nReplica", self.replica_id, ": slept for", sleep_time, "seconds", sep = " ")	
+				output("\nReplica", self.replica_id, ": injecting failure sleep for", sleep_time, "seconds.", sep = " ")	
 				time.sleep(sleep_time)
 			elif f == 'drop()':
 				self.drop = num
 			elif f == 'increment_slot()':
-				return
+				if self.isHead:
+					output("\nReplica", self.replica_id, ": injecting failure increment_slot() for this replica.", sep = " ")
+					self.slot_num += 1
 			elif f == 'extra_op()':
-				output("\nReplica", self.replica_id, ": added extra put('a','a') to dictionary", sep = " ")	
+				output("\nReplica", self.replica_id, ": injecting failure extra_op(), add put('a','a') to dictionary", sep = " ")	
 				self.operation_dict['a'] = 'a'		
 			elif f == 'invalid_order_sig()':
 				self.invalid_order_sig_failure = num
@@ -947,6 +965,7 @@ class Replica(process):
 			output("\nReplica", self.replica_id, ": failure", failures[trigger], "triggered by", trigger, sep = " ")
 			failureInjection(failures[trigger], 1)
 		
+		# check for failure injection drop()
 		if self.drop > 0:
 			output("\n:Replica", self.replica_id, ": injecting failure drop() in catch_up", sep = " ")
 			self.drop = 0
@@ -1002,6 +1021,7 @@ class Replica(process):
 			output("\nReplica", self.replica_id, ": failure", failures[trigger], "triggered by", trigger, sep = " ")
 			failureInjection(failures[trigger], 1)
 			
+		# check for failure injection drop()
 		if self.drop > 0:
 			output("\n:Replica", self.replica_id, ": injecting failure drop() in get_running_state", sep = " ")
 			self.drop = 0
@@ -1012,6 +1032,12 @@ class Replica(process):
 			
 	def run():
 		output('\nStarting replica', self.replica_id, sep = " ")
+		
+		# check for new_config trigger
+		if len(self.new_config_failures) > 0:
+			output("\nReplica", self.replica_id, ": failures", self.new_config_failures, "triggered by new_config.", sep = " ")
+			failureInjection(self.new_config_failures, 1)
+		
 		# terminate when receive terminate message from Olympus
 		if await(some(received(('terminate', _), from_ = Olympus))):
 			time.sleep(3)

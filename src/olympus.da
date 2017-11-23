@@ -19,6 +19,9 @@ class Olympus(process):
 		self.checkpt_interval = int(config['checkpt_interval'])
 		self.HASHER = nacl.hash.sha256
 
+		# variables for new_config trigger
+		self.new_config_failure = dict()
+		
 		# reconfiguration state
 		self.reconfig_state = False
 		
@@ -64,6 +67,12 @@ class Olympus(process):
 						failures[trigger] += ";" + failure
 					else:
 						failures[trigger] = failure
+						
+					if trigger.startswith('new_configuration'):
+						if index in new_config_failure:
+							self.new_config_failure[index] += ";" + failure
+						else:
+							self.new_config_failure[index] = failure
 
 				output("\nFailure for replica", index, ":\n", failures, sep = " ")
 
@@ -80,8 +89,8 @@ class Olympus(process):
 			timeout = int(timeout / 1000)
 
 			setup(replica, (index, None, isHead, isTail, prev_replica, next_replica, self.replica_list[0], self, self.configuration_id, 
-				[], 'ACTIVE', self.signing_key_list[index], self.verify_key_list, self.client_verify_key_list, 
-				timeout, failures, self.checkpt_interval))
+				[], 0, 'ACTIVE', self.signing_key_list[index], self.verify_key_list, self.client_verify_key_list, 
+				timeout, failures, '', self.checkpt_interval))
 	
 	def receive(msg =('check_configuration', message_id, client_configuration_id, _), from_= client):
 		# check if configuration id matches
@@ -298,9 +307,10 @@ class Olympus(process):
 	
 	def switchConfig(quorum):
 		#precondition checks
-		if len(quorum) > self.quorum_size:
+		if len(quorum) >= self.quorum_size:
 			#find longest history
 			output("\nOlympus: start looking for longest history.", sep = " ")
+			init_history = []
 			longest_history = []
 			max_slot_history = []
 			max_slot = 0
@@ -363,20 +373,23 @@ class Olympus(process):
 			
 			# construct longest history from min slot to max slot
 			for slot in range(min_slot, max_slot + 1):
-				if slot in [t[0] for t in min_slot_history]:
-					# slot is found in min slot history
-					(op_slot, request_id, operation) = [(t[0], t[1], t[2]) for t in min_slot_history if t[0] == slot][0]
-					longest_history.append((op_slot, request_id, operation))
-				elif slot in [t[0] for t in max_slot_history]:
+				if slot in [t[0] for t in max_slot_history]:
 					# slot is found in max slot history
-					(op_slot, request_id, operation) = [(t[0], t[1], t[2]) for t in max_slot_history if t[0] == slot][0]
-					longest_history.append((op_slot, request_id, operation))
+					history_item = [t for t in max_slot_history if t[0] == slot][0]
+					longest_history.append((history_item[0], history_item[1], history_item[2]))
+					init_history.append(history_item)
+				elif slot in [t[0] for t in min_slot_history]:
+					# slot is found in min slot history
+					history_item = [t for t in min_slot_history if t[0] == slot][0]
+					longest_history.append((history_item[0], history_item[1], history_item[2]))
+					init_history.append(history_item)
 				else:
 					# slot is not found in either, but some replica must have history that assign this slot
 					for (_, _, replica_history, _, _) in quorum:
 						if slot in [t[0] for t in replica_history]:
-							(op_slot, request_id, operation) = [(t[0], t[1], t[2]) for t in replica_history if t[0] == slot][0]
-							longest_history.append((op_slot, request_id, operation))
+							history_item = [t for t in replica_history if t[0] == slot][0]
+							longest_history.append((history_item[0], history_item[1], history_item[2]))
+							init_history.append(history_item)
 			
 			output("\nOlympus: longest history constructed:", longest_history, sep = " ")
 			
@@ -491,7 +504,8 @@ class Olympus(process):
 			
 			# create new configuration
 			self.configuration_id += 1
-			setupReplica(correct_state)
+			setupReplica(correct_state, [], max_slot + 1, self.new_config_failure.copy())
+
 			output("\nOlympus: start all new replicas")
 			start(self.replicas)
 			
@@ -501,7 +515,9 @@ class Olympus(process):
 			
 			return True
 		
-	def setupReplica(running_state):
+	def setupReplica(running_state, init_history, init_slot, past_config_failure):
+		self.new_config_failure = dict()
+		
 		# create new replicas
 		self.replicas = new(replica_da.Replica, num = self.replica_num)
 		self.replica_list = []
@@ -518,6 +534,8 @@ class Olympus(process):
 		
 		# setup each replica
 		for index in range(len(replica_list)):
+			output("\nOlympus: setting up replica", index, "for new configuration.", sep = " ")
+		
 			replica = replica_list[index]
 			isHead = False
 			isTail = False
@@ -539,6 +557,12 @@ class Olympus(process):
 						failures[trigger] += ";" + failure
 					else:
 						failures[trigger] = failure
+						
+					if trigger.startswith('new_configuration'):
+						if index in new_config_failure:
+							self.new_config_failure[index] += ";" + failure
+						else:
+							self.new_config_failure[index] = failure
 
 				output("\nFailure for replica", index, ":\n", failures, sep = " ")
 
@@ -553,10 +577,15 @@ class Olympus(process):
 				prev_replica = replica_list[index - 1]
 		
 			timeout = int(timeout / 1000)
+			
+			if index in past_config_failure:
+				actual_failure = past_config_failure[index]
+			else:
+				actual_failure = []
 
 			setup(replica, (index, running_state, isHead, isTail, prev_replica, next_replica, self.replica_list[0], self, self.configuration_id, 
-				[], 'ACTIVE', self.signing_key_list[index], self.verify_key_list, self.client_verify_key_list, 
-				timeout, failures, self.checkpt_interval))
+				init_history, init_slot, 'ACTIVE', self.signing_key_list[index], self.verify_key_list, self.client_verify_key_list, 
+				timeout, failures, actual_failure, self.checkpt_interval))
 		
 	def run():
 		start = time.time()

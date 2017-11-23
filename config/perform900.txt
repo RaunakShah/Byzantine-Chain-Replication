@@ -19,7 +19,7 @@ client_timeout = 3000
 head_timeout = 3000
 nonhead_timeout = 3000
 # checkpoint interval.  take a checkpoint every checkpt_interval slots.
-checkpt_interval = 10
+checkpt_interval = 300
 
 # CLIENT WORKLOAD
 workload[0] = pseudorandom(190,300)

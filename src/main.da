@@ -29,7 +29,7 @@ def main():
 	config(channel = 'reliable')
 	
 	# create an Olympus object
-	olympus = new(olympus_da.Olympus, num=1, at = 'OlympusNode')
+	olympus = new(olympus_da.Olympus, num=1, at = 'MainNode')
 	
 	# set up signing key and verify key for each client
 	client_num = config['num_client']
@@ -50,7 +50,7 @@ def main():
 	# create client objects
 	timeout = config['client_timeout']
 	timeout = int(timeout / 1000)
-	clients = new(client_da.Client, num=client_num, at = 'ClientNode')
+	clients = new(client_da.Client, num=client_num)
 	
 	# set up each client
 	client_list = list(clients)
