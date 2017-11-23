@@ -727,11 +727,12 @@ class Replica(process):
 		self.mode = 'IMMUTABLE'
 
 		# check for wedge_request trigger
-		self.wedge_request_count += 1
 		if 'wedge_request(' + str(self.wedge_request_count) + ')' in self.failures:
 			trigger = 'wedge_request(' + str(self.wedge_request_count) + ')'
 			output("\nReplica", self.replica_id, ": failure", failures[trigger], "triggered by", trigger, sep = " ")
 			failureInjection(failures[trigger], 1)
+		
+		self.wedge_request_count += 1
 
 		if self.drop > 0:
 			output("\n:Replica", self.replica_id, ": injecting failure drop() in wedge_request", sep = " ")
@@ -750,7 +751,7 @@ class Replica(process):
 		wedged_msg = self.signing_key.sign((str(self.replica_id) + ';' + str(wedge_history) + ';' + str(self.latest_checkpoint_proof) + ';' + str(self.last_checkpoint_slot)).encode())
 		output("\nReplica", self.replica_id, ": sent wedge statement to Olympus.", sep = " ")		
 		send(('wedge_statement', wedged_msg, self.replica_id, wedge_history, self.latest_checkpoint_proof, self.last_checkpoint_slot, 
-			self.configuration_id, self), to = self.olympus)
+			self.configuration_id), to = self.olympus)
 
 	#5. replica receives checkpoint proof shuttle (from head to tail)
 	def receive(msg = ('checkpoint_proof', checkpoint_proof_statement_list, checkpoint_prefix, current_slot, _), from_ = self.prev_replica):
@@ -758,11 +759,11 @@ class Replica(process):
 			checkpoint_prefix, "at slot", current_slot, "from", self.prev_replica, sep = " ")
 		
 		# check for checkpoint trigger
-		self.received_checkpoint_count += 1	
 		if 'checkpoint(' + str(self.received_checkpoint_count) + ')' in self.failures:
-					trigger = 'checkpoint(' + str(self.received_checkpoint_count) + ')'
-					output("\nReplica", self.replica_id, ": failure", failures[trigger], "triggered by", trigger, sep = " ")
-					failureInjection(failures[trigger], 1)
+			trigger = 'checkpoint(' + str(self.received_checkpoint_count) + ')'
+			output("\nReplica", self.replica_id, ": failure", failures[trigger], "triggered by", trigger, sep = " ")
+			failureInjection(failures[trigger], 1)
+		self.received_checkpoint_count += 1	
 	
 		# check for failure injection drop()
 		if self.drop > 0:
@@ -804,11 +805,11 @@ class Replica(process):
 			checkpoint_prefix, "at slot", current_slot, "from", self.next_replica, sep = " ")
 		
 		# check for trigger completed_checkpoint
-		self.completed_checkpoint_count += 1	
 		if 'completed_checkpoint(' + str(self.completed_checkpoint_count) + ')' in self.failures:
 			trigger = 'completed_checkpoint(' + str(self.completed_checkpoint_count) + ')'
 			output("\nReplica", self.replica_id, ": failure", failures[trigger], "triggered by", trigger, sep = " ")
 			failureInjection(failures[trigger], 1)
+		self.completed_checkpoint_count += 1	
 		
 		# check for failure injection drop()
 		if self.drop > 0:
@@ -828,8 +829,8 @@ class Replica(process):
 		if self.isHead == False:
 			#handle failure drop checkpoint statements
 			if self.drop_checkpt_stmts > 0:
-				output("\nReplica", self.replica_id, ": injecting drop_checkpt_stmt failure for request", request_id, "at shuttle.", sep = " ")
-				checkpoint_proof_statement_list = checkpoint_proof_statement_list[self.majority_num:]
+				output("\nReplica", self.replica_id, ": injecting drop_checkpt_stmt failure for at completed checkpoint shuttle.", sep = " ")
+				checkpoint_proof_statement_list = checkpoint_proof_statement_list[int(self.majority_num):]
 				self.drop_checkpt_stmts = 0
 			
 			send(('checkpoint_result', checkpoint_proof_statement_list, checkpoint_prefix, current_slot, self), to = self.prev_replica)
@@ -879,10 +880,10 @@ class Replica(process):
 	def failureInjection(failure, num):
 		""" handles all failure injections """
 		if ';' in failure:
-			failures = failure.split(';')
+			failures_list = failure.split(';')
 		else:
-			failures = [failure]
-		for f in failures:
+			failures_list = [failure]
+		for f in failures_list:
 			f.strip()
 			if f == 'change_operation()':
 				self.change_operation_failure = num
@@ -959,11 +960,11 @@ class Replica(process):
 		output("\nReplica", self.replica_id, ": received catch_up request for sequence", catch_up_sequence, sep = " ")
 		
 		# check for caught_up trigger
-		self.catch_up_count += 1	
 		if 'catch_up(' + str(self.catch_up_count) + ')' in self.failures:
 			trigger = 'catch_up(' + str(self.catch_up_count) + ')'
 			output("\nReplica", self.replica_id, ": failure", failures[trigger], "triggered by", trigger, sep = " ")
 			failureInjection(failures[trigger], 1)
+		self.catch_up_count += 1	
 		
 		# check for failure injection drop()
 		if self.drop > 0:
@@ -982,6 +983,7 @@ class Replica(process):
 		# get signed result stmt of all clients latest request
 		result_stmt_dict = getLatestResultStmt()
 		
+		output("\nReplica", self.replica_id, ": current state in caught_up is", self.operation_dict, sep = " ")
 		output("\nReplica", self.replica_id, ": send caught_up message and result state hash to Olympus", sep = " ")
 		send(('caught_up', state_hash, self.replica_id, result_stmt_dict, self.configuration_id, self), to = self.olympus)
 			
@@ -1015,11 +1017,11 @@ class Replica(process):
 		output("\nReplica", self.replica_id, ": received get_running_state request.", sep = " ")
 		
 		# check for get_running_state trigger
-		self.get_running_state_count += 1	
 		if 'get_running_state(' + str(self.get_running_state_count) + ')' in self.failures:
 			trigger = 'get_running_state(' + str(self.get_running_state_count) + ')'
 			output("\nReplica", self.replica_id, ": failure", failures[trigger], "triggered by", trigger, sep = " ")
 			failureInjection(failures[trigger], 1)
+		self.get_running_state_count += 1	
 			
 		# check for failure injection drop()
 		if self.drop > 0:

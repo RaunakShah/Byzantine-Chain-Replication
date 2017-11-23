@@ -1,0 +1,1092 @@
+[2017-11-22 23:28:52,576] client.Client<Client:96003#MainNode>:OUTPUT: Client ID: 0 
+Workload: ["put('movie','star')", " append('movie',' wars')", " get('movie')"] 
+Timeout: 6
+[2017-11-22 23:28:53,373] olympus.Olympus<Olympus:96002#MainNode>:OUTPUT: 
+Failure for replica 0 :
+ {'client_request(0,1)': 'change_operation()'}
+[2017-11-22 23:28:53,389] replica.Replica<Replica:15001#MainNode>:OUTPUT: 
+Replica: 0 with history [] initiated
+[2017-11-22 23:28:53,389] olympus.Olympus<Olympus:96002#MainNode>:OUTPUT: 
+Failure for replica 1 :
+ {'catch_up(0)': 'drop()'}
+[2017-11-22 23:28:53,389] replica.Replica<Replica:15005#MainNode>:OUTPUT: 
+Replica: 1 with history [] initiated
+[2017-11-22 23:28:53,404] replica.Replica<Replica:15004#MainNode>:OUTPUT: 
+Replica: 2 with history [] initiated
+[2017-11-22 23:28:53,404] replica.Replica<Replica:15002#MainNode>:OUTPUT: 
+Replica: 3 with history [] initiated
+[2017-11-22 23:28:53,404] replica.Replica<Replica:15003#MainNode>:OUTPUT: 
+Replica: 4 with history [] initiated
+[2017-11-22 23:28:53,404] olympus.Olympus<Olympus:96002#MainNode>:OUTPUT: 
+Starting test case: test14 - Client Request trigger Change Operation, catch_up trigger drop()
+[2017-11-22 23:28:53,404] olympus.Olympus<Olympus:96002#MainNode>:OUTPUT: 
+Starting Olympus.
+[2017-11-22 23:28:53,404] client.Client<Client:96003#MainNode>:OUTPUT: 
+Starting client 0
+[2017-11-22 23:28:53,404] replica.Replica<Replica:15001#MainNode>:OUTPUT: 
+Starting replica 0
+[2017-11-22 23:28:53,404] replica.Replica<Replica:15005#MainNode>:OUTPUT: 
+Starting replica 1
+[2017-11-22 23:28:53,404] replica.Replica<Replica:15004#MainNode>:OUTPUT: 
+Starting replica 2
+[2017-11-22 23:28:53,404] replica.Replica<Replica:15002#MainNode>:OUTPUT: 
+Starting replica 3
+[2017-11-22 23:28:53,404] replica.Replica<Replica:15003#MainNode>:OUTPUT: 
+Starting replica 4
+[2017-11-22 23:28:53,404] client.Client<Client:96003#MainNode>:OUTPUT: 
+Client 0 : sent get_configuration to Olympus.
+[2017-11-22 23:28:53,420] olympus.Olympus<Olympus:96002#MainNode>:OUTPUT: 
+Olympus: send replicas and configuration information for config 0 to client <Client:96003#MainNode>
+[2017-11-22 23:28:53,420] client.Client<Client:96003#MainNode>:OUTPUT: 
+Client 0 : received configuration 0 from Olympus.
+[2017-11-22 23:28:53,420] client.Client<Client:96003#MainNode>:OUTPUT: 
+Client 0 : configuration response from Olympus is validated.
+[2017-11-22 23:28:53,420] client.Client<Client:96003#MainNode>:OUTPUT: 
+Client 0 : start sending requests in new configuration 0
+[2017-11-22 23:28:53,420] client.Client<Client:96003#MainNode>:OUTPUT: 
+Client 0 : sent check config message with id 0 to Olympus.
+[2017-11-22 23:28:53,420] olympus.Olympus<Olympus:96002#MainNode>:OUTPUT: 
+Olympus: send check config response 'OK' to client <Client:96003#MainNode>
+[2017-11-22 23:28:53,436] client.Client<Client:96003#MainNode>:OUTPUT: 
+Client 0 : received check config response: OK continue normally.
+[2017-11-22 23:28:53,436] client.Client<Client:96003#MainNode>:OUTPUT: 
+Client 0 : sent operation_request (0, 0) to <Replica:15001#MainNode>
+[2017-11-22 23:28:53,436] replica.Replica<Replica:15001#MainNode>:OUTPUT: 
+Replica 0 : message from client is validated
+[2017-11-22 23:28:53,436] replica.Replica<Replica:15001#MainNode>:OUTPUT: 
+Replica 0 : received new operation request (0, 0) for operation: put('movie','star')
+[2017-11-22 23:28:53,436] replica.Replica<Replica:15001#MainNode>:OUTPUT: 
+Replica 0 : handling new request from <Client:96003#MainNode>
+[2017-11-22 23:28:53,436] replica.Replica<Replica:15001#MainNode>:OUTPUT: 
+Replica 0 : validation for applying request succeeds, start applying request.
+[2017-11-22 23:28:53,451] replica.Replica<Replica:15001#MainNode>:OUTPUT: 
+Replica 0 : applied operation and result returned.
+[2017-11-22 23:28:53,451] replica.Replica<Replica:15001#MainNode>:OUTPUT: 
+Replica 0 : create order statement at slot 0
+[2017-11-22 23:28:53,451] replica.Replica<Replica:15001#MainNode>:OUTPUT: 
+Replica 0 : signed order statement and added order proof to history
+[2017-11-22 23:28:53,451] replica.Replica<Replica:15001#MainNode>:OUTPUT: 
+Replica 0 : hashed and signed result
+[2017-11-22 23:28:53,451] replica.Replica<Replica:15001#MainNode>:OUTPUT: 
+Replica 0 : obtained result and signed order statement for request (0, 0)
+[2017-11-22 23:28:53,451] replica.Replica<Replica:15001#MainNode>:OUTPUT: 
+Replica 0 : hashed and signed result statement for request (0, 0) at shuttle.
+[2017-11-22 23:28:53,451] replica.Replica<Replica:15001#MainNode>:OUTPUT: 
+Replica 0 : sent shuttle (0, 0) to  <Replica:15005#MainNode>
+[2017-11-22 23:28:53,451] replica.Replica<Replica:15005#MainNode>:OUTPUT: 
+Replica 1 : received shuttle (0, 0) from <Replica:15001#MainNode>
+[2017-11-22 23:28:53,467] replica.Replica<Replica:15005#MainNode>:OUTPUT: 
+Replica 1 : shuttle message from replica is validated
+[2017-11-22 23:28:53,467] replica.Replica<Replica:15005#MainNode>:OUTPUT: 
+Replica 1 : signature of replica 0 is validated
+[2017-11-22 23:28:53,467] replica.Replica<Replica:15005#MainNode>:OUTPUT: 
+Replica 1 : received and successfully decoded signed order statement
+[2017-11-22 23:28:53,467] replica.Replica<Replica:15005#MainNode>:OUTPUT: 
+Replica 1 : no conflict in slot number and request id during order proof validation
+[2017-11-22 23:28:53,467] replica.Replica<Replica:15005#MainNode>:OUTPUT: 
+Replica 1 : validation for applying request succeeds, start applying request.
+[2017-11-22 23:28:53,467] replica.Replica<Replica:15005#MainNode>:OUTPUT: 
+Replica 1 : applied operation and result returned.
+[2017-11-22 23:28:53,467] replica.Replica<Replica:15005#MainNode>:OUTPUT: 
+Replica 1 : create order statement at slot 0
+[2017-11-22 23:28:53,467] replica.Replica<Replica:15005#MainNode>:OUTPUT: 
+Replica 1 : signed order statement and added order proof to history
+[2017-11-22 23:28:53,467] replica.Replica<Replica:15005#MainNode>:OUTPUT: 
+Replica 1 : hashed and signed result
+[2017-11-22 23:28:53,467] replica.Replica<Replica:15005#MainNode>:OUTPUT: 
+Replica 1 : hashed and result for request (0, 0) at shuttle.
+[2017-11-22 23:28:53,467] replica.Replica<Replica:15005#MainNode>:OUTPUT: 
+Replica 1 : sent shuttle (0, 0) to <Replica:15004#MainNode>
+[2017-11-22 23:28:53,482] replica.Replica<Replica:15004#MainNode>:OUTPUT: 
+Replica 2 : received shuttle (0, 0) from <Replica:15005#MainNode>
+[2017-11-22 23:28:53,482] replica.Replica<Replica:15004#MainNode>:OUTPUT: 
+Replica 2 : shuttle message from replica is validated
+[2017-11-22 23:28:53,482] replica.Replica<Replica:15004#MainNode>:OUTPUT: 
+Replica 2 : signature of replica 0 is validated
+[2017-11-22 23:28:53,482] replica.Replica<Replica:15004#MainNode>:OUTPUT: 
+Replica 2 : received and successfully decoded signed order statement
+[2017-11-22 23:28:53,482] replica.Replica<Replica:15004#MainNode>:OUTPUT: 
+Replica 2 : no conflict in slot number and request id during order proof validation
+[2017-11-22 23:28:53,482] replica.Replica<Replica:15004#MainNode>:OUTPUT: 
+Replica 2 : signature of replica 1 is validated
+[2017-11-22 23:28:53,482] replica.Replica<Replica:15004#MainNode>:OUTPUT: 
+Replica 2 : received and successfully decoded signed order statement
+[2017-11-22 23:28:53,482] replica.Replica<Replica:15004#MainNode>:OUTPUT: 
+Replica 2 : no conflict in slot number and request id during order proof validation
+[2017-11-22 23:28:53,498] replica.Replica<Replica:15004#MainNode>:OUTPUT: 
+Replica 2 : validation for applying request succeeds, start applying request.
+[2017-11-22 23:28:53,498] replica.Replica<Replica:15004#MainNode>:OUTPUT: 
+Replica 2 : applied operation and result returned.
+[2017-11-22 23:28:53,498] replica.Replica<Replica:15004#MainNode>:OUTPUT: 
+Replica 2 : create order statement at slot 0
+[2017-11-22 23:28:53,498] replica.Replica<Replica:15004#MainNode>:OUTPUT: 
+Replica 2 : signed order statement and added order proof to history
+[2017-11-22 23:28:53,498] replica.Replica<Replica:15004#MainNode>:OUTPUT: 
+Replica 2 : hashed and signed result
+[2017-11-22 23:28:53,498] replica.Replica<Replica:15004#MainNode>:OUTPUT: 
+Replica 2 : hashed and result for request (0, 0) at shuttle.
+[2017-11-22 23:28:53,498] replica.Replica<Replica:15004#MainNode>:OUTPUT: 
+Replica 2 : sent shuttle (0, 0) to <Replica:15002#MainNode>
+[2017-11-22 23:28:53,514] replica.Replica<Replica:15002#MainNode>:OUTPUT: 
+Replica 3 : received shuttle (0, 0) from <Replica:15004#MainNode>
+[2017-11-22 23:28:53,514] replica.Replica<Replica:15002#MainNode>:OUTPUT: 
+Replica 3 : shuttle message from replica is validated
+[2017-11-22 23:28:53,514] replica.Replica<Replica:15002#MainNode>:OUTPUT: 
+Replica 3 : signature of replica 0 is validated
+[2017-11-22 23:28:53,514] replica.Replica<Replica:15002#MainNode>:OUTPUT: 
+Replica 3 : received and successfully decoded signed order statement
+[2017-11-22 23:28:53,514] replica.Replica<Replica:15002#MainNode>:OUTPUT: 
+Replica 3 : no conflict in slot number and request id during order proof validation
+[2017-11-22 23:28:53,514] replica.Replica<Replica:15002#MainNode>:OUTPUT: 
+Replica 3 : signature of replica 1 is validated
+[2017-11-22 23:28:53,514] replica.Replica<Replica:15002#MainNode>:OUTPUT: 
+Replica 3 : received and successfully decoded signed order statement
+[2017-11-22 23:28:53,514] replica.Replica<Replica:15002#MainNode>:OUTPUT: 
+Replica 3 : no conflict in slot number and request id during order proof validation
+[2017-11-22 23:28:53,514] replica.Replica<Replica:15002#MainNode>:OUTPUT: 
+Replica 3 : signature of replica 2 is validated
+[2017-11-22 23:28:53,514] replica.Replica<Replica:15002#MainNode>:OUTPUT: 
+Replica 3 : received and successfully decoded signed order statement
+[2017-11-22 23:28:53,514] replica.Replica<Replica:15002#MainNode>:OUTPUT: 
+Replica 3 : no conflict in slot number and request id during order proof validation
+[2017-11-22 23:28:53,514] replica.Replica<Replica:15002#MainNode>:OUTPUT: 
+Replica 3 : validation for applying request succeeds, start applying request.
+[2017-11-22 23:28:53,514] replica.Replica<Replica:15002#MainNode>:OUTPUT: 
+Replica 3 : applied operation and result returned.
+[2017-11-22 23:28:53,514] replica.Replica<Replica:15002#MainNode>:OUTPUT: 
+Replica 3 : create order statement at slot 0
+[2017-11-22 23:28:53,514] replica.Replica<Replica:15002#MainNode>:OUTPUT: 
+Replica 3 : signed order statement and added order proof to history
+[2017-11-22 23:28:53,514] replica.Replica<Replica:15002#MainNode>:OUTPUT: 
+Replica 3 : hashed and signed result
+[2017-11-22 23:28:53,514] replica.Replica<Replica:15002#MainNode>:OUTPUT: 
+Replica 3 : hashed and result for request (0, 0) at shuttle.
+[2017-11-22 23:28:53,514] replica.Replica<Replica:15002#MainNode>:OUTPUT: 
+Replica 3 : sent shuttle (0, 0) to <Replica:15003#MainNode>
+[2017-11-22 23:28:53,514] replica.Replica<Replica:15003#MainNode>:OUTPUT: 
+Replica 4 : received shuttle (0, 0) from <Replica:15002#MainNode>
+[2017-11-22 23:28:53,514] replica.Replica<Replica:15003#MainNode>:OUTPUT: 
+Replica 4 : shuttle message from replica is validated
+[2017-11-22 23:28:53,529] replica.Replica<Replica:15003#MainNode>:OUTPUT: 
+Replica 4 : signature of replica 0 is validated
+[2017-11-22 23:28:53,529] replica.Replica<Replica:15003#MainNode>:OUTPUT: 
+Replica 4 : received and successfully decoded signed order statement
+[2017-11-22 23:28:53,529] replica.Replica<Replica:15003#MainNode>:OUTPUT: 
+Replica 4 : no conflict in slot number and request id during order proof validation
+[2017-11-22 23:28:53,529] replica.Replica<Replica:15003#MainNode>:OUTPUT: 
+Replica 4 : signature of replica 1 is validated
+[2017-11-22 23:28:53,529] replica.Replica<Replica:15003#MainNode>:OUTPUT: 
+Replica 4 : received and successfully decoded signed order statement
+[2017-11-22 23:28:53,529] replica.Replica<Replica:15003#MainNode>:OUTPUT: 
+Replica 4 : no conflict in slot number and request id during order proof validation
+[2017-11-22 23:28:53,529] replica.Replica<Replica:15003#MainNode>:OUTPUT: 
+Replica 4 : signature of replica 2 is validated
+[2017-11-22 23:28:53,529] replica.Replica<Replica:15003#MainNode>:OUTPUT: 
+Replica 4 : received and successfully decoded signed order statement
+[2017-11-22 23:28:53,529] replica.Replica<Replica:15003#MainNode>:OUTPUT: 
+Replica 4 : no conflict in slot number and request id during order proof validation
+[2017-11-22 23:28:53,529] replica.Replica<Replica:15003#MainNode>:OUTPUT: 
+Replica 4 : signature of replica 3 is validated
+[2017-11-22 23:28:53,529] replica.Replica<Replica:15003#MainNode>:OUTPUT: 
+Replica 4 : received and successfully decoded signed order statement
+[2017-11-22 23:28:53,529] replica.Replica<Replica:15003#MainNode>:OUTPUT: 
+Replica 4 : no conflict in slot number and request id during order proof validation
+[2017-11-22 23:28:53,529] replica.Replica<Replica:15003#MainNode>:OUTPUT: 
+Replica 4 : validation for applying request succeeds, start applying request.
+[2017-11-22 23:28:53,529] replica.Replica<Replica:15003#MainNode>:OUTPUT: 
+Replica 4 : applied operation and result returned.
+[2017-11-22 23:28:53,529] replica.Replica<Replica:15003#MainNode>:OUTPUT: 
+Replica 4 : create order statement at slot 0
+[2017-11-22 23:28:53,529] replica.Replica<Replica:15003#MainNode>:OUTPUT: 
+Replica 4 : signed order statement and added order proof to history
+[2017-11-22 23:28:53,529] replica.Replica<Replica:15003#MainNode>:OUTPUT: 
+Replica 4 : hashed and signed result
+[2017-11-22 23:28:53,529] replica.Replica<Replica:15003#MainNode>:OUTPUT: 
+Replica 4 : hashed and result for request (0, 0) at shuttle.
+[2017-11-22 23:28:53,545] replica.Replica<Replica:15003#MainNode>:OUTPUT: 
+Replica 4 : sent result_shuttle (0, 0) to replica <Replica:15002#MainNode>
+[2017-11-22 23:28:53,545] replica.Replica<Replica:15003#MainNode>:OUTPUT: 
+Replica 4 : sent operation_result (0, 0) to client <Client:96003#MainNode>
+[2017-11-22 23:28:53,545] replica.Replica<Replica:15002#MainNode>:OUTPUT: 
+Replica 3 : received result_shuttle (0, 0) from <Replica:15003#MainNode>
+[2017-11-22 23:28:53,545] replica.Replica<Replica:15002#MainNode>:OUTPUT: 
+Replica 3 : result shuttle for (0, 0) contains enough entries, expected 5 and received 5
+[2017-11-22 23:28:53,545] replica.Replica<Replica:15002#MainNode>:OUTPUT: 
+Replica 3 : result shuttle from replica is validated
+[2017-11-22 23:28:53,545] client.Client<Client:96003#MainNode>:OUTPUT: 
+Client 0 : received response for new request (0, 0) from <Replica:15003#MainNode>
+[2017-11-22 23:28:53,545] replica.Replica<Replica:15002#MainNode>:OUTPUT: 
+Replica 3 : result shuttle from replica is validated
+[2017-11-22 23:28:53,561] replica.Replica<Replica:15002#MainNode>:OUTPUT: 
+Replica 3 : result shuttle from replica is validated
+[2017-11-22 23:28:53,561] client.Client<Client:96003#MainNode>:OUTPUT: 
+Client 0 : response of request (0, 0) for operation put('movie','star') is verified with 5 replicas acceptance.
+[2017-11-22 23:28:53,561] replica.Replica<Replica:15002#MainNode>:OUTPUT: 
+Replica 3 : result_shuttle is validated.
+[2017-11-22 23:28:53,561] replica.Replica<Replica:15002#MainNode>:OUTPUT: 
+Replica 3 : cached result proof for request id (0, 0)
+[2017-11-22 23:28:53,561] client.Client<Client:96003#MainNode>:OUTPUT: 
+Client 0 : response of new request (0, 0) for operation put('movie','star') is validated, the result is: OK
+[2017-11-22 23:28:53,561] replica.Replica<Replica:15002#MainNode>:OUTPUT: 
+Replica 3 : sent result_shuttle (0, 0) to <Replica:15004#MainNode>
+[2017-11-22 23:28:53,561] client.Client<Client:96003#MainNode>:OUTPUT: 
+Client 0 : sent operation_request (0, 1) to <Replica:15001#MainNode>
+[2017-11-22 23:28:53,561] replica.Replica<Replica:15001#MainNode>:OUTPUT: 
+Replica 0 : message from client is validated
+[2017-11-22 23:28:53,561] replica.Replica<Replica:15001#MainNode>:OUTPUT: 
+Replica 0 : received new operation request (0, 1) for operation:  append('movie',' wars')
+[2017-11-22 23:28:53,561] replica.Replica<Replica:15001#MainNode>:OUTPUT: 
+Replica 0 : failure change_operation() triggered by client_request(0,1)
+[2017-11-22 23:28:53,561] replica.Replica<Replica:15004#MainNode>:OUTPUT: 
+Replica 2 : received result_shuttle (0, 0) from <Replica:15002#MainNode>
+[2017-11-22 23:28:53,561] replica.Replica<Replica:15001#MainNode>:OUTPUT: 
+Replica 0 : handling new request from <Client:96003#MainNode>
+[2017-11-22 23:28:53,561] replica.Replica<Replica:15004#MainNode>:OUTPUT: 
+Replica 2 : result shuttle for (0, 0) contains enough entries, expected 5 and received 5
+[2017-11-22 23:28:53,561] replica.Replica<Replica:15001#MainNode>:OUTPUT: 
+Replica 0 : validation for applying request succeeds, start applying request.
+[2017-11-22 23:28:53,561] replica.Replica<Replica:15001#MainNode>:OUTPUT: 
+Replica 0 : applied operation and result returned.
+[2017-11-22 23:28:53,561] replica.Replica<Replica:15004#MainNode>:OUTPUT: 
+Replica 2 : result shuttle from replica is validated
+[2017-11-22 23:28:53,576] replica.Replica<Replica:15001#MainNode>:OUTPUT: 
+Replica 0 : create order statement at slot 1
+[2017-11-22 23:28:53,576] replica.Replica<Replica:15004#MainNode>:OUTPUT: 
+Replica 2 : result shuttle from replica is validated
+[2017-11-22 23:28:53,576] replica.Replica<Replica:15004#MainNode>:OUTPUT: 
+Replica 2 : result_shuttle is validated.
+[2017-11-22 23:28:53,576] replica.Replica<Replica:15001#MainNode>:OUTPUT: 
+Replica 0 : signed order statement and added order proof to history
+[2017-11-22 23:28:53,576] replica.Replica<Replica:15004#MainNode>:OUTPUT: 
+Replica 2 : cached result proof for request id (0, 0)
+[2017-11-22 23:28:53,576] replica.Replica<Replica:15004#MainNode>:OUTPUT: 
+Replica 2 : sent result_shuttle (0, 0) to <Replica:15005#MainNode>
+[2017-11-22 23:28:53,576] replica.Replica<Replica:15001#MainNode>:OUTPUT: 
+Replica 0 : hashed and signed result
+[2017-11-22 23:28:53,576] replica.Replica<Replica:15001#MainNode>:OUTPUT: 
+Replica 0 : obtained result and signed order statement for request (0, 1)
+[2017-11-22 23:28:53,576] replica.Replica<Replica:15001#MainNode>:OUTPUT: 
+Replica 0 : injecting change_operation failure for request (0, 1) at shuttle.
+[2017-11-22 23:28:53,576] replica.Replica<Replica:15001#MainNode>:OUTPUT: 
+Replica 0 : hashed and signed order statement for request (0, 1) at shuttle.
+[2017-11-22 23:28:53,576] replica.Replica<Replica:15001#MainNode>:OUTPUT: 
+Replica 0 : hashed and signed result statement for request (0, 1) at shuttle.
+[2017-11-22 23:28:53,576] replica.Replica<Replica:15001#MainNode>:OUTPUT: 
+Replica 0 : sent shuttle (0, 1) to  <Replica:15005#MainNode>
+[2017-11-22 23:28:53,576] replica.Replica<Replica:15005#MainNode>:OUTPUT: 
+Replica 1 : received result_shuttle (0, 0) from <Replica:15004#MainNode>
+[2017-11-22 23:28:53,576] replica.Replica<Replica:15005#MainNode>:OUTPUT: 
+Replica 1 : result shuttle for (0, 0) contains enough entries, expected 5 and received 5
+[2017-11-22 23:28:53,592] replica.Replica<Replica:15005#MainNode>:OUTPUT: 
+Replica 1 : result shuttle from replica is validated
+[2017-11-22 23:28:53,592] replica.Replica<Replica:15005#MainNode>:OUTPUT: 
+Replica 1 : result_shuttle is validated.
+[2017-11-22 23:28:53,592] replica.Replica<Replica:15005#MainNode>:OUTPUT: 
+Replica 1 : cached result proof for request id (0, 0)
+[2017-11-22 23:28:53,592] replica.Replica<Replica:15005#MainNode>:OUTPUT: 
+Replica 1 : sent result_shuttle (0, 0) to <Replica:15001#MainNode>
+[2017-11-22 23:28:53,592] replica.Replica<Replica:15005#MainNode>:OUTPUT: 
+Replica 1 : received shuttle (0, 1) from <Replica:15001#MainNode>
+[2017-11-22 23:28:53,592] replica.Replica<Replica:15001#MainNode>:OUTPUT: 
+Replica 0 : received result_shuttle (0, 0) from <Replica:15005#MainNode>
+[2017-11-22 23:28:53,592] replica.Replica<Replica:15001#MainNode>:OUTPUT: 
+Replica 0 : result shuttle for (0, 0) contains enough entries, expected 5 and received 5
+[2017-11-22 23:28:53,592] replica.Replica<Replica:15005#MainNode>:OUTPUT: 
+Replica 1 : shuttle message from replica is validated
+[2017-11-22 23:28:53,592] replica.Replica<Replica:15001#MainNode>:OUTPUT: 
+Replica 0 : result_shuttle is validated.
+[2017-11-22 23:28:53,592] replica.Replica<Replica:15001#MainNode>:OUTPUT: 
+Replica 0 : cached result proof for request id (0, 0)
+[2017-11-22 23:28:53,608] replica.Replica<Replica:15005#MainNode>:OUTPUT: 
+Replica 1 : signature of replica 0 is validated
+[2017-11-22 23:28:53,608] replica.Replica<Replica:15005#MainNode>:OUTPUT: 
+Replica 1 : received and successfully decoded signed order statement
+[2017-11-22 23:28:53,608] replica.Replica<Replica:15005#MainNode>:OUTPUT: 
+Replica 1 : message in order statement from shuttle doesn't match.
+[2017-11-22 23:28:59,570] client.Client<Client:96003#MainNode>:OUTPUT: 
+Client 0 : timeout waiting for response for request (0, 1) start retransmission phase
+[2017-11-22 23:28:59,570] client.Client<Client:96003#MainNode>:OUTPUT: 
+Client 0 : sent check config message with id 1 to Olympus.
+[2017-11-22 23:28:59,570] olympus.Olympus<Olympus:96002#MainNode>:OUTPUT: 
+Olympus: send check config response 'OK' to client <Client:96003#MainNode>
+[2017-11-22 23:28:59,570] client.Client<Client:96003#MainNode>:OUTPUT: 
+Client 0 : received check config response: OK continue normally.
+[2017-11-22 23:28:59,570] client.Client<Client:96003#MainNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:15001#MainNode>
+[2017-11-22 23:28:59,570] replica.Replica<Replica:15001#MainNode>:OUTPUT: 
+Replica 0 : message from client is validated
+[2017-11-22 23:28:59,570] replica.Replica<Replica:15001#MainNode>:OUTPUT: 
+Replica 0 : received retransmission operation request (0, 1) for operation:  append('movie',' wars')
+[2017-11-22 23:28:59,570] client.Client<Client:96003#MainNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:15001#MainNode>
+[2017-11-22 23:28:59,570] replica.Replica<Replica:15001#MainNode>:OUTPUT: 
+Replica 0 : retransmission request (0, 1) is performed but has not received result shuttle.
+[2017-11-22 23:28:59,586] replica.Replica<Replica:15005#MainNode>:OUTPUT: 
+Replica 1 : message from client is validated
+[2017-11-22 23:28:59,586] client.Client<Client:96003#MainNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:15001#MainNode>
+[2017-11-22 23:28:59,586] replica.Replica<Replica:15005#MainNode>:OUTPUT: 
+Replica 1 : received retransmission operation request (0, 1) for operation:  append('movie',' wars')
+[2017-11-22 23:28:59,586] replica.Replica<Replica:15004#MainNode>:OUTPUT: 
+Replica 2 : message from client is validated
+[2017-11-22 23:28:59,586] replica.Replica<Replica:15005#MainNode>:OUTPUT: 
+Replica 1 : nonhead replica receives retransmission request (0, 1) forward request to head.
+[2017-11-22 23:28:59,586] replica.Replica<Replica:15004#MainNode>:OUTPUT: 
+Replica 2 : received retransmission operation request (0, 1) for operation:  append('movie',' wars')
+[2017-11-22 23:28:59,586] replica.Replica<Replica:15004#MainNode>:OUTPUT: 
+Replica 2 : nonhead replica receives retransmission request (0, 1) forward request to head.
+[2017-11-22 23:28:59,586] client.Client<Client:96003#MainNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:15001#MainNode>
+[2017-11-22 23:28:59,586] replica.Replica<Replica:15001#MainNode>:OUTPUT: 
+Replica 0 : message from client is validated
+[2017-11-22 23:28:59,586] replica.Replica<Replica:15002#MainNode>:OUTPUT: 
+Replica 3 : message from client is validated
+[2017-11-22 23:28:59,586] replica.Replica<Replica:15001#MainNode>:OUTPUT: 
+Replica 0 : received forward operation request (0, 1) for operation:  append('movie',' wars')
+ars')
+[2017-11-22 23:28:59,586] client.Client<Client:96003#MainNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:15001#MainNode>
+[2017-11-22 23:28:59,586] replica.Replica<Replica:15002#MainNode>:OUTPUT: 
+Replica 3 : nonhead replica receives retransmission request (0, 1) forward request to head.
+[2017-11-22 23:28:59,586] replica.Replica<Replica:15001#MainNode>:OUTPUT: 
+Replica 0 : retransmission request (0, 1) is performed but has not received result shuttle.
+[2017-11-22 23:28:59,601] replica.Replica<Replica:15003#MainNode>:OUTPUT: 
+Replica 4 : message from client is validated
+[2017-11-22 23:28:59,601] replica.Replica<Replica:15001#MainNode>:OUTPUT: 
+Replica 0 : message from client is validated
+[2017-11-22 23:28:59,601] replica.Replica<Replica:15003#MainNode>:OUTPUT: 
+Replica 4 : received retransmission operation request (0, 1) for operation:  append('movie',' wars')
+[2017-11-22 23:28:59,601] replica.Replica<Replica:15001#MainNode>:OUTPUT: 
+Replica 0 : received forward operation request (0, 1) for operation:  append('movie',' wars')
+[2017-11-22 23:28:59,601] replica.Replica<Replica:15003#MainNode>:OUTPUT: 
+Replica 4 : nonhead replica receives retransmission request (0, 1) forward request to head.
+[2017-11-22 23:28:59,601] replica.Replica<Replica:15001#MainNode>:OUTPUT: 
+Replica 0 : retransmission request (0, 1) is performed but has not received result shuttle.
+[2017-11-22 23:28:59,601] replica.Replica<Replica:15001#MainNode>:OUTPUT: 
+Replica 0 : message from client is validated
+[2017-11-22 23:28:59,601] replica.Replica<Replica:15001#MainNode>:OUTPUT: 
+Replica 0 : received forward operation request (0, 1) for operation:  append('movie',' wars')
+[2017-11-22 23:28:59,617] replica.Replica<Replica:15001#MainNode>:OUTPUT: 
+Replica 0 : retransmission request (0, 1) is performed but has not received result shuttle.
+[2017-11-22 23:28:59,617] replica.Replica<Replica:15001#MainNode>:OUTPUT: 
+Replica 0 : message from client is validated
+[2017-11-22 23:28:59,617] replica.Replica<Replica:15001#MainNode>:OUTPUT: 
+Replica 0 : received forward operation request (0, 1) for operation:  append('movie',' wars')
+[2017-11-22 23:28:59,617] replica.Replica<Replica:15001#MainNode>:OUTPUT: 
+Replica 0 : retransmission request (0, 1) is performed but has not received result shuttle.
+[2017-11-22 23:29:02,594] replica.Replica<Replica:15004#MainNode>:OUTPUT: 
+Replica 2 : timeout handling retransmission request (0, 1) send reconfiguration request to Olympus.
+[2017-11-22 23:29:02,594] replica.Replica<Replica:15005#MainNode>:OUTPUT: 
+Replica 1 : timeout handling retransmission request (0, 1) send reconfiguration request to Olympus.
+[2017-11-22 23:29:02,594] olympus.Olympus<Olympus:96002#MainNode>:OUTPUT: 
+Olympus: received reconfig request from replica 2 for configuration 0
+[2017-11-22 23:29:02,594] olympus.Olympus<Olympus:96002#MainNode>:OUTPUT: 
+Olympus: start reconfiguration.
+[2017-11-22 23:29:02,594] olympus.Olympus<Olympus:96002#MainNode>:OUTPUT: 
+Olympus: send wedge requests to all 5 replicas.
+[2017-11-22 23:29:02,594] replica.Replica<Replica:15001#MainNode>:OUTPUT: 
+Replica 0 : received wedge request from Olympus, become IMMUTABLE.
+[2017-11-22 23:29:02,594] replica.Replica<Replica:15005#MainNode>:OUTPUT: 
+Replica 1 : received wedge request from Olympus, become IMMUTABLE.
+[2017-11-22 23:29:02,594] replica.Replica<Replica:15001#MainNode>:OUTPUT: 
+Replica 0 : sent wedge statement to Olympus.
+[2017-11-22 23:29:02,594] olympus.Olympus<Olympus:96002#MainNode>:OUTPUT: 
+Olympus: received reconfig request from replica 1 for configuration 0
+[2017-11-22 23:29:02,594] replica.Replica<Replica:15004#MainNode>:OUTPUT: 
+Replica 2 : received wedge request from Olympus, become IMMUTABLE.
+[2017-11-22 23:29:02,594] olympus.Olympus<Olympus:96002#MainNode>:OUTPUT: 
+Olympus: reconfiguration is ongoing.
+[2017-11-22 23:29:02,594] replica.Replica<Replica:15005#MainNode>:OUTPUT: 
+Replica 1 : sent wedge statement to Olympus.
+[2017-11-22 23:29:02,594] replica.Replica<Replica:15002#MainNode>:OUTPUT: 
+Replica 3 : received wedge request from Olympus, become IMMUTABLE.
+[2017-11-22 23:29:02,594] replica.Replica<Replica:15004#MainNode>:OUTPUT: 
+Replica 2 : sent wedge statement to Olympus.
+[2017-11-22 23:29:02,594] replica.Replica<Replica:15003#MainNode>:OUTPUT: 
+Replica 4 : received wedge request from Olympus, become IMMUTABLE.
+[2017-11-22 23:29:02,609] replica.Replica<Replica:15002#MainNode>:OUTPUT: 
+Replica 3 : sent wedge statement to Olympus.
+[2017-11-22 23:29:02,609] olympus.Olympus<Olympus:96002#MainNode>:OUTPUT: 
+Olympus: received wedge statement from replica 0
+[2017-11-22 23:29:02,609] replica.Replica<Replica:15003#MainNode>:OUTPUT: 
+Replica 4 : sent wedge statement to Olympus.
+[2017-11-22 23:29:02,609] olympus.Olympus<Olympus:96002#MainNode>:OUTPUT: 
+Olympus: received wedge statement from replica 1
+[2017-11-22 23:29:02,609] olympus.Olympus<Olympus:96002#MainNode>:OUTPUT: 
+Olympus: received wedge statement from replica 2
+[2017-11-22 23:29:02,609] olympus.Olympus<Olympus:96002#MainNode>:OUTPUT: 
+Olympus: received wedge statements from all 3 replicas.
+[2017-11-22 23:29:02,609] olympus.Olympus<Olympus:96002#MainNode>:OUTPUT: 
+Olympus: start finding a quorum of size 3
+[2017-11-22 23:29:02,609] olympus.Olympus<Olympus:96002#MainNode>:OUTPUT: 
+Olympus: wedged stmt validated for replica 0
+[2017-11-22 23:29:02,625] olympus.Olympus<Olympus:96002#MainNode>:OUTPUT: 
+Olympus: wedged stmt validated for replica 1
+[2017-11-22 23:29:02,625] olympus.Olympus<Olympus:96002#MainNode>:OUTPUT: 
+Olympus: wedged stmt validated for replica 2
+[2017-11-22 23:29:02,625] olympus.Olympus<Olympus:96002#MainNode>:OUTPUT: 
+Olympus: start forming quorum with replica 0
+[2017-11-22 23:29:02,625] olympus.Olympus<Olympus:96002#MainNode>:OUTPUT: 
+Olympus: during forming quorum with replica 0 replica 1 is consistent with every replica in current quorum, add it to current quorum
+[2017-11-22 23:29:02,625] olympus.Olympus<Olympus:96002#MainNode>:OUTPUT: 
+Olympus: during forming quorum with replica 0 replica 2 is consistent with every replica in current quorum, add it to current quorum
+[2017-11-22 23:29:02,625] olympus.Olympus<Olympus:96002#MainNode>:OUTPUT: 
+Olympus: found quorum of size 3 the chosen replicas are [0, 1, 2]
+[2017-11-22 23:29:02,625] olympus.Olympus<Olympus:96002#MainNode>:OUTPUT: 
+Olympus: start looking for longest history.
+[2017-11-22 23:29:02,625] olympus.Olympus<Olympus:96002#MainNode>:OUTPUT: 
+Olympus: find new max slot 1 at replica 0
+[2017-11-22 23:29:02,625] olympus.Olympus<Olympus:96002#MainNode>:OUTPUT: 
+Olympus: longest history constructed: [(0, (0, 0), "put('movie','star')"), (1, (0, 1), " append('movie',' wars')")]
+[2017-11-22 23:29:02,625] olympus.Olympus<Olympus:96002#MainNode>:OUTPUT: 
+Olympus: constructing catch up sequence for replica 0 start from slot 1
+[2017-11-22 23:29:02,625] olympus.Olympus<Olympus:96002#MainNode>:OUTPUT: 
+Olympus: catch_up sequence [] constructed for replica 0
+[2017-11-22 23:29:02,641] olympus.Olympus<Olympus:96002#MainNode>:OUTPUT: 
+Olympus: send catch_up request to replica 0
+[2017-11-22 23:29:02,641] olympus.Olympus<Olympus:96002#MainNode>:OUTPUT: 
+Olympus: received wedge statement from replica 3
+[2017-11-22 23:29:02,641] replica.Replica<Replica:15001#MainNode>:OUTPUT: 
+Replica 0 : received catch_up request for sequence []
+[2017-11-22 23:29:02,641] olympus.Olympus<Olympus:96002#MainNode>:OUTPUT: 
+Olympus: received wedge statement from replica 4
+[2017-11-22 23:29:02,641] replica.Replica<Replica:15001#MainNode>:OUTPUT: 
+Replica 0 : start looking for latest result statement for each client.
+[2017-11-22 23:29:02,641] replica.Replica<Replica:15001#MainNode>:OUTPUT: 
+Replica 0 : find latest result for clients, the requests id of the results are {0: (0, 1)}
+[2017-11-22 23:29:02,641] replica.Replica<Replica:15001#MainNode>:OUTPUT: 
+Replica 0 : current state in caught_up is {'movie': 'star wars'}
+[2017-11-22 23:29:02,641] replica.Replica<Replica:15001#MainNode>:OUTPUT: 
+Replica 0 : send caught_up message and result state hash to Olympus
+[2017-11-22 23:29:02,641] olympus.Olympus<Olympus:96002#MainNode>:OUTPUT: 
+Olympus: received caught_up message from replica 0
+[2017-11-22 23:29:02,641] olympus.Olympus<Olympus:96002#MainNode>:OUTPUT: 
+Olympus: handling latest request (0, 1) from replica 0
+[2017-11-22 23:29:02,656] olympus.Olympus<Olympus:96002#MainNode>:OUTPUT: 
+Olympus: constructing catch up sequence for replica 1 start from slot 0
+[2017-11-22 23:29:02,656] olympus.Olympus<Olympus:96002#MainNode>:OUTPUT: 
+Olympus: catch_up sequence [(1, (0, 1), " append('movie',' wars')")] constructed for replica 1
+[2017-11-22 23:29:02,656] olympus.Olympus<Olympus:96002#MainNode>:OUTPUT: 
+Olympus: send catch_up request to replica 1
+[2017-11-22 23:29:02,656] replica.Replica<Replica:15005#MainNode>:OUTPUT: 
+Replica 1 : received catch_up request for sequence [(1, (0, 1), " append('movie',' wars')")]
+[2017-11-22 23:29:02,656] replica.Replica<Replica:15005#MainNode>:OUTPUT: 
+Replica 1 : failure drop() triggered by catch_up(0)
+[2017-11-22 23:29:02,656] replica.Replica<Replica:15005#MainNode>:OUTPUT: 
+:Replica 1 : injecting failure drop() in catch_up
+[2017-11-22 23:29:05,592] client.Client<Client:96003#MainNode>:OUTPUT: 
+Client 0 : retransmission for request (0, 1) timeout, retry.
+[2017-11-22 23:29:05,592] client.Client<Client:96003#MainNode>:OUTPUT: 
+Client 0 : sent check config message with id 2 to Olympus.
+[2017-11-22 23:29:05,592] olympus.Olympus<Olympus:96002#MainNode>:OUTPUT: 
+Olympus: send check config response 'OK' to client <Client:96003#MainNode>
+[2017-11-22 23:29:05,592] client.Client<Client:96003#MainNode>:OUTPUT: 
+Client 0 : received check config response: OK continue normally.
+[2017-11-22 23:29:05,592] client.Client<Client:96003#MainNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:15001#MainNode>
+[2017-11-22 23:29:05,592] client.Client<Client:96003#MainNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:15001#MainNode>
+[2017-11-22 23:29:05,592] replica.Replica<Replica:15001#MainNode>:OUTPUT: 
+Replica 0 : message from client is validated
+[2017-11-22 23:29:05,592] client.Client<Client:96003#MainNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:15001#MainNode>
+[2017-11-22 23:29:05,592] replica.Replica<Replica:15001#MainNode>:OUTPUT: 
+Replica 0 : received retransmission operation request (0, 1) for operation:  append('movie',' wars')
+[2017-11-22 23:29:05,592] replica.Replica<Replica:15001#MainNode>:OUTPUT: 
+Replica 0 : received retransmission request in IMMUTABLE state, do nothing.
+[2017-11-22 23:29:05,592] replica.Replica<Replica:15005#MainNode>:OUTPUT: 
+Replica 1 : message from client is validated
+[2017-11-22 23:29:05,592] client.Client<Client:96003#MainNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:15001#MainNode>
+[2017-11-22 23:29:05,592] replica.Replica<Replica:15005#MainNode>:OUTPUT: 
+Replica 1 : received retransmission operation request (0, 1) for operation:  append('movie',' wars')
+[2017-11-22 23:29:05,608] replica.Replica<Replica:15005#MainNode>:OUTPUT: 
+Replica 1 : received retransmission request in IMMUTABLE state, do nothing.
+[2017-11-22 23:29:05,608] replica.Replica<Replica:15004#MainNode>:OUTPUT: 
+Replica 2 : message from client is validated
+[2017-11-22 23:29:05,608] client.Client<Client:96003#MainNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:15001#MainNode>
+[2017-11-22 23:29:05,608] replica.Replica<Replica:15002#MainNode>:OUTPUT: 
+Replica 3 : message from client is validated
+[2017-11-22 23:29:05,608] replica.Replica<Replica:15003#MainNode>:OUTPUT: 
+Replica 4 : message from client is validated
+[2017-11-22 23:29:05,608] replica.Replica<Replica:15004#MainNode>:OUTPUT: 
+Replica 2 : received retransmission operation request (0, 1) for operation:  append('movie',' wars')
+[2017-11-22 23:29:05,608] replica.Replica<Replica:15002#MainNode>:OUTPUT: 
+Replica 3 : received retransmission operation request (0, 1) for operation:  append('movie',' wars')
+[2017-11-22 23:29:05,608] replica.Replica<Replica:15003#MainNode>:OUTPUT: 
+Replica 4 : received retransmission operation request (0, 1) for operation:  append('movie',' wars')
+[2017-11-22 23:29:05,608] replica.Replica<Replica:15004#MainNode>:OUTPUT: 
+Replica 2 : received retransmission request in IMMUTABLE state, do nothing.
+[2017-11-22 23:29:05,608] replica.Replica<Replica:15002#MainNode>:OUTPUT: 
+Replica 3 : received retransmission request in IMMUTABLE state, do nothing.
+[2017-11-22 23:29:05,608] replica.Replica<Replica:15003#MainNode>:OUTPUT: 
+Replica 4 : received retransmission request in IMMUTABLE state, do nothing.
+[2017-11-22 23:29:11,613] client.Client<Client:96003#MainNode>:OUTPUT: 
+Client 0 : retransmission for request (0, 1) timeout, retry.
+[2017-11-22 23:29:11,613] client.Client<Client:96003#MainNode>:OUTPUT: 
+Client 0 : sent check config message with id 3 to Olympus.
+[2017-11-22 23:29:11,613] olympus.Olympus<Olympus:96002#MainNode>:OUTPUT: 
+Olympus: send check config response 'OK' to client <Client:96003#MainNode>
+[2017-11-22 23:29:11,620] client.Client<Client:96003#MainNode>:OUTPUT: 
+Client 0 : received check config response: OK continue normally.
+[2017-11-22 23:29:11,622] client.Client<Client:96003#MainNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:15001#MainNode>
+[2017-11-22 23:29:11,624] client.Client<Client:96003#MainNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:15001#MainNode>
+[2017-11-22 23:29:11,625] replica.Replica<Replica:15001#MainNode>:OUTPUT: 
+Replica 0 : message from client is validated
+[2017-11-22 23:29:11,626] replica.Replica<Replica:15001#MainNode>:OUTPUT: 
+Replica 0 : received retransmission operation request (0, 1) for operation:  append('movie',' wars')
+[2017-11-22 23:29:11,626] client.Client<Client:96003#MainNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:15001#MainNode>
+[2017-11-22 23:29:11,626] replica.Replica<Replica:15001#MainNode>:OUTPUT: 
+Replica 0 : received retransmission request in IMMUTABLE state, do nothing.
+[2017-11-22 23:29:11,627] replica.Replica<Replica:15005#MainNode>:OUTPUT: 
+Replica 1 : message from client is validated
+[2017-11-22 23:29:11,628] replica.Replica<Replica:15005#MainNode>:OUTPUT: 
+Replica 1 : received retransmission operation request (0, 1) for operation:  append('movie',' wars')
+[2017-11-22 23:29:11,628] client.Client<Client:96003#MainNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:15001#MainNode>
+[2017-11-22 23:29:11,629] replica.Replica<Replica:15005#MainNode>:OUTPUT: 
+Replica 1 : received retransmission request in IMMUTABLE state, do nothing.
+[2017-11-22 23:29:11,630] client.Client<Client:96003#MainNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:15001#MainNode>
+[2017-11-22 23:29:11,630] replica.Replica<Replica:15004#MainNode>:OUTPUT: 
+Replica 2 : message from client is validated
+[2017-11-22 23:29:11,631] replica.Replica<Replica:15004#MainNode>:OUTPUT: 
+Replica 2 : received retransmission operation request (0, 1) for operation:  append('movie',' wars')
+[2017-11-22 23:29:11,631] replica.Replica<Replica:15002#MainNode>:OUTPUT: 
+Replica 3 : message from client is validated
+[2017-11-22 23:29:11,632] replica.Replica<Replica:15004#MainNode>:OUTPUT: 
+Replica 2 : received retransmission request in IMMUTABLE state, do nothing.
+[2017-11-22 23:29:11,632] replica.Replica<Replica:15002#MainNode>:OUTPUT: 
+Replica 3 : received retransmission operation request (0, 1) for operation:  append('movie',' wars')
+[2017-11-22 23:29:11,633] replica.Replica<Replica:15002#MainNode>:OUTPUT: 
+Replica 3 : received retransmission request in IMMUTABLE state, do nothing.
+[2017-11-22 23:29:11,633] replica.Replica<Replica:15003#MainNode>:OUTPUT: 
+Replica 4 : message from client is validated
+[2017-11-22 23:29:11,634] replica.Replica<Replica:15003#MainNode>:OUTPUT: 
+Replica 4 : received retransmission operation request (0, 1) for operation:  append('movie',' wars')
+[2017-11-22 23:29:11,640] replica.Replica<Replica:15003#MainNode>:OUTPUT: 
+Replica 4 : received retransmission request in IMMUTABLE state, do nothing.
+[2017-11-22 23:29:12,674] olympus.Olympus<Olympus:96002#MainNode>:OUTPUT: 
+Olympus: start finding a quorum of size 3
+[2017-11-22 23:29:12,674] olympus.Olympus<Olympus:96002#MainNode>:OUTPUT: 
+Olympus: wedged stmt validated for replica 0
+[2017-11-22 23:29:12,674] olympus.Olympus<Olympus:96002#MainNode>:OUTPUT: 
+Olympus: wedged stmt validated for replica 1
+[2017-11-22 23:29:12,674] olympus.Olympus<Olympus:96002#MainNode>:OUTPUT: 
+Olympus: wedged stmt validated for replica 2
+[2017-11-22 23:29:12,674] olympus.Olympus<Olympus:96002#MainNode>:OUTPUT: 
+Olympus: wedged stmt validated for replica 3
+[2017-11-22 23:29:12,689] olympus.Olympus<Olympus:96002#MainNode>:OUTPUT: 
+Olympus: wedged stmt validated for replica 4
+[2017-11-22 23:29:12,689] olympus.Olympus<Olympus:96002#MainNode>:OUTPUT: 
+Olympus: start forming quorum with replica 0
+[2017-11-22 23:29:12,689] olympus.Olympus<Olympus:96002#MainNode>:OUTPUT: 
+Olympus: during forming quorum with replica 0 replica 1 is consistent with every replica in current quorum, add it to current quorum
+[2017-11-22 23:29:12,689] olympus.Olympus<Olympus:96002#MainNode>:OUTPUT: 
+Olympus: during forming quorum with replica 0 replica 2 is consistent with every replica in current quorum, add it to current quorum
+[2017-11-22 23:29:12,689] olympus.Olympus<Olympus:96002#MainNode>:OUTPUT: 
+Olympus: during forming quorum with replica 0 replica 3 is consistent with every replica in current quorum, add it to current quorum
+[2017-11-22 23:29:12,689] olympus.Olympus<Olympus:96002#MainNode>:OUTPUT: 
+Olympus: during forming quorum with replica 0 replica 4 is consistent with every replica in current quorum, add it to current quorum
+[2017-11-22 23:29:12,689] olympus.Olympus<Olympus:96002#MainNode>:OUTPUT: 
+Olympus: found quorum of size 3 the chosen replicas are [0, 1, 2, 3, 4]
+[2017-11-22 23:29:12,689] olympus.Olympus<Olympus:96002#MainNode>:OUTPUT: 
+Olympus: start looking for longest history.
+[2017-11-22 23:29:12,689] olympus.Olympus<Olympus:96002#MainNode>:OUTPUT: 
+Olympus: find new max slot 1 at replica 0
+[2017-11-22 23:29:12,689] olympus.Olympus<Olympus:96002#MainNode>:OUTPUT: 
+Olympus: longest history constructed: [(0, (0, 0), "put('movie','star')"), (1, (0, 1), " append('movie',' wars')")]
+[2017-11-22 23:29:12,689] olympus.Olympus<Olympus:96002#MainNode>:OUTPUT: 
+Olympus: constructing catch up sequence for replica 0 start from slot 1
+[2017-11-22 23:29:12,689] olympus.Olympus<Olympus:96002#MainNode>:OUTPUT: 
+Olympus: catch_up sequence [] constructed for replica 0
+[2017-11-22 23:29:12,689] olympus.Olympus<Olympus:96002#MainNode>:OUTPUT: 
+Olympus: send catch_up request to replica 0
+[2017-11-22 23:29:12,705] olympus.Olympus<Olympus:96002#MainNode>:OUTPUT: 
+Olympus: received caught_up message from replica 0
+[2017-11-22 23:29:12,705] replica.Replica<Replica:15001#MainNode>:OUTPUT: 
+Replica 0 : received catch_up request for sequence []
+[2017-11-22 23:29:12,705] olympus.Olympus<Olympus:96002#MainNode>:OUTPUT: 
+Olympus: handling latest request (0, 1) from replica 0
+[2017-11-22 23:29:12,705] replica.Replica<Replica:15001#MainNode>:OUTPUT: 
+Replica 0 : start looking for latest result statement for each client.
+[2017-11-22 23:29:12,705] olympus.Olympus<Olympus:96002#MainNode>:OUTPUT: 
+Olympus: constructing catch up sequence for replica 1 start from slot 0
+[2017-11-22 23:29:12,705] replica.Replica<Replica:15001#MainNode>:OUTPUT: 
+Replica 0 : find latest result for clients, the requests id of the results are {0: (0, 1)}
+[2017-11-22 23:29:12,705] olympus.Olympus<Olympus:96002#MainNode>:OUTPUT: 
+Olympus: catch_up sequence [(1, (0, 1), " append('movie',' wars')")] constructed for replica 1
+[2017-11-22 23:29:12,705] replica.Replica<Replica:15001#MainNode>:OUTPUT: 
+Replica 0 : current state in caught_up is {'movie': 'star wars'}
+[2017-11-22 23:29:12,705] olympus.Olympus<Olympus:96002#MainNode>:OUTPUT: 
+Olympus: send catch_up request to replica 1
+[2017-11-22 23:29:12,705] replica.Replica<Replica:15001#MainNode>:OUTPUT: 
+Replica 0 : send caught_up message and result state hash to Olympus
+[2017-11-22 23:29:12,705] replica.Replica<Replica:15005#MainNode>:OUTPUT: 
+Replica 1 : received catch_up request for sequence [(1, (0, 1), " append('movie',' wars')")]
+[2017-11-22 23:29:12,705] replica.Replica<Replica:15005#MainNode>:OUTPUT: 
+Replica 1 : applying operation  append('movie',' wars') at slot 1 during reconfiguration
+[2017-11-22 23:29:12,705] replica.Replica<Replica:15005#MainNode>:OUTPUT: 
+Replica 1 : during reconfiguration, perform operation succeeds, result is OK
+[2017-11-22 23:29:12,705] replica.Replica<Replica:15005#MainNode>:OUTPUT: 
+Replica 1 : start looking for latest result statement for each client.
+[2017-11-22 23:29:12,705] replica.Replica<Replica:15005#MainNode>:OUTPUT: 
+Replica 1 : find latest result for clients, the requests id of the results are {0: (0, 1)}
+[2017-11-22 23:29:12,720] replica.Replica<Replica:15005#MainNode>:OUTPUT: 
+Replica 1 : current state in caught_up is {'movie': 'star wars'}
+[2017-11-22 23:29:12,720] replica.Replica<Replica:15005#MainNode>:OUTPUT: 
+Replica 1 : send caught_up message and result state hash to Olympus
+[2017-11-22 23:29:12,720] olympus.Olympus<Olympus:96002#MainNode>:OUTPUT: 
+Olympus: received caught_up message from replica 1
+[2017-11-22 23:29:12,720] olympus.Olympus<Olympus:96002#MainNode>:OUTPUT: 
+Olympus: handling latest request (0, 1) from replica 1
+[2017-11-22 23:29:12,720] olympus.Olympus<Olympus:96002#MainNode>:OUTPUT: 
+Olympus: constructing catch up sequence for replica 2 start from slot 0
+[2017-11-22 23:29:12,720] olympus.Olympus<Olympus:96002#MainNode>:OUTPUT: 
+Olympus: catch_up sequence [(1, (0, 1), " append('movie',' wars')")] constructed for replica 2
+[2017-11-22 23:29:12,720] olympus.Olympus<Olympus:96002#MainNode>:OUTPUT: 
+Olympus: send catch_up request to replica 2
+[2017-11-22 23:29:12,720] replica.Replica<Replica:15004#MainNode>:OUTPUT: 
+Replica 2 : received catch_up request for sequence [(1, (0, 1), " append('movie',' wars')")]
+[2017-11-22 23:29:12,720] replica.Replica<Replica:15004#MainNode>:OUTPUT: 
+Replica 2 : applying operation  append('movie',' wars') at slot 1 during reconfiguration
+[2017-11-22 23:29:12,736] replica.Replica<Replica:15004#MainNode>:OUTPUT: 
+Replica 2 : during reconfiguration, perform operation succeeds, result is OK
+[2017-11-22 23:29:12,736] replica.Replica<Replica:15004#MainNode>:OUTPUT: 
+Replica 2 : start looking for latest result statement for each client.
+[2017-11-22 23:29:12,736] replica.Replica<Replica:15004#MainNode>:OUTPUT: 
+Replica 2 : find latest result for clients, the requests id of the results are {0: (0, 1)}
+[2017-11-22 23:29:12,736] replica.Replica<Replica:15004#MainNode>:OUTPUT: 
+Replica 2 : current state in caught_up is {'movie': 'star wars'}
+[2017-11-22 23:29:12,736] replica.Replica<Replica:15004#MainNode>:OUTPUT: 
+Replica 2 : send caught_up message and result state hash to Olympus
+[2017-11-22 23:29:12,736] olympus.Olympus<Olympus:96002#MainNode>:OUTPUT: 
+Olympus: received caught_up message from replica 2
+[2017-11-22 23:29:12,736] olympus.Olympus<Olympus:96002#MainNode>:OUTPUT: 
+Olympus: handling latest request (0, 1) from replica 2
+[2017-11-22 23:29:12,736] olympus.Olympus<Olympus:96002#MainNode>:OUTPUT: 
+Olympus: constructing catch up sequence for replica 3 start from slot 0
+[2017-11-22 23:29:12,736] olympus.Olympus<Olympus:96002#MainNode>:OUTPUT: 
+Olympus: catch_up sequence [(1, (0, 1), " append('movie',' wars')")] constructed for replica 3
+[2017-11-22 23:29:12,736] olympus.Olympus<Olympus:96002#MainNode>:OUTPUT: 
+Olympus: send catch_up request to replica 3
+[2017-11-22 23:29:12,752] replica.Replica<Replica:15002#MainNode>:OUTPUT: 
+Replica 3 : received catch_up request for sequence [(1, (0, 1), " append('movie',' wars')")]
+[2017-11-22 23:29:12,752] replica.Replica<Replica:15002#MainNode>:OUTPUT: 
+Replica 3 : applying operation  append('movie',' wars') at slot 1 during reconfiguration
+[2017-11-22 23:29:12,752] replica.Replica<Replica:15002#MainNode>:OUTPUT: 
+Replica 3 : during reconfiguration, perform operation succeeds, result is OK
+[2017-11-22 23:29:12,752] replica.Replica<Replica:15002#MainNode>:OUTPUT: 
+Replica 3 : start looking for latest result statement for each client.
+[2017-11-22 23:29:12,752] replica.Replica<Replica:15002#MainNode>:OUTPUT: 
+Replica 3 : find latest result for clients, the requests id of the results are {0: (0, 1)}
+[2017-11-22 23:29:12,752] replica.Replica<Replica:15002#MainNode>:OUTPUT: 
+Replica 3 : current state in caught_up is {'movie': 'star wars'}
+[2017-11-22 23:29:12,752] replica.Replica<Replica:15002#MainNode>:OUTPUT: 
+Replica 3 : send caught_up message and result state hash to Olympus
+[2017-11-22 23:29:12,752] olympus.Olympus<Olympus:96002#MainNode>:OUTPUT: 
+Olympus: received caught_up message from replica 3
+[2017-11-22 23:29:12,752] olympus.Olympus<Olympus:96002#MainNode>:OUTPUT: 
+Olympus: handling latest request (0, 1) from replica 3
+[2017-11-22 23:29:12,752] olympus.Olympus<Olympus:96002#MainNode>:OUTPUT: 
+Olympus: constructing catch up sequence for replica 4 start from slot 0
+[2017-11-22 23:29:12,752] olympus.Olympus<Olympus:96002#MainNode>:OUTPUT: 
+Olympus: catch_up sequence [(1, (0, 1), " append('movie',' wars')")] constructed for replica 4
+[2017-11-22 23:29:12,752] olympus.Olympus<Olympus:96002#MainNode>:OUTPUT: 
+Olympus: send catch_up request to replica 4
+[2017-11-22 23:29:12,767] replica.Replica<Replica:15003#MainNode>:OUTPUT: 
+Replica 4 : received catch_up request for sequence [(1, (0, 1), " append('movie',' wars')")]
+[2017-11-22 23:29:12,767] replica.Replica<Replica:15003#MainNode>:OUTPUT: 
+Replica 4 : applying operation  append('movie',' wars') at slot 1 during reconfiguration
+[2017-11-22 23:29:12,767] replica.Replica<Replica:15003#MainNode>:OUTPUT: 
+Replica 4 : during reconfiguration, perform operation succeeds, result is OK
+[2017-11-22 23:29:12,767] replica.Replica<Replica:15003#MainNode>:OUTPUT: 
+Replica 4 : start looking for latest result statement for each client.
+[2017-11-22 23:29:12,767] replica.Replica<Replica:15003#MainNode>:OUTPUT: 
+Replica 4 : find latest result for clients, the requests id of the results are {0: (0, 1)}
+[2017-11-22 23:29:12,767] replica.Replica<Replica:15003#MainNode>:OUTPUT: 
+Replica 4 : current state in caught_up is {'movie': 'star wars'}
+[2017-11-22 23:29:12,767] replica.Replica<Replica:15003#MainNode>:OUTPUT: 
+Replica 4 : send caught_up message and result state hash to Olympus
+[2017-11-22 23:29:12,783] olympus.Olympus<Olympus:96002#MainNode>:OUTPUT: 
+Olympus: received caught_up message from replica 4
+[2017-11-22 23:29:12,783] olympus.Olympus<Olympus:96002#MainNode>:OUTPUT: 
+Olympus: handling latest request (0, 1) from replica 4
+[2017-11-22 23:29:12,783] olympus.Olympus<Olympus:96002#MainNode>:OUTPUT: 
+Olympus: caught up message received from all replicas
+[2017-11-22 23:29:12,783] olympus.Olympus<Olympus:96002#MainNode>:OUTPUT: 
+Olympus: construct result proof for client 0 for latest request (0, 1) for operation  append('movie',' wars')
+[2017-11-22 23:29:12,783] olympus.Olympus<Olympus:96002#MainNode>:OUTPUT: 
+Olympus: caught_up state hashes match for replicas in the quorum.
+[2017-11-22 23:29:12,783] olympus.Olympus<Olympus:96002#MainNode>:OUTPUT: 
+Olympus: send get_running_state request to replica 0
+[2017-11-22 23:29:12,783] replica.Replica<Replica:15001#MainNode>:OUTPUT: 
+Replica 0 : received get_running_state request.
+[2017-11-22 23:29:12,783] replica.Replica<Replica:15001#MainNode>:OUTPUT: 
+Replica 0 : send running_state_message for current state to Olympus.
+[2017-11-22 23:29:12,783] olympus.Olympus<Olympus:96002#MainNode>:OUTPUT: 
+Olympus: received running_state_message message from replica 0
+[2017-11-22 23:29:12,783] olympus.Olympus<Olympus:96002#MainNode>:OUTPUT: 
+Olympus: all replica in the quorum have state hashes match for running state of replica 0
+[2017-11-22 23:29:12,783] olympus.Olympus<Olympus:96002#MainNode>:OUTPUT: 
+Olympus: the correct running state is {'movie': 'star wars'}
+[2017-11-22 23:29:12,799] olympus.Olympus<Olympus:96002#MainNode>:OUTPUT: 
+Olympus: sent reconfig operation_result for latest request (0, 1) for operation  append('movie',' wars') to client 0
+[2017-11-22 23:29:12,799] olympus.Olympus<Olympus:96002#MainNode>:OUTPUT: 
+Olympus: terminte current replicas
+[2017-11-22 23:29:12,799] client.Client<Client:96003#MainNode>:OUTPUT: 
+Client 0 : received response for reconfig request (0, 1) from <Olympus:96002#MainNode>
+[2017-11-22 23:29:12,799] client.Client<Client:96003#MainNode>:OUTPUT: 
+Client 0 : response of request (0, 1) for operation  append('movie',' wars') is verified with 5 replicas acceptance.
+[2017-11-22 23:29:12,799] client.Client<Client:96003#MainNode>:OUTPUT: 
+Client 0 : response of reconfig request (0, 1) for operation  append('movie',' wars') is validated, the result is: OK
+[2017-11-22 23:29:12,799] client.Client<Client:96003#MainNode>:OUTPUT: 
+Client 0 : retransmission for request (0, 1) finished.
+[2017-11-22 23:29:12,814] client.Client<Client:96003#MainNode>:OUTPUT: 
+Client 0 : sent check config message with id 4 to Olympus.
+[2017-11-22 23:29:13,611] olympus.Olympus<Olympus:96002#MainNode>:OUTPUT: 
+Olympus: setting up replica 0 for new configuration.
+[2017-11-22 23:29:13,611] replica.Replica<Replica:15008#MainNode>:OUTPUT: 
+Replica: 0 with history [] initiated
+[2017-11-22 23:29:13,611] olympus.Olympus<Olympus:96002#MainNode>:OUTPUT: 
+Olympus: setting up replica 1 for new configuration.
+[2017-11-22 23:29:13,611] replica.Replica<Replica:15006#MainNode>:OUTPUT: 
+Replica: 1 with history [] initiated
+[2017-11-22 23:29:13,611] olympus.Olympus<Olympus:96002#MainNode>:OUTPUT: 
+Olympus: setting up replica 2 for new configuration.
+[2017-11-22 23:29:13,611] replica.Replica<Replica:15009#MainNode>:OUTPUT: 
+Replica: 2 with history [] initiated
+[2017-11-22 23:29:13,611] olympus.Olympus<Olympus:96002#MainNode>:OUTPUT: 
+Olympus: setting up replica 3 for new configuration.
+[2017-11-22 23:29:13,627] replica.Replica<Replica:1500a#MainNode>:OUTPUT: 
+Replica: 3 with history [] initiated
+[2017-11-22 23:29:13,627] olympus.Olympus<Olympus:96002#MainNode>:OUTPUT: 
+Olympus: setting up replica 4 for new configuration.
+[2017-11-22 23:29:13,627] replica.Replica<Replica:15007#MainNode>:OUTPUT: 
+Replica: 4 with history [] initiated
+[2017-11-22 23:29:13,627] olympus.Olympus<Olympus:96002#MainNode>:OUTPUT: 
+Olympus: start all new replicas
+[2017-11-22 23:29:13,627] replica.Replica<Replica:15008#MainNode>:OUTPUT: 
+Starting replica 0
+[2017-11-22 23:29:13,627] replica.Replica<Replica:15006#MainNode>:OUTPUT: 
+Starting replica 1
+[2017-11-22 23:29:13,627] replica.Replica<Replica:15009#MainNode>:OUTPUT: 
+Starting replica 2
+[2017-11-22 23:29:13,627] replica.Replica<Replica:1500a#MainNode>:OUTPUT: 
+Starting replica 3
+[2017-11-22 23:29:13,627] replica.Replica<Replica:15007#MainNode>:OUTPUT: 
+Starting replica 4
+[2017-11-22 23:29:13,627] olympus.Olympus<Olympus:96002#MainNode>:OUTPUT: 
+Olympus: send check config response 'RECONFIG' to client <Client:96003#MainNode>
+[2017-11-22 23:29:13,627] client.Client<Client:96003#MainNode>:OUTPUT: 
+Client 0 : received check config response: RECONFIG get new configuration
+[2017-11-22 23:29:13,627] client.Client<Client:96003#MainNode>:OUTPUT: 
+Client 0 : sent get_configuration to Olympus.
+[2017-11-22 23:29:13,627] olympus.Olympus<Olympus:96002#MainNode>:OUTPUT: 
+Olympus: send replicas and configuration information for config 1 to client <Client:96003#MainNode>
+[2017-11-22 23:29:13,627] client.Client<Client:96003#MainNode>:OUTPUT: 
+Client 0 : received configuration 1 from Olympus.
+[2017-11-22 23:29:13,627] client.Client<Client:96003#MainNode>:OUTPUT: 
+Client 0 : configuration response from Olympus is validated.
+[2017-11-22 23:29:13,627] client.Client<Client:96003#MainNode>:OUTPUT: 
+Client 0 : start sending requests in new configuration 1
+[2017-11-22 23:29:13,627] client.Client<Client:96003#MainNode>:OUTPUT: 
+Client 0 : sent check config message with id 5 to Olympus.
+[2017-11-22 23:29:13,627] olympus.Olympus<Olympus:96002#MainNode>:OUTPUT: 
+Olympus: send check config response 'OK' to client <Client:96003#MainNode>
+[2017-11-22 23:29:13,627] client.Client<Client:96003#MainNode>:OUTPUT: 
+Client 0 : received check config response: OK continue normally.
+[2017-11-22 23:29:13,642] olympus.Olympus<Olympus:96002#MainNode>:OUTPUT: 
+Olympus: send check config response 'OK' to client <Client:96003#MainNode>
+[2017-11-22 23:29:13,642] client.Client<Client:96003#MainNode>:OUTPUT: 
+Client 0 : sent check config message with id 6 to Olympus.
+[2017-11-22 23:29:13,642] client.Client<Client:96003#MainNode>:OUTPUT: 
+Client 0 : received check config response: OK continue normally.
+[2017-11-22 23:29:13,642] client.Client<Client:96003#MainNode>:OUTPUT: 
+Client 0 : sent operation_request (0, 2) to <Replica:15008#MainNode>
+[2017-11-22 23:29:13,642] replica.Replica<Replica:15008#MainNode>:OUTPUT: 
+Replica 0 : message from client is validated
+[2017-11-22 23:29:13,642] replica.Replica<Replica:15008#MainNode>:OUTPUT: 
+Replica 0 : received new operation request (0, 2) for operation:  get('movie')
+[2017-11-22 23:29:13,642] replica.Replica<Replica:15008#MainNode>:OUTPUT: 
+Replica 0 : handling new request from <Client:96003#MainNode>
+[2017-11-22 23:29:13,642] replica.Replica<Replica:15008#MainNode>:OUTPUT: 
+Replica 0 : validation for applying request succeeds, start applying request.
+[2017-11-22 23:29:13,642] replica.Replica<Replica:15008#MainNode>:OUTPUT: 
+Replica 0 : applied operation and result returned.
+[2017-11-22 23:29:13,642] replica.Replica<Replica:15008#MainNode>:OUTPUT: 
+Replica 0 : create order statement at slot 2
+[2017-11-22 23:29:13,642] replica.Replica<Replica:15008#MainNode>:OUTPUT: 
+Replica 0 : signed order statement and added order proof to history
+[2017-11-22 23:29:13,642] replica.Replica<Replica:15008#MainNode>:OUTPUT: 
+Replica 0 : hashed and signed result
+[2017-11-22 23:29:13,642] replica.Replica<Replica:15008#MainNode>:OUTPUT: 
+Replica 0 : obtained result and signed order statement for request (0, 2)
+[2017-11-22 23:29:13,642] replica.Replica<Replica:15008#MainNode>:OUTPUT: 
+Replica 0 : hashed and signed result statement for request (0, 2) at shuttle.
+[2017-11-22 23:29:13,642] replica.Replica<Replica:15008#MainNode>:OUTPUT: 
+Replica 0 : sent shuttle (0, 2) to  <Replica:15006#MainNode>
+[2017-11-22 23:29:13,642] replica.Replica<Replica:15006#MainNode>:OUTPUT: 
+Replica 1 : received shuttle (0, 2) from <Replica:15008#MainNode>
+[2017-11-22 23:29:13,642] replica.Replica<Replica:15006#MainNode>:OUTPUT: 
+Replica 1 : shuttle message from replica is validated
+[2017-11-22 23:29:13,642] replica.Replica<Replica:15006#MainNode>:OUTPUT: 
+Replica 1 : signature of replica 0 is validated
+[2017-11-22 23:29:13,642] replica.Replica<Replica:15006#MainNode>:OUTPUT: 
+Replica 1 : received and successfully decoded signed order statement
+[2017-11-22 23:29:13,658] replica.Replica<Replica:15006#MainNode>:OUTPUT: 
+Replica 1 : no conflict in slot number and request id during order proof validation
+[2017-11-22 23:29:13,658] replica.Replica<Replica:15006#MainNode>:OUTPUT: 
+Replica 1 : validation for applying request succeeds, start applying request.
+[2017-11-22 23:29:13,658] replica.Replica<Replica:15006#MainNode>:OUTPUT: 
+Replica 1 : applied operation and result returned.
+[2017-11-22 23:29:13,658] replica.Replica<Replica:15006#MainNode>:OUTPUT: 
+Replica 1 : create order statement at slot 2
+[2017-11-22 23:29:13,658] replica.Replica<Replica:15006#MainNode>:OUTPUT: 
+Replica 1 : signed order statement and added order proof to history
+[2017-11-22 23:29:13,658] replica.Replica<Replica:15006#MainNode>:OUTPUT: 
+Replica 1 : hashed and signed result
+[2017-11-22 23:29:13,658] replica.Replica<Replica:15006#MainNode>:OUTPUT: 
+Replica 1 : hashed and result for request (0, 2) at shuttle.
+[2017-11-22 23:29:13,658] replica.Replica<Replica:15006#MainNode>:OUTPUT: 
+Replica 1 : sent shuttle (0, 2) to <Replica:15009#MainNode>
+[2017-11-22 23:29:13,658] replica.Replica<Replica:15009#MainNode>:OUTPUT: 
+Replica 2 : received shuttle (0, 2) from <Replica:15006#MainNode>
+[2017-11-22 23:29:13,658] replica.Replica<Replica:15009#MainNode>:OUTPUT: 
+Replica 2 : shuttle message from replica is validated
+[2017-11-22 23:29:13,658] replica.Replica<Replica:15009#MainNode>:OUTPUT: 
+Replica 2 : signature of replica 0 is validated
+[2017-11-22 23:29:13,658] replica.Replica<Replica:15009#MainNode>:OUTPUT: 
+Replica 2 : received and successfully decoded signed order statement
+[2017-11-22 23:29:13,658] replica.Replica<Replica:15009#MainNode>:OUTPUT: 
+Replica 2 : no conflict in slot number and request id during order proof validation
+[2017-11-22 23:29:13,658] replica.Replica<Replica:15009#MainNode>:OUTPUT: 
+Replica 2 : signature of replica 1 is validated
+[2017-11-22 23:29:13,658] replica.Replica<Replica:15009#MainNode>:OUTPUT: 
+Replica 2 : received and successfully decoded signed order statement
+[2017-11-22 23:29:13,658] replica.Replica<Replica:15009#MainNode>:OUTPUT: 
+Replica 2 : no conflict in slot number and request id during order proof validation
+[2017-11-22 23:29:13,658] replica.Replica<Replica:15009#MainNode>:OUTPUT: 
+Replica 2 : validation for applying request succeeds, start applying request.
+[2017-11-22 23:29:13,658] replica.Replica<Replica:15009#MainNode>:OUTPUT: 
+Replica 2 : applied operation and result returned.
+[2017-11-22 23:29:13,658] replica.Replica<Replica:15009#MainNode>:OUTPUT: 
+Replica 2 : create order statement at slot 2
+[2017-11-22 23:29:13,674] replica.Replica<Replica:15009#MainNode>:OUTPUT: 
+Replica 2 : signed order statement and added order proof to history
+[2017-11-22 23:29:13,674] replica.Replica<Replica:15009#MainNode>:OUTPUT: 
+Replica 2 : hashed and signed result
+[2017-11-22 23:29:13,674] replica.Replica<Replica:15009#MainNode>:OUTPUT: 
+Replica 2 : hashed and result for request (0, 2) at shuttle.
+[2017-11-22 23:29:13,674] replica.Replica<Replica:15009#MainNode>:OUTPUT: 
+Replica 2 : sent shuttle (0, 2) to <Replica:1500a#MainNode>
+[2017-11-22 23:29:13,674] replica.Replica<Replica:1500a#MainNode>:OUTPUT: 
+Replica 3 : received shuttle (0, 2) from <Replica:15009#MainNode>
+[2017-11-22 23:29:13,674] replica.Replica<Replica:1500a#MainNode>:OUTPUT: 
+Replica 3 : shuttle message from replica is validated
+[2017-11-22 23:29:13,674] replica.Replica<Replica:1500a#MainNode>:OUTPUT: 
+Replica 3 : signature of replica 0 is validated
+[2017-11-22 23:29:13,674] replica.Replica<Replica:1500a#MainNode>:OUTPUT: 
+Replica 3 : received and successfully decoded signed order statement
+[2017-11-22 23:29:13,674] replica.Replica<Replica:1500a#MainNode>:OUTPUT: 
+Replica 3 : no conflict in slot number and request id during order proof validation
+[2017-11-22 23:29:13,674] replica.Replica<Replica:1500a#MainNode>:OUTPUT: 
+Replica 3 : signature of replica 1 is validated
+[2017-11-22 23:29:13,674] replica.Replica<Replica:1500a#MainNode>:OUTPUT: 
+Replica 3 : received and successfully decoded signed order statement
+[2017-11-22 23:29:13,674] replica.Replica<Replica:1500a#MainNode>:OUTPUT: 
+Replica 3 : no conflict in slot number and request id during order proof validation
+[2017-11-22 23:29:13,674] replica.Replica<Replica:1500a#MainNode>:OUTPUT: 
+Replica 3 : signature of replica 2 is validated
+[2017-11-22 23:29:13,674] replica.Replica<Replica:1500a#MainNode>:OUTPUT: 
+Replica 3 : received and successfully decoded signed order statement
+[2017-11-22 23:29:13,674] replica.Replica<Replica:1500a#MainNode>:OUTPUT: 
+Replica 3 : no conflict in slot number and request id during order proof validation
+[2017-11-22 23:29:13,674] replica.Replica<Replica:1500a#MainNode>:OUTPUT: 
+Replica 3 : validation for applying request succeeds, start applying request.
+[2017-11-22 23:29:13,674] replica.Replica<Replica:1500a#MainNode>:OUTPUT: 
+Replica 3 : applied operation and result returned.
+[2017-11-22 23:29:13,674] replica.Replica<Replica:1500a#MainNode>:OUTPUT: 
+Replica 3 : create order statement at slot 2
+[2017-11-22 23:29:13,674] replica.Replica<Replica:1500a#MainNode>:OUTPUT: 
+Replica 3 : signed order statement and added order proof to history
+[2017-11-22 23:29:13,674] replica.Replica<Replica:1500a#MainNode>:OUTPUT: 
+Replica 3 : hashed and signed result
+[2017-11-22 23:29:13,674] replica.Replica<Replica:1500a#MainNode>:OUTPUT: 
+Replica 3 : hashed and result for request (0, 2) at shuttle.
+[2017-11-22 23:29:13,674] replica.Replica<Replica:1500a#MainNode>:OUTPUT: 
+Replica 3 : sent shuttle (0, 2) to <Replica:15007#MainNode>
+[2017-11-22 23:29:13,689] replica.Replica<Replica:15007#MainNode>:OUTPUT: 
+Replica 4 : received shuttle (0, 2) from <Replica:1500a#MainNode>
+[2017-11-22 23:29:13,689] replica.Replica<Replica:15007#MainNode>:OUTPUT: 
+Replica 4 : shuttle message from replica is validated
+[2017-11-22 23:29:13,689] replica.Replica<Replica:15007#MainNode>:OUTPUT: 
+Replica 4 : signature of replica 0 is validated
+[2017-11-22 23:29:13,689] replica.Replica<Replica:15007#MainNode>:OUTPUT: 
+Replica 4 : received and successfully decoded signed order statement
+[2017-11-22 23:29:13,689] replica.Replica<Replica:15007#MainNode>:OUTPUT: 
+Replica 4 : no conflict in slot number and request id during order proof validation
+[2017-11-22 23:29:13,689] replica.Replica<Replica:15007#MainNode>:OUTPUT: 
+Replica 4 : signature of replica 1 is validated
+[2017-11-22 23:29:13,689] replica.Replica<Replica:15007#MainNode>:OUTPUT: 
+Replica 4 : received and successfully decoded signed order statement
+[2017-11-22 23:29:13,689] replica.Replica<Replica:15007#MainNode>:OUTPUT: 
+Replica 4 : no conflict in slot number and request id during order proof validation
+[2017-11-22 23:29:13,689] replica.Replica<Replica:15007#MainNode>:OUTPUT: 
+Replica 4 : signature of replica 2 is validated
+[2017-11-22 23:29:13,689] replica.Replica<Replica:15007#MainNode>:OUTPUT: 
+Replica 4 : received and successfully decoded signed order statement
+[2017-11-22 23:29:13,689] replica.Replica<Replica:15007#MainNode>:OUTPUT: 
+Replica 4 : no conflict in slot number and request id during order proof validation
+[2017-11-22 23:29:13,689] replica.Replica<Replica:15007#MainNode>:OUTPUT: 
+Replica 4 : signature of replica 3 is validated
+[2017-11-22 23:29:13,689] replica.Replica<Replica:15007#MainNode>:OUTPUT: 
+Replica 4 : received and successfully decoded signed order statement
+[2017-11-22 23:29:13,689] replica.Replica<Replica:15007#MainNode>:OUTPUT: 
+Replica 4 : no conflict in slot number and request id during order proof validation
+[2017-11-22 23:29:13,689] replica.Replica<Replica:15007#MainNode>:OUTPUT: 
+Replica 4 : validation for applying request succeeds, start applying request.
+[2017-11-22 23:29:13,689] replica.Replica<Replica:15007#MainNode>:OUTPUT: 
+Replica 4 : applied operation and result returned.
+[2017-11-22 23:29:13,689] replica.Replica<Replica:15007#MainNode>:OUTPUT: 
+Replica 4 : create order statement at slot 2
+[2017-11-22 23:29:13,689] replica.Replica<Replica:15007#MainNode>:OUTPUT: 
+Replica 4 : signed order statement and added order proof to history
+[2017-11-22 23:29:13,689] replica.Replica<Replica:15007#MainNode>:OUTPUT: 
+Replica 4 : hashed and signed result
+[2017-11-22 23:29:13,689] replica.Replica<Replica:15007#MainNode>:OUTPUT: 
+Replica 4 : hashed and result for request (0, 2) at shuttle.
+[2017-11-22 23:29:13,689] replica.Replica<Replica:15007#MainNode>:OUTPUT: 
+Replica 4 : sent result_shuttle (0, 2) to replica <Replica:1500a#MainNode>
+[2017-11-22 23:29:13,705] replica.Replica<Replica:15007#MainNode>:OUTPUT: 
+Replica 4 : sent operation_result (0, 2) to client <Client:96003#MainNode>
+[2017-11-22 23:29:13,705] replica.Replica<Replica:1500a#MainNode>:OUTPUT: 
+Replica 3 : received result_shuttle (0, 2) from <Replica:15007#MainNode>
+[2017-11-22 23:29:13,705] replica.Replica<Replica:1500a#MainNode>:OUTPUT: 
+Replica 3 : result shuttle for (0, 2) contains enough entries, expected 5 and received 5
+[2017-11-22 23:29:13,705] replica.Replica<Replica:1500a#MainNode>:OUTPUT: 
+Replica 3 : result shuttle from replica is validated
+[2017-11-22 23:29:13,705] replica.Replica<Replica:1500a#MainNode>:OUTPUT: 
+Replica 3 : result shuttle from replica is validated
+[2017-11-22 23:29:13,705] client.Client<Client:96003#MainNode>:OUTPUT: 
+Client 0 : received response for new request (0, 2) from <Replica:15007#MainNode>
+[2017-11-22 23:29:13,705] replica.Replica<Replica:1500a#MainNode>:OUTPUT: 
+Replica 3 : result shuttle from replica is validated
+[2017-11-22 23:29:13,705] replica.Replica<Replica:1500a#MainNode>:OUTPUT: 
+Replica 3 : result_shuttle is validated.
+[2017-11-22 23:29:13,705] replica.Replica<Replica:1500a#MainNode>:OUTPUT: 
+Replica 3 : cached result proof for request id (0, 2)
+[2017-11-22 23:29:13,705] replica.Replica<Replica:1500a#MainNode>:OUTPUT: 
+Replica 3 : sent result_shuttle (0, 2) to <Replica:15009#MainNode>
+[2017-11-22 23:29:13,705] client.Client<Client:96003#MainNode>:OUTPUT: 
+Client 0 : response of request (0, 2) for operation  get('movie') is verified with 5 replicas acceptance.
+[2017-11-22 23:29:13,705] client.Client<Client:96003#MainNode>:OUTPUT: 
+Client 0 : response of new request (0, 2) for operation  get('movie') is validated, the result is: star wars
+[2017-11-22 23:29:13,705] replica.Replica<Replica:15009#MainNode>:OUTPUT: 
+Replica 2 : received result_shuttle (0, 2) from <Replica:1500a#MainNode>
+[2017-11-22 23:29:13,705] replica.Replica<Replica:15009#MainNode>:OUTPUT: 
+Replica 2 : result shuttle for (0, 2) contains enough entries, expected 5 and received 5
+[2017-11-22 23:29:13,705] replica.Replica<Replica:15009#MainNode>:OUTPUT: 
+Replica 2 : result shuttle from replica is validated
+[2017-11-22 23:29:13,705] replica.Replica<Replica:15009#MainNode>:OUTPUT: 
+Replica 2 : result shuttle from replica is validated
+[2017-11-22 23:29:13,705] replica.Replica<Replica:15009#MainNode>:OUTPUT: 
+Replica 2 : result_shuttle is validated.
+[2017-11-22 23:29:13,705] replica.Replica<Replica:15009#MainNode>:OUTPUT: 
+Replica 2 : cached result proof for request id (0, 2)
+[2017-11-22 23:29:13,705] replica.Replica<Replica:15009#MainNode>:OUTPUT: 
+Replica 2 : sent result_shuttle (0, 2) to <Replica:15006#MainNode>
+[2017-11-22 23:29:13,721] replica.Replica<Replica:15006#MainNode>:OUTPUT: 
+Replica 1 : received result_shuttle (0, 2) from <Replica:15009#MainNode>
+[2017-11-22 23:29:13,721] replica.Replica<Replica:15006#MainNode>:OUTPUT: 
+Replica 1 : result shuttle for (0, 2) contains enough entries, expected 5 and received 5
+[2017-11-22 23:29:13,721] replica.Replica<Replica:15006#MainNode>:OUTPUT: 
+Replica 1 : result shuttle from replica is validated
+[2017-11-22 23:29:13,721] replica.Replica<Replica:15006#MainNode>:OUTPUT: 
+Replica 1 : result_shuttle is validated.
+[2017-11-22 23:29:13,721] replica.Replica<Replica:15006#MainNode>:OUTPUT: 
+Replica 1 : cached result proof for request id (0, 2)
+[2017-11-22 23:29:13,721] replica.Replica<Replica:15006#MainNode>:OUTPUT: 
+Replica 1 : sent result_shuttle (0, 2) to <Replica:15008#MainNode>
+[2017-11-22 23:29:13,721] replica.Replica<Replica:15008#MainNode>:OUTPUT: 
+Replica 0 : received result_shuttle (0, 2) from <Replica:15006#MainNode>
+[2017-11-22 23:29:13,721] replica.Replica<Replica:15008#MainNode>:OUTPUT: 
+Replica 0 : result shuttle for (0, 2) contains enough entries, expected 5 and received 5
+[2017-11-22 23:29:13,721] replica.Replica<Replica:15008#MainNode>:OUTPUT: 
+Replica 0 : result_shuttle is validated.
+[2017-11-22 23:29:13,721] replica.Replica<Replica:15008#MainNode>:OUTPUT: 
+Replica 0 : cached result proof for request id (0, 2)
+[2017-11-22 23:29:15,802] replica.Replica<Replica:15005#MainNode>:OUTPUT: 
+Replica 1 state: {'movie': 'star wars'}
+[2017-11-22 23:29:15,802] replica.Replica<Replica:15004#MainNode>:OUTPUT: 
+Replica 2 state: {'movie': 'star wars'}
+[2017-11-22 23:29:15,802] replica.Replica<Replica:15002#MainNode>:OUTPUT: 
+Replica 3 state: {'movie': 'star wars'}
+[2017-11-22 23:29:15,802] replica.Replica<Replica:15003#MainNode>:OUTPUT: 
+Replica 4 state: {'movie': 'star wars'}
+[2017-11-22 23:29:15,802] replica.Replica<Replica:15001#MainNode>:OUTPUT: 
+Replica 0 state: {'movie': 'star wars'}
+[2017-11-22 23:29:15,802] replica.Replica<Replica:15005#MainNode>:OUTPUT: 
+Replica 1 history: slot 0 ; request_id (0, 0) ; request put('movie','star')
+[2017-11-22 23:29:15,802] replica.Replica<Replica:15004#MainNode>:OUTPUT: 
+Replica 2 history: slot 0 ; request_id (0, 0) ; request put('movie','star')
+[2017-11-22 23:29:15,802] replica.Replica<Replica:15001#MainNode>:OUTPUT: 
+Replica 0 history: slot 0 ; request_id (0, 0) ; request put('movie','star')
+[2017-11-22 23:29:15,802] replica.Replica<Replica:15003#MainNode>:OUTPUT: 
+Replica 4 history: slot 0 ; request_id (0, 0) ; request put('movie','star')
+[2017-11-22 23:29:15,802] replica.Replica<Replica:15002#MainNode>:OUTPUT: 
+Replica 3 history: slot 0 ; request_id (0, 0) ; request put('movie','star')
+[2017-11-22 23:29:15,802] replica.Replica<Replica:15004#MainNode>:OUTPUT: 
+Replica 2 last checkpoint slot: 0
+[2017-11-22 23:29:15,802] replica.Replica<Replica:15005#MainNode>:OUTPUT: 
+Replica 1 last checkpoint slot: 0
+[2017-11-22 23:29:15,802] replica.Replica<Replica:15001#MainNode>:OUTPUT: 
+Replica 0 history: slot 1 ; request_id (0, 1) ; request  append('movie',' wars')
+[2017-11-22 23:29:15,802] replica.Replica<Replica:15003#MainNode>:OUTPUT: 
+Replica 4 last checkpoint slot: 0
+[2017-11-22 23:29:15,802] replica.Replica<Replica:15002#MainNode>:OUTPUT: 
+Replica 3 last checkpoint slot: 0
+[2017-11-22 23:29:15,802] replica.Replica<Replica:15001#MainNode>:OUTPUT: 
+Replica 0 last checkpoint slot: 0
+[2017-11-22 23:29:18,719] client.Client<Client:96003#MainNode>:OUTPUT: 
+Client 0 : actual request result: {(0, 1): 'OK', (0, 0): 'OK', (0, 2): 'star wars'}
+[2017-11-22 23:29:18,719] client.Client<Client:96003#MainNode>:OUTPUT: 
+Client 0 : final test result: {(0, 1): 'OK', (0, 0): 'OK', (0, 2): 'star wars'}
+[2017-11-22 23:29:18,719] client.Client<Client:96003#MainNode>:OUTPUT: 
+Client 0 : final test state: {'movie': 'star wars'}
+[2017-11-22 23:29:18,719] client.Client<Client:96003#MainNode>:OUTPUT: 
+Client 0 terminating.
+[2017-11-22 23:29:18,719] olympus.Olympus<Olympus:96002#MainNode>:OUTPUT: 
+Application elapsed time: 25.314420461654663
+[2017-11-22 23:29:21,719] replica.Replica<Replica:15006#MainNode>:OUTPUT: 
+Replica 1 state: {'movie': 'star wars'}
+[2017-11-22 23:29:21,719] replica.Replica<Replica:15009#MainNode>:OUTPUT: 
+Replica 2 state: {'movie': 'star wars'}
+[2017-11-22 23:29:21,719] replica.Replica<Replica:1500a#MainNode>:OUTPUT: 
+Replica 3 state: {'movie': 'star wars'}
+[2017-11-22 23:29:21,719] replica.Replica<Replica:15008#MainNode>:OUTPUT: 
+Replica 0 state: {'movie': 'star wars'}
+[2017-11-22 23:29:21,719] replica.Replica<Replica:15007#MainNode>:OUTPUT: 
+Replica 4 state: {'movie': 'star wars'}
+[2017-11-22 23:29:21,719] replica.Replica<Replica:15006#MainNode>:OUTPUT: 
+Replica 1 history: slot 2 ; request_id (0, 2) ; request  get('movie')
+[2017-11-22 23:29:21,719] replica.Replica<Replica:15009#MainNode>:OUTPUT: 
+Replica 2 history: slot 2 ; request_id (0, 2) ; request  get('movie')
+[2017-11-22 23:29:21,719] replica.Replica<Replica:1500a#MainNode>:OUTPUT: 
+Replica 3 history: slot 2 ; request_id (0, 2) ; request  get('movie')
+[2017-11-22 23:29:21,719] replica.Replica<Replica:15007#MainNode>:OUTPUT: 
+Replica 4 history: slot 2 ; request_id (0, 2) ; request  get('movie')
+[2017-11-22 23:29:21,719] replica.Replica<Replica:15006#MainNode>:OUTPUT: 
+Replica 1 last checkpoint slot: 2
+[2017-11-22 23:29:21,719] replica.Replica<Replica:15008#MainNode>:OUTPUT: 
+Replica 0 history: slot 2 ; request_id (0, 2) ; request  get('movie')
+[2017-11-22 23:29:21,719] replica.Replica<Replica:15009#MainNode>:OUTPUT: 
+Replica 2 last checkpoint slot: 2
+[2017-11-22 23:29:21,719] replica.Replica<Replica:1500a#MainNode>:OUTPUT: 
+Replica 3 last checkpoint slot: 2
+[2017-11-22 23:29:21,719] replica.Replica<Replica:15008#MainNode>:OUTPUT: 
+Replica 0 last checkpoint slot: 2

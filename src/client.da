@@ -160,6 +160,9 @@ class Client(process):
 		if request_id in self.result:
 			output("\nClient", self.client_id, ": request", request_id, "already received result, check for new configuration.", sep = " ")
 	
+		# check for new configuration
+		checkNewConfig()
+			
 		request_type = 'retransmission'
 		# create and sign request message
 		request_msg = "request<" + str(request_id) + "," + request + ">"

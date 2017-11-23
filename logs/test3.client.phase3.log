@@ -1,0 +1,1072 @@
+[2017-11-22 18:39:53,518] client.Client<Client:0dc02#ClientNode>:OUTPUT: Client ID: 0 
+Workload: ["put('movie','star')", " append('movie',' wars')", " get('movie')"] 
+Timeout: 6
+[2017-11-22 18:39:53,532] client.Client<Client:0dc03#ClientNode>:OUTPUT: Client ID: 0 
+Workload: ["put('movie','star')", " append('movie',' wars')", " get('movie')"] 
+Timeout: 6
+[2017-11-22 18:39:53,594] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Starting client 0
+[2017-11-22 18:39:53,594] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Starting client 0
+[2017-11-22 18:39:53,596] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent get_configuration to Olympus.
+[2017-11-22 18:39:53,596] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent get_configuration to Olympus.
+[2017-11-22 18:39:53,601] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : received configuration 0 from Olympus.
+[2017-11-22 18:39:53,601] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : received configuration 0 from Olympus.
+[2017-11-22 18:39:53,601] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : configuration response from Olympus is validated.
+[2017-11-22 18:39:53,602] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : configuration response from Olympus is validated.
+[2017-11-22 18:39:53,602] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : start sending requests in new configuration 0
+[2017-11-22 18:39:53,602] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : start sending requests in new configuration 0
+[2017-11-22 18:39:53,602] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent check config message with id 0 to Olympus.
+[2017-11-22 18:39:53,602] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent check config message with id 0 to Olympus.
+[2017-11-22 18:39:53,603] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : received check config response: OK continue normally.
+[2017-11-22 18:39:53,603] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : received check config response: OK continue normally.
+[2017-11-22 18:39:53,605] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent operation_request (0, 0) to <Replica:8a406#MainNode>
+[2017-11-22 18:39:53,605] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent operation_request (0, 0) to <Replica:8a404#MainNode>
+[2017-11-22 18:39:53,634] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : received response for new request (0, 0) from <Replica:8a405#MainNode>
+[2017-11-22 18:39:53,635] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : received response for new request (0, 0) from <Replica:8a405#MainNode>
+[2017-11-22 18:39:53,635] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : response of request (0, 0) for operation put('movie','star') is verified with 3 replicas acceptance.
+[2017-11-22 18:39:53,636] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : response of new request (0, 0) for operation put('movie','star') is validated, the result is: OK
+[2017-11-22 18:39:53,636] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : response of request (0, 0) for operation put('movie','star') is verified with 3 replicas acceptance.
+[2017-11-22 18:39:53,636] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : response of new request (0, 0) for operation put('movie','star') is validated, the result is: OK
+[2017-11-22 18:39:53,637] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent operation_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:39:53,638] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent operation_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:39:59,639] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : timeout waiting for response for request (0, 1) start retransmission phase
+[2017-11-22 18:39:59,639] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : timeout waiting for response for request (0, 1) start retransmission phase
+[2017-11-22 18:39:59,640] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:39:59,640] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:39:59,642] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:39:59,642] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:39:59,644] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:39:59,643] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:40:02,670] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : received response for reconfig request (0, 0) from <Olympus:8a402#MainNode>
+[2017-11-22 18:40:02,670] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : request (0, 0) already received result, do nothing.
+[2017-11-22 18:40:02,674] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : received response for reconfig request (0, 0) from <Olympus:8a403#MainNode>
+[2017-11-22 18:40:02,674] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : request (0, 0) already received result, do nothing.
+[2017-11-22 18:40:05,645] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : retransmission for request (0, 1) timeout, retry.
+[2017-11-22 18:40:05,645] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : retransmission for request (0, 1) timeout, retry.
+[2017-11-22 18:40:05,646] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:40:05,646] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:40:05,647] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:40:05,647] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:40:05,648] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:40:05,648] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:40:11,649] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : retransmission for request (0, 1) timeout, retry.
+[2017-11-22 18:40:11,649] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : retransmission for request (0, 1) timeout, retry.
+[2017-11-22 18:40:11,650] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 33098)",)
+[2017-11-22 18:40:11,650] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 25524)",)
+[2017-11-22 18:40:11,656] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:40:11,657] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:40:11,657] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 10984)",)
+[2017-11-22 18:40:11,657] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 18967)",)
+[2017-11-22 18:40:11,657] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:40:11,657] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:40:11,658] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 21095)",)
+[2017-11-22 18:40:11,658] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 29870)",)
+[2017-11-22 18:40:11,658] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:40:11,658] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:40:17,659] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : retransmission for request (0, 1) timeout, retry.
+[2017-11-22 18:40:17,660] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 25524)",)
+[2017-11-22 18:40:17,660] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : retransmission for request (0, 1) timeout, retry.
+[2017-11-22 18:40:17,660] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:40:17,661] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 33098)",)
+[2017-11-22 18:40:17,661] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 10984)",)
+[2017-11-22 18:40:17,661] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:40:17,661] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:40:17,662] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 18967)",)
+[2017-11-22 18:40:17,662] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 21095)",)
+[2017-11-22 18:40:17,662] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:40:17,662] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:40:17,663] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 29870)",)
+[2017-11-22 18:40:17,663] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:40:23,663] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : retransmission for request (0, 1) timeout, retry.
+[2017-11-22 18:40:23,664] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : retransmission for request (0, 1) timeout, retry.
+[2017-11-22 18:40:23,664] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 25524)",)
+[2017-11-22 18:40:23,665] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 33098)",)
+[2017-11-22 18:40:23,665] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:40:23,665] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:40:23,666] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 10984)",)
+[2017-11-22 18:40:23,666] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 18967)",)
+[2017-11-22 18:40:23,666] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:40:23,666] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:40:23,667] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 21095)",)
+[2017-11-22 18:40:23,667] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 29870)",)
+[2017-11-22 18:40:23,667] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:40:23,667] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:40:29,668] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : retransmission for request (0, 1) timeout, retry.
+[2017-11-22 18:40:29,668] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : retransmission for request (0, 1) timeout, retry.
+[2017-11-22 18:40:29,669] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 25524)",)
+[2017-11-22 18:40:29,669] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 33098)",)
+[2017-11-22 18:40:29,669] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:40:29,669] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:40:29,670] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 10984)",)
+[2017-11-22 18:40:29,670] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 18967)",)
+[2017-11-22 18:40:29,670] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:40:29,670] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:40:29,671] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 21095)",)
+[2017-11-22 18:40:29,671] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 29870)",)
+[2017-11-22 18:40:29,671] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:40:29,671] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:40:35,673] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : retransmission for request (0, 1) timeout, retry.
+[2017-11-22 18:40:35,673] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : retransmission for request (0, 1) timeout, retry.
+[2017-11-22 18:40:35,673] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 25524)",)
+[2017-11-22 18:40:35,673] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 33098)",)
+[2017-11-22 18:40:35,674] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:40:35,674] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:40:35,674] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 18967)",)
+[2017-11-22 18:40:35,674] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 10984)",)
+[2017-11-22 18:40:35,675] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:40:35,676] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:40:35,676] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 29870)",)
+[2017-11-22 18:40:35,677] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:40:35,677] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 21095)",)
+[2017-11-22 18:40:35,677] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:40:41,678] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : retransmission for request (0, 1) timeout, retry.
+[2017-11-22 18:40:41,678] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 33098)",)
+[2017-11-22 18:40:41,679] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : retransmission for request (0, 1) timeout, retry.
+[2017-11-22 18:40:41,679] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:40:41,679] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 25524)",)
+[2017-11-22 18:40:41,679] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 18967)",)
+[2017-11-22 18:40:41,680] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:40:41,680] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:40:41,680] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 10984)",)
+[2017-11-22 18:40:41,680] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 29870)",)
+[2017-11-22 18:40:41,680] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:40:41,681] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:40:41,681] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 21095)",)
+[2017-11-22 18:40:41,681] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:40:47,682] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : retransmission for request (0, 1) timeout, retry.
+[2017-11-22 18:40:47,682] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : retransmission for request (0, 1) timeout, retry.
+[2017-11-22 18:40:47,683] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 33098)",)
+[2017-11-22 18:40:47,683] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 25524)",)
+[2017-11-22 18:40:47,683] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:40:47,683] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:40:47,684] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 18967)",)
+[2017-11-22 18:40:47,684] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 10984)",)
+[2017-11-22 18:40:47,684] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:40:47,685] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:40:47,685] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 29870)",)
+[2017-11-22 18:40:47,685] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 21095)",)
+[2017-11-22 18:40:47,685] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:40:47,686] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:40:53,686] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : retransmission for request (0, 1) timeout, retry.
+[2017-11-22 18:40:53,686] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : retransmission for request (0, 1) timeout, retry.
+[2017-11-22 18:40:53,687] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 33098)",)
+[2017-11-22 18:40:53,687] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 25524)",)
+[2017-11-22 18:40:53,687] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:40:53,687] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:40:53,688] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 10984)",)
+[2017-11-22 18:40:53,688] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 18967)",)
+[2017-11-22 18:40:53,688] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:40:53,688] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:40:53,689] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 21095)",)
+[2017-11-22 18:40:53,689] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 29870)",)
+[2017-11-22 18:40:53,689] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:40:53,689] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:40:59,690] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : retransmission for request (0, 1) timeout, retry.
+[2017-11-22 18:40:59,691] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 25524)",)
+[2017-11-22 18:40:59,691] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : retransmission for request (0, 1) timeout, retry.
+[2017-11-22 18:40:59,691] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:40:59,692] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 33098)",)
+[2017-11-22 18:40:59,692] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 10984)",)
+[2017-11-22 18:40:59,692] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:40:59,692] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:40:59,692] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 18967)",)
+[2017-11-22 18:40:59,693] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 21095)",)
+[2017-11-22 18:40:59,693] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:40:59,693] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:40:59,693] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 29870)",)
+[2017-11-22 18:40:59,694] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:41:05,695] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : retransmission for request (0, 1) timeout, retry.
+[2017-11-22 18:41:05,695] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : retransmission for request (0, 1) timeout, retry.
+[2017-11-22 18:41:05,696] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 25524)",)
+[2017-11-22 18:41:05,696] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 33098)",)
+[2017-11-22 18:41:05,696] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:41:05,696] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:41:05,697] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 10984)",)
+[2017-11-22 18:41:05,697] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 18967)",)
+[2017-11-22 18:41:05,697] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:41:05,697] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:41:05,697] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 21095)",)
+[2017-11-22 18:41:05,698] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 29870)",)
+[2017-11-22 18:41:05,698] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:41:05,698] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:41:11,699] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : retransmission for request (0, 1) timeout, retry.
+[2017-11-22 18:41:11,699] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : retransmission for request (0, 1) timeout, retry.
+[2017-11-22 18:41:11,700] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 33098)",)
+[2017-11-22 18:41:11,701] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 25524)",)
+[2017-11-22 18:41:11,701] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:41:11,701] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:41:11,702] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 10984)",)
+[2017-11-22 18:41:11,702] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 18967)",)
+[2017-11-22 18:41:11,702] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:41:11,702] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:41:11,703] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 21095)",)
+[2017-11-22 18:41:11,703] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 29870)",)
+[2017-11-22 18:41:11,703] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:41:11,703] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:41:17,705] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : retransmission for request (0, 1) timeout, retry.
+[2017-11-22 18:41:17,705] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : retransmission for request (0, 1) timeout, retry.
+[2017-11-22 18:41:17,706] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 25524)",)
+[2017-11-22 18:41:17,706] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 33098)",)
+[2017-11-22 18:41:17,706] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:41:17,706] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:41:17,707] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 10984)",)
+[2017-11-22 18:41:17,707] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 18967)",)
+[2017-11-22 18:41:17,707] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:41:17,707] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:41:17,708] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 21095)",)
+[2017-11-22 18:41:17,708] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 29870)",)
+[2017-11-22 18:41:17,708] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:41:17,708] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:41:23,709] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : retransmission for request (0, 1) timeout, retry.
+[2017-11-22 18:41:23,709] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : retransmission for request (0, 1) timeout, retry.
+[2017-11-22 18:41:23,710] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 33098)",)
+[2017-11-22 18:41:23,710] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 25524)",)
+[2017-11-22 18:41:23,711] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:41:23,711] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:41:23,711] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 18967)",)
+[2017-11-22 18:41:23,711] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 10984)",)
+[2017-11-22 18:41:23,711] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:41:23,712] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:41:23,712] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 29870)",)
+[2017-11-22 18:41:23,712] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 21095)",)
+[2017-11-22 18:41:23,712] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:41:23,712] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:41:29,713] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : retransmission for request (0, 1) timeout, retry.
+[2017-11-22 18:41:29,713] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : retransmission for request (0, 1) timeout, retry.
+[2017-11-22 18:41:29,714] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 33098)",)
+[2017-11-22 18:41:29,714] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 25524)",)
+[2017-11-22 18:41:29,715] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:41:29,715] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:41:29,716] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 10984)",)
+[2017-11-22 18:41:29,716] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 18967)",)
+[2017-11-22 18:41:29,716] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:41:29,716] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:41:29,717] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 29870)",)
+[2017-11-22 18:41:29,717] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 21095)",)
+[2017-11-22 18:41:29,717] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:41:29,717] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:41:35,718] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : retransmission for request (0, 1) timeout, retry.
+[2017-11-22 18:41:35,718] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : retransmission for request (0, 1) timeout, retry.
+[2017-11-22 18:41:35,720] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 33098)",)
+[2017-11-22 18:41:35,720] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 25524)",)
+[2017-11-22 18:41:35,721] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:41:35,721] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:41:35,721] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 10984)",)
+[2017-11-22 18:41:35,721] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 18967)",)
+[2017-11-22 18:41:35,721] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:41:35,721] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:41:35,722] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 21095)",)
+[2017-11-22 18:41:35,722] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 29870)",)
+[2017-11-22 18:41:35,722] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:41:35,722] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:41:41,724] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : retransmission for request (0, 1) timeout, retry.
+[2017-11-22 18:41:41,724] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : retransmission for request (0, 1) timeout, retry.
+[2017-11-22 18:41:41,725] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 25524)",)
+[2017-11-22 18:41:41,725] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 33098)",)
+[2017-11-22 18:41:41,725] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:41:41,725] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:41:41,726] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 10984)",)
+[2017-11-22 18:41:41,726] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 18967)",)
+[2017-11-22 18:41:41,726] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:41:41,726] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:41:41,727] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 29870)",)
+[2017-11-22 18:41:41,727] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 21095)",)
+[2017-11-22 18:41:41,727] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:41:41,727] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:41:47,729] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : retransmission for request (0, 1) timeout, retry.
+[2017-11-22 18:41:47,729] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : retransmission for request (0, 1) timeout, retry.
+[2017-11-22 18:41:47,730] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 33098)",)
+[2017-11-22 18:41:47,730] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 25524)",)
+[2017-11-22 18:41:47,730] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:41:47,730] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:41:47,731] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 10984)",)
+[2017-11-22 18:41:47,731] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 18967)",)
+[2017-11-22 18:41:47,731] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:41:47,731] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:41:47,732] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 21095)",)
+[2017-11-22 18:41:47,732] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 29870)",)
+[2017-11-22 18:41:47,732] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:41:47,732] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:41:53,734] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : retransmission for request (0, 1) timeout, retry.
+[2017-11-22 18:41:53,734] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : retransmission for request (0, 1) timeout, retry.
+[2017-11-22 18:41:53,735] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 25524)",)
+[2017-11-22 18:41:53,735] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 33098)",)
+[2017-11-22 18:41:53,736] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:41:53,736] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:41:53,736] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 18967)",)
+[2017-11-22 18:41:53,736] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 10984)",)
+[2017-11-22 18:41:53,737] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:41:53,737] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:41:53,737] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 21095)",)
+[2017-11-22 18:41:53,737] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 29870)",)
+[2017-11-22 18:41:53,738] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:41:53,738] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:41:59,739] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : retransmission for request (0, 1) timeout, retry.
+[2017-11-22 18:41:59,739] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : retransmission for request (0, 1) timeout, retry.
+[2017-11-22 18:41:59,740] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 33098)",)
+[2017-11-22 18:41:59,740] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 25524)",)
+[2017-11-22 18:41:59,740] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:41:59,740] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:41:59,741] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 10984)",)
+[2017-11-22 18:41:59,741] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 18967)",)
+[2017-11-22 18:41:59,741] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:41:59,741] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:41:59,742] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 21095)",)
+[2017-11-22 18:41:59,742] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 29870)",)
+[2017-11-22 18:41:59,742] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:41:59,742] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:42:05,744] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : retransmission for request (0, 1) timeout, retry.
+[2017-11-22 18:42:05,744] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : retransmission for request (0, 1) timeout, retry.
+[2017-11-22 18:42:05,745] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 33098)",)
+[2017-11-22 18:42:05,745] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 25524)",)
+[2017-11-22 18:42:05,745] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:42:05,745] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:42:05,746] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 10984)",)
+[2017-11-22 18:42:05,746] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 18967)",)
+[2017-11-22 18:42:05,746] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:42:05,747] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:42:05,747] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 21095)",)
+[2017-11-22 18:42:05,747] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 29870)",)
+[2017-11-22 18:42:05,749] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:42:05,749] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:42:11,751] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : retransmission for request (0, 1) timeout, retry.
+[2017-11-22 18:42:11,751] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : retransmission for request (0, 1) timeout, retry.
+[2017-11-22 18:42:11,752] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 33098)",)
+[2017-11-22 18:42:11,752] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 25524)",)
+[2017-11-22 18:42:11,752] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:42:11,752] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:42:11,753] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 18967)",)
+[2017-11-22 18:42:11,753] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 10984)",)
+[2017-11-22 18:42:11,753] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:42:11,753] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:42:11,754] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 29870)",)
+[2017-11-22 18:42:11,754] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 21095)",)
+[2017-11-22 18:42:11,754] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:42:11,754] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:42:17,755] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : retransmission for request (0, 1) timeout, retry.
+[2017-11-22 18:42:17,755] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : retransmission for request (0, 1) timeout, retry.
+[2017-11-22 18:42:17,757] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 33098)",)
+[2017-11-22 18:42:17,757] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:42:17,757] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 25524)",)
+[2017-11-22 18:42:17,758] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:42:17,758] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 18967)",)
+[2017-11-22 18:42:17,758] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 10984)",)
+[2017-11-22 18:42:17,758] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:42:17,758] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:42:17,759] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 29870)",)
+[2017-11-22 18:42:17,759] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 21095)",)
+[2017-11-22 18:42:17,759] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:42:17,759] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:42:23,760] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : retransmission for request (0, 1) timeout, retry.
+[2017-11-22 18:42:23,761] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 33098)",)
+[2017-11-22 18:42:23,761] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:42:23,761] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : retransmission for request (0, 1) timeout, retry.
+[2017-11-22 18:42:23,762] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 18967)",)
+[2017-11-22 18:42:23,762] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:42:23,763] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 25524)",)
+[2017-11-22 18:42:23,763] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 29870)",)
+[2017-11-22 18:42:23,763] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:42:23,764] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:42:23,764] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 10984)",)
+[2017-11-22 18:42:23,764] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:42:23,765] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 21095)",)
+[2017-11-22 18:42:23,765] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:42:29,765] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : retransmission for request (0, 1) timeout, retry.
+[2017-11-22 18:42:29,766] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 33098)",)
+[2017-11-22 18:42:29,766] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : retransmission for request (0, 1) timeout, retry.
+[2017-11-22 18:42:29,766] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:42:29,767] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 25524)",)
+[2017-11-22 18:42:29,767] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 18967)",)
+[2017-11-22 18:42:29,767] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:42:29,767] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:42:29,768] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 29870)",)
+[2017-11-22 18:42:29,768] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 10984)",)
+[2017-11-22 18:42:29,768] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:42:29,768] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:42:29,769] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 21095)",)
+[2017-11-22 18:42:29,769] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:42:35,769] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : retransmission for request (0, 1) timeout, retry.
+[2017-11-22 18:42:35,770] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 33098)",)
+[2017-11-22 18:42:35,770] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : retransmission for request (0, 1) timeout, retry.
+[2017-11-22 18:42:35,770] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:42:35,771] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 25524)",)
+[2017-11-22 18:42:35,771] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 18967)",)
+[2017-11-22 18:42:35,771] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:42:35,771] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:42:35,772] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 10984)",)
+[2017-11-22 18:42:35,772] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 29870)",)
+[2017-11-22 18:42:35,772] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:42:35,772] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:42:35,773] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 21095)",)
+[2017-11-22 18:42:35,773] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:42:41,774] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : retransmission for request (0, 1) timeout, retry.
+[2017-11-22 18:42:41,774] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : retransmission for request (0, 1) timeout, retry.
+[2017-11-22 18:42:41,775] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 33098)",)
+[2017-11-22 18:42:41,775] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 25524)",)
+[2017-11-22 18:42:41,776] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:42:41,776] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:42:41,777] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 10984)",)
+[2017-11-22 18:42:41,777] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 18967)",)
+[2017-11-22 18:42:41,779] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:42:41,779] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:42:41,780] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 29870)",)
+[2017-11-22 18:42:41,780] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 21095)",)
+[2017-11-22 18:42:41,780] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:42:41,780] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:42:47,782] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : retransmission for request (0, 1) timeout, retry.
+[2017-11-22 18:42:47,782] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : retransmission for request (0, 1) timeout, retry.
+[2017-11-22 18:42:47,783] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 33098)",)
+[2017-11-22 18:42:47,783] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 25524)",)
+[2017-11-22 18:42:47,783] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:42:47,783] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:42:47,784] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 18967)",)
+[2017-11-22 18:42:47,784] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 10984)",)
+[2017-11-22 18:42:47,784] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:42:47,784] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:42:47,785] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 29870)",)
+[2017-11-22 18:42:47,785] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 21095)",)
+[2017-11-22 18:42:47,785] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:42:47,785] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:42:53,786] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : retransmission for request (0, 1) timeout, retry.
+[2017-11-22 18:42:53,786] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : retransmission for request (0, 1) timeout, retry.
+[2017-11-22 18:42:53,787] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 33098)",)
+[2017-11-22 18:42:53,787] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 25524)",)
+[2017-11-22 18:42:53,788] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:42:53,788] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:42:53,788] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 18967)",)
+[2017-11-22 18:42:53,788] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 10984)",)
+[2017-11-22 18:42:53,789] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:42:53,789] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:42:53,789] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 21095)",)
+[2017-11-22 18:42:53,789] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 29870)",)
+[2017-11-22 18:42:53,790] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:42:53,790] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:42:59,791] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : retransmission for request (0, 1) timeout, retry.
+[2017-11-22 18:42:59,791] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : retransmission for request (0, 1) timeout, retry.
+[2017-11-22 18:42:59,792] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 25524)",)
+[2017-11-22 18:42:59,792] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 33098)",)
+[2017-11-22 18:42:59,793] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:42:59,793] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:42:59,793] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 18967)",)
+[2017-11-22 18:42:59,794] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 10984)",)
+[2017-11-22 18:42:59,794] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:42:59,794] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:42:59,795] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 21095)",)
+[2017-11-22 18:42:59,795] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 29870)",)
+[2017-11-22 18:42:59,795] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:42:59,795] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:43:05,796] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : retransmission for request (0, 1) timeout, retry.
+[2017-11-22 18:43:05,796] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : retransmission for request (0, 1) timeout, retry.
+[2017-11-22 18:43:05,797] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 25524)",)
+[2017-11-22 18:43:05,797] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 33098)",)
+[2017-11-22 18:43:05,798] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:43:05,799] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:43:05,799] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 10984)",)
+[2017-11-22 18:43:05,800] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:43:05,800] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 18967)",)
+[2017-11-22 18:43:05,800] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:43:05,800] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 21095)",)
+[2017-11-22 18:43:05,801] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 29870)",)
+[2017-11-22 18:43:05,801] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:43:05,801] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:43:11,802] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : retransmission for request (0, 1) timeout, retry.
+[2017-11-22 18:43:11,802] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : retransmission for request (0, 1) timeout, retry.
+[2017-11-22 18:43:11,803] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 33098)",)
+[2017-11-22 18:43:11,803] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 25524)",)
+[2017-11-22 18:43:11,803] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:43:11,803] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:43:11,804] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 10984)",)
+[2017-11-22 18:43:11,804] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 18967)",)
+[2017-11-22 18:43:11,804] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:43:11,804] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:43:11,805] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 21095)",)
+[2017-11-22 18:43:11,805] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 29870)",)
+[2017-11-22 18:43:11,805] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:43:11,805] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:43:17,807] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : retransmission for request (0, 1) timeout, retry.
+[2017-11-22 18:43:17,807] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : retransmission for request (0, 1) timeout, retry.
+[2017-11-22 18:43:17,810] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 25524)",)
+[2017-11-22 18:43:17,810] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 33098)",)
+[2017-11-22 18:43:17,810] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:43:17,810] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:43:17,811] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 10984)",)
+[2017-11-22 18:43:17,811] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 18967)",)
+[2017-11-22 18:43:17,811] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:43:17,811] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:43:17,812] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 21095)",)
+[2017-11-22 18:43:17,812] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 29870)",)
+[2017-11-22 18:43:17,812] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:43:17,812] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:43:23,814] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : retransmission for request (0, 1) timeout, retry.
+[2017-11-22 18:43:23,814] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : retransmission for request (0, 1) timeout, retry.
+[2017-11-22 18:43:23,815] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 25524)",)
+[2017-11-22 18:43:23,815] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 33098)",)
+[2017-11-22 18:43:23,815] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:43:23,815] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:43:23,816] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 10984)",)
+[2017-11-22 18:43:23,816] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 18967)",)
+[2017-11-22 18:43:23,816] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:43:23,816] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:43:23,816] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 21095)",)
+[2017-11-22 18:43:23,816] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 29870)",)
+[2017-11-22 18:43:23,817] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:43:23,817] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:43:29,818] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : retransmission for request (0, 1) timeout, retry.
+[2017-11-22 18:43:29,818] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : retransmission for request (0, 1) timeout, retry.
+[2017-11-22 18:43:29,819] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 25524)",)
+[2017-11-22 18:43:29,819] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 33098)",)
+[2017-11-22 18:43:29,820] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:43:29,820] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:43:29,820] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 10984)",)
+[2017-11-22 18:43:29,821] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 18967)",)
+[2017-11-22 18:43:29,821] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:43:29,821] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:43:29,821] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 21095)",)
+[2017-11-22 18:43:29,822] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 29870)",)
+[2017-11-22 18:43:29,822] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:43:29,822] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:43:35,824] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : retransmission for request (0, 1) timeout, retry.
+[2017-11-22 18:43:35,824] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : retransmission for request (0, 1) timeout, retry.
+[2017-11-22 18:43:35,825] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 25524)",)
+[2017-11-22 18:43:35,825] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 33098)",)
+[2017-11-22 18:43:35,825] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:43:35,825] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:43:35,826] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 18967)",)
+[2017-11-22 18:43:35,826] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 10984)",)
+[2017-11-22 18:43:35,826] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:43:35,826] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:43:35,827] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 21095)",)
+[2017-11-22 18:43:35,827] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 29870)",)
+[2017-11-22 18:43:35,827] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:43:35,827] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:43:41,831] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : retransmission for request (0, 1) timeout, retry.
+[2017-11-22 18:43:41,831] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : retransmission for request (0, 1) timeout, retry.
+[2017-11-22 18:43:41,831] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 33098)",)
+[2017-11-22 18:43:41,831] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 25524)",)
+[2017-11-22 18:43:41,832] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:43:41,832] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:43:41,832] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 10984)",)
+[2017-11-22 18:43:41,832] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 18967)",)
+[2017-11-22 18:43:41,833] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:43:41,833] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:43:41,833] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 29870)",)
+[2017-11-22 18:43:41,833] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 21095)",)
+[2017-11-22 18:43:41,834] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:43:41,834] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:43:47,835] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : retransmission for request (0, 1) timeout, retry.
+[2017-11-22 18:43:47,835] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : retransmission for request (0, 1) timeout, retry.
+[2017-11-22 18:43:47,836] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 33098)",)
+[2017-11-22 18:43:47,836] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 25524)",)
+[2017-11-22 18:43:47,837] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:43:47,837] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:43:47,837] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 18967)",)
+[2017-11-22 18:43:47,837] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 10984)",)
+[2017-11-22 18:43:47,838] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:43:47,838] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:43:47,838] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 21095)",)
+[2017-11-22 18:43:47,838] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 29870)",)
+[2017-11-22 18:43:47,838] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:43:47,838] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:43:53,840] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : retransmission for request (0, 1) timeout, retry.
+[2017-11-22 18:43:53,840] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : retransmission for request (0, 1) timeout, retry.
+[2017-11-22 18:43:53,841] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 33098)",)
+[2017-11-22 18:43:53,841] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 25524)",)
+[2017-11-22 18:43:53,842] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:43:53,842] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:43:53,842] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 10984)",)
+[2017-11-22 18:43:53,842] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 18967)",)
+[2017-11-22 18:43:53,843] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:43:53,843] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:43:53,843] da.sim.Router<OSProcessContainer-1>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 21095)",)
+[2017-11-22 18:43:53,843] da.sim.Router<OSProcessContainer-2>:ERROR: Could not send message due to: TransportException("connection refused by ('127.0.0.1', 29870)",)
+[2017-11-22 18:43:53,843] client.Client<Client:0dc02#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a404#MainNode>
+[2017-11-22 18:43:53,843] client.Client<Client:0dc03#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:8a406#MainNode>
+[2017-11-22 18:44:29,917] client.Client<Client:fd802#ClientNode>:OUTPUT: Client ID: 0 
+Workload: ["put('movie','star')", " append('movie',' wars')", " get('movie')"] 
+Timeout: 6
+[2017-11-22 18:44:29,932] client.Client<Client:fd803#ClientNode>:OUTPUT: Client ID: 0 
+Workload: ["put('movie','star')", " append('movie',' wars')", " get('movie')"] 
+Timeout: 6
+[2017-11-22 18:44:29,992] client.Client<Client:fd803#ClientNode>:OUTPUT: 
+Starting client 0
+[2017-11-22 18:44:29,994] client.Client<Client:fd803#ClientNode>:OUTPUT: 
+Client 0 : sent get_configuration to Olympus.
+[2017-11-22 18:44:29,994] client.Client<Client:fd802#ClientNode>:OUTPUT: 
+Starting client 0
+[2017-11-22 18:44:29,999] client.Client<Client:fd802#ClientNode>:OUTPUT: 
+Client 0 : sent get_configuration to Olympus.
+[2017-11-22 18:44:30,001] client.Client<Client:fd803#ClientNode>:OUTPUT: 
+Client 0 : received configuration 0 from Olympus.
+[2017-11-22 18:44:30,001] client.Client<Client:fd803#ClientNode>:OUTPUT: 
+Client 0 : configuration response from Olympus is validated.
+[2017-11-22 18:44:30,002] client.Client<Client:fd803#ClientNode>:OUTPUT: 
+Client 0 : start sending requests in new configuration 0
+[2017-11-22 18:44:30,002] client.Client<Client:fd803#ClientNode>:OUTPUT: 
+Client 0 : sent check config message with id 0 to Olympus.
+[2017-11-22 18:44:30,002] client.Client<Client:fd802#ClientNode>:OUTPUT: 
+Client 0 : received configuration 0 from Olympus.
+[2017-11-22 18:44:30,003] client.Client<Client:fd802#ClientNode>:OUTPUT: 
+Client 0 : configuration response from Olympus is validated.
+[2017-11-22 18:44:30,003] client.Client<Client:fd802#ClientNode>:OUTPUT: 
+Client 0 : start sending requests in new configuration 0
+[2017-11-22 18:44:30,003] client.Client<Client:fd803#ClientNode>:OUTPUT: 
+Client 0 : received check config response: OK continue normally.
+[2017-11-22 18:44:30,004] client.Client<Client:fd802#ClientNode>:OUTPUT: 
+Client 0 : sent check config message with id 0 to Olympus.
+[2017-11-22 18:44:30,005] client.Client<Client:fd803#ClientNode>:OUTPUT: 
+Client 0 : sent operation_request (0, 0) to <Replica:b0006#MainNode>
+[2017-11-22 18:44:30,005] client.Client<Client:fd802#ClientNode>:OUTPUT: 
+Client 0 : received check config response: OK continue normally.
+[2017-11-22 18:44:30,006] client.Client<Client:fd802#ClientNode>:OUTPUT: 
+Client 0 : sent operation_request (0, 0) to <Replica:b0003#MainNode>
+[2017-11-22 18:44:30,036] client.Client<Client:fd803#ClientNode>:OUTPUT: 
+Client 0 : received response for new request (0, 0) from <Replica:b0005#MainNode>
+[2017-11-22 18:44:30,037] client.Client<Client:fd803#ClientNode>:OUTPUT: 
+Client 0 : response of request (0, 0) for operation put('movie','star') is verified with 3 replicas acceptance.
+[2017-11-22 18:44:30,037] client.Client<Client:fd803#ClientNode>:OUTPUT: 
+Client 0 : response of new request (0, 0) for operation put('movie','star') is validated, the result is: OK
+[2017-11-22 18:44:30,040] client.Client<Client:fd803#ClientNode>:OUTPUT: 
+Client 0 : sent operation_request (0, 1) to <Replica:b0006#MainNode>
+[2017-11-22 18:44:30,041] client.Client<Client:fd802#ClientNode>:OUTPUT: 
+Client 0 : received response for new request (0, 0) from <Replica:b0004#MainNode>
+[2017-11-22 18:44:30,042] client.Client<Client:fd802#ClientNode>:OUTPUT: 
+Client 0 : response of request (0, 0) for operation put('movie','star') is verified with 3 replicas acceptance.
+[2017-11-22 18:44:30,042] client.Client<Client:fd802#ClientNode>:OUTPUT: 
+Client 0 : response of new request (0, 0) for operation put('movie','star') is validated, the result is: OK
+[2017-11-22 18:44:30,044] client.Client<Client:fd802#ClientNode>:OUTPUT: 
+Client 0 : sent operation_request (0, 1) to <Replica:b0003#MainNode>
+[2017-11-22 18:44:36,041] client.Client<Client:fd803#ClientNode>:OUTPUT: 
+Client 0 : timeout waiting for response for request (0, 1) start retransmission phase
+[2017-11-22 18:44:36,043] client.Client<Client:fd803#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:b0006#MainNode>
+[2017-11-22 18:44:36,044] client.Client<Client:fd803#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:b0006#MainNode>
+[2017-11-22 18:44:36,045] client.Client<Client:fd802#ClientNode>:OUTPUT: 
+Client 0 : timeout waiting for response for request (0, 1) start retransmission phase
+[2017-11-22 18:44:36,045] client.Client<Client:fd803#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:b0006#MainNode>
+[2017-11-22 18:44:36,046] client.Client<Client:fd802#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:b0003#MainNode>
+[2017-11-22 18:44:36,047] client.Client<Client:fd802#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:b0003#MainNode>
+[2017-11-22 18:44:36,050] client.Client<Client:fd802#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 1) to <Replica:b0003#MainNode>
+[2017-11-22 18:44:39,081] client.Client<Client:fd803#ClientNode>:OUTPUT: 
+Client 0 : received response for reconfig request (0, 1) from <Olympus:b0003#MainNode>
+[2017-11-22 18:44:39,081] client.Client<Client:fd802#ClientNode>:OUTPUT: 
+Client 0 : received response for reconfig request (0, 1) from <Olympus:b0002#MainNode>
+[2017-11-22 18:44:39,082] client.Client<Client:fd803#ClientNode>:OUTPUT: 
+Client 0 : response of request (0, 1) for operation  append('movie',' wars') is verified with 3 replicas acceptance.
+[2017-11-22 18:44:39,082] client.Client<Client:fd802#ClientNode>:OUTPUT: 
+Client 0 : response of request (0, 1) for operation  append('movie',' wars') is verified with 3 replicas acceptance.
+[2017-11-22 18:44:39,082] client.Client<Client:fd803#ClientNode>:OUTPUT: 
+Client 0 : response of reconfig request (0, 1) for operation  append('movie',' wars') is validated, the result is: OK
+[2017-11-22 18:44:39,083] client.Client<Client:fd802#ClientNode>:OUTPUT: 
+Client 0 : response of reconfig request (0, 1) for operation  append('movie',' wars') is validated, the result is: OK
+[2017-11-22 18:44:39,083] client.Client<Client:fd802#ClientNode>:OUTPUT: 
+Client 0 : retransmission for request (0, 1) finished.
+[2017-11-22 18:44:39,083] client.Client<Client:fd802#ClientNode>:OUTPUT: 
+Client 0 : sent check config message with id 1 to Olympus.
+[2017-11-22 18:44:39,083] client.Client<Client:fd803#ClientNode>:OUTPUT: 
+Client 0 : retransmission for request (0, 1) finished.
+[2017-11-22 18:44:39,085] client.Client<Client:fd803#ClientNode>:OUTPUT: 
+Client 0 : sent check config message with id 1 to Olympus.
+[2017-11-22 18:44:39,147] client.Client<Client:fd802#ClientNode>:OUTPUT: 
+Client 0 : received check config response: RECONFIG get new configuration
+[2017-11-22 18:44:39,148] client.Client<Client:fd802#ClientNode>:OUTPUT: 
+Client 0 : sent get_configuration to Olympus.
+[2017-11-22 18:44:39,148] client.Client<Client:fd803#ClientNode>:OUTPUT: 
+Client 0 : received check config response: RECONFIG get new configuration
+[2017-11-22 18:44:39,148] client.Client<Client:fd803#ClientNode>:OUTPUT: 
+Client 0 : sent get_configuration to Olympus.
+[2017-11-22 18:44:39,149] client.Client<Client:fd802#ClientNode>:OUTPUT: 
+Client 0 : received configuration 1 from Olympus.
+[2017-11-22 18:44:39,150] client.Client<Client:fd803#ClientNode>:OUTPUT: 
+Client 0 : received configuration 1 from Olympus.
+[2017-11-22 18:44:39,150] client.Client<Client:fd802#ClientNode>:OUTPUT: 
+Client 0 : configuration response from Olympus is validated.
+[2017-11-22 18:44:39,150] client.Client<Client:fd802#ClientNode>:OUTPUT: 
+Client 0 : start sending requests in new configuration 1
+[2017-11-22 18:44:39,150] client.Client<Client:fd803#ClientNode>:OUTPUT: 
+Client 0 : configuration response from Olympus is validated.
+[2017-11-22 18:44:39,150] client.Client<Client:fd803#ClientNode>:OUTPUT: 
+Client 0 : start sending requests in new configuration 1
+[2017-11-22 18:44:39,152] client.Client<Client:fd802#ClientNode>:OUTPUT: 
+Client 0 : sent operation_request (0, 2) to <Replica:b0008#MainNode>
+[2017-11-22 18:44:39,152] client.Client<Client:fd803#ClientNode>:OUTPUT: 
+Client 0 : sent operation_request (0, 2) to <Replica:b0007#MainNode>
+[2017-11-22 18:44:39,180] client.Client<Client:fd803#ClientNode>:OUTPUT: 
+Client 0 : received response for new request (0, 2) from <Replica:b0009#MainNode>
+[2017-11-22 18:44:39,181] client.Client<Client:fd802#ClientNode>:OUTPUT: 
+Client 0 : received response for new request (0, 2) from <Replica:b0007#MainNode>
+[2017-11-22 18:44:39,181] client.Client<Client:fd803#ClientNode>:OUTPUT: 
+Client 0 : response of request (0, 2) for operation  get('movie') is verified with 3 replicas acceptance.
+[2017-11-22 18:44:39,181] client.Client<Client:fd803#ClientNode>:OUTPUT: 
+Client 0 : response of new request (0, 2) for operation  get('movie') is validated, the result is: star wars
+[2017-11-22 18:44:39,182] client.Client<Client:fd802#ClientNode>:OUTPUT: 
+Client 0 : response of request (0, 2) for operation  get('movie') is verified with 3 replicas acceptance.
+[2017-11-22 18:44:39,182] client.Client<Client:fd802#ClientNode>:OUTPUT: 
+Client 0 : response of new request (0, 2) for operation  get('movie') is validated, the result is: star wars
+[2017-11-22 18:44:44,183] client.Client<Client:fd803#ClientNode>:OUTPUT: 
+Client 0 : actual request result: {(0, 0): 'OK', (0, 1): 'OK', (0, 2): 'star wars'}
+[2017-11-22 18:44:44,183] client.Client<Client:fd803#ClientNode>:OUTPUT: 
+Client 0 : final test result: {(0, 0): 'OK', (0, 1): 'OK', (0, 2): 'star wars'}
+[2017-11-22 18:44:44,183] client.Client<Client:fd803#ClientNode>:OUTPUT: 
+Client 0 : final test state: {'movie': 'star wars'}
+[2017-11-22 18:44:44,183] client.Client<Client:fd802#ClientNode>:OUTPUT: 
+Client 0 : actual request result: {(0, 0): 'OK', (0, 1): 'OK', (0, 2): 'star wars'}
+[2017-11-22 18:44:44,183] client.Client<Client:fd803#ClientNode>:OUTPUT: 
+Client 0 terminating.
+[2017-11-22 18:44:44,184] client.Client<Client:fd802#ClientNode>:OUTPUT: 
+Client 0 : final test result: {(0, 0): 'OK', (0, 1): 'OK', (0, 2): 'star wars'}
+[2017-11-22 18:44:44,184] client.Client<Client:fd802#ClientNode>:OUTPUT: 
+Client 0 : final test state: {'movie': 'star wars'}
+[2017-11-22 18:44:44,184] client.Client<Client:fd802#ClientNode>:OUTPUT: 
+Client 0 terminating.

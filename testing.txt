@@ -11,13 +11,36 @@ Client 2: put('school','Stony Brook'); put('school','Columbia'); get('school')
 
 3) N/A
 
-4) Log file name: logs/test1.log
+4) Log file name: logs/test1.client.phase3.log
+					logs/test1.replica.phase3.log
 
 5) The actual results and testing results for all requests for all clients match
 
 6) Test passes, since there is no byzantine failure and the output is expected
 
 ======================================================================================================
+
+test1 - Failure free multihost
+
+1) Failure free scenario with our own defined requests only running on 2 hosts
+
+3 clients with t = 1, own defined requests are:
+Client 0: put('movie','star'); append('movie',' wars'); get('movie')
+Client 1: put('jedi','luke skywalker'); slice('jedi','0:4'); get('jedi')
+Client 2: put('school','Stony Brook'); put('school','Columbia'); get('school')
+
+2) Input file name: config/test1.txt
+
+3) N/A
+
+4) Log file name: test1.multihost.log
+
+5) The actual results and testing results for all requests for all clients match
+
+6) Test passes, since there is no byzantine failure and the output is expected
+
+======================================================================================================
+
 test2 - Failure free with pseudorandom requests
 
 1) Failure free scenario with randomly generated requests only
@@ -30,7 +53,8 @@ Client 1: append('key_1','value_3'); append('key_1','value_3'); slice('key_0','2
 
 3) N/A
 
-4) Log file name: logs/test2.log
+4) Log file name: logs/test2.client.phase3.log
+					logs/test2.replica.phase3.log
 
 5) Since Client 1 has slice operation for 'key_0' but no put operation for 'key_0', therefore it's own dictionary state is different from the actual
 dictionary state of the replicas. However, with put 'key_0' request from Client 0, the slice operation will operate successfully on the replicas, 
@@ -56,8 +80,8 @@ timeouts for retransmit request, and ignore this request and moves to next reque
 Next request is processed successfully until the shuttle reaches Replica 1. Since Replica 1 never runs the previous request (0,1) but Replica 0 does,
 Replica 0 gives slot 1 to request (0,1) and slot 2 to request (0,2), but Replica 1 has a hole in slot 1, therefore it ignores the request as well.
 
-Client 0 once again timeouts and sends retransmit request for (0,2), and eventually all replicas timeout and supposedly send reconfig request to
-Olympus. In phase 2 there is no reconfig request, therefore Client 0 timeouts for retransmit request, and ignore this request and terminates
+Client 0 once again timeouts and sends retransmit request for (0,2), and eventually some replicas timeout and supposedly send reconfig request to
+Olympus. Olypus starts reconfiguration and client notifies new config as well. At the end, all requests are processed successfully.
 
 1 client with t = 1:
 Client 0: put('movie','star'); append('movie',' wars'); get('movie')
@@ -66,12 +90,12 @@ Client 0: put('movie','star'); append('movie',' wars'); get('movie')
 
 3) N/A
 
-4) Log file name: logs/test3.log
-
+4) Log file name: logs/test3.client.phase3.log
+					logs/test3.replica.phase3.log
 5) Client 0 only receives response for request (0,1), which is 'OK'. Replica 0 processes request (0,1) but other replicas don't, therefore Replica 0
 has state {'movie': 'star wars'}, but others have states {'movie': 'star'}
 
-6) In Phase 2 there is no reconfig, therefore both requests (0,1) and (0,2) timeout in retransmission. This is expected and test passes.
+6) Test passes, since reconfiguration is successful and results match
 
 =====================================================================================================
 test4 - Shuttle trigger Change Result
@@ -93,7 +117,8 @@ Client 2: put('school','Stony Brook'); put('school','Columbia'); get('school')
 
 3) N/A
 
-4) Log file name: logs/test4.log
+4) Log file name: logs/test4.client.phase3.log
+					logs/test4.replica.phase3.log
 
 5) The actual results and testing results for all requests for all clients match
 
@@ -117,7 +142,8 @@ Client 1: put('jedi','luke skywalker'); slice('jedi','0:4'); get('jedi')
 
 3) N/A
 
-4) Log file name: logs/test5.log
+4) Log file name: logs/test5.client.phase3.log
+					logs/test5.replica.phase3.log
 
 5) The actual results and testing results for all requests for all clients match
 
@@ -145,7 +171,8 @@ Client 1: put('jedi','luke skywalker'); slice('jedi','0:4'); get('jedi')
 
 3) N/A
 
-4) Log file name: logs/test6.log
+4) Log file name: logs/test6.client.phase3.log
+					logs/test6.replica.phase3.log
 
 5) The actual results and testing results for all requests for all clients match
 
@@ -167,7 +194,8 @@ Client 0: put('movie','star'); append('movie',' wars'); get('movie')
 
 3) N/A
 
-4) Log file name: logs/test7.log
+4) Log file name: logs/test7.client.phase3.log
+					logs/test7.replica.phase3.log
 
 5) Since Replica 2 sends result to Client first, at the time Replica 0 sends its result, Client 0 has already accepted the result and terminates.
 By inspecting the log, it can be checked that Replica 0 indeed injects the failures at result shuttle as well as result sent to client.
@@ -183,8 +211,140 @@ test8 - Stress Test
 
 3) N/A
 
-4) Log file name: logs/test8.log
+4) Log file name: logs/test8.client.phase3.log
+					logs/test8.replica.phase3.log
 
 5) N/A
 
 6) Test passes, since there is no run time error
+
+====================================================================================================
+test9 - Client Request trigger Invalid Order Signature, Wedge request trigger truncate_history
+
+1) 1 client with t = 2
+First failure put invalid order signature in shuttle, and cause next replica to ignore shuttle.
+Eventually reconfig happens because retransmission timeout, and Olympus asks for wedged statement from all replicas.
+replica 1 triggers truncate_history() failure and inject failure, however, since Olympus picks replicas [0, 2, 4] as the quorum, this failure
+doesn't affect the reconfiguration process.
+
+Failures:
+failures[0,0] = client_request(0,1), invalid_order_sig()
+failures[0,1] = wedge_request(0), truncate_history(2)
+
+2) Input file name: config/test9.txt
+
+3) N/A
+
+4) Log file name: logs/test9.log
+
+5) N/A
+
+6) Test passes, since reconfiguration is successful and results match with test results
+
+====================================================================================================
+test10 - Checkpoint trigger Crash
+
+1) 1 client with t = 1
+Set checkpoint interval to 2 and have 5 request, and when replica 2 receives checkpoint shuttle, it crashes.
+Reconfiguration begins and new config starts successfully.
+
+Failures:
+failures[0,2] = checkpoint(1), crash()
+
+2) Input file name: config/test10.txt
+
+3) N/A
+
+4) Log file name: logs/test10.log
+
+5) N/A
+
+6) Test passes, since reconfiguration is successful and results match with test results
+
+====================================================================================================
+test11 - Completed checkpoint trigger drop checkpoint stmt
+
+1) 1 client with t = 2
+Set checkpoint interval to 2 and have 5 request, and when replica 3 receives completed checkpoint shuttle, it drops t+1 checkpoint statements.
+Then replica 0 and 1 receives the completed checkpoint shuttle, but since majority of checkpoint statements are missing, it is ignored and the history stays the same
+
+Failures:
+failures[0,3] = completed_checkpoint(0), drop_checkpt_stmts()
+
+2) Input file name: config/test11.txt
+
+3) N/A
+
+4) Log file name: logs/test11.log
+
+5) N/A
+
+6) Test passes, since at the end replica 3 and 4 has history beginning at slot 4 after checkpoint, and replica 1 and 2 has history beginning at slot 2
+
+====================================================================================================
+test12 - drop failure triggers retransmission, then triggers invalid_result
+
+1) 3 client with t = 2
+Head replica drops incoming client request to initiate retransmission.
+Replica 2 triggers invalid result failure, and client doesn't validate the signature.
+
+Failures:
+failures[0,0] = client_request(2,2), drop()
+failures[0,2] = client_request(2,0), invalid_result_sig()
+
+2) Input file name: config/test12.txt
+
+3) N/A
+
+4) Log file name: logs/test12.log
+
+5) N/A
+
+6) Test passes, since client doesn't validate signature, but still accept result because majority (4) of result statements are validated.
+
+====================================================================================================
+test13 - trigger reconfig, get_running_state trigger extra_op and catch_up trigger drop
+
+1) 1 client with t = 1
+Use increment slot failure to trigger reconfiguration. 
+During reconfiguration, get extra op makes running state message invalid, so Olympus asks next replica for its running state.
+When new configuration starts, invalid_order_sig() failure is triggered, and Olympus eventually starts another reconfig.
+At the end, everything works as normal again.
+
+Failures:
+failures[0,0] = client_request(0,1), increment_slot(); get_running_state(0), extra_op()
+failures[0,1] = new_configuration(0), invalid_order_sig()
+
+2) Input file name: config/test13.txt
+
+3) N/A
+
+4) Log file name: logs/test13.log
+
+5) N/A
+
+6) Test passes, since both reconfigurations are successful and results match with test results
+
+====================================================================================================
+test14 - Client Request trigger Change Operation, catch_up trigger drop()
+
+1) 1 client with t = 2
+Change operation failure triggers reconfiguration, and Olympus asks other non-head replicas to catch up.
+Replica 1 drops catch up message, and Olympus has to restart reconfig process again.
+Since failure is gone, Replica 1 works normally and reconfiguration succeed.
+
+Failures:
+failures[0,0] = client_request(0,1), change_operation()
+failures[0,1] = catch_up(0), drop()
+
+2) Input file name: config/test11.txt
+
+3) N/A
+
+4) Log file name: logs/test11.log
+
+5) N/A
+
+6) Test passes, since reconfiguration is successful and results match with test results
+
+====================================================================================================

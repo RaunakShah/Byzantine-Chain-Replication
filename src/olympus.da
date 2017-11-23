@@ -122,28 +122,35 @@ class Olympus(process):
 		else:
 			self.reconfig_state = True
 			output("\nOlympus: start reconfiguration.", sep = " ")
-		# for now only replicas send reconfig request
-		output("\nOlympus: send wedge requests to all", self.replica_num, "replicas.", sep = " ")
-		for r in self.replica_list:
-			send(('wedge_request', self), to = r)
-		#wait for replies from all replicas
-		if await(len(self.wedged_msg) == self.replica_num):
-			output("\nOlympus: received wedge statements from all", self.replica_num, "replicas.", sep = " ")
-			while True:
-				# start looking for a quorum
-				quorum = findQuorum()
-				# the below if condition should never happen, but included for safety
-				if len(quorum) < self.quorum_size:
-					output("\nOlympus: cannot find a quorum with enough replicas, this should never happen", sep = " ")
-					return			
-				# switch config
-				switch_config_succeed = switchConfig(quorum)
-				# if succeed, continue; else redo finding quorum
-				if switch_config_succeed:
-					break
-			
+		
+		stay_in_loop = True
+		while stay_in_loop:	
+			# for now only replicas send reconfig request
+			output("\nOlympus: send wedge requests to all", self.replica_num, "replicas.", sep = " ")
+			send(('wedge_request', self), to = self.replicas)
+			#wait for replies from all replicas
+			if await(len(self.wedged_msg) >= self.quorum_size):
+				output("\nOlympus: received wedge statements from all", len(self.wedged_msg), "replicas.", sep = " ")
+				while True:
+					# start looking for a quorum
+					quorum = findQuorum()
+					# the below if condition should never happen, but included for safety
+					if len(quorum) < self.quorum_size:
+						output("\nOlympus: cannot find a quorum with enough replicas, this should never happen", sep = " ")
+						return			
+					# switch config
+					switch_config_succeed = switchConfig(quorum)
+					# if succeed, continue; else redo finding quorum
+					if switch_config_succeed:
+						stay_in_loop = False
+						break
+			if stay_in_loop:
+				self.wedged_msg = []
+				self.selected_quorum = []
+			else:
+				break
 	
-	def receive(msg = ('wedge_statement', wedged_response, replica_id, replica_history, replica_checkpt_proof, replica_last_checkpt, replica_config_id, _), from_= _):
+	def receive(msg = ('wedge_statement', wedged_response, replica_id, replica_history, replica_checkpt_proof, replica_last_checkpt, replica_config_id), from_= _):
 		output("\nOlympus: received wedge statement from replica", replica_id, sep = " ")
 		# check if config id matches
 		if replica_config_id == self.configuration_id:
@@ -332,7 +339,7 @@ class Olympus(process):
 					continue
 					
 				# get hash of current replica first
-				current_checkpt_hash = [t[1].message for t in replica_checkpt_proof if t[0] == replica_id]
+				current_checkpt_hash = [t[1].message for t in replica_checkpt_proof if t[0] == replica_id][0]
 					
 				# check for each check point statement in checkpoint proof
 				for index in range(len(replica_checkpt_proof)):
@@ -435,7 +442,9 @@ class Olympus(process):
 								current_result_proof = result_proof_dict[key][3]
 								current_result_proof.append(result_stmt)
 								result_proof_dict[key] = (request_id, request_result, request_operation, current_result_proof)
-							
+				elif timeout(10):
+					return False
+				
 			output("\nOlympus: caught up message received from all replicas")
 			
 			# log constructed result proof
@@ -444,7 +453,7 @@ class Olympus(process):
 					"for operation", result_proof_dict[key][2], sep =" ")
     	
 			#check if all state hashes are the same after catch up
-			expected_value = next(iter(ch.values()))  
+			expected_value = next(iter(ch.values())) 
 			matched_state_num = 0 
 			for value in ch.values():
 				# check if hashes match
@@ -487,7 +496,7 @@ class Olympus(process):
 						break
 			
 			if not running_state_match or correct_state is None:
-				output("\nOlympus: not correct running state found.", sep = " ")
+				output("\nOlympus: no correct running state found.", sep = " ")
 				return False
 				
 			# for each client's latest request, send result proof

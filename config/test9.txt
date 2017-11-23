@@ -1,14 +1,14 @@
-test_case_name = test9 - Client Request trigger Invalid Order Signature
+test_case_name = test9 - Client Request trigger Invalid Order Signature, Wedge request trigger truncate_history
 
 # number of failures to tolerate.  number of replicas is 2t+1.
-t = 1
+t = 2
 # number of clients
 num_client = 1
 # client timeout, in milliseconds.
-client_timeout = 3000
+client_timeout = 6000
 # timeout, in milliseconds, for head and non-head servers, respectively
-head_timeout = 5000
-nonhead_timeout = 5000
+head_timeout = 3000
+nonhead_timeout = 3000
 # checkpoint interval.  take a checkpoint every checkpt_interval slots.
 checkpt_interval = 10
 
@@ -17,3 +17,4 @@ workload[0] = put('movie','star'); append('movie',' wars'); get('movie')
 
 # FAILURE SCENARIO
 failures[0,0] = client_request(0,1), invalid_order_sig()
+failures[0,1] = wedge_request(0), truncate_history(2)

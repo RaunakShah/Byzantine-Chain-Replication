@@ -1,0 +1,294 @@
+[2017-11-22 19:31:58,788] client.Client<Client:71403#ClientNode>:OUTPUT: Client ID: 0 
+Workload: ["put('movie','star')", " append('movie',' wars')", " get('movie')"] 
+Timeout: 3
+[2017-11-22 19:31:58,791] client.Client<Client:71404#ClientNode>:OUTPUT: Client ID: 1 
+Workload: ["put('jedi','luke skywalker')", " slice('jedi','0:4')", " get('jedi')"] 
+Timeout: 3
+[2017-11-22 19:31:58,794] client.Client<Client:71402#ClientNode>:OUTPUT: Client ID: 2 
+Workload: ["put('school','Stony Brook')", " put('school','Columbia')", " get('school')"] 
+Timeout: 3
+[2017-11-22 19:31:58,835] client.Client<Client:71406#ClientNode>:OUTPUT: Client ID: 0 
+Workload: ["put('movie','star')", " append('movie',' wars')", " get('movie')"] 
+Timeout: 3
+[2017-11-22 19:31:58,838] client.Client<Client:71405#ClientNode>:OUTPUT: Client ID: 1 
+Workload: ["put('jedi','luke skywalker')", " slice('jedi','0:4')", " get('jedi')"] 
+Timeout: 3
+[2017-11-22 19:31:58,841] client.Client<Client:71407#ClientNode>:OUTPUT: Client ID: 2 
+Workload: ["put('school','Stony Brook')", " put('school','Columbia')", " get('school')"] 
+Timeout: 3
+[2017-11-22 19:31:58,863] client.Client<Client:71403#ClientNode>:OUTPUT: 
+Starting client 0
+[2017-11-22 19:31:58,863] client.Client<Client:71404#ClientNode>:OUTPUT: 
+Starting client 1
+[2017-11-22 19:31:58,864] client.Client<Client:71402#ClientNode>:OUTPUT: 
+Starting client 2
+[2017-11-22 19:31:58,868] client.Client<Client:71403#ClientNode>:OUTPUT: 
+Client 0 : sent get_configuration to Olympus.
+[2017-11-22 19:31:58,868] client.Client<Client:71404#ClientNode>:OUTPUT: 
+Client 1 : sent get_configuration to Olympus.
+[2017-11-22 19:31:58,871] client.Client<Client:71402#ClientNode>:OUTPUT: 
+Client 2 : sent get_configuration to Olympus.
+[2017-11-22 19:31:58,886] client.Client<Client:71403#ClientNode>:OUTPUT: 
+Client 0 : received configuration 0 from Olympus.
+[2017-11-22 19:31:58,887] client.Client<Client:71403#ClientNode>:OUTPUT: 
+Client 0 : configuration response from Olympus is validated.
+[2017-11-22 19:31:58,888] client.Client<Client:71403#ClientNode>:OUTPUT: 
+Client 0 : start sending requests in new configuration 0
+[2017-11-22 19:31:58,889] client.Client<Client:71403#ClientNode>:OUTPUT: 
+Client 0 : sent check config message with id 0 to Olympus.
+[2017-11-22 19:31:58,892] client.Client<Client:71404#ClientNode>:OUTPUT: 
+Client 1 : received configuration 0 from Olympus.
+[2017-11-22 19:31:58,893] client.Client<Client:71404#ClientNode>:OUTPUT: 
+Client 1 : configuration response from Olympus is validated.
+[2017-11-22 19:31:58,893] client.Client<Client:71404#ClientNode>:OUTPUT: 
+Client 1 : start sending requests in new configuration 0
+[2017-11-22 19:31:58,893] client.Client<Client:71404#ClientNode>:OUTPUT: 
+Client 1 : sent check config message with id 0 to Olympus.
+[2017-11-22 19:31:58,897] client.Client<Client:71402#ClientNode>:OUTPUT: 
+Client 2 : received configuration 0 from Olympus.
+[2017-11-22 19:31:58,898] client.Client<Client:71402#ClientNode>:OUTPUT: 
+Client 2 : configuration response from Olympus is validated.
+[2017-11-22 19:31:58,899] client.Client<Client:71402#ClientNode>:OUTPUT: 
+Client 2 : start sending requests in new configuration 0
+[2017-11-22 19:31:58,899] client.Client<Client:71403#ClientNode>:OUTPUT: 
+Client 0 : received check config response: OK continue normally.
+[2017-11-22 19:31:58,899] client.Client<Client:71402#ClientNode>:OUTPUT: 
+Client 2 : sent check config message with id 0 to Olympus.
+[2017-11-22 19:31:58,901] client.Client<Client:71403#ClientNode>:OUTPUT: 
+Client 0 : sent operation_request (0, 0) to <Replica:8d803#MainNode>
+[2017-11-22 19:31:58,901] client.Client<Client:71404#ClientNode>:OUTPUT: 
+Client 1 : received check config response: OK continue normally.
+[2017-11-22 19:31:58,908] client.Client<Client:71404#ClientNode>:OUTPUT: 
+Client 1 : sent operation_request (1, 0) to <Replica:8d803#MainNode>
+[2017-11-22 19:31:58,925] client.Client<Client:71402#ClientNode>:OUTPUT: 
+Client 2 : received check config response: OK continue normally.
+[2017-11-22 19:31:58,927] client.Client<Client:71402#ClientNode>:OUTPUT: 
+Client 2 : sent operation_request (2, 0) to <Replica:8d803#MainNode>
+[2017-11-22 19:31:58,933] client.Client<Client:71406#ClientNode>:OUTPUT: 
+Starting client 0
+[2017-11-22 19:31:58,934] client.Client<Client:71406#ClientNode>:OUTPUT: 
+Client 0 : sent get_configuration to Olympus.
+[2017-11-22 19:31:58,934] client.Client<Client:71405#ClientNode>:OUTPUT: 
+Starting client 1
+[2017-11-22 19:31:58,935] client.Client<Client:71403#ClientNode>:OUTPUT: 
+Client 0 : received response for new request (0, 0) from <Replica:8d805#MainNode>
+[2017-11-22 19:31:58,936] client.Client<Client:71403#ClientNode>:OUTPUT: 
+Client 0 : response of request (0, 0) for operation put('movie','star') is verified with 3 replicas acceptance.
+[2017-11-22 19:31:58,937] client.Client<Client:71403#ClientNode>:OUTPUT: 
+Client 0 : response of new request (0, 0) for operation put('movie','star') is validated, the result is: OK
+[2017-11-22 19:31:58,937] client.Client<Client:71405#ClientNode>:OUTPUT: 
+Client 1 : sent get_configuration to Olympus.
+[2017-11-22 19:31:58,936] client.Client<Client:71407#ClientNode>:OUTPUT: 
+Starting client 2
+[2017-11-22 19:31:58,938] client.Client<Client:71403#ClientNode>:OUTPUT: 
+Client 0 : sent operation_request (0, 1) to <Replica:8d803#MainNode>
+[2017-11-22 19:31:58,940] client.Client<Client:71407#ClientNode>:OUTPUT: 
+Client 2 : sent get_configuration to Olympus.
+[2017-11-22 19:31:58,940] client.Client<Client:71406#ClientNode>:OUTPUT: 
+Client 0 : received configuration 0 from Olympus.
+[2017-11-22 19:31:58,945] client.Client<Client:71405#ClientNode>:OUTPUT: 
+Client 1 : received configuration 0 from Olympus.
+[2017-11-22 19:31:58,945] client.Client<Client:71406#ClientNode>:OUTPUT: 
+Client 0 : configuration response from Olympus is validated.
+[2017-11-22 19:31:58,945] client.Client<Client:71406#ClientNode>:OUTPUT: 
+Client 0 : start sending requests in new configuration 0
+[2017-11-22 19:31:58,946] client.Client<Client:71405#ClientNode>:OUTPUT: 
+Client 1 : configuration response from Olympus is validated.
+[2017-11-22 19:31:58,946] client.Client<Client:71406#ClientNode>:OUTPUT: 
+Client 0 : sent check config message with id 0 to Olympus.
+[2017-11-22 19:31:58,946] client.Client<Client:71405#ClientNode>:OUTPUT: 
+Client 1 : start sending requests in new configuration 0
+[2017-11-22 19:31:58,946] client.Client<Client:71405#ClientNode>:OUTPUT: 
+Client 1 : sent check config message with id 0 to Olympus.
+[2017-11-22 19:31:58,950] client.Client<Client:71406#ClientNode>:OUTPUT: 
+Client 0 : received check config response: OK continue normally.
+[2017-11-22 19:31:58,950] client.Client<Client:71405#ClientNode>:OUTPUT: 
+Client 1 : received check config response: OK continue normally.
+[2017-11-22 19:31:58,951] client.Client<Client:71406#ClientNode>:OUTPUT: 
+Client 0 : sent operation_request (0, 0) to <Replica:8d804#MainNode>
+[2017-11-22 19:31:58,951] client.Client<Client:71407#ClientNode>:OUTPUT: 
+Client 2 : received configuration 0 from Olympus.
+[2017-11-22 19:31:58,951] client.Client<Client:71405#ClientNode>:OUTPUT: 
+Client 1 : sent operation_request (1, 0) to <Replica:8d804#MainNode>
+[2017-11-22 19:31:58,955] client.Client<Client:71407#ClientNode>:OUTPUT: 
+Client 2 : configuration response from Olympus is validated.
+[2017-11-22 19:31:58,955] client.Client<Client:71407#ClientNode>:OUTPUT: 
+Client 2 : start sending requests in new configuration 0
+[2017-11-22 19:31:58,956] client.Client<Client:71407#ClientNode>:OUTPUT: 
+Client 2 : sent check config message with id 0 to Olympus.
+[2017-11-22 19:31:58,961] client.Client<Client:71407#ClientNode>:OUTPUT: 
+Client 2 : received check config response: OK continue normally.
+[2017-11-22 19:31:58,963] client.Client<Client:71404#ClientNode>:OUTPUT: 
+Client 1 : received response for new request (1, 0) from <Replica:8d805#MainNode>
+[2017-11-22 19:31:58,964] client.Client<Client:71407#ClientNode>:OUTPUT: 
+Client 2 : sent operation_request (2, 0) to <Replica:8d804#MainNode>
+[2017-11-22 19:31:58,964] client.Client<Client:71404#ClientNode>:OUTPUT: 
+Client 1 : response of request (1, 0) for operation put('jedi','luke skywalker') is verified with 3 replicas acceptance.
+[2017-11-22 19:31:58,965] client.Client<Client:71404#ClientNode>:OUTPUT: 
+Client 1 : response of new request (1, 0) for operation put('jedi','luke skywalker') is validated, the result is: OK
+[2017-11-22 19:31:58,966] client.Client<Client:71404#ClientNode>:OUTPUT: 
+Client 1 : sent operation_request (1, 1) to <Replica:8d803#MainNode>
+[2017-11-22 19:31:58,981] client.Client<Client:71402#ClientNode>:OUTPUT: 
+Client 2 : received response for new request (2, 0) from <Replica:8d805#MainNode>
+[2017-11-22 19:31:58,982] client.Client<Client:71402#ClientNode>:OUTPUT: 
+Client 2 : response of request (2, 0) for operation put('school','Stony Brook') is verified with 3 replicas acceptance.
+[2017-11-22 19:31:58,983] client.Client<Client:71402#ClientNode>:OUTPUT: 
+Client 2 : response of new request (2, 0) for operation put('school','Stony Brook') is validated, the result is: OK
+[2017-11-22 19:31:58,985] client.Client<Client:71402#ClientNode>:OUTPUT: 
+Client 2 : sent operation_request (2, 1) to <Replica:8d803#MainNode>
+[2017-11-22 19:31:58,996] client.Client<Client:71406#ClientNode>:OUTPUT: 
+Client 0 : received response for new request (0, 0) from <Replica:8d805#MainNode>
+[2017-11-22 19:31:58,997] client.Client<Client:71406#ClientNode>:OUTPUT: 
+Client 0 : response of request (0, 0) for operation put('movie','star') is verified with 3 replicas acceptance.
+[2017-11-22 19:31:58,998] client.Client<Client:71406#ClientNode>:OUTPUT: 
+Client 0 : response of new request (0, 0) for operation put('movie','star') is validated, the result is: OK
+[2017-11-22 19:31:58,999] client.Client<Client:71406#ClientNode>:OUTPUT: 
+Client 0 : sent operation_request (0, 1) to <Replica:8d804#MainNode>
+[2017-11-22 19:31:59,003] client.Client<Client:71405#ClientNode>:OUTPUT: 
+Client 1 : received response for new request (1, 0) from <Replica:8d805#MainNode>
+[2017-11-22 19:31:59,004] client.Client<Client:71405#ClientNode>:OUTPUT: 
+Client 1 : response of request (1, 0) for operation put('jedi','luke skywalker') is verified with 3 replicas acceptance.
+[2017-11-22 19:31:59,004] client.Client<Client:71405#ClientNode>:OUTPUT: 
+Client 1 : response of new request (1, 0) for operation put('jedi','luke skywalker') is validated, the result is: OK
+[2017-11-22 19:31:59,007] client.Client<Client:71405#ClientNode>:OUTPUT: 
+Client 1 : sent operation_request (1, 1) to <Replica:8d804#MainNode>
+[2017-11-22 19:31:59,014] client.Client<Client:71407#ClientNode>:OUTPUT: 
+Client 2 : received response for new request (2, 0) from <Replica:8d805#MainNode>
+[2017-11-22 19:31:59,015] client.Client<Client:71407#ClientNode>:OUTPUT: 
+Client 2 : response of request (2, 0) for operation put('school','Stony Brook') is verified with 3 replicas acceptance.
+[2017-11-22 19:31:59,016] client.Client<Client:71407#ClientNode>:OUTPUT: 
+Client 2 : response of new request (2, 0) for operation put('school','Stony Brook') is validated, the result is: OK
+[2017-11-22 19:31:59,017] client.Client<Client:71407#ClientNode>:OUTPUT: 
+Client 2 : sent operation_request (2, 1) to <Replica:8d804#MainNode>
+[2017-11-22 19:31:59,025] client.Client<Client:71403#ClientNode>:OUTPUT: 
+Client 0 : received response for new request (0, 1) from <Replica:8d805#MainNode>
+[2017-11-22 19:31:59,026] client.Client<Client:71403#ClientNode>:OUTPUT: 
+Client 0 : response of request (0, 1) for operation  append('movie',' wars') is verified with 3 replicas acceptance.
+[2017-11-22 19:31:59,027] client.Client<Client:71403#ClientNode>:OUTPUT: 
+Client 0 : response of new request (0, 1) for operation  append('movie',' wars') is validated, the result is: OK
+[2017-11-22 19:31:59,029] client.Client<Client:71403#ClientNode>:OUTPUT: 
+Client 0 : sent operation_request (0, 2) to <Replica:8d803#MainNode>
+[2017-11-22 19:31:59,030] client.Client<Client:71406#ClientNode>:OUTPUT: 
+Client 0 : received response for new request (0, 1) from <Replica:8d805#MainNode>
+[2017-11-22 19:31:59,031] client.Client<Client:71406#ClientNode>:OUTPUT: 
+Client 0 : response of request (0, 1) for operation  append('movie',' wars') is verified with 3 replicas acceptance.
+[2017-11-22 19:31:59,031] client.Client<Client:71406#ClientNode>:OUTPUT: 
+Client 0 : response of new request (0, 1) for operation  append('movie',' wars') is validated, the result is: OK
+[2017-11-22 19:31:59,032] client.Client<Client:71406#ClientNode>:OUTPUT: 
+Client 0 : sent operation_request (0, 2) to <Replica:8d804#MainNode>
+[2017-11-22 19:31:59,037] client.Client<Client:71405#ClientNode>:OUTPUT: 
+Client 1 : received response for new request (1, 1) from <Replica:8d805#MainNode>
+[2017-11-22 19:31:59,038] client.Client<Client:71405#ClientNode>:OUTPUT: 
+Client 1 : response of request (1, 1) for operation  slice('jedi','0:4') is verified with 3 replicas acceptance.
+[2017-11-22 19:31:59,038] client.Client<Client:71405#ClientNode>:OUTPUT: 
+Client 1 : response of new request (1, 1) for operation  slice('jedi','0:4') is validated, the result is: OK
+[2017-11-22 19:31:59,039] client.Client<Client:71405#ClientNode>:OUTPUT: 
+Client 1 : sent operation_request (1, 2) to <Replica:8d804#MainNode>
+[2017-11-22 19:31:59,042] client.Client<Client:71407#ClientNode>:OUTPUT: 
+Client 2 : received response for new request (2, 1) from <Replica:8d805#MainNode>
+[2017-11-22 19:31:59,044] client.Client<Client:71407#ClientNode>:OUTPUT: 
+Client 2 : response of request (2, 1) for operation  put('school','Columbia') is verified with 3 replicas acceptance.
+[2017-11-22 19:31:59,044] client.Client<Client:71407#ClientNode>:OUTPUT: 
+Client 2 : response of new request (2, 1) for operation  put('school','Columbia') is validated, the result is: OK
+[2017-11-22 19:31:59,045] client.Client<Client:71407#ClientNode>:OUTPUT: 
+Client 2 : sent operation_request (2, 2) to <Replica:8d804#MainNode>
+[2017-11-22 19:31:59,048] client.Client<Client:71406#ClientNode>:OUTPUT: 
+Client 0 : received response for new request (0, 2) from <Replica:8d805#MainNode>
+[2017-11-22 19:31:59,049] client.Client<Client:71406#ClientNode>:OUTPUT: 
+Client 0 : response of request (0, 2) for operation  get('movie') is verified with 3 replicas acceptance.
+[2017-11-22 19:31:59,049] client.Client<Client:71406#ClientNode>:OUTPUT: 
+Client 0 : response of new request (0, 2) for operation  get('movie') is validated, the result is: star wars
+[2017-11-22 19:31:59,062] client.Client<Client:71405#ClientNode>:OUTPUT: 
+Client 1 : received response for new request (1, 2) from <Replica:8d805#MainNode>
+[2017-11-22 19:31:59,063] client.Client<Client:71405#ClientNode>:OUTPUT: 
+Client 1 : response of request (1, 2) for operation  get('jedi') is verified with 3 replicas acceptance.
+[2017-11-22 19:31:59,064] client.Client<Client:71405#ClientNode>:OUTPUT: 
+Client 1 : response of new request (1, 2) for operation  get('jedi') is validated, the result is: luke
+[2017-11-22 19:31:59,072] client.Client<Client:71407#ClientNode>:OUTPUT: 
+Client 2 : received response for new request (2, 2) from <Replica:8d805#MainNode>
+[2017-11-22 19:31:59,073] client.Client<Client:71407#ClientNode>:OUTPUT: 
+Client 2 : response of request (2, 2) for operation  get('school') is verified with 3 replicas acceptance.
+[2017-11-22 19:31:59,074] client.Client<Client:71407#ClientNode>:OUTPUT: 
+Client 2 : response of new request (2, 2) for operation  get('school') is validated, the result is: Columbia
+[2017-11-22 19:31:59,081] client.Client<Client:71404#ClientNode>:OUTPUT: 
+Client 1 : received response for new request (1, 1) from <Replica:8d805#MainNode>
+[2017-11-22 19:31:59,082] client.Client<Client:71404#ClientNode>:OUTPUT: 
+Client 1 : response of request (1, 1) for operation  slice('jedi','0:4') is verified with 3 replicas acceptance.
+[2017-11-22 19:31:59,082] client.Client<Client:71404#ClientNode>:OUTPUT: 
+Client 1 : response of new request (1, 1) for operation  slice('jedi','0:4') is validated, the result is: OK
+[2017-11-22 19:31:59,083] client.Client<Client:71404#ClientNode>:OUTPUT: 
+Client 1 : sent operation_request (1, 2) to <Replica:8d803#MainNode>
+[2017-11-22 19:31:59,090] client.Client<Client:71402#ClientNode>:OUTPUT: 
+Client 2 : received response for new request (2, 1) from <Replica:8d805#MainNode>
+[2017-11-22 19:31:59,092] client.Client<Client:71402#ClientNode>:OUTPUT: 
+Client 2 : response of request (2, 1) for operation  put('school','Columbia') is verified with 3 replicas acceptance.
+[2017-11-22 19:31:59,092] client.Client<Client:71402#ClientNode>:OUTPUT: 
+Client 2 : response of new request (2, 1) for operation  put('school','Columbia') is validated, the result is: OK
+[2017-11-22 19:31:59,093] client.Client<Client:71402#ClientNode>:OUTPUT: 
+Client 2 : sent operation_request (2, 2) to <Replica:8d803#MainNode>
+[2017-11-22 19:31:59,102] client.Client<Client:71403#ClientNode>:OUTPUT: 
+Client 0 : received response for new request (0, 2) from <Replica:8d805#MainNode>
+[2017-11-22 19:31:59,103] client.Client<Client:71403#ClientNode>:OUTPUT: 
+Client 0 : response of request (0, 2) for operation  get('movie') is verified with 3 replicas acceptance.
+[2017-11-22 19:31:59,103] client.Client<Client:71403#ClientNode>:OUTPUT: 
+Client 0 : response of new request (0, 2) for operation  get('movie') is validated, the result is: star wars
+[2017-11-22 19:31:59,113] client.Client<Client:71404#ClientNode>:OUTPUT: 
+Client 1 : received response for new request (1, 2) from <Replica:8d805#MainNode>
+[2017-11-22 19:31:59,114] client.Client<Client:71404#ClientNode>:OUTPUT: 
+Client 1 : response of request (1, 2) for operation  get('jedi') is verified with 3 replicas acceptance.
+[2017-11-22 19:31:59,115] client.Client<Client:71404#ClientNode>:OUTPUT: 
+Client 1 : response of new request (1, 2) for operation  get('jedi') is validated, the result is: luke
+[2017-11-22 19:31:59,120] client.Client<Client:71402#ClientNode>:OUTPUT: 
+Client 2 : received response for new request (2, 2) from <Replica:8d805#MainNode>
+[2017-11-22 19:31:59,121] client.Client<Client:71402#ClientNode>:OUTPUT: 
+Client 2 : response of request (2, 2) for operation  get('school') is verified with 3 replicas acceptance.
+[2017-11-22 19:31:59,121] client.Client<Client:71402#ClientNode>:OUTPUT: 
+Client 2 : response of new request (2, 2) for operation  get('school') is validated, the result is: Columbia
+[2017-11-22 19:32:04,050] client.Client<Client:71406#ClientNode>:OUTPUT: 
+Client 0 : actual request result: {(0, 0): 'OK', (0, 1): 'OK', (0, 2): 'star wars'}
+[2017-11-22 19:32:04,050] client.Client<Client:71406#ClientNode>:OUTPUT: 
+Client 0 : final test result: {(0, 0): 'OK', (0, 1): 'OK', (0, 2): 'star wars'}
+[2017-11-22 19:32:04,051] client.Client<Client:71406#ClientNode>:OUTPUT: 
+Client 0 : final test state: {'movie': 'star wars'}
+[2017-11-22 19:32:04,051] client.Client<Client:71406#ClientNode>:OUTPUT: 
+Client 0 terminating.
+[2017-11-22 19:32:04,065] client.Client<Client:71405#ClientNode>:OUTPUT: 
+Client 1 : actual request result: {(1, 0): 'OK', (1, 1): 'OK', (1, 2): 'luke'}
+[2017-11-22 19:32:04,065] client.Client<Client:71405#ClientNode>:OUTPUT: 
+Client 1 : final test result: {(1, 0): 'OK', (1, 1): 'OK', (1, 2): 'luke'}
+[2017-11-22 19:32:04,065] client.Client<Client:71405#ClientNode>:OUTPUT: 
+Client 1 : final test state: {'jedi': 'luke'}
+[2017-11-22 19:32:04,065] client.Client<Client:71405#ClientNode>:OUTPUT: 
+Client 1 terminating.
+[2017-11-22 19:32:04,075] client.Client<Client:71407#ClientNode>:OUTPUT: 
+Client 2 : actual request result: {(2, 0): 'OK', (2, 1): 'OK', (2, 2): 'Columbia'}
+[2017-11-22 19:32:04,075] client.Client<Client:71407#ClientNode>:OUTPUT: 
+Client 2 : final test result: {(2, 0): 'OK', (2, 1): 'OK', (2, 2): 'Columbia'}
+[2017-11-22 19:32:04,075] client.Client<Client:71407#ClientNode>:OUTPUT: 
+Client 2 : final test state: {'school': 'Columbia'}
+[2017-11-22 19:32:04,076] client.Client<Client:71407#ClientNode>:OUTPUT: 
+Client 2 terminating.
+[2017-11-22 19:32:04,105] client.Client<Client:71403#ClientNode>:OUTPUT: 
+Client 0 : actual request result: {(0, 0): 'OK', (0, 1): 'OK', (0, 2): 'star wars'}
+[2017-11-22 19:32:04,105] client.Client<Client:71403#ClientNode>:OUTPUT: 
+Client 0 : final test result: {(0, 0): 'OK', (0, 1): 'OK', (0, 2): 'star wars'}
+[2017-11-22 19:32:04,105] client.Client<Client:71403#ClientNode>:OUTPUT: 
+Client 0 : final test state: {'movie': 'star wars'}
+[2017-11-22 19:32:04,105] client.Client<Client:71403#ClientNode>:OUTPUT: 
+Client 0 terminating.
+[2017-11-22 19:32:04,116] client.Client<Client:71404#ClientNode>:OUTPUT: 
+Client 1 : actual request result: {(1, 0): 'OK', (1, 1): 'OK', (1, 2): 'luke'}
+[2017-11-22 19:32:04,117] client.Client<Client:71404#ClientNode>:OUTPUT: 
+Client 1 : final test result: {(1, 0): 'OK', (1, 1): 'OK', (1, 2): 'luke'}
+[2017-11-22 19:32:04,117] client.Client<Client:71404#ClientNode>:OUTPUT: 
+Client 1 : final test state: {'jedi': 'luke'}
+[2017-11-22 19:32:04,117] client.Client<Client:71404#ClientNode>:OUTPUT: 
+Client 1 terminating.
+[2017-11-22 19:32:04,123] client.Client<Client:71402#ClientNode>:OUTPUT: 
+Client 2 : actual request result: {(2, 0): 'OK', (2, 1): 'OK', (2, 2): 'Columbia'}
+[2017-11-22 19:32:04,123] client.Client<Client:71402#ClientNode>:OUTPUT: 
+Client 2 : final test result: {(2, 0): 'OK', (2, 1): 'OK', (2, 2): 'Columbia'}
+[2017-11-22 19:32:04,123] client.Client<Client:71402#ClientNode>:OUTPUT: 
+Client 2 : final test state: {'school': 'Columbia'}
+[2017-11-22 19:32:04,123] client.Client<Client:71402#ClientNode>:OUTPUT: 
+Client 2 terminating.

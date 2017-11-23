@@ -1,0 +1,20 @@
+test_case_name = test14 - Client Request trigger Change Operation, catch_up trigger drop()
+
+# number of failures to tolerate.  number of replicas is 2t+1.
+t = 2
+# number of clients
+num_client = 1
+# client timeout, in milliseconds.
+client_timeout = 6000
+# timeout, in milliseconds, for head and non-head servers, respectively
+head_timeout = 3000
+nonhead_timeout = 3000
+# checkpoint interval.  take a checkpoint every checkpt_interval slots.
+checkpt_interval = 10
+
+# CLIENT WORKLOAD
+workload[0] = put('movie','star'); append('movie',' wars'); get('movie')
+
+# FAILURE SCENARIO
+failures[0,0] = client_request(0,1), change_operation()
+failures[0,1] = catch_up(0), drop()

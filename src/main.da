@@ -50,7 +50,7 @@ def main():
 	# create client objects
 	timeout = config['client_timeout']
 	timeout = int(timeout / 1000)
-	clients = new(client_da.Client, num=client_num)
+	clients = new(client_da.Client, num=client_num, at = 'ClientNode')
 	
 	# set up each client
 	client_list = list(clients)

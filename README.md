@@ -15,12 +15,12 @@ PLATFORM:
 INSTRUCTIONS:
 
 	To build and run on same machine
-	python -m da -f --logfilename logs/test1.replica.phase2.log -F output -n MainNode src/main.da config/test1.txt
+	python -m da -f --logfilename logs/test1.replica.phase3.log -F output -n MainNode src/main.da config/test1.txt
 	python -m da -f --logfilename logs/test1.client.phase3.log -F output -n ClientNode -D src/main.da config/test1.txt
 
 	To built on multiple hosts
-	python -m da -f --logfilename logs/test1.replica-phase2.log -F output -H <host_ip> -n MainNode src/main.da config/test1.txt
-	python -m da -f --logfilename logs/test1.client.phase2.log -F output -n -H <host_ip> -R <peer_ip> ClientNode -D src/main.da config/test1.txt
+	python -m da -f --logfilename logs/test1.replica-phase3.log -F output -H <host_ip> -n MainNode src/main.da config/test1.txt
+	python -m da -f --logfilename logs/test1.client.phase3.log -F output -n -H <host_ip> -R <peer_ip> ClientNode -D src/main.da config/test1.txt
 
 WORKLOAD GENERATION:
 
@@ -44,14 +44,13 @@ For example, if key value = 0 and append value = 3, operation is append('key_0',
 
 BUGS AND LIMITATIONS:
 
-Have not configured to run on multiple hosts. Currently only running on one host.
-No reconfig request or reconfig detection by client. If client timeout during retransmission request, it simply skips the request and moves on.
+Sometimes reconfiguration will run in an infinite loop. However, it will work normally for another run. It depends on the order of wedged responses received by Olympus
 
 CONTRIBUTIONS:
 
-	Jiajie Li - Pseudorandom request; Implement part of each da files; Generate some test cases; Logging; Testing
+	Jiajie Li - Pseudorandom request; Implement part of each da files; Generate some test cases; Reconfiguration; Logging; Testing
 
-	Raunak Shah - Implementation of parts of source code files; Failure Injection; Logging; Testing
+	Raunak Shah - Implementation of parts of source code files; Failure Injection; Logging; Reconfiguration; Testing
 
 
 MAIN FILES:

@@ -1,0 +1,2622 @@
+[2017-11-22 18:46:09,065] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica: 0 with history [] initiated
+[2017-11-22 18:46:09,068] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica: 1 with history [] initiated
+[2017-11-22 18:46:09,071] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica: 0 with history [] initiated
+[2017-11-22 18:46:09,071] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica: 2 with history [] initiated
+[2017-11-22 18:46:09,074] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica: 1 with history [] initiated
+[2017-11-22 18:46:09,075] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica: 3 with history [] initiated
+[2017-11-22 18:46:09,077] olympus.Olympus<Olympus:8ec02#MainNode>:OUTPUT: 
+Failure for replica 4 :
+ {'shuttle(1,2)': 'drop_result_stmt()'}
+[2017-11-22 18:46:09,077] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica: 2 with history [] initiated
+[2017-11-22 18:46:09,079] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica: 4 with history [] initiated
+[2017-11-22 18:46:09,081] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica: 3 with history [] initiated
+[2017-11-22 18:46:09,083] olympus.Olympus<Olympus:8ec02#MainNode>:OUTPUT: 
+Starting test case: test6 - Shuttle trigger Drop Result Statement
+[2017-11-22 18:46:09,083] olympus.Olympus<Olympus:8ec02#MainNode>:OUTPUT: 
+Starting Olympus.
+[2017-11-22 18:46:09,083] olympus.Olympus<Olympus:8ec03#MainNode>:OUTPUT: 
+Failure for replica 4 :
+ {'shuttle(1,2)': 'drop_result_stmt()'}
+[2017-11-22 18:46:09,085] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Starting replica 1
+[2017-11-22 18:46:09,086] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Starting replica 2
+[2017-11-22 18:46:09,086] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Starting replica 3
+[2017-11-22 18:46:09,087] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Starting replica 4
+[2017-11-22 18:46:09,085] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Starting replica 0
+[2017-11-22 18:46:09,089] olympus.Olympus<Olympus:8ec02#MainNode>:OUTPUT: 
+Olympus: send replicas and configuration information for config 0 to client <Client:10003#ClientNode>
+[2017-11-22 18:46:09,090] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica: 4 with history [] initiated
+[2017-11-22 18:46:09,091] olympus.Olympus<Olympus:8ec02#MainNode>:OUTPUT: 
+Olympus: send replicas and configuration information for config 0 to client <Client:10002#ClientNode>
+[2017-11-22 18:46:09,093] olympus.Olympus<Olympus:8ec03#MainNode>:OUTPUT: 
+Starting test case: test6 - Shuttle trigger Drop Result Statement
+[2017-11-22 18:46:09,093] olympus.Olympus<Olympus:8ec03#MainNode>:OUTPUT: 
+Starting Olympus.
+[2017-11-22 18:46:09,096] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Starting replica 2
+[2017-11-22 18:46:09,097] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Starting replica 4
+[2017-11-22 18:46:09,097] olympus.Olympus<Olympus:8ec02#MainNode>:OUTPUT: 
+Olympus: send check config response 'OK' to client <Client:10003#ClientNode>
+[2017-11-22 18:46:09,098] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Starting replica 1
+[2017-11-22 18:46:09,096] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Starting replica 0
+[2017-11-22 18:46:09,101] olympus.Olympus<Olympus:8ec02#MainNode>:OUTPUT: 
+Olympus: send check config response 'OK' to client <Client:10002#ClientNode>
+[2017-11-22 18:46:09,102] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Starting replica 3
+[2017-11-22 18:46:09,109] olympus.Olympus<Olympus:8ec03#MainNode>:OUTPUT: 
+Olympus: send replicas and configuration information for config 0 to client <Client:10005#ClientNode>
+[2017-11-22 18:46:09,116] olympus.Olympus<Olympus:8ec03#MainNode>:OUTPUT: 
+Olympus: send replicas and configuration information for config 0 to client <Client:10004#ClientNode>
+[2017-11-22 18:46:09,116] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 0 : message from client is validated
+[2017-11-22 18:46:09,116] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 0 : received new operation request (1, 0) for operation: put('jedi','luke skywalker')
+[2017-11-22 18:46:09,117] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 0 : handling new request from <Client:10003#ClientNode>
+[2017-11-22 18:46:09,117] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 0 : validation for applying request succeeds, start applying request.
+[2017-11-22 18:46:09,118] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 0 : applied operation and result returned.
+[2017-11-22 18:46:09,119] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 0 : create order statement at slot 0
+[2017-11-22 18:46:09,119] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 0 : signed order statement and added order proof to history
+[2017-11-22 18:46:09,119] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 0 : hashed and signed result
+[2017-11-22 18:46:09,120] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 0 : obtained result and signed order statement for request (1, 0)
+[2017-11-22 18:46:09,120] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 0 : hashed and signed result statement for request (1, 0) at shuttle.
+[2017-11-22 18:46:09,122] olympus.Olympus<Olympus:8ec03#MainNode>:OUTPUT: 
+Olympus: send check config response 'OK' to client <Client:10005#ClientNode>
+[2017-11-22 18:46:09,128] olympus.Olympus<Olympus:8ec03#MainNode>:OUTPUT: 
+Olympus: send check config response 'OK' to client <Client:10004#ClientNode>
+[2017-11-22 18:46:09,128] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 0 : sent shuttle (1, 0) to  <Replica:8ec05#MainNode>
+[2017-11-22 18:46:09,130] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 0 : message from client is validated
+[2017-11-22 18:46:09,130] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 : received shuttle (1, 0) from <Replica:8ec06#MainNode>
+[2017-11-22 18:46:09,130] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 0 : received new operation request (0, 0) for operation: put('movie','star')
+[2017-11-22 18:46:09,131] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 0 : handling new request from <Client:10002#ClientNode>
+[2017-11-22 18:46:09,131] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 0 : validation for applying request succeeds, start applying request.
+[2017-11-22 18:46:09,131] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 0 : applied operation and result returned.
+[2017-11-22 18:46:09,131] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 0 : create order statement at slot 1
+[2017-11-22 18:46:09,132] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 : shuttle message from replica is validated
+[2017-11-22 18:46:09,132] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 0 : signed order statement and added order proof to history
+[2017-11-22 18:46:09,132] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 : signature of replica 0 is validated
+[2017-11-22 18:46:09,133] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 0 : hashed and signed result
+[2017-11-22 18:46:09,133] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 0 : obtained result and signed order statement for request (0, 0)
+[2017-11-22 18:46:09,133] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 0 : hashed and signed result statement for request (0, 0) at shuttle.
+[2017-11-22 18:46:09,134] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 0 : sent shuttle (0, 0) to  <Replica:8ec05#MainNode>
+[2017-11-22 18:46:09,134] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,135] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 0 : message from client is validated
+[2017-11-22 18:46:09,135] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,135] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 0 : received new operation request (0, 0) for operation: put('movie','star')
+[2017-11-22 18:46:09,135] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 : validation for applying request succeeds, start applying request.
+[2017-11-22 18:46:09,135] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 0 : handling new request from <Client:10005#ClientNode>
+[2017-11-22 18:46:09,135] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 0 : validation for applying request succeeds, start applying request.
+[2017-11-22 18:46:09,136] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 : applied operation and result returned.
+[2017-11-22 18:46:09,136] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 : create order statement at slot 0
+[2017-11-22 18:46:09,136] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 : signed order statement and added order proof to history
+[2017-11-22 18:46:09,136] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 0 : applied operation and result returned.
+[2017-11-22 18:46:09,136] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 0 : create order statement at slot 0
+[2017-11-22 18:46:09,137] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 : hashed and signed result
+[2017-11-22 18:46:09,137] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 0 : signed order statement and added order proof to history
+[2017-11-22 18:46:09,137] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 : hashed and result for request (1, 0) at shuttle.
+[2017-11-22 18:46:09,137] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 : sent shuttle (1, 0) to <Replica:8ec04#MainNode>
+[2017-11-22 18:46:09,137] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 0 : hashed and signed result
+[2017-11-22 18:46:09,137] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 0 : obtained result and signed order statement for request (0, 0)
+[2017-11-22 18:46:09,137] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 0 : hashed and signed result statement for request (0, 0) at shuttle.
+[2017-11-22 18:46:09,140] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 : received shuttle (0, 0) from <Replica:8ec06#MainNode>
+[2017-11-22 18:46:09,140] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 0 : sent shuttle (0, 0) to  <Replica:8ec04#MainNode>
+[2017-11-22 18:46:09,141] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : received shuttle (1, 0) from <Replica:8ec05#MainNode>
+[2017-11-22 18:46:09,141] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 : shuttle message from replica is validated
+[2017-11-22 18:46:09,141] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 : signature of replica 0 is validated
+[2017-11-22 18:46:09,141] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 0 : message from client is validated
+[2017-11-22 18:46:09,141] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 : received shuttle (0, 0) from <Replica:8ec05#MainNode>
+[2017-11-22 18:46:09,142] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : shuttle message from replica is validated
+[2017-11-22 18:46:09,142] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,142] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 0 : received new operation request (1, 0) for operation: put('jedi','luke skywalker')
+[2017-11-22 18:46:09,142] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,142] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 0 : handling new request from <Client:10004#ClientNode>
+[2017-11-22 18:46:09,142] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : signature of replica 0 is validated
+[2017-11-22 18:46:09,142] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 : validation for applying request succeeds, start applying request.
+[2017-11-22 18:46:09,142] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 : shuttle message from replica is validated
+[2017-11-22 18:46:09,142] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 : applied operation and result returned.
+[2017-11-22 18:46:09,143] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 : create order statement at slot 1
+[2017-11-22 18:46:09,142] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 0 : validation for applying request succeeds, start applying request.
+[2017-11-22 18:46:09,143] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 0 : applied operation and result returned.
+[2017-11-22 18:46:09,143] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 : signed order statement and added order proof to history
+[2017-11-22 18:46:09,143] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 : signature of replica 0 is validated
+[2017-11-22 18:46:09,143] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 0 : create order statement at slot 1
+[2017-11-22 18:46:09,143] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 : hashed and signed result
+[2017-11-22 18:46:09,143] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 0 : signed order statement and added order proof to history
+[2017-11-22 18:46:09,143] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,143] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 : hashed and result for request (0, 0) at shuttle.
+[2017-11-22 18:46:09,143] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 0 : hashed and signed result
+[2017-11-22 18:46:09,144] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 : sent shuttle (0, 0) to <Replica:8ec04#MainNode>
+[2017-11-22 18:46:09,143] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,144] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 0 : obtained result and signed order statement for request (1, 0)
+[2017-11-22 18:46:09,144] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,144] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 0 : hashed and signed result statement for request (1, 0) at shuttle.
+[2017-11-22 18:46:09,144] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,144] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : signature of replica 1 is validated
+[2017-11-22 18:46:09,144] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 : validation for applying request succeeds, start applying request.
+[2017-11-22 18:46:09,144] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,145] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,145] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 0 : sent shuttle (1, 0) to  <Replica:8ec04#MainNode>
+[2017-11-22 18:46:09,145] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : validation for applying request succeeds, start applying request.
+[2017-11-22 18:46:09,145] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 : applied operation and result returned.
+[2017-11-22 18:46:09,146] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 : create order statement at slot 0
+[2017-11-22 18:46:09,146] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 : signed order statement and added order proof to history
+[2017-11-22 18:46:09,146] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : applied operation and result returned.
+[2017-11-22 18:46:09,146] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : create order statement at slot 0
+[2017-11-22 18:46:09,146] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 : hashed and signed result
+[2017-11-22 18:46:09,147] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : signed order statement and added order proof to history
+[2017-11-22 18:46:09,147] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : hashed and signed result
+[2017-11-22 18:46:09,147] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : hashed and result for request (1, 0) at shuttle.
+[2017-11-22 18:46:09,147] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 : hashed and result for request (0, 0) at shuttle.
+[2017-11-22 18:46:09,148] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : sent shuttle (1, 0) to <Replica:8ec07#MainNode>
+[2017-11-22 18:46:09,148] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 : sent shuttle (0, 0) to <Replica:8ec06#MainNode>
+[2017-11-22 18:46:09,150] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : received shuttle (0, 0) from <Replica:8ec05#MainNode>
+[2017-11-22 18:46:09,151] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : shuttle message from replica is validated
+[2017-11-22 18:46:09,151] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : signature of replica 0 is validated
+[2017-11-22 18:46:09,151] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,151] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,152] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : received shuttle (1, 0) from <Replica:8ec04#MainNode>
+[2017-11-22 18:46:09,152] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : signature of replica 1 is validated
+[2017-11-22 18:46:09,152] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,152] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,152] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : validation for applying request succeeds, start applying request.
+[2017-11-22 18:46:09,152] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : shuttle message from replica is validated
+[2017-11-22 18:46:09,152] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : applied operation and result returned.
+[2017-11-22 18:46:09,153] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : create order statement at slot 1
+[2017-11-22 18:46:09,153] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : signature of replica 0 is validated
+[2017-11-22 18:46:09,153] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : signed order statement and added order proof to history
+[2017-11-22 18:46:09,153] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : hashed and signed result
+[2017-11-22 18:46:09,154] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,154] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,154] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : signature of replica 1 is validated
+[2017-11-22 18:46:09,155] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,150] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 : received shuttle (1, 0) from <Replica:8ec05#MainNode>
+[2017-11-22 18:46:09,155] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,155] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 : shuttle message from replica is validated
+[2017-11-22 18:46:09,155] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : signature of replica 2 is validated
+[2017-11-22 18:46:09,155] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : received shuttle (0, 0) from <Replica:8ec04#MainNode>
+[2017-11-22 18:46:09,155] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,155] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 : signature of replica 0 is validated
+[2017-11-22 18:46:09,156] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,153] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : hashed and result for request (0, 0) at shuttle.
+[2017-11-22 18:46:09,156] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : sent shuttle (0, 0) to <Replica:8ec07#MainNode>
+[2017-11-22 18:46:09,156] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : shuttle message from replica is validated
+[2017-11-22 18:46:09,156] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,156] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : signature of replica 0 is validated
+[2017-11-22 18:46:09,156] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,159] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 : validation for applying request succeeds, start applying request.
+[2017-11-22 18:46:09,159] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 : applied operation and result returned.
+[2017-11-22 18:46:09,159] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 : create order statement at slot 1
+[2017-11-22 18:46:09,156] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : validation for applying request succeeds, start applying request.
+[2017-11-22 18:46:09,160] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 : signed order statement and added order proof to history
+[2017-11-22 18:46:09,160] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,160] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 : hashed and signed result
+[2017-11-22 18:46:09,160] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,160] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 : hashed and result for request (1, 0) at shuttle.
+[2017-11-22 18:46:09,160] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : signature of replica 1 is validated
+[2017-11-22 18:46:09,161] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 : sent shuttle (1, 0) to <Replica:8ec06#MainNode>
+[2017-11-22 18:46:09,160] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : applied operation and result returned.
+[2017-11-22 18:46:09,161] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,161] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,161] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : create order statement at slot 0
+[2017-11-22 18:46:09,161] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : signed order statement and added order proof to history
+[2017-11-22 18:46:09,161] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : validation for applying request succeeds, start applying request.
+[2017-11-22 18:46:09,162] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : hashed and signed result
+[2017-11-22 18:46:09,162] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : hashed and result for request (1, 0) at shuttle.
+[2017-11-22 18:46:09,162] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : applied operation and result returned.
+[2017-11-22 18:46:09,162] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : sent shuttle (1, 0) to <Replica:8ec03#MainNode>
+[2017-11-22 18:46:09,162] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : create order statement at slot 0
+[2017-11-22 18:46:09,163] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : signed order statement and added order proof to history
+[2017-11-22 18:46:09,163] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : hashed and signed result
+[2017-11-22 18:46:09,163] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : hashed and result for request (0, 0) at shuttle.
+[2017-11-22 18:46:09,163] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : sent shuttle (0, 0) to <Replica:8ec08#MainNode>
+[2017-11-22 18:46:09,165] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : received shuttle (1, 0) from <Replica:8ec07#MainNode>
+[2017-11-22 18:46:09,164] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : received shuttle (0, 0) from <Replica:8ec04#MainNode>
+[2017-11-22 18:46:09,165] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : shuttle message from replica is validated
+[2017-11-22 18:46:09,166] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : signature of replica 0 is validated
+[2017-11-22 18:46:09,166] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : received shuttle (0, 0) from <Replica:8ec06#MainNode>
+[2017-11-22 18:46:09,166] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : received shuttle (1, 0) from <Replica:8ec04#MainNode>
+[2017-11-22 18:46:09,166] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : shuttle message from replica is validated
+[2017-11-22 18:46:09,167] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,167] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,166] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : shuttle message from replica is validated
+[2017-11-22 18:46:09,167] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : shuttle message from replica is validated
+[2017-11-22 18:46:09,167] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : signature of replica 1 is validated
+[2017-11-22 18:46:09,167] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : signature of replica 0 is validated
+[2017-11-22 18:46:09,167] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : signature of replica 0 is validated
+[2017-11-22 18:46:09,167] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,168] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,168] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,168] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,167] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : signature of replica 0 is validated
+[2017-11-22 18:46:09,168] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : signature of replica 2 is validated
+[2017-11-22 18:46:09,168] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : signature of replica 1 is validated
+[2017-11-22 18:46:09,168] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,168] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,168] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,168] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,168] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,168] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,169] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : signature of replica 1 is validated
+[2017-11-22 18:46:09,169] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : signature of replica 3 is validated
+[2017-11-22 18:46:09,169] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : signature of replica 1 is validated
+[2017-11-22 18:46:09,169] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,169] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,169] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,168] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,169] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,169] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,169] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,169] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : validation for applying request succeeds, start applying request.
+[2017-11-22 18:46:09,169] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,170] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : validation for applying request succeeds, start applying request.
+[2017-11-22 18:46:09,170] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : signature of replica 2 is validated
+[2017-11-22 18:46:09,170] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : applied operation and result returned.
+[2017-11-22 18:46:09,170] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,170] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : signature of replica 2 is validated
+[2017-11-22 18:46:09,170] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : create order statement at slot 1
+[2017-11-22 18:46:09,170] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,170] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,170] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : applied operation and result returned.
+[2017-11-22 18:46:09,170] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : validation for applying request succeeds, start applying request.
+[2017-11-22 18:46:09,170] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : signed order statement and added order proof to history
+[2017-11-22 18:46:09,170] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : create order statement at slot 0
+[2017-11-22 18:46:09,171] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : hashed and signed result
+[2017-11-22 18:46:09,171] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : signed order statement and added order proof to history
+[2017-11-22 18:46:09,171] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : hashed and result for request (1, 0) at shuttle.
+[2017-11-22 18:46:09,171] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : hashed and signed result
+[2017-11-22 18:46:09,171] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : applied operation and result returned.
+[2017-11-22 18:46:09,170] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,172] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : hashed and result for request (1, 0) at shuttle.
+[2017-11-22 18:46:09,172] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : sent result_shuttle (1, 0) to replica <Replica:8ec07#MainNode>
+[2017-11-22 18:46:09,172] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : create order statement at slot 0
+[2017-11-22 18:46:09,171] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : sent shuttle (1, 0) to <Replica:8ec08#MainNode>
+[2017-11-22 18:46:09,172] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : validation for applying request succeeds, start applying request.
+[2017-11-22 18:46:09,174] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : signed order statement and added order proof to history
+[2017-11-22 18:46:09,175] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : sent operation_result (1, 0) to client <Client:10003#ClientNode>
+[2017-11-22 18:46:09,175] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : hashed and signed result
+[2017-11-22 18:46:09,174] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : applied operation and result returned.
+[2017-11-22 18:46:09,175] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : hashed and result for request (0, 0) at shuttle.
+[2017-11-22 18:46:09,175] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : create order statement at slot 1
+[2017-11-22 18:46:09,176] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : sent shuttle (0, 0) to <Replica:8ec07#MainNode>
+[2017-11-22 18:46:09,179] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : received shuttle (1, 0) from <Replica:8ec06#MainNode>
+[2017-11-22 18:46:09,180] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : received shuttle (0, 0) from <Replica:8ec08#MainNode>
+[2017-11-22 18:46:09,181] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : shuttle message from replica is validated
+[2017-11-22 18:46:09,176] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : signed order statement and added order proof to history
+[2017-11-22 18:46:09,181] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : signature of replica 0 is validated
+[2017-11-22 18:46:09,181] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : shuttle message from replica is validated
+[2017-11-22 18:46:09,181] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,182] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : hashed and signed result
+[2017-11-22 18:46:09,182] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,182] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : signature of replica 0 is validated
+[2017-11-22 18:46:09,182] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : hashed and result for request (0, 0) at shuttle.
+[2017-11-22 18:46:09,182] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : signature of replica 1 is validated
+[2017-11-22 18:46:09,182] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,183] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,183] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,183] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : signature of replica 2 is validated
+[2017-11-22 18:46:09,183] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,183] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,182] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : sent shuttle (0, 0) to <Replica:8ec03#MainNode>
+[2017-11-22 18:46:09,183] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,183] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 0 : message from client is validated
+[2017-11-22 18:46:09,183] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : signature of replica 1 is validated
+[2017-11-22 18:46:09,184] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : validation for applying request succeeds, start applying request.
+[2017-11-22 18:46:09,184] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,184] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : applied operation and result returned.
+[2017-11-22 18:46:09,184] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,184] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : create order statement at slot 1
+[2017-11-22 18:46:09,184] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : signature of replica 2 is validated
+[2017-11-22 18:46:09,184] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : signed order statement and added order proof to history
+[2017-11-22 18:46:09,185] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,185] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : hashed and signed result
+[2017-11-22 18:46:09,185] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,185] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : hashed and result for request (1, 0) at shuttle.
+[2017-11-22 18:46:09,185] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : received shuttle (0, 0) from <Replica:8ec07#MainNode>
+[2017-11-22 18:46:09,185] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : signature of replica 3 is validated
+[2017-11-22 18:46:09,185] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : sent shuttle (1, 0) to <Replica:8ec07#MainNode>
+[2017-11-22 18:46:09,184] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 0 : received new operation request (1, 1) for operation:  slice('jedi','0:4')
+[2017-11-22 18:46:09,185] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : received result_shuttle (1, 0) from <Replica:8ec03#MainNode>
+[2017-11-22 18:46:09,185] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : shuttle message from replica is validated
+[2017-11-22 18:46:09,186] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : result shuttle for (1, 0) contains enough entries, expected 5 and received 5
+[2017-11-22 18:46:09,186] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 0 : handling new request from <Client:10003#ClientNode>
+[2017-11-22 18:46:09,185] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,186] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : signature of replica 0 is validated
+[2017-11-22 18:46:09,186] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 0 : validation for applying request succeeds, start applying request.
+[2017-11-22 18:46:09,186] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : result shuttle from replica is validated
+[2017-11-22 18:46:09,186] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,186] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,186] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : validation for applying request succeeds, start applying request.
+[2017-11-22 18:46:09,186] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,187] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : result shuttle from replica is validated
+[2017-11-22 18:46:09,187] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 0 : applied operation and result returned.
+[2017-11-22 18:46:09,187] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : signature of replica 1 is validated
+[2017-11-22 18:46:09,187] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 0 : create order statement at slot 2
+[2017-11-22 18:46:09,187] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,187] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : result shuttle from replica is validated
+[2017-11-22 18:46:09,187] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,187] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : applied operation and result returned.
+[2017-11-22 18:46:09,187] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : result_shuttle is validated.
+[2017-11-22 18:46:09,187] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 0 : signed order statement and added order proof to history
+[2017-11-22 18:46:09,187] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : create order statement at slot 0
+[2017-11-22 18:46:09,188] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : signature of replica 2 is validated
+[2017-11-22 18:46:09,187] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : cached result proof for request id (1, 0)
+[2017-11-22 18:46:09,188] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,188] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : signed order statement and added order proof to history
+[2017-11-22 18:46:09,188] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,188] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 0 : hashed and signed result
+[2017-11-22 18:46:09,188] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : hashed and signed result
+[2017-11-22 18:46:09,188] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 0 : obtained result and signed order statement for request (1, 1)
+[2017-11-22 18:46:09,188] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : signature of replica 3 is validated
+[2017-11-22 18:46:09,189] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,189] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : hashed and result for request (0, 0) at shuttle.
+[2017-11-22 18:46:09,189] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 0 : hashed and signed result statement for request (1, 1) at shuttle.
+[2017-11-22 18:46:09,188] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : sent result_shuttle (1, 0) to <Replica:8ec04#MainNode>
+[2017-11-22 18:46:09,190] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,190] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : sent result_shuttle (0, 0) to replica <Replica:8ec08#MainNode>
+[2017-11-22 18:46:09,190] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : validation for applying request succeeds, start applying request.
+[2017-11-22 18:46:09,190] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : applied operation and result returned.
+[2017-11-22 18:46:09,191] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : create order statement at slot 1
+[2017-11-22 18:46:09,191] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : signed order statement and added order proof to history
+[2017-11-22 18:46:09,191] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : sent operation_result (0, 0) to client <Client:10005#ClientNode>
+[2017-11-22 18:46:09,192] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : hashed and signed result
+[2017-11-22 18:46:09,192] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : hashed and result for request (0, 0) at shuttle.
+[2017-11-22 18:46:09,192] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 : received shuttle (1, 1) from <Replica:8ec06#MainNode>
+[2017-11-22 18:46:09,192] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : sent result_shuttle (0, 0) to replica <Replica:8ec07#MainNode>
+[2017-11-22 18:46:09,195] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 0 : sent shuttle (1, 1) to  <Replica:8ec05#MainNode>
+[2017-11-22 18:46:09,196] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : sent operation_result (0, 0) to client <Client:10002#ClientNode>
+[2017-11-22 18:46:09,192] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : received result_shuttle (0, 0) from <Replica:8ec07#MainNode>
+[2017-11-22 18:46:09,196] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : result shuttle for (0, 0) contains enough entries, expected 5 and received 5
+[2017-11-22 18:46:09,194] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : received shuttle (1, 0) from <Replica:8ec08#MainNode>
+[2017-11-22 18:46:09,197] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : result shuttle from replica is validated
+[2017-11-22 18:46:09,197] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : shuttle message from replica is validated
+[2017-11-22 18:46:09,199] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : received result_shuttle (0, 0) from <Replica:8ec03#MainNode>
+[2017-11-22 18:46:09,199] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : result shuttle for (0, 0) contains enough entries, expected 5 and received 5
+[2017-11-22 18:46:09,199] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : result shuttle from replica is validated
+[2017-11-22 18:46:09,200] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : result shuttle from replica is validated
+[2017-11-22 18:46:09,198] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : signature of replica 0 is validated
+[2017-11-22 18:46:09,201] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,198] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : result shuttle from replica is validated
+[2017-11-22 18:46:09,201] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,201] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : result shuttle from replica is validated
+[2017-11-22 18:46:09,201] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : signature of replica 1 is validated
+[2017-11-22 18:46:09,201] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : result_shuttle is validated.
+[2017-11-22 18:46:09,201] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,200] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : result shuttle from replica is validated
+[2017-11-22 18:46:09,202] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 0 : message from client is validated
+[2017-11-22 18:46:09,202] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 0 : received new operation request (0, 1) for operation:  append('movie',' wars')
+[2017-11-22 18:46:09,202] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : result_shuttle is validated.
+[2017-11-22 18:46:09,202] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : cached result proof for request id (0, 0)
+[2017-11-22 18:46:09,202] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 0 : handling new request from <Client:10002#ClientNode>
+[2017-11-22 18:46:09,202] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : cached result proof for request id (0, 0)
+[2017-11-22 18:46:09,202] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : sent result_shuttle (0, 0) to <Replica:8ec04#MainNode>
+[2017-11-22 18:46:09,202] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 0 : validation for applying request succeeds, start applying request.
+[2017-11-22 18:46:09,202] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : sent result_shuttle (0, 0) to <Replica:8ec06#MainNode>
+[2017-11-22 18:46:09,199] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 0 : message from client is validated
+[2017-11-22 18:46:09,202] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,203] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 0 : received new operation request (0, 1) for operation:  append('movie',' wars')
+[2017-11-22 18:46:09,203] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 0 : handling new request from <Client:10005#ClientNode>
+[2017-11-22 18:46:09,206] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : signature of replica 2 is validated
+[2017-11-22 18:46:09,206] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 0 : validation for applying request succeeds, start applying request.
+[2017-11-22 18:46:09,206] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,206] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,194] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : received result_shuttle (1, 0) from <Replica:8ec07#MainNode>
+[2017-11-22 18:46:09,207] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 0 : applied operation and result returned.
+[2017-11-22 18:46:09,207] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : signature of replica 3 is validated
+[2017-11-22 18:46:09,207] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : received result_shuttle (0, 0) from <Replica:8ec08#MainNode>
+[2017-11-22 18:46:09,207] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 0 : create order statement at slot 2
+[2017-11-22 18:46:09,207] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : result shuttle for (1, 0) contains enough entries, expected 5 and received 5
+[2017-11-22 18:46:09,207] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : result shuttle for (0, 0) contains enough entries, expected 5 and received 5
+[2017-11-22 18:46:09,207] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 0 : signed order statement and added order proof to history
+[2017-11-22 18:46:09,207] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,207] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : result shuttle from replica is validated
+[2017-11-22 18:46:09,207] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,207] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 0 : hashed and signed result
+[2017-11-22 18:46:09,208] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : validation for applying request succeeds, start applying request.
+[2017-11-22 18:46:09,208] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : result shuttle from replica is validated
+[2017-11-22 18:46:09,208] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 0 : obtained result and signed order statement for request (0, 1)
+[2017-11-22 18:46:09,209] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : applied operation and result returned.
+[2017-11-22 18:46:09,209] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : result_shuttle is validated.
+[2017-11-22 18:46:09,209] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 0 : hashed and signed result statement for request (0, 1) at shuttle.
+[2017-11-22 18:46:09,209] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : create order statement at slot 1
+[2017-11-22 18:46:09,209] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : cached result proof for request id (0, 0)
+[2017-11-22 18:46:09,209] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : sent result_shuttle (0, 0) to <Replica:8ec04#MainNode>
+[2017-11-22 18:46:09,209] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : signed order statement and added order proof to history
+[2017-11-22 18:46:09,210] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : hashed and signed result
+[2017-11-22 18:46:09,210] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : hashed and result for request (1, 0) at shuttle.
+[2017-11-22 18:46:09,210] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 0 : sent shuttle (0, 1) to  <Replica:8ec04#MainNode>
+[2017-11-22 18:46:09,210] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : sent result_shuttle (1, 0) to replica <Replica:8ec08#MainNode>
+[2017-11-22 18:46:09,210] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 : received shuttle (0, 1) from <Replica:8ec05#MainNode>
+[2017-11-22 18:46:09,208] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 0 : applied operation and result returned.
+[2017-11-22 18:46:09,211] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : sent operation_result (1, 0) to client <Client:10004#ClientNode>
+[2017-11-22 18:46:09,211] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 : shuttle message from replica is validated
+[2017-11-22 18:46:09,212] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : received result_shuttle (1, 0) from <Replica:8ec07#MainNode>
+[2017-11-22 18:46:09,212] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : result shuttle for (1, 0) contains enough entries, expected 5 and received 5
+[2017-11-22 18:46:09,211] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 0 : create order statement at slot 3
+[2017-11-22 18:46:09,212] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 : signature of replica 0 is validated
+[2017-11-22 18:46:09,213] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,213] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 0 : signed order statement and added order proof to history
+[2017-11-22 18:46:09,213] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,213] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 : validation for applying request succeeds, start applying request.
+[2017-11-22 18:46:09,213] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : result shuttle from replica is validated
+[2017-11-22 18:46:09,214] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 : applied operation and result returned.
+[2017-11-22 18:46:09,214] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : result shuttle from replica is validated
+[2017-11-22 18:46:09,214] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : result shuttle from replica is validated
+[2017-11-22 18:46:09,215] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : result_shuttle is validated.
+[2017-11-22 18:46:09,215] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : cached result proof for request id (1, 0)
+[2017-11-22 18:46:09,214] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 : create order statement at slot 2
+[2017-11-22 18:46:09,215] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : sent result_shuttle (1, 0) to <Replica:8ec06#MainNode>
+[2017-11-22 18:46:09,215] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 : signed order statement and added order proof to history
+[2017-11-22 18:46:09,216] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 : hashed and signed result
+[2017-11-22 18:46:09,217] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 : hashed and result for request (0, 1) at shuttle.
+[2017-11-22 18:46:09,213] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 0 : hashed and signed result
+[2017-11-22 18:46:09,217] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 : sent shuttle (0, 1) to <Replica:8ec06#MainNode>
+[2017-11-22 18:46:09,217] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : received result_shuttle (1, 0) from <Replica:8ec08#MainNode>
+[2017-11-22 18:46:09,207] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : result shuttle from replica is validated
+[2017-11-22 18:46:09,217] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 0 : obtained result and signed order statement for request (0, 1)
+[2017-11-22 18:46:09,217] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : result shuttle for (1, 0) contains enough entries, expected 5 and received 5
+[2017-11-22 18:46:09,217] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 0 : message from client is validated
+[2017-11-22 18:46:09,217] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 0 : received new operation request (1, 1) for operation:  slice('jedi','0:4')
+[2017-11-22 18:46:09,218] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 0 : handling new request from <Client:10004#ClientNode>
+[2017-11-22 18:46:09,218] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : result shuttle from replica is validated
+[2017-11-22 18:46:09,218] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 0 : hashed and signed result statement for request (0, 1) at shuttle.
+[2017-11-22 18:46:09,218] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 : received result_shuttle (0, 0) from <Replica:8ec06#MainNode>
+[2017-11-22 18:46:09,218] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 0 : validation for applying request succeeds, start applying request.
+[2017-11-22 18:46:09,218] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : result shuttle from replica is validated
+[2017-11-22 18:46:09,219] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 : result shuttle for (0, 0) contains enough entries, expected 5 and received 5
+[2017-11-22 18:46:09,219] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : result_shuttle is validated.
+[2017-11-22 18:46:09,195] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 : shuttle message from replica is validated
+[2017-11-22 18:46:09,219] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : cached result proof for request id (1, 0)
+[2017-11-22 18:46:09,219] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 : result shuttle from replica is validated
+[2017-11-22 18:46:09,218] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 0 : sent shuttle (0, 1) to  <Replica:8ec05#MainNode>
+[2017-11-22 18:46:09,219] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : sent result_shuttle (1, 0) to <Replica:8ec04#MainNode>
+[2017-11-22 18:46:09,219] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 0 : applied operation and result returned.
+[2017-11-22 18:46:09,219] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 : result_shuttle is validated.
+[2017-11-22 18:46:09,219] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 0 : create order statement at slot 3
+[2017-11-22 18:46:09,219] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 : signature of replica 0 is validated
+[2017-11-22 18:46:09,219] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 : cached result proof for request id (0, 0)
+[2017-11-22 18:46:09,220] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,220] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 0 : signed order statement and added order proof to history
+[2017-11-22 18:46:09,220] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 : sent result_shuttle (0, 0) to <Replica:8ec05#MainNode>
+[2017-11-22 18:46:09,220] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 0 : hashed and signed result
+[2017-11-22 18:46:09,220] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : received shuttle (0, 1) from <Replica:8ec04#MainNode>
+[2017-11-22 18:46:09,220] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 0 : obtained result and signed order statement for request (1, 1)
+[2017-11-22 18:46:09,220] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,218] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : result shuttle from replica is validated
+[2017-11-22 18:46:09,221] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 0 : hashed and signed result statement for request (1, 1) at shuttle.
+[2017-11-22 18:46:09,221] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : shuttle message from replica is validated
+[2017-11-22 18:46:09,223] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 : received result_shuttle (1, 0) from <Replica:8ec06#MainNode>
+[2017-11-22 18:46:09,223] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 : result shuttle for (1, 0) contains enough entries, expected 5 and received 5
+[2017-11-22 18:46:09,224] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : signature of replica 0 is validated
+[2017-11-22 18:46:09,224] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 0 : sent shuttle (1, 1) to  <Replica:8ec04#MainNode>
+[2017-11-22 18:46:09,224] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,224] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,224] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 : result shuttle from replica is validated
+[2017-11-22 18:46:09,221] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 : validation for applying request succeeds, start applying request.
+[2017-11-22 18:46:09,225] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 : result_shuttle is validated.
+[2017-11-22 18:46:09,225] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : signature of replica 1 is validated
+[2017-11-22 18:46:09,225] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 0 : received result_shuttle (0, 0) from <Replica:8ec04#MainNode>
+[2017-11-22 18:46:09,226] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,226] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 : cached result proof for request id (1, 0)
+[2017-11-22 18:46:09,226] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 0 : result shuttle for (0, 0) contains enough entries, expected 5 and received 5
+[2017-11-22 18:46:09,227] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 : sent result_shuttle (1, 0) to <Replica:8ec05#MainNode>
+[2017-11-22 18:46:09,226] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,228] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 0 : result_shuttle is validated.
+[2017-11-22 18:46:09,228] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : validation for applying request succeeds, start applying request.
+[2017-11-22 18:46:09,228] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 0 : cached result proof for request id (0, 0)
+[2017-11-22 18:46:09,222] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : result_shuttle is validated.
+[2017-11-22 18:46:09,228] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : cached result proof for request id (1, 0)
+[2017-11-22 18:46:09,229] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : applied operation and result returned.
+[2017-11-22 18:46:09,229] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : sent result_shuttle (1, 0) to <Replica:8ec05#MainNode>
+[2017-11-22 18:46:09,229] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : create order statement at slot 2
+[2017-11-22 18:46:09,225] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 : applied operation and result returned.
+[2017-11-22 18:46:09,229] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 : received shuttle (1, 1) from <Replica:8ec05#MainNode>
+[2017-11-22 18:46:09,229] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : signed order statement and added order proof to history
+[2017-11-22 18:46:09,229] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 0 : received result_shuttle (1, 0) from <Replica:8ec04#MainNode>
+[2017-11-22 18:46:09,230] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 0 : result shuttle for (1, 0) contains enough entries, expected 5 and received 5
+[2017-11-22 18:46:09,230] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : hashed and signed result
+[2017-11-22 18:46:09,229] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 : create order statement at slot 2
+[2017-11-22 18:46:09,230] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 : shuttle message from replica is validated
+[2017-11-22 18:46:09,230] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 0 : result_shuttle is validated.
+[2017-11-22 18:46:09,230] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 0 : cached result proof for request id (1, 0)
+[2017-11-22 18:46:09,230] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : hashed and result for request (0, 1) at shuttle.
+[2017-11-22 18:46:09,231] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : sent shuttle (0, 1) to <Replica:8ec08#MainNode>
+[2017-11-22 18:46:09,231] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 : signature of replica 0 is validated
+[2017-11-22 18:46:09,231] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,231] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,231] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 : validation for applying request succeeds, start applying request.
+[2017-11-22 18:46:09,231] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 : signed order statement and added order proof to history
+[2017-11-22 18:46:09,232] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 : hashed and signed result
+[2017-11-22 18:46:09,232] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 : applied operation and result returned.
+[2017-11-22 18:46:09,232] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 : hashed and result for request (1, 1) at shuttle.
+[2017-11-22 18:46:09,232] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 : create order statement at slot 3
+[2017-11-22 18:46:09,232] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : received shuttle (0, 1) from <Replica:8ec06#MainNode>
+[2017-11-22 18:46:09,232] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 : sent shuttle (1, 1) to <Replica:8ec04#MainNode>
+[2017-11-22 18:46:09,233] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 : signed order statement and added order proof to history
+[2017-11-22 18:46:09,233] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : shuttle message from replica is validated
+[2017-11-22 18:46:09,233] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 : hashed and signed result
+[2017-11-22 18:46:09,233] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : received result_shuttle (0, 0) from <Replica:8ec07#MainNode>
+[2017-11-22 18:46:09,233] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : signature of replica 0 is validated
+[2017-11-22 18:46:09,233] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 : hashed and result for request (1, 1) at shuttle.
+[2017-11-22 18:46:09,233] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,233] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : result shuttle for (0, 0) contains enough entries, expected 5 and received 5
+[2017-11-22 18:46:09,234] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 : sent shuttle (1, 1) to <Replica:8ec06#MainNode>
+[2017-11-22 18:46:09,234] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,234] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : signature of replica 1 is validated
+[2017-11-22 18:46:09,234] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,234] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : result shuttle from replica is validated
+[2017-11-22 18:46:09,234] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,235] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 : received shuttle (0, 1) from <Replica:8ec06#MainNode>
+[2017-11-22 18:46:09,235] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : signature of replica 2 is validated
+[2017-11-22 18:46:09,235] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : result shuttle from replica is validated
+[2017-11-22 18:46:09,235] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : received shuttle (1, 1) from <Replica:8ec04#MainNode>
+[2017-11-22 18:46:09,235] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,235] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : result_shuttle is validated.
+[2017-11-22 18:46:09,235] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,235] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 : shuttle message from replica is validated
+[2017-11-22 18:46:09,235] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : validation for applying request succeeds, start applying request.
+[2017-11-22 18:46:09,235] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : cached result proof for request id (0, 0)
+[2017-11-22 18:46:09,235] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : shuttle message from replica is validated
+[2017-11-22 18:46:09,236] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : sent result_shuttle (0, 0) to <Replica:8ec05#MainNode>
+[2017-11-22 18:46:09,236] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 : signature of replica 0 is validated
+[2017-11-22 18:46:09,236] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : signature of replica 0 is validated
+[2017-11-22 18:46:09,236] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,236] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,236] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : applied operation and result returned.
+[2017-11-22 18:46:09,236] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,236] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,236] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : create order statement at slot 2
+[2017-11-22 18:46:09,237] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 : validation for applying request succeeds, start applying request.
+[2017-11-22 18:46:09,237] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : signature of replica 1 is validated
+[2017-11-22 18:46:09,237] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : signed order statement and added order proof to history
+[2017-11-22 18:46:09,237] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,237] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : hashed and signed result
+[2017-11-22 18:46:09,237] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,237] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 : applied operation and result returned.
+[2017-11-22 18:46:09,237] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : validation for applying request succeeds, start applying request.
+[2017-11-22 18:46:09,237] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : hashed and result for request (0, 1) at shuttle.
+[2017-11-22 18:46:09,238] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : sent shuttle (0, 1) to <Replica:8ec07#MainNode>
+[2017-11-22 18:46:09,237] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 : create order statement at slot 3
+[2017-11-22 18:46:09,238] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : applied operation and result returned.
+[2017-11-22 18:46:09,238] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : create order statement at slot 3
+[2017-11-22 18:46:09,238] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 : signed order statement and added order proof to history
+[2017-11-22 18:46:09,238] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : signed order statement and added order proof to history
+[2017-11-22 18:46:09,239] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : hashed and signed result
+[2017-11-22 18:46:09,240] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 : hashed and signed result
+[2017-11-22 18:46:09,237] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : received shuttle (1, 1) from <Replica:8ec05#MainNode>
+[2017-11-22 18:46:09,240] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : hashed and result for request (1, 1) at shuttle.
+[2017-11-22 18:46:09,240] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : received shuttle (0, 1) from <Replica:8ec08#MainNode>
+[2017-11-22 18:46:09,240] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 : hashed and result for request (0, 1) at shuttle.
+[2017-11-22 18:46:09,240] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : sent shuttle (1, 1) to <Replica:8ec08#MainNode>
+[2017-11-22 18:46:09,240] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : shuttle message from replica is validated
+[2017-11-22 18:46:09,240] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 : sent shuttle (0, 1) to <Replica:8ec04#MainNode>
+[2017-11-22 18:46:09,241] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : shuttle message from replica is validated
+[2017-11-22 18:46:09,241] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : signature of replica 0 is validated
+[2017-11-22 18:46:09,242] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,242] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,242] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : received shuttle (1, 1) from <Replica:8ec06#MainNode>
+[2017-11-22 18:46:09,242] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 : received result_shuttle (1, 0) from <Replica:8ec04#MainNode>
+[2017-11-22 18:46:09,242] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : signature of replica 1 is validated
+[2017-11-22 18:46:09,242] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : shuttle message from replica is validated
+[2017-11-22 18:46:09,242] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 : result shuttle for (1, 0) contains enough entries, expected 5 and received 5
+[2017-11-22 18:46:09,243] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 : result shuttle from replica is validated
+[2017-11-22 18:46:09,243] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 : result_shuttle is validated.
+[2017-11-22 18:46:09,243] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 : cached result proof for request id (1, 0)
+[2017-11-22 18:46:09,244] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 : sent result_shuttle (1, 0) to <Replica:8ec06#MainNode>
+[2017-11-22 18:46:09,243] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,244] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,243] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : signature of replica 0 is validated
+[2017-11-22 18:46:09,244] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : signature of replica 2 is validated
+[2017-11-22 18:46:09,244] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,245] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,245] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,245] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,247] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : signature of replica 3 is validated
+[2017-11-22 18:46:09,247] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,247] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,247] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : validation for applying request succeeds, start applying request.
+[2017-11-22 18:46:09,248] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : applied operation and result returned.
+[2017-11-22 18:46:09,248] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : create order statement at slot 2
+[2017-11-22 18:46:09,248] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : signed order statement and added order proof to history
+[2017-11-22 18:46:09,249] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : hashed and signed result
+[2017-11-22 18:46:09,245] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : signature of replica 1 is validated
+[2017-11-22 18:46:09,249] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : hashed and result for request (0, 1) at shuttle.
+[2017-11-22 18:46:09,249] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,249] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : sent result_shuttle (0, 1) to replica <Replica:8ec08#MainNode>
+[2017-11-22 18:46:09,249] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,241] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : signature of replica 0 is validated
+[2017-11-22 18:46:09,250] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : sent operation_result (0, 1) to client <Client:10005#ClientNode>
+[2017-11-22 18:46:09,250] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : signature of replica 2 is validated
+[2017-11-22 18:46:09,250] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,250] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,250] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,250] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : validation for applying request succeeds, start applying request.
+[2017-11-22 18:46:09,251] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,251] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : applied operation and result returned.
+[2017-11-22 18:46:09,251] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : create order statement at slot 3
+[2017-11-22 18:46:09,251] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : signature of replica 1 is validated
+[2017-11-22 18:46:09,252] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,252] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : signed order statement and added order proof to history
+[2017-11-22 18:46:09,252] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,252] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : hashed and signed result
+[2017-11-22 18:46:09,252] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : validation for applying request succeeds, start applying request.
+[2017-11-22 18:46:09,246] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 0 : received result_shuttle (1, 0) from <Replica:8ec05#MainNode>
+[2017-11-22 18:46:09,252] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : hashed and result for request (1, 1) at shuttle.
+[2017-11-22 18:46:09,253] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : sent shuttle (1, 1) to <Replica:8ec07#MainNode>
+[2017-11-22 18:46:09,252] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 0 : result shuttle for (1, 0) contains enough entries, expected 5 and received 5
+[2017-11-22 18:46:09,254] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 0 : result_shuttle is validated.
+[2017-11-22 18:46:09,254] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 0 : cached result proof for request id (1, 0)
+[2017-11-22 18:46:09,246] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 : received result_shuttle (0, 0) from <Replica:8ec04#MainNode>
+[2017-11-22 18:46:09,254] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : received result_shuttle (0, 1) from <Replica:8ec07#MainNode>
+[2017-11-22 18:46:09,254] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 : result shuttle for (0, 0) contains enough entries, expected 5 and received 5
+[2017-11-22 18:46:09,254] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : received shuttle (1, 1) from <Replica:8ec08#MainNode>
+[2017-11-22 18:46:09,255] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : result shuttle for (0, 1) contains enough entries, expected 5 and received 5
+[2017-11-22 18:46:09,255] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 0 : message from client is validated
+[2017-11-22 18:46:09,255] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : shuttle message from replica is validated
+[2017-11-22 18:46:09,252] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : applied operation and result returned.
+[2017-11-22 18:46:09,255] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 : result shuttle from replica is validated
+[2017-11-22 18:46:09,258] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : create order statement at slot 2
+[2017-11-22 18:46:09,258] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 : result_shuttle is validated.
+[2017-11-22 18:46:09,258] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : signature of replica 0 is validated
+[2017-11-22 18:46:09,255] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : result shuttle from replica is validated
+[2017-11-22 18:46:09,255] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 0 : received new operation request (0, 2) for operation:  get('movie')
+[2017-11-22 18:46:09,258] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,258] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,258] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 0 : handling new request from <Client:10005#ClientNode>
+[2017-11-22 18:46:09,258] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 0 : validation for applying request succeeds, start applying request.
+[2017-11-22 18:46:09,258] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : result shuttle from replica is validated
+[2017-11-22 18:46:09,259] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : signature of replica 1 is validated
+[2017-11-22 18:46:09,259] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,259] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 0 : applied operation and result returned.
+[2017-11-22 18:46:09,259] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : result shuttle from replica is validated
+[2017-11-22 18:46:09,259] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 0 : create order statement at slot 4
+[2017-11-22 18:46:09,259] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,259] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : result_shuttle is validated.
+[2017-11-22 18:46:09,259] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : cached result proof for request id (0, 1)
+[2017-11-22 18:46:09,259] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 0 : signed order statement and added order proof to history
+[2017-11-22 18:46:09,259] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : signature of replica 2 is validated
+[2017-11-22 18:46:09,259] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : sent result_shuttle (0, 1) to <Replica:8ec06#MainNode>
+[2017-11-22 18:46:09,260] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 0 : hashed and signed result
+[2017-11-22 18:46:09,260] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,260] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 0 : obtained result and signed order statement for request (0, 2)
+[2017-11-22 18:46:09,260] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,260] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 0 : hashed and signed result statement for request (0, 2) at shuttle.
+[2017-11-22 18:46:09,260] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : signature of replica 3 is validated
+[2017-11-22 18:46:09,260] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,261] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 0 : sent shuttle (0, 2) to  <Replica:8ec04#MainNode>
+[2017-11-22 18:46:09,261] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,261] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : received result_shuttle (0, 1) from <Replica:8ec08#MainNode>
+[2017-11-22 18:46:09,261] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : validation for applying request succeeds, start applying request.
+[2017-11-22 18:46:09,261] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : result shuttle for (0, 1) contains enough entries, expected 5 and received 5
+[2017-11-22 18:46:09,262] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : applied operation and result returned.
+[2017-11-22 18:46:09,262] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : result shuttle from replica is validated
+[2017-11-22 18:46:09,262] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 : received shuttle (0, 2) from <Replica:8ec05#MainNode>
+[2017-11-22 18:46:09,262] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : create order statement at slot 3
+[2017-11-22 18:46:09,262] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : signed order statement and added order proof to history
+[2017-11-22 18:46:09,262] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 : shuttle message from replica is validated
+[2017-11-22 18:46:09,262] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : result shuttle from replica is validated
+[2017-11-22 18:46:09,262] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : hashed and signed result
+[2017-11-22 18:46:09,263] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 : signature of replica 0 is validated
+[2017-11-22 18:46:09,263] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : result_shuttle is validated.
+[2017-11-22 18:46:09,263] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : hashed and result for request (1, 1) at shuttle.
+[2017-11-22 18:46:09,263] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,263] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : cached result proof for request id (0, 1)
+[2017-11-22 18:46:09,263] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : sent result_shuttle (1, 1) to replica <Replica:8ec08#MainNode>
+[2017-11-22 18:46:09,263] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,263] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : sent result_shuttle (0, 1) to <Replica:8ec04#MainNode>
+[2017-11-22 18:46:09,263] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 : validation for applying request succeeds, start applying request.
+[2017-11-22 18:46:09,264] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 : applied operation and result returned.
+[2017-11-22 18:46:09,264] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : sent operation_result (1, 1) to client <Client:10004#ClientNode>
+[2017-11-22 18:46:09,264] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 : create order statement at slot 4
+[2017-11-22 18:46:09,264] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 : signed order statement and added order proof to history
+[2017-11-22 18:46:09,265] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 : hashed and signed result
+[2017-11-22 18:46:09,265] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 : hashed and result for request (0, 2) at shuttle.
+[2017-11-22 18:46:09,265] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 : sent shuttle (0, 2) to <Replica:8ec06#MainNode>
+[2017-11-22 18:46:09,265] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : received result_shuttle (1, 1) from <Replica:8ec07#MainNode>
+[2017-11-22 18:46:09,265] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : result shuttle for (1, 1) contains enough entries, expected 5 and received 5
+[2017-11-22 18:46:09,266] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : result shuttle from replica is validated
+[2017-11-22 18:46:09,266] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : result shuttle from replica is validated
+[2017-11-22 18:46:09,267] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : received shuttle (0, 2) from <Replica:8ec04#MainNode>
+[2017-11-22 18:46:09,267] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : result shuttle from replica is validated
+[2017-11-22 18:46:09,267] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : result_shuttle is validated.
+[2017-11-22 18:46:09,267] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : shuttle message from replica is validated
+[2017-11-22 18:46:09,267] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : cached result proof for request id (1, 1)
+[2017-11-22 18:46:09,267] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : sent result_shuttle (1, 1) to <Replica:8ec06#MainNode>
+[2017-11-22 18:46:09,267] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 : received result_shuttle (0, 1) from <Replica:8ec06#MainNode>
+[2017-11-22 18:46:09,267] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : signature of replica 0 is validated
+[2017-11-22 18:46:09,268] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 : result shuttle for (0, 1) contains enough entries, expected 5 and received 5
+[2017-11-22 18:46:09,268] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,258] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 : cached result proof for request id (0, 0)
+[2017-11-22 18:46:09,268] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,268] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 : sent result_shuttle (0, 0) to <Replica:8ec06#MainNode>
+[2017-11-22 18:46:09,268] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 : result shuttle from replica is validated
+[2017-11-22 18:46:09,258] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : signed order statement and added order proof to history
+[2017-11-22 18:46:09,268] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 : result_shuttle is validated.
+[2017-11-22 18:46:09,270] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 : cached result proof for request id (0, 1)
+[2017-11-22 18:46:09,270] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 : sent result_shuttle (0, 1) to <Replica:8ec05#MainNode>
+[2017-11-22 18:46:09,270] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 0 : received result_shuttle (0, 0) from <Replica:8ec05#MainNode>
+[2017-11-22 18:46:09,268] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : signature of replica 1 is validated
+[2017-11-22 18:46:09,269] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : hashed and signed result
+[2017-11-22 18:46:09,271] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : hashed and result for request (1, 1) at shuttle.
+[2017-11-22 18:46:09,271] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : sent shuttle (1, 1) to <Replica:8ec07#MainNode>
+[2017-11-22 18:46:09,270] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,269] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 0 : message from client is validated
+[2017-11-22 18:46:09,272] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,272] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 0 : received new operation request (1, 2) for operation:  get('jedi')
+[2017-11-22 18:46:09,272] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : validation for applying request succeeds, start applying request.
+[2017-11-22 18:46:09,272] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 0 : handling new request from <Client:10004#ClientNode>
+[2017-11-22 18:46:09,272] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : applied operation and result returned.
+[2017-11-22 18:46:09,272] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 0 : validation for applying request succeeds, start applying request.
+[2017-11-22 18:46:09,273] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 0 : applied operation and result returned.
+[2017-11-22 18:46:09,273] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : create order statement at slot 4
+[2017-11-22 18:46:09,270] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 0 : result shuttle for (0, 0) contains enough entries, expected 5 and received 5
+[2017-11-22 18:46:09,273] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : signed order statement and added order proof to history
+[2017-11-22 18:46:09,273] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 0 : create order statement at slot 5
+[2017-11-22 18:46:09,274] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 0 : result_shuttle is validated.
+[2017-11-22 18:46:09,274] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : hashed and signed result
+[2017-11-22 18:46:09,274] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : received shuttle (1, 1) from <Replica:8ec04#MainNode>
+[2017-11-22 18:46:09,274] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 0 : signed order statement and added order proof to history
+[2017-11-22 18:46:09,275] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : hashed and result for request (0, 2) at shuttle.
+[2017-11-22 18:46:09,275] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 0 : hashed and signed result
+[2017-11-22 18:46:09,274] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 0 : cached result proof for request id (0, 0)
+[2017-11-22 18:46:09,275] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : sent shuttle (0, 2) to <Replica:8ec08#MainNode>
+[2017-11-22 18:46:09,275] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 0 : obtained result and signed order statement for request (1, 2)
+[2017-11-22 18:46:09,276] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 0 : hashed and signed result statement for request (1, 2) at shuttle.
+[2017-11-22 18:46:09,277] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 0 : sent shuttle (1, 2) to  <Replica:8ec04#MainNode>
+[2017-11-22 18:46:09,277] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : received result_shuttle (1, 1) from <Replica:8ec08#MainNode>
+[2017-11-22 18:46:09,277] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : received shuttle (0, 2) from <Replica:8ec06#MainNode>
+[2017-11-22 18:46:09,276] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : received shuttle (0, 1) from <Replica:8ec05#MainNode>
+[2017-11-22 18:46:09,278] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 : received shuttle (1, 2) from <Replica:8ec05#MainNode>
+[2017-11-22 18:46:09,278] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 0 : received result_shuttle (0, 1) from <Replica:8ec04#MainNode>
+[2017-11-22 18:46:09,278] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : shuttle message from replica is validated
+[2017-11-22 18:46:09,278] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : result shuttle for (1, 1) contains enough entries, expected 5 and received 5
+[2017-11-22 18:46:09,279] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 0 : result shuttle for (0, 1) contains enough entries, expected 5 and received 5
+[2017-11-22 18:46:09,279] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 : shuttle message from replica is validated
+[2017-11-22 18:46:09,279] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 0 : result_shuttle is validated.
+[2017-11-22 18:46:09,279] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : result shuttle from replica is validated
+[2017-11-22 18:46:09,279] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : signature of replica 0 is validated
+[2017-11-22 18:46:09,275] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : shuttle message from replica is validated
+[2017-11-22 18:46:09,278] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : shuttle message from replica is validated
+[2017-11-22 18:46:09,280] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : signature of replica 0 is validated
+[2017-11-22 18:46:09,280] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : signature of replica 0 is validated
+[2017-11-22 18:46:09,281] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,281] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,281] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,281] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,282] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : signature of replica 1 is validated
+[2017-11-22 18:46:09,282] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,279] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 0 : cached result proof for request id (0, 1)
+[2017-11-22 18:46:09,282] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : signature of replica 1 is validated
+[2017-11-22 18:46:09,283] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,280] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 : signature of replica 0 is validated
+[2017-11-22 18:46:09,283] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,283] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : validation for applying request succeeds, start applying request.
+[2017-11-22 18:46:09,283] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,283] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,283] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,284] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : applied operation and result returned.
+[2017-11-22 18:46:09,284] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 : validation for applying request succeeds, start applying request.
+[2017-11-22 18:46:09,284] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : create order statement at slot 3
+[2017-11-22 18:46:09,284] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : signature of replica 2 is validated
+[2017-11-22 18:46:09,284] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 : applied operation and result returned.
+[2017-11-22 18:46:09,284] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,284] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 : create order statement at slot 5
+[2017-11-22 18:46:09,284] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : signed order statement and added order proof to history
+[2017-11-22 18:46:09,284] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,284] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : validation for applying request succeeds, start applying request.
+[2017-11-22 18:46:09,284] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : hashed and signed result
+[2017-11-22 18:46:09,284] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 : signed order statement and added order proof to history
+[2017-11-22 18:46:09,285] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : hashed and result for request (0, 1) at shuttle.
+[2017-11-22 18:46:09,285] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 : hashed and signed result
+[2017-11-22 18:46:09,285] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : sent shuttle (0, 1) to <Replica:8ec07#MainNode>
+[2017-11-22 18:46:09,285] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : applied operation and result returned.
+[2017-11-22 18:46:09,285] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : create order statement at slot 2
+[2017-11-22 18:46:09,285] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 : hashed and result for request (1, 2) at shuttle.
+[2017-11-22 18:46:09,286] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 : sent shuttle (1, 2) to <Replica:8ec06#MainNode>
+[2017-11-22 18:46:09,286] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : signed order statement and added order proof to history
+[2017-11-22 18:46:09,286] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : hashed and signed result
+[2017-11-22 18:46:09,280] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : result shuttle from replica is validated
+[2017-11-22 18:46:09,287] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : hashed and result for request (1, 1) at shuttle.
+[2017-11-22 18:46:09,287] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : result_shuttle is validated.
+[2017-11-22 18:46:09,279] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,287] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : sent shuttle (1, 1) to <Replica:8ec03#MainNode>
+[2017-11-22 18:46:09,287] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : cached result proof for request id (1, 1)
+[2017-11-22 18:46:09,287] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,287] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : sent result_shuttle (1, 1) to <Replica:8ec04#MainNode>
+[2017-11-22 18:46:09,288] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : received shuttle (0, 1) from <Replica:8ec04#MainNode>
+[2017-11-22 18:46:09,288] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : received shuttle (1, 1) from <Replica:8ec07#MainNode>
+[2017-11-22 18:46:09,290] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 : received result_shuttle (1, 1) from <Replica:8ec06#MainNode>
+[2017-11-22 18:46:09,290] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : shuttle message from replica is validated
+[2017-11-22 18:46:09,290] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : shuttle message from replica is validated
+[2017-11-22 18:46:09,290] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 : result shuttle for (1, 1) contains enough entries, expected 5 and received 5
+[2017-11-22 18:46:09,291] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : signature of replica 0 is validated
+[2017-11-22 18:46:09,291] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 : result shuttle from replica is validated
+[2017-11-22 18:46:09,291] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : signature of replica 0 is validated
+[2017-11-22 18:46:09,291] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,291] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 : result_shuttle is validated.
+[2017-11-22 18:46:09,291] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,291] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,291] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 : cached result proof for request id (1, 1)
+[2017-11-22 18:46:09,291] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,292] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 : sent result_shuttle (1, 1) to <Replica:8ec05#MainNode>
+[2017-11-22 18:46:09,292] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : signature of replica 1 is validated
+[2017-11-22 18:46:09,292] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,292] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : signature of replica 1 is validated
+[2017-11-22 18:46:09,292] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,292] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : signature of replica 2 is validated
+[2017-11-22 18:46:09,293] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,293] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,293] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 0 : received result_shuttle (1, 1) from <Replica:8ec04#MainNode>
+[2017-11-22 18:46:09,294] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : signature of replica 3 is validated
+[2017-11-22 18:46:09,294] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 0 : result shuttle for (1, 1) contains enough entries, expected 5 and received 5
+[2017-11-22 18:46:09,294] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,294] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 0 : result_shuttle is validated.
+[2017-11-22 18:46:09,294] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,294] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 0 : cached result proof for request id (1, 1)
+[2017-11-22 18:46:09,292] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,294] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : validation for applying request succeeds, start applying request.
+[2017-11-22 18:46:09,294] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,295] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : signature of replica 2 is validated
+[2017-11-22 18:46:09,295] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : applied operation and result returned.
+[2017-11-22 18:46:09,295] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,295] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : create order statement at slot 2
+[2017-11-22 18:46:09,295] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,295] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : validation for applying request succeeds, start applying request.
+[2017-11-22 18:46:09,295] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : signed order statement and added order proof to history
+[2017-11-22 18:46:09,296] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : hashed and signed result
+[2017-11-22 18:46:09,296] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : applied operation and result returned.
+[2017-11-22 18:46:09,296] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : hashed and result for request (1, 1) at shuttle.
+[2017-11-22 18:46:09,296] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : create order statement at slot 3
+[2017-11-22 18:46:09,296] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : sent result_shuttle (1, 1) to replica <Replica:8ec07#MainNode>
+[2017-11-22 18:46:09,296] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : signed order statement and added order proof to history
+[2017-11-22 18:46:09,297] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : sent operation_result (1, 1) to client <Client:10003#ClientNode>
+[2017-11-22 18:46:09,297] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : hashed and signed result
+[2017-11-22 18:46:09,297] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : hashed and result for request (0, 1) at shuttle.
+[2017-11-22 18:46:09,297] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : sent shuttle (0, 1) to <Replica:8ec03#MainNode>
+[2017-11-22 18:46:09,299] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : received result_shuttle (1, 1) from <Replica:8ec03#MainNode>
+[2017-11-22 18:46:09,299] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : received shuttle (0, 1) from <Replica:8ec07#MainNode>
+[2017-11-22 18:46:09,299] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : result shuttle for (1, 1) contains enough entries, expected 5 and received 5
+[2017-11-22 18:46:09,299] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : shuttle message from replica is validated
+[2017-11-22 18:46:09,299] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : result shuttle from replica is validated
+[2017-11-22 18:46:09,300] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : signature of replica 0 is validated
+[2017-11-22 18:46:09,300] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : result shuttle from replica is validated
+[2017-11-22 18:46:09,300] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,300] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,301] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : signature of replica 1 is validated
+[2017-11-22 18:46:09,301] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,301] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,301] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 0 : message from client is validated
+[2017-11-22 18:46:09,302] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 0 : received new operation request (1, 2) for operation:  get('jedi')
+[2017-11-22 18:46:09,302] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : signature of replica 2 is validated
+[2017-11-22 18:46:09,302] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 0 : handling new request from <Client:10003#ClientNode>
+[2017-11-22 18:46:09,302] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,302] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 0 : validation for applying request succeeds, start applying request.
+[2017-11-22 18:46:09,300] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : result shuttle from replica is validated
+[2017-11-22 18:46:09,302] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,303] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : signature of replica 3 is validated
+[2017-11-22 18:46:09,303] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,302] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 0 : applied operation and result returned.
+[2017-11-22 18:46:09,305] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,302] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : result_shuttle is validated.
+[2017-11-22 18:46:09,305] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 0 : create order statement at slot 4
+[2017-11-22 18:46:09,305] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : validation for applying request succeeds, start applying request.
+[2017-11-22 18:46:09,305] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : cached result proof for request id (1, 1)
+[2017-11-22 18:46:09,305] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 0 : signed order statement and added order proof to history
+[2017-11-22 18:46:09,305] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : sent result_shuttle (1, 1) to <Replica:8ec04#MainNode>
+[2017-11-22 18:46:09,305] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 0 : hashed and signed result
+[2017-11-22 18:46:09,306] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : applied operation and result returned.
+[2017-11-22 18:46:09,306] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 0 : obtained result and signed order statement for request (1, 2)
+[2017-11-22 18:46:09,306] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : create order statement at slot 3
+[2017-11-22 18:46:09,306] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 0 : hashed and signed result statement for request (1, 2) at shuttle.
+[2017-11-22 18:46:09,306] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : signed order statement and added order proof to history
+[2017-11-22 18:46:09,306] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : hashed and signed result
+[2017-11-22 18:46:09,307] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 0 : sent shuttle (1, 2) to  <Replica:8ec05#MainNode>
+[2017-11-22 18:46:09,307] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : hashed and result for request (0, 1) at shuttle.
+[2017-11-22 18:46:09,307] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : sent result_shuttle (0, 1) to replica <Replica:8ec07#MainNode>
+[2017-11-22 18:46:09,307] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : received result_shuttle (1, 1) from <Replica:8ec07#MainNode>
+[2017-11-22 18:46:09,307] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : result shuttle for (1, 1) contains enough entries, expected 5 and received 5
+[2017-11-22 18:46:09,308] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : result shuttle from replica is validated
+[2017-11-22 18:46:09,308] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 : received shuttle (1, 2) from <Replica:8ec06#MainNode>
+[2017-11-22 18:46:09,308] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : result shuttle from replica is validated
+[2017-11-22 18:46:09,308] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : sent operation_result (0, 1) to client <Client:10002#ClientNode>
+[2017-11-22 18:46:09,308] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : result_shuttle is validated.
+[2017-11-22 18:46:09,308] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 : shuttle message from replica is validated
+[2017-11-22 18:46:09,308] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : received result_shuttle (0, 1) from <Replica:8ec03#MainNode>
+[2017-11-22 18:46:09,308] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : cached result proof for request id (1, 1)
+[2017-11-22 18:46:09,309] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : sent result_shuttle (1, 1) to <Replica:8ec05#MainNode>
+[2017-11-22 18:46:09,308] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : result shuttle for (0, 1) contains enough entries, expected 5 and received 5
+[2017-11-22 18:46:09,309] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 : signature of replica 0 is validated
+[2017-11-22 18:46:09,309] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,309] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : result shuttle from replica is validated
+[2017-11-22 18:46:09,310] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,310] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 : validation for applying request succeeds, start applying request.
+[2017-11-22 18:46:09,310] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : result shuttle from replica is validated
+[2017-11-22 18:46:09,310] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 : applied operation and result returned.
+[2017-11-22 18:46:09,310] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : received shuttle (1, 2) from <Replica:8ec04#MainNode>
+[2017-11-22 18:46:09,310] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : result shuttle from replica is validated
+[2017-11-22 18:46:09,310] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 : create order statement at slot 4
+[2017-11-22 18:46:09,311] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : result_shuttle is validated.
+[2017-11-22 18:46:09,311] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : cached result proof for request id (0, 1)
+[2017-11-22 18:46:09,311] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 : signed order statement and added order proof to history
+[2017-11-22 18:46:09,311] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : sent result_shuttle (0, 1) to <Replica:8ec04#MainNode>
+[2017-11-22 18:46:09,311] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 : hashed and signed result
+[2017-11-22 18:46:09,311] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 : hashed and result for request (1, 2) at shuttle.
+[2017-11-22 18:46:09,311] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : shuttle message from replica is validated
+[2017-11-22 18:46:09,312] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 : sent shuttle (1, 2) to <Replica:8ec04#MainNode>
+[2017-11-22 18:46:09,312] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : received result_shuttle (0, 1) from <Replica:8ec07#MainNode>
+[2017-11-22 18:46:09,313] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : signature of replica 0 is validated
+[2017-11-22 18:46:09,313] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : result shuttle for (0, 1) contains enough entries, expected 5 and received 5
+[2017-11-22 18:46:09,313] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 : received result_shuttle (1, 1) from <Replica:8ec04#MainNode>
+[2017-11-22 18:46:09,313] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 0 : message from client is validated
+[2017-11-22 18:46:09,313] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,313] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 0 : received new operation request (0, 2) for operation:  get('movie')
+[2017-11-22 18:46:09,313] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 : result shuttle for (1, 1) contains enough entries, expected 5 and received 5
+[2017-11-22 18:46:09,313] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : result shuttle from replica is validated
+[2017-11-22 18:46:09,314] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 0 : handling new request from <Client:10002#ClientNode>
+[2017-11-22 18:46:09,314] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 0 : validation for applying request succeeds, start applying request.
+[2017-11-22 18:46:09,314] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 : result shuttle from replica is validated
+[2017-11-22 18:46:09,314] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : result shuttle from replica is validated
+[2017-11-22 18:46:09,314] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 0 : applied operation and result returned.
+[2017-11-22 18:46:09,314] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 : result_shuttle is validated.
+[2017-11-22 18:46:09,314] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : result_shuttle is validated.
+[2017-11-22 18:46:09,314] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 0 : create order statement at slot 5
+[2017-11-22 18:46:09,314] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : cached result proof for request id (0, 1)
+[2017-11-22 18:46:09,314] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 : cached result proof for request id (1, 1)
+[2017-11-22 18:46:09,314] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 0 : signed order statement and added order proof to history
+[2017-11-22 18:46:09,315] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : sent result_shuttle (0, 1) to <Replica:8ec05#MainNode>
+[2017-11-22 18:46:09,315] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 : sent result_shuttle (1, 1) to <Replica:8ec06#MainNode>
+[2017-11-22 18:46:09,315] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 0 : hashed and signed result
+[2017-11-22 18:46:09,315] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 0 : obtained result and signed order statement for request (0, 2)
+[2017-11-22 18:46:09,313] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,315] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 0 : hashed and signed result statement for request (0, 2) at shuttle.
+[2017-11-22 18:46:09,316] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : received shuttle (1, 2) from <Replica:8ec05#MainNode>
+[2017-11-22 18:46:09,316] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 0 : sent shuttle (0, 2) to  <Replica:8ec05#MainNode>
+[2017-11-22 18:46:09,316] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : signature of replica 1 is validated
+[2017-11-22 18:46:09,316] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : shuttle message from replica is validated
+[2017-11-22 18:46:09,316] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 : received result_shuttle (0, 1) from <Replica:8ec04#MainNode>
+[2017-11-22 18:46:09,317] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : signature of replica 0 is validated
+[2017-11-22 18:46:09,316] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,317] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 : result shuttle for (0, 1) contains enough entries, expected 5 and received 5
+[2017-11-22 18:46:09,317] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 0 : received result_shuttle (1, 1) from <Replica:8ec05#MainNode>
+[2017-11-22 18:46:09,317] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,317] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,317] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 0 : result shuttle for (1, 1) contains enough entries, expected 5 and received 5
+[2017-11-22 18:46:09,317] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,317] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 : result shuttle from replica is validated
+[2017-11-22 18:46:09,317] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 0 : result_shuttle is validated.
+[2017-11-22 18:46:09,318] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 : result_shuttle is validated.
+[2017-11-22 18:46:09,318] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 0 : cached result proof for request id (1, 1)
+[2017-11-22 18:46:09,318] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : signature of replica 1 is validated
+[2017-11-22 18:46:09,318] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 : cached result proof for request id (0, 1)
+[2017-11-22 18:46:09,318] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,318] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : validation for applying request succeeds, start applying request.
+[2017-11-22 18:46:09,318] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 : sent result_shuttle (0, 1) to <Replica:8ec06#MainNode>
+[2017-11-22 18:46:09,318] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,318] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : validation for applying request succeeds, start applying request.
+[2017-11-22 18:46:09,319] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : signature of replica 1 is validated
+[2017-11-22 18:46:09,319] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : applied operation and result returned.
+[2017-11-22 18:46:09,319] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : create order statement at slot 4
+[2017-11-22 18:46:09,318] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : applied operation and result returned.
+[2017-11-22 18:46:09,319] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : signed order statement and added order proof to history
+[2017-11-22 18:46:09,319] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : create order statement at slot 5
+[2017-11-22 18:46:09,319] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 0 : received result_shuttle (0, 1) from <Replica:8ec05#MainNode>
+[2017-11-22 18:46:09,319] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 : received shuttle (0, 2) from <Replica:8ec06#MainNode>
+[2017-11-22 18:46:09,319] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : hashed and signed result
+[2017-11-22 18:46:09,320] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 0 : result shuttle for (0, 1) contains enough entries, expected 5 and received 5
+[2017-11-22 18:46:09,320] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : hashed and result for request (1, 2) at shuttle.
+[2017-11-22 18:46:09,320] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : signed order statement and added order proof to history
+[2017-11-22 18:46:09,320] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 0 : result_shuttle is validated.
+[2017-11-22 18:46:09,320] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 : shuttle message from replica is validated
+[2017-11-22 18:46:09,320] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 0 : cached result proof for request id (0, 1)
+[2017-11-22 18:46:09,320] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : sent shuttle (1, 2) to <Replica:8ec07#MainNode>
+[2017-11-22 18:46:09,320] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : hashed and signed result
+[2017-11-22 18:46:09,320] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 : signature of replica 0 is validated
+[2017-11-22 18:46:09,321] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,321] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,321] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 : validation for applying request succeeds, start applying request.
+[2017-11-22 18:46:09,321] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 : applied operation and result returned.
+[2017-11-22 18:46:09,321] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 : create order statement at slot 5
+[2017-11-22 18:46:09,322] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 : signed order statement and added order proof to history
+[2017-11-22 18:46:09,322] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 : hashed and signed result
+[2017-11-22 18:46:09,322] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 : hashed and result for request (0, 2) at shuttle.
+[2017-11-22 18:46:09,323] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 : sent shuttle (0, 2) to <Replica:8ec04#MainNode>
+[2017-11-22 18:46:09,324] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : received shuttle (1, 2) from <Replica:8ec04#MainNode>
+[2017-11-22 18:46:09,325] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : shuttle message from replica is validated
+[2017-11-22 18:46:09,325] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : received shuttle (0, 2) from <Replica:8ec05#MainNode>
+[2017-11-22 18:46:09,325] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : signature of replica 0 is validated
+[2017-11-22 18:46:09,325] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : shuttle message from replica is validated
+[2017-11-22 18:46:09,326] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,326] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,326] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : signature of replica 0 is validated
+[2017-11-22 18:46:09,326] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,326] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,326] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : signature of replica 1 is validated
+[2017-11-22 18:46:09,328] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,328] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : signature of replica 1 is validated
+[2017-11-22 18:46:09,328] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : hashed and result for request (1, 2) at shuttle.
+[2017-11-22 18:46:09,328] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,319] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,328] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,328] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : sent shuttle (1, 2) to <Replica:8ec08#MainNode>
+[2017-11-22 18:46:09,329] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,329] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : signature of replica 2 is validated
+[2017-11-22 18:46:09,329] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : validation for applying request succeeds, start applying request.
+[2017-11-22 18:46:09,329] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,329] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : applied operation and result returned.
+[2017-11-22 18:46:09,329] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,329] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : create order statement at slot 5
+[2017-11-22 18:46:09,329] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : validation for applying request succeeds, start applying request.
+[2017-11-22 18:46:09,330] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : signed order statement and added order proof to history
+[2017-11-22 18:46:09,330] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : hashed and signed result
+[2017-11-22 18:46:09,330] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : applied operation and result returned.
+[2017-11-22 18:46:09,328] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,330] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : create order statement at slot 4
+[2017-11-22 18:46:09,330] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : hashed and result for request (0, 2) at shuttle.
+[2017-11-22 18:46:09,331] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : sent shuttle (0, 2) to <Replica:8ec07#MainNode>
+[2017-11-22 18:46:09,331] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : signed order statement and added order proof to history
+[2017-11-22 18:46:09,331] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : signature of replica 2 is validated
+[2017-11-22 18:46:09,331] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : hashed and signed result
+[2017-11-22 18:46:09,332] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,332] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,332] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : hashed and result for request (1, 2) at shuttle.
+[2017-11-22 18:46:09,332] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : validation for applying request succeeds, start applying request.
+[2017-11-22 18:46:09,332] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : sent shuttle (1, 2) to <Replica:8ec03#MainNode>
+[2017-11-22 18:46:09,332] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : applied operation and result returned.
+[2017-11-22 18:46:09,333] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : create order statement at slot 4
+[2017-11-22 18:46:09,333] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : signed order statement and added order proof to history
+[2017-11-22 18:46:09,333] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : hashed and signed result
+[2017-11-22 18:46:09,333] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : received shuttle (0, 2) from <Replica:8ec04#MainNode>
+[2017-11-22 18:46:09,334] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : hashed and result for request (0, 2) at shuttle.
+[2017-11-22 18:46:09,334] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : received shuttle (1, 2) from <Replica:8ec07#MainNode>
+[2017-11-22 18:46:09,334] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : shuttle message from replica is validated
+[2017-11-22 18:46:09,334] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : sent shuttle (0, 2) to <Replica:8ec07#MainNode>
+[2017-11-22 18:46:09,334] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : shuttle message from replica is validated
+[2017-11-22 18:46:09,334] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : signature of replica 0 is validated
+[2017-11-22 18:46:09,334] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : failure drop_result_stmt() triggered by shuttle(1,2)
+[2017-11-22 18:46:09,335] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,335] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,335] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : signature of replica 0 is validated
+[2017-11-22 18:46:09,335] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,335] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,335] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : signature of replica 1 is validated
+[2017-11-22 18:46:09,335] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,336] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,336] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : received shuttle (0, 2) from <Replica:8ec08#MainNode>
+[2017-11-22 18:46:09,336] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : signature of replica 1 is validated
+[2017-11-22 18:46:09,336] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,336] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : received shuttle (1, 2) from <Replica:8ec06#MainNode>
+[2017-11-22 18:46:09,336] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : signature of replica 2 is validated
+[2017-11-22 18:46:09,336] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,336] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : shuttle message from replica is validated
+[2017-11-22 18:46:09,336] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,336] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : shuttle message from replica is validated
+[2017-11-22 18:46:09,336] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,337] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : signature of replica 0 is validated
+[2017-11-22 18:46:09,337] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : validation for applying request succeeds, start applying request.
+[2017-11-22 18:46:09,336] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : signature of replica 2 is validated
+[2017-11-22 18:46:09,337] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : applied operation and result returned.
+[2017-11-22 18:46:09,337] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,337] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,337] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : create order statement at slot 5
+[2017-11-22 18:46:09,337] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,337] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,337] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : signature of replica 0 is validated
+[2017-11-22 18:46:09,337] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : signed order statement and added order proof to history
+[2017-11-22 18:46:09,337] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : signature of replica 3 is validated
+[2017-11-22 18:46:09,338] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : hashed and signed result
+[2017-11-22 18:46:09,338] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,337] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : signature of replica 1 is validated
+[2017-11-22 18:46:09,338] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,338] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,338] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : hashed and result for request (0, 2) at shuttle.
+[2017-11-22 18:46:09,338] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : validation for applying request succeeds, start applying request.
+[2017-11-22 18:46:09,338] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,338] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : sent shuttle (0, 2) to <Replica:8ec03#MainNode>
+[2017-11-22 18:46:09,338] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : applied operation and result returned.
+[2017-11-22 18:46:09,338] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : signature of replica 2 is validated
+[2017-11-22 18:46:09,339] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : create order statement at slot 4
+[2017-11-22 18:46:09,340] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,341] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,341] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : signed order statement and added order proof to history
+[2017-11-22 18:46:09,341] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : signature of replica 3 is validated
+[2017-11-22 18:46:09,341] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : hashed and signed result
+[2017-11-22 18:46:09,341] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,342] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,342] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : validation for applying request succeeds, start applying request.
+[2017-11-22 18:46:09,342] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : hashed and result for request (1, 2) at shuttle.
+[2017-11-22 18:46:09,342] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : injecting drop_result_stmt failure for request (1, 2) at shuttle.
+[2017-11-22 18:46:09,342] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : applied operation and result returned.
+[2017-11-22 18:46:09,342] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : sent result_shuttle (1, 2) to replica <Replica:8ec07#MainNode>
+[2017-11-22 18:46:09,343] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : create order statement at slot 4
+[2017-11-22 18:46:09,343] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : sent operation_result (1, 2) to client <Client:10003#ClientNode>
+[2017-11-22 18:46:09,344] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : received result_shuttle (1, 2) from <Replica:8ec03#MainNode>
+[2017-11-22 18:46:09,344] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : received shuttle (0, 2) from <Replica:8ec07#MainNode>
+[2017-11-22 18:46:09,345] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : result shuttle for (1, 2) does not contain enough entries, expected 5 but only receive 4 ignore this result shuttle
+[2017-11-22 18:46:09,345] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : shuttle message from replica is validated
+[2017-11-22 18:46:09,345] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : signature of replica 0 is validated
+[2017-11-22 18:46:09,346] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,346] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,343] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : signed order statement and added order proof to history
+[2017-11-22 18:46:09,346] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : signature of replica 1 is validated
+[2017-11-22 18:46:09,346] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : hashed and signed result
+[2017-11-22 18:46:09,346] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,346] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,346] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : hashed and result for request (0, 2) at shuttle.
+[2017-11-22 18:46:09,347] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : sent result_shuttle (0, 2) to replica <Replica:8ec08#MainNode>
+[2017-11-22 18:46:09,347] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : signature of replica 2 is validated
+[2017-11-22 18:46:09,347] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,337] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,347] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,347] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,348] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : signature of replica 3 is validated
+[2017-11-22 18:46:09,348] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,348] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,348] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : validation for applying request succeeds, start applying request.
+[2017-11-22 18:46:09,348] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : applied operation and result returned.
+[2017-11-22 18:46:09,348] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : create order statement at slot 5
+[2017-11-22 18:46:09,349] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : sent operation_result (0, 2) to client <Client:10005#ClientNode>
+[2017-11-22 18:46:09,349] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : signed order statement and added order proof to history
+[2017-11-22 18:46:09,349] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : hashed and signed result
+[2017-11-22 18:46:09,349] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : hashed and result for request (0, 2) at shuttle.
+[2017-11-22 18:46:09,348] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : signature of replica 1 is validated
+[2017-11-22 18:46:09,350] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,350] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,350] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : signature of replica 2 is validated
+[2017-11-22 18:46:09,351] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,351] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,351] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : validation for applying request succeeds, start applying request.
+[2017-11-22 18:46:09,351] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : applied operation and result returned.
+[2017-11-22 18:46:09,350] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : sent result_shuttle (0, 2) to replica <Replica:8ec07#MainNode>
+[2017-11-22 18:46:09,354] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : create order statement at slot 5
+[2017-11-22 18:46:09,354] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : signed order statement and added order proof to history
+[2017-11-22 18:46:09,354] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : hashed and signed result
+[2017-11-22 18:46:09,354] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 : sent operation_result (0, 2) to client <Client:10002#ClientNode>
+[2017-11-22 18:46:09,355] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : hashed and result for request (1, 2) at shuttle.
+[2017-11-22 18:46:09,355] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : received result_shuttle (0, 2) from <Replica:8ec03#MainNode>
+[2017-11-22 18:46:09,355] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : result shuttle for (0, 2) contains enough entries, expected 5 and received 5
+[2017-11-22 18:46:09,355] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : sent shuttle (1, 2) to <Replica:8ec07#MainNode>
+[2017-11-22 18:46:09,356] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : result shuttle from replica is validated
+[2017-11-22 18:46:09,357] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : result shuttle from replica is validated
+[2017-11-22 18:46:09,358] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : result shuttle from replica is validated
+[2017-11-22 18:46:09,358] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : result_shuttle is validated.
+[2017-11-22 18:46:09,358] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : cached result proof for request id (0, 2)
+[2017-11-22 18:46:09,359] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 : sent result_shuttle (0, 2) to <Replica:8ec04#MainNode>
+[2017-11-22 18:46:09,360] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : received shuttle (1, 2) from <Replica:8ec08#MainNode>
+[2017-11-22 18:46:09,360] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : received result_shuttle (0, 2) from <Replica:8ec07#MainNode>
+[2017-11-22 18:46:09,360] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : result shuttle for (0, 2) contains enough entries, expected 5 and received 5
+[2017-11-22 18:46:09,360] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : shuttle message from replica is validated
+[2017-11-22 18:46:09,361] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : failure drop_result_stmt() triggered by shuttle(1,2)
+[2017-11-22 18:46:09,361] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : result shuttle from replica is validated
+[2017-11-22 18:46:09,361] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : received result_shuttle (0, 2) from <Replica:8ec07#MainNode>
+[2017-11-22 18:46:09,361] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : result shuttle for (0, 2) contains enough entries, expected 5 and received 5
+[2017-11-22 18:46:09,361] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : signature of replica 0 is validated
+[2017-11-22 18:46:09,361] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : result shuttle from replica is validated
+[2017-11-22 18:46:09,362] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,362] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : result shuttle from replica is validated
+[2017-11-22 18:46:09,362] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,362] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : result shuttle from replica is validated
+[2017-11-22 18:46:09,362] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : result shuttle from replica is validated
+[2017-11-22 18:46:09,362] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : signature of replica 1 is validated
+[2017-11-22 18:46:09,363] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : result_shuttle is validated.
+[2017-11-22 18:46:09,363] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : result_shuttle is validated.
+[2017-11-22 18:46:09,363] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,363] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : cached result proof for request id (0, 2)
+[2017-11-22 18:46:09,363] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,363] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 : sent result_shuttle (0, 2) to <Replica:8ec05#MainNode>
+[2017-11-22 18:46:09,363] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : cached result proof for request id (0, 2)
+[2017-11-22 18:46:09,364] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : signature of replica 2 is validated
+[2017-11-22 18:46:09,364] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : sent result_shuttle (0, 2) to <Replica:8ec06#MainNode>
+[2017-11-22 18:46:09,364] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,364] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,365] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : signature of replica 3 is validated
+[2017-11-22 18:46:09,365] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 : received result_shuttle (0, 2) from <Replica:8ec04#MainNode>
+[2017-11-22 18:46:09,365] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : received and successfully decoded signed order statement
+[2017-11-22 18:46:09,365] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 : result shuttle for (0, 2) contains enough entries, expected 5 and received 5
+[2017-11-22 18:46:09,365] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : no conflict in slot number and request id during order proof validation
+[2017-11-22 18:46:09,366] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : validation for applying request succeeds, start applying request.
+[2017-11-22 18:46:09,366] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 : result shuttle from replica is validated
+[2017-11-22 18:46:09,366] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : applied operation and result returned.
+[2017-11-22 18:46:09,366] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : create order statement at slot 5
+[2017-11-22 18:46:09,366] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 : result_shuttle is validated.
+[2017-11-22 18:46:09,366] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : received result_shuttle (0, 2) from <Replica:8ec08#MainNode>
+[2017-11-22 18:46:09,366] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 : cached result proof for request id (0, 2)
+[2017-11-22 18:46:09,366] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : result shuttle for (0, 2) contains enough entries, expected 5 and received 5
+[2017-11-22 18:46:09,366] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : signed order statement and added order proof to history
+[2017-11-22 18:46:09,366] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 : sent result_shuttle (0, 2) to <Replica:8ec06#MainNode>
+[2017-11-22 18:46:09,367] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : hashed and signed result
+[2017-11-22 18:46:09,367] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : result shuttle from replica is validated
+[2017-11-22 18:46:09,367] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : hashed and result for request (1, 2) at shuttle.
+[2017-11-22 18:46:09,367] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : injecting drop_result_stmt failure for request (1, 2) at shuttle.
+[2017-11-22 18:46:09,367] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : result shuttle from replica is validated
+[2017-11-22 18:46:09,367] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : sent result_shuttle (1, 2) to replica <Replica:8ec08#MainNode>
+[2017-11-22 18:46:09,368] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : result_shuttle is validated.
+[2017-11-22 18:46:09,368] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : cached result proof for request id (0, 2)
+[2017-11-22 18:46:09,368] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 : sent result_shuttle (0, 2) to <Replica:8ec04#MainNode>
+[2017-11-22 18:46:09,368] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 0 : received result_shuttle (0, 2) from <Replica:8ec05#MainNode>
+[2017-11-22 18:46:09,368] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 0 : result shuttle for (0, 2) contains enough entries, expected 5 and received 5
+[2017-11-22 18:46:09,368] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 0 : result_shuttle is validated.
+[2017-11-22 18:46:09,368] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 : sent operation_result (1, 2) to client <Client:10004#ClientNode>
+[2017-11-22 18:46:09,369] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 0 : cached result proof for request id (0, 2)
+[2017-11-22 18:46:09,369] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : received result_shuttle (1, 2) from <Replica:8ec07#MainNode>
+[2017-11-22 18:46:09,369] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 : received result_shuttle (0, 2) from <Replica:8ec06#MainNode>
+[2017-11-22 18:46:09,370] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 : result shuttle for (0, 2) contains enough entries, expected 5 and received 5
+[2017-11-22 18:46:09,370] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 : result shuttle for (1, 2) does not contain enough entries, expected 5 but only receive 4 ignore this result shuttle
+[2017-11-22 18:46:09,370] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 : result shuttle from replica is validated
+[2017-11-22 18:46:09,370] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 : result_shuttle is validated.
+[2017-11-22 18:46:09,371] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 : cached result proof for request id (0, 2)
+[2017-11-22 18:46:09,371] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 : sent result_shuttle (0, 2) to <Replica:8ec05#MainNode>
+[2017-11-22 18:46:09,372] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 0 : received result_shuttle (0, 2) from <Replica:8ec04#MainNode>
+[2017-11-22 18:46:09,373] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 0 : result shuttle for (0, 2) contains enough entries, expected 5 and received 5
+[2017-11-22 18:46:09,373] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 0 : result_shuttle is validated.
+[2017-11-22 18:46:09,373] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 0 : cached result proof for request id (0, 2)
+[2017-11-22 18:46:14,365] olympus.Olympus<Olympus:8ec02#MainNode>:OUTPUT: 
+Application elapsed time: 5.282174110412598
+[2017-11-22 18:46:14,377] olympus.Olympus<Olympus:8ec03#MainNode>:OUTPUT: 
+Application elapsed time: 5.283726215362549
+[2017-11-22 18:46:17,365] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 state: {'jedi': 'luke', 'movie': 'star wars'}
+[2017-11-22 18:46:17,365] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 0 state: {'jedi': 'luke', 'movie': 'star wars'}
+[2017-11-22 18:46:17,365] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 history: slot 0 ; request_id (1, 0) ; request put('jedi','luke skywalker')
+[2017-11-22 18:46:17,365] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 state: {'jedi': 'luke', 'movie': 'star wars'}
+[2017-11-22 18:46:17,366] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 history: slot 1 ; request_id (0, 0) ; request put('movie','star')
+[2017-11-22 18:46:17,365] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 0 history: slot 0 ; request_id (1, 0) ; request put('jedi','luke skywalker')
+[2017-11-22 18:46:17,366] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 history: slot 0 ; request_id (1, 0) ; request put('jedi','luke skywalker')
+[2017-11-22 18:46:17,366] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 history: slot 2 ; request_id (1, 1) ; request  slice('jedi','0:4')
+[2017-11-22 18:46:17,366] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 0 history: slot 1 ; request_id (0, 0) ; request put('movie','star')
+[2017-11-22 18:46:17,366] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 history: slot 1 ; request_id (0, 0) ; request put('movie','star')
+[2017-11-22 18:46:17,366] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 history: slot 3 ; request_id (0, 1) ; request  append('movie',' wars')
+[2017-11-22 18:46:17,366] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 history: slot 2 ; request_id (1, 1) ; request  slice('jedi','0:4')
+[2017-11-22 18:46:17,366] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 0 history: slot 2 ; request_id (1, 1) ; request  slice('jedi','0:4')
+[2017-11-22 18:46:17,366] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 0 history: slot 3 ; request_id (0, 1) ; request  append('movie',' wars')
+[2017-11-22 18:46:17,366] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 state: {'jedi': 'luke', 'movie': 'star wars'}
+[2017-11-22 18:46:17,366] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 history: slot 4 ; request_id (1, 2) ; request  get('jedi')
+[2017-11-22 18:46:17,367] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 0 history: slot 4 ; request_id (1, 2) ; request  get('jedi')
+[2017-11-22 18:46:17,366] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 state: {'jedi': 'luke', 'movie': 'star wars'}
+[2017-11-22 18:46:17,367] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 history: slot 5 ; request_id (0, 2) ; request  get('movie')
+[2017-11-22 18:46:17,366] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 history: slot 3 ; request_id (0, 1) ; request  append('movie',' wars')
+[2017-11-22 18:46:17,367] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 1 last checkpoint slot: 0
+[2017-11-22 18:46:17,367] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 history: slot 0 ; request_id (1, 0) ; request put('jedi','luke skywalker')
+[2017-11-22 18:46:17,367] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 history: slot 4 ; request_id (1, 2) ; request  get('jedi')
+[2017-11-22 18:46:17,367] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 history: slot 1 ; request_id (0, 0) ; request put('movie','star')
+[2017-11-22 18:46:17,367] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 history: slot 5 ; request_id (0, 2) ; request  get('movie')
+[2017-11-22 18:46:17,367] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 history: slot 2 ; request_id (1, 1) ; request  slice('jedi','0:4')
+[2017-11-22 18:46:17,367] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 0 history: slot 5 ; request_id (0, 2) ; request  get('movie')
+[2017-11-22 18:46:17,368] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 2 last checkpoint slot: 0
+[2017-11-22 18:46:17,368] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 history: slot 3 ; request_id (0, 1) ; request  append('movie',' wars')
+[2017-11-22 18:46:17,368] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 history: slot 4 ; request_id (1, 2) ; request  get('jedi')
+[2017-11-22 18:46:17,368] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 history: slot 5 ; request_id (0, 2) ; request  get('movie')
+[2017-11-22 18:46:17,367] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 history: slot 0 ; request_id (1, 0) ; request put('jedi','luke skywalker')
+[2017-11-22 18:46:17,368] replica.Replica<Replica:8ec03#MainNode>:OUTPUT: 
+Replica 4 last checkpoint slot: 0
+[2017-11-22 18:46:17,368] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 0 last checkpoint slot: 0
+[2017-11-22 18:46:17,368] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 history: slot 1 ; request_id (0, 0) ; request put('movie','star')
+[2017-11-22 18:46:17,369] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 history: slot 2 ; request_id (1, 1) ; request  slice('jedi','0:4')
+[2017-11-22 18:46:17,370] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 history: slot 3 ; request_id (0, 1) ; request  append('movie',' wars')
+[2017-11-22 18:46:17,370] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 history: slot 4 ; request_id (1, 2) ; request  get('jedi')
+[2017-11-22 18:46:17,370] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 history: slot 5 ; request_id (0, 2) ; request  get('movie')
+[2017-11-22 18:46:17,370] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 3 last checkpoint slot: 0
+[2017-11-22 18:46:17,376] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 0 state: {'movie': 'star wars', 'jedi': 'luke'}
+[2017-11-22 18:46:17,377] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 0 history: slot 0 ; request_id (0, 0) ; request put('movie','star')
+[2017-11-22 18:46:17,377] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 0 history: slot 1 ; request_id (1, 0) ; request put('jedi','luke skywalker')
+[2017-11-22 18:46:17,377] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 0 history: slot 2 ; request_id (0, 1) ; request  append('movie',' wars')
+[2017-11-22 18:46:17,377] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 0 history: slot 3 ; request_id (1, 1) ; request  slice('jedi','0:4')
+[2017-11-22 18:46:17,377] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 0 history: slot 4 ; request_id (0, 2) ; request  get('movie')
+[2017-11-22 18:46:17,378] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 state: {'movie': 'star wars', 'jedi': 'luke'}
+[2017-11-22 18:46:17,378] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 state: {'movie': 'star wars', 'jedi': 'luke'}
+[2017-11-22 18:46:17,378] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 0 history: slot 5 ; request_id (1, 2) ; request  get('jedi')
+[2017-11-22 18:46:17,378] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 history: slot 0 ; request_id (0, 0) ; request put('movie','star')
+[2017-11-22 18:46:17,378] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 history: slot 0 ; request_id (0, 0) ; request put('movie','star')
+[2017-11-22 18:46:17,378] replica.Replica<Replica:8ec05#MainNode>:OUTPUT: 
+Replica 0 last checkpoint slot: 0
+[2017-11-22 18:46:17,378] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 history: slot 1 ; request_id (1, 0) ; request put('jedi','luke skywalker')
+[2017-11-22 18:46:17,378] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 history: slot 2 ; request_id (0, 1) ; request  append('movie',' wars')
+[2017-11-22 18:46:17,378] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 history: slot 1 ; request_id (1, 0) ; request put('jedi','luke skywalker')
+[2017-11-22 18:46:17,378] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 state: {'movie': 'star wars', 'jedi': 'luke'}
+[2017-11-22 18:46:17,379] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 history: slot 0 ; request_id (0, 0) ; request put('movie','star')
+[2017-11-22 18:46:17,379] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 history: slot 3 ; request_id (1, 1) ; request  slice('jedi','0:4')
+[2017-11-22 18:46:17,379] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 history: slot 1 ; request_id (1, 0) ; request put('jedi','luke skywalker')
+[2017-11-22 18:46:17,379] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 history: slot 4 ; request_id (0, 2) ; request  get('movie')
+[2017-11-22 18:46:17,379] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 history: slot 2 ; request_id (0, 1) ; request  append('movie',' wars')
+[2017-11-22 18:46:17,380] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 history: slot 5 ; request_id (1, 2) ; request  get('jedi')
+[2017-11-22 18:46:17,380] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 history: slot 3 ; request_id (1, 1) ; request  slice('jedi','0:4')
+[2017-11-22 18:46:17,380] replica.Replica<Replica:8ec04#MainNode>:OUTPUT: 
+Replica 1 last checkpoint slot: 0
+[2017-11-22 18:46:17,380] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 history: slot 4 ; request_id (0, 2) ; request  get('movie')
+[2017-11-22 18:46:17,380] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 history: slot 5 ; request_id (1, 2) ; request  get('jedi')
+[2017-11-22 18:46:17,380] replica.Replica<Replica:8ec08#MainNode>:OUTPUT: 
+Replica 3 last checkpoint slot: 0
+[2017-11-22 18:46:17,379] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 history: slot 2 ; request_id (0, 1) ; request  append('movie',' wars')
+[2017-11-22 18:46:17,381] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 history: slot 3 ; request_id (1, 1) ; request  slice('jedi','0:4')
+[2017-11-22 18:46:17,381] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 history: slot 4 ; request_id (0, 2) ; request  get('movie')
+[2017-11-22 18:46:17,381] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 history: slot 5 ; request_id (1, 2) ; request  get('jedi')
+[2017-11-22 18:46:17,382] replica.Replica<Replica:8ec06#MainNode>:OUTPUT: 
+Replica 2 last checkpoint slot: 0
+[2017-11-22 18:46:17,381] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 state: {'movie': 'star wars', 'jedi': 'luke'}
+[2017-11-22 18:46:17,382] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 history: slot 0 ; request_id (0, 0) ; request put('movie','star')
+[2017-11-22 18:46:17,382] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 history: slot 1 ; request_id (1, 0) ; request put('jedi','luke skywalker')
+[2017-11-22 18:46:17,383] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 history: slot 2 ; request_id (0, 1) ; request  append('movie',' wars')
+[2017-11-22 18:46:17,383] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 history: slot 3 ; request_id (1, 1) ; request  slice('jedi','0:4')
+[2017-11-22 18:46:17,383] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 history: slot 4 ; request_id (0, 2) ; request  get('movie')
+[2017-11-22 18:46:17,383] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 history: slot 5 ; request_id (1, 2) ; request  get('jedi')
+[2017-11-22 18:46:17,384] replica.Replica<Replica:8ec07#MainNode>:OUTPUT: 
+Replica 4 last checkpoint slot: 0

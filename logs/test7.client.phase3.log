@@ -1,0 +1,134 @@
+[2017-11-22 18:46:48,436] client.Client<Client:4f002#ClientNode>:OUTPUT: Client ID: 0 
+Workload: ["put('movie','star')", " append('movie',' wars')", " get('movie')"] 
+Timeout: 3
+[2017-11-22 18:46:48,453] client.Client<Client:4f003#ClientNode>:OUTPUT: Client ID: 0 
+Workload: ["put('movie','star')", " append('movie',' wars')", " get('movie')"] 
+Timeout: 3
+[2017-11-22 18:46:48,546] client.Client<Client:4f002#ClientNode>:OUTPUT: 
+Starting client 0
+[2017-11-22 18:46:48,548] client.Client<Client:4f002#ClientNode>:OUTPUT: 
+Client 0 : sent get_configuration to Olympus.
+[2017-11-22 18:46:48,553] client.Client<Client:4f003#ClientNode>:OUTPUT: 
+Starting client 0
+[2017-11-22 18:46:48,554] client.Client<Client:4f003#ClientNode>:OUTPUT: 
+Client 0 : sent get_configuration to Olympus.
+[2017-11-22 18:46:48,556] client.Client<Client:4f002#ClientNode>:OUTPUT: 
+Client 0 : received configuration 0 from Olympus.
+[2017-11-22 18:46:48,557] client.Client<Client:4f002#ClientNode>:OUTPUT: 
+Client 0 : configuration response from Olympus is validated.
+[2017-11-22 18:46:48,557] client.Client<Client:4f002#ClientNode>:OUTPUT: 
+Client 0 : start sending requests in new configuration 0
+[2017-11-22 18:46:48,558] client.Client<Client:4f002#ClientNode>:OUTPUT: 
+Client 0 : sent check config message with id 0 to Olympus.
+[2017-11-22 18:46:48,561] client.Client<Client:4f003#ClientNode>:OUTPUT: 
+Client 0 : received configuration 0 from Olympus.
+[2017-11-22 18:46:48,567] client.Client<Client:4f003#ClientNode>:OUTPUT: 
+Client 0 : configuration response from Olympus is validated.
+[2017-11-22 18:46:48,574] client.Client<Client:4f003#ClientNode>:OUTPUT: 
+Client 0 : start sending requests in new configuration 0
+[2017-11-22 18:46:48,575] client.Client<Client:4f003#ClientNode>:OUTPUT: 
+Client 0 : sent check config message with id 0 to Olympus.
+[2017-11-22 18:46:48,575] client.Client<Client:4f002#ClientNode>:OUTPUT: 
+Client 0 : received check config response: OK continue normally.
+[2017-11-22 18:46:48,576] client.Client<Client:4f003#ClientNode>:OUTPUT: 
+Client 0 : received check config response: OK continue normally.
+[2017-11-22 18:46:48,577] client.Client<Client:4f002#ClientNode>:OUTPUT: 
+Client 0 : sent operation_request (0, 0) to <Replica:3cc03#MainNode>
+[2017-11-22 18:46:48,579] client.Client<Client:4f003#ClientNode>:OUTPUT: 
+Client 0 : sent operation_request (0, 0) to <Replica:3cc04#MainNode>
+[2017-11-22 18:46:48,609] client.Client<Client:4f002#ClientNode>:OUTPUT: 
+Client 0 : received response for new request (0, 0) from <Replica:3cc05#MainNode>
+[2017-11-22 18:46:48,610] client.Client<Client:4f002#ClientNode>:OUTPUT: 
+Client 0 : response of request (0, 0) for operation put('movie','star') is verified with 3 replicas acceptance.
+[2017-11-22 18:46:48,610] client.Client<Client:4f002#ClientNode>:OUTPUT: 
+Client 0 : response of new request (0, 0) for operation put('movie','star') is validated, the result is: OK
+[2017-11-22 18:46:48,612] client.Client<Client:4f002#ClientNode>:OUTPUT: 
+Client 0 : sent operation_request (0, 1) to <Replica:3cc03#MainNode>
+[2017-11-22 18:46:48,624] client.Client<Client:4f003#ClientNode>:OUTPUT: 
+Client 0 : received response for new request (0, 0) from <Replica:3cc05#MainNode>
+[2017-11-22 18:46:48,626] client.Client<Client:4f003#ClientNode>:OUTPUT: 
+Client 0 : response of request (0, 0) for operation put('movie','star') is verified with 3 replicas acceptance.
+[2017-11-22 18:46:48,626] client.Client<Client:4f003#ClientNode>:OUTPUT: 
+Client 0 : response of new request (0, 0) for operation put('movie','star') is validated, the result is: OK
+[2017-11-22 18:46:48,628] client.Client<Client:4f003#ClientNode>:OUTPUT: 
+Client 0 : sent operation_request (0, 1) to <Replica:3cc04#MainNode>
+[2017-11-22 18:46:48,633] client.Client<Client:4f002#ClientNode>:OUTPUT: 
+Client 0 : received response for new request (0, 1) from <Replica:3cc05#MainNode>
+[2017-11-22 18:46:48,635] client.Client<Client:4f002#ClientNode>:OUTPUT: 
+Client 0 : response of request (0, 1) for operation  append('movie',' wars') is verified with 3 replicas acceptance.
+[2017-11-22 18:46:48,635] client.Client<Client:4f002#ClientNode>:OUTPUT: 
+Client 0 : response of new request (0, 1) for operation  append('movie',' wars') is validated, the result is: OK
+[2017-11-22 18:46:48,637] client.Client<Client:4f002#ClientNode>:OUTPUT: 
+Client 0 : sent operation_request (0, 2) to <Replica:3cc03#MainNode>
+[2017-11-22 18:46:48,648] client.Client<Client:4f003#ClientNode>:OUTPUT: 
+Client 0 : received response for new request (0, 1) from <Replica:3cc05#MainNode>
+[2017-11-22 18:46:48,649] client.Client<Client:4f003#ClientNode>:OUTPUT: 
+Client 0 : response of request (0, 1) for operation  append('movie',' wars') is verified with 3 replicas acceptance.
+[2017-11-22 18:46:48,649] client.Client<Client:4f003#ClientNode>:OUTPUT: 
+Client 0 : response of new request (0, 1) for operation  append('movie',' wars') is validated, the result is: OK
+[2017-11-22 18:46:48,651] client.Client<Client:4f003#ClientNode>:OUTPUT: 
+Client 0 : sent operation_request (0, 2) to <Replica:3cc04#MainNode>
+[2017-11-22 18:46:51,639] client.Client<Client:4f002#ClientNode>:OUTPUT: 
+Client 0 : timeout waiting for response for request (0, 2) start retransmission phase
+[2017-11-22 18:46:51,640] client.Client<Client:4f002#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 2) to <Replica:3cc03#MainNode>
+[2017-11-22 18:46:51,641] client.Client<Client:4f002#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 2) to <Replica:3cc03#MainNode>
+[2017-11-22 18:46:51,643] client.Client<Client:4f002#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 2) to <Replica:3cc03#MainNode>
+[2017-11-22 18:46:51,652] client.Client<Client:4f003#ClientNode>:OUTPUT: 
+Client 0 : timeout waiting for response for request (0, 2) start retransmission phase
+[2017-11-22 18:46:51,653] client.Client<Client:4f003#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 2) to <Replica:3cc04#MainNode>
+[2017-11-22 18:46:51,654] client.Client<Client:4f003#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 2) to <Replica:3cc04#MainNode>
+[2017-11-22 18:46:51,656] client.Client<Client:4f003#ClientNode>:OUTPUT: 
+Client 0 : sent retransmission_request (0, 2) to <Replica:3cc04#MainNode>
+[2017-11-22 18:46:53,661] client.Client<Client:4f002#ClientNode>:OUTPUT: 
+Client 0 : received response for new request (0, 2) from <Replica:3cc05#MainNode>
+[2017-11-22 18:46:53,662] client.Client<Client:4f002#ClientNode>:OUTPUT: 
+Client 0 : response of request (0, 2) for operation  get('movie') is verified with 3 replicas acceptance.
+[2017-11-22 18:46:53,662] client.Client<Client:4f002#ClientNode>:OUTPUT: 
+Client 0 : response of new request (0, 2) for operation  get('movie') is validated, the result is: star wars
+[2017-11-22 18:46:53,662] client.Client<Client:4f002#ClientNode>:OUTPUT: 
+Client 0 : retransmission for request (0, 2) finished.
+[2017-11-22 18:46:53,663] client.Client<Client:4f002#ClientNode>:OUTPUT: 
+Client 0 : sent check config message with id 1 to Olympus.
+[2017-11-22 18:46:53,664] client.Client<Client:4f002#ClientNode>:OUTPUT: 
+Client 0 : received response for retransmission request (0, 2) from <Replica:3cc05#MainNode>
+[2017-11-22 18:46:53,664] client.Client<Client:4f002#ClientNode>:OUTPUT: 
+Client 0 : request (0, 2) already received result, do nothing.
+[2017-11-22 18:46:53,665] client.Client<Client:4f002#ClientNode>:OUTPUT: 
+Client 0 : received check config response: OK continue normally.
+[2017-11-22 18:46:53,670] client.Client<Client:4f003#ClientNode>:OUTPUT: 
+Client 0 : received response for new request (0, 2) from <Replica:3cc05#MainNode>
+[2017-11-22 18:46:53,671] client.Client<Client:4f003#ClientNode>:OUTPUT: 
+Client 0 : response of request (0, 2) for operation  get('movie') is verified with 3 replicas acceptance.
+[2017-11-22 18:46:53,671] client.Client<Client:4f003#ClientNode>:OUTPUT: 
+Client 0 : response of new request (0, 2) for operation  get('movie') is validated, the result is: star wars
+[2017-11-22 18:46:53,671] client.Client<Client:4f003#ClientNode>:OUTPUT: 
+Client 0 : retransmission for request (0, 2) finished.
+[2017-11-22 18:46:53,672] client.Client<Client:4f003#ClientNode>:OUTPUT: 
+Client 0 : sent check config message with id 1 to Olympus.
+[2017-11-22 18:46:53,672] client.Client<Client:4f003#ClientNode>:OUTPUT: 
+Client 0 : received response for retransmission request (0, 2) from <Replica:3cc05#MainNode>
+[2017-11-22 18:46:53,673] client.Client<Client:4f003#ClientNode>:OUTPUT: 
+Client 0 : request (0, 2) already received result, do nothing.
+[2017-11-22 18:46:53,674] client.Client<Client:4f003#ClientNode>:OUTPUT: 
+Client 0 : received check config response: OK continue normally.
+[2017-11-22 18:46:58,667] client.Client<Client:4f002#ClientNode>:OUTPUT: 
+Client 0 : actual request result: {(0, 0): 'OK', (0, 1): 'OK', (0, 2): 'star wars'}
+[2017-11-22 18:46:58,667] client.Client<Client:4f002#ClientNode>:OUTPUT: 
+Client 0 : final test result: {(0, 0): 'OK', (0, 1): 'OK', (0, 2): 'star wars'}
+[2017-11-22 18:46:58,667] client.Client<Client:4f002#ClientNode>:OUTPUT: 
+Client 0 : final test state: {'movie': 'star wars'}
+[2017-11-22 18:46:58,668] client.Client<Client:4f002#ClientNode>:OUTPUT: 
+Client 0 terminating.
+[2017-11-22 18:46:58,675] client.Client<Client:4f003#ClientNode>:OUTPUT: 
+Client 0 : actual request result: {(0, 0): 'OK', (0, 1): 'OK', (0, 2): 'star wars'}
+[2017-11-22 18:46:58,676] client.Client<Client:4f003#ClientNode>:OUTPUT: 
+Client 0 : final test result: {(0, 0): 'OK', (0, 1): 'OK', (0, 2): 'star wars'}
+[2017-11-22 18:46:58,676] client.Client<Client:4f003#ClientNode>:OUTPUT: 
+Client 0 : final test state: {'movie': 'star wars'}
+[2017-11-22 18:46:58,676] client.Client<Client:4f003#ClientNode>:OUTPUT: 
+Client 0 terminating.
