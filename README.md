@@ -14,8 +14,13 @@ PLATFORM:
 
 INSTRUCTIONS:
 
-	To build and run testcase 1
-	python -m da -f --logfilename logs/test1.log -F output src/main.da config/test1.txt
+	To build and run on same machine
+	python -m da -f --logfilename logs/test1.replica.phase2.log -F output -n MainNode src/main.da config/test1.txt
+	python -m da -f --logfilename logs/test1.client.phase3.log -F output -n ClientNode -D src/main.da config/test1.txt
+
+	To built on multiple hosts
+	python -m da -f --logfilename logs/test1.replica-phase2.log -F output -H <host_ip> -n MainNode src/main.da config/test1.txt
+	python -m da -f --logfilename logs/test1.client.phase2.log -F output -n -H <host_ip> -R <peer_ip> ClientNode -D src/main.da config/test1.txt
 
 WORKLOAD GENERATION:
 
@@ -58,9 +63,9 @@ MAIN FILES:
 
 CODE SIZE:
 
-	algorithm - 523 lines
-	other - 129 lines
-	total - 652 lines
+	algorithm ~ 1100 lines
+	other ~ 400 lines
+	total - 1459 lines
 
 	Obtained the non-comment and non-blank lines of code from CLOC (https://github.com/AlDanial/cloc).
 	Separted algorithms and other manually. About 70 % of the code in "algorithm" is for the algorithm itself and the rest deals with logging and failure injection.
@@ -68,6 +73,6 @@ CODE SIZE:
 LANGUAGE FEATURE USAGE:
 
 	List comprehension used - 1
-	Set comprehensions used - 1
-	Aggregrations used - 1
-	Quantifications used - 9 
+	Set comprehensions used - 2
+	Aggregrations used - 3
+	Quantifications used - 15 
